@@ -1,0 +1,12 @@
+version: '2'
+services:
+    frontend:
+        build:
+            context: .
+            dockerfile: Dockerfile_dev
+        environment:
+            DEVELOPER_EDITION: "true"
+        ports:
+            - "8080:80"
+        volumes:
+            - "./:/app"
