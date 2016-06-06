@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  angular.module('application', [
+  angular.module('marsApp', [
     'ui.router',
     'ngAnimate',
 
