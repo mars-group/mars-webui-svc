@@ -5,5 +5,6 @@ if [ "$DEVELOPER_EDITION" = "true" ]; then
         bower install --allow-root
         gulp
     else
-        gulp --production
+        gulp build --production
+        node server.js
     fi

@@ -5,7 +5,7 @@ services:
         environment:
             DEVELOPER_EDITION: "true"
         ports:
-            - "8080:80"
+            - "8080:8080"
             - "35729:35729"
         volumes:
             - "./:/app"
