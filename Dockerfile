@@ -13,6 +13,6 @@ RUN chmod +x entrypoint.sh
 
 RUN npm install && bower install --allow-root
 
-EXPOSE 80
+EXPOSE 80 35729
 
 ENTRYPOINT ["sh", "entrypoint.sh"]
