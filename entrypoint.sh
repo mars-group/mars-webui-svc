@@ -6,5 +6,5 @@ if [ "$DEVELOPER_EDITION" = "true" ]; then
         gulp
     else
         gulp build --production
-        node server.js
+        node server/app.js
     fi

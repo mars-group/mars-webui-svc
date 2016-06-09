@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular.module('marsApp', [
@@ -11,8 +11,7 @@
     'foundation.dynamicRouting.animations'
   ])
     .config(config)
-    .run(run)
-  ;
+    .run(run);
 
   config.$inject = ['$urlRouterProvider', '$locationProvider'];
 
@@ -20,7 +19,7 @@
     $urlProvider.otherwise('/');
 
     $locationProvider.html5Mode({
-      enabled:false,
+      enabled: false,
       requireBase: false
     });
 

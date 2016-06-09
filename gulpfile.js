@@ -5,12 +5,13 @@
 // 1. LIBRARIES
 // - - - - - - - - - - - - - - -
 
-var $        = require('gulp-load-plugins')();
-var argv     = require('yargs').argv;
-var gulp     = require('gulp');
-var rimraf   = require('rimraf');
-var router   = require('front-router');
+var $ = require('gulp-load-plugins')();
+var argv = require('yargs').argv;
+var gulp = require('gulp');
+var rimraf = require('rimraf');
+var router = require('front-router');
 var sequence = require('run-sequence');
+var eureka = require('./server/components/eureka');
 
 // Check for --production flag
 var isProduction = !!(argv.production);
@@ -52,32 +53,30 @@ var paths = {
 // - - - - - - - - - - - - - - -
 
 // Cleans the build directory
-gulp.task('clean', function(cb) {
+gulp.task('clean', function (cb) {
   rimraf('./build', cb);
 });
 
 // Copies everything in the client folder except templates, Sass, and JS
-gulp.task('copy', function() {
+gulp.task('copy', function () {
   return gulp.src(paths.assets, {
     base: './client/'
   })
-    .pipe(gulp.dest('./build'))
-  ;
+    .pipe(gulp.dest('./build'));
 });
 
 // Copies your app's page templates and generates URLs for them
-gulp.task('copy:templates', function() {
+gulp.task('copy:templates', function () {
   return gulp.src('./client/templates/**/*.html')
     .pipe(router({
       path: 'build/assets/js/routes.js',
       root: 'client'
     }))
-    .pipe(gulp.dest('./build/templates'))
-  ;
+    .pipe(gulp.dest('./build/templates'));
 });
 
 // Compiles the Foundation for Apps directive partials into a single JavaScript file
-gulp.task('copy:foundation', function(cb) {
+gulp.task('copy:foundation', function (cb) {
   gulp.src('bower_components/foundation-apps/js/angular/components/**/*.html')
     .pipe($.ngHtml2js({
       prefix: 'components/',
@@ -86,13 +85,11 @@ gulp.task('copy:foundation', function(cb) {
     }))
     .pipe($.uglify())
     .pipe($.concat('templates.js'))
-    .pipe(gulp.dest('./build/assets/js'))
-  ;
+    .pipe(gulp.dest('./build/assets/js'));
 
   // Iconic SVG icons
   gulp.src('./bower_components/foundation-apps/iconic/**/*')
-    .pipe(gulp.dest('./build/assets/img/iconic/'))
-  ;
+    .pipe(gulp.dest('./build/assets/img/iconic/'));
 
   cb();
 });
@@ -111,14 +108,13 @@ gulp.task('sass', function () {
       browsers: ['last 2 versions', 'ie 10']
     }))
     .pipe(minifyCss)
-    .pipe(gulp.dest('./build/assets/css/'))
-  ;
+    .pipe(gulp.dest('./build/assets/css/'));
 });
 
 // Compiles and copies the Foundation for Apps JavaScript, as well as your app's custom JS
 gulp.task('uglify', ['uglify:foundation', 'uglify:app']);
 
-gulp.task('uglify:foundation', function(cb) {
+gulp.task('uglify:foundation', function (cb) {
   var uglify = $.if(isProduction, $.uglify()
     .on('error', function (e) {
       console.log(e);
@@ -127,11 +123,10 @@ gulp.task('uglify:foundation', function(cb) {
   return gulp.src(paths.foundationJS)
     .pipe(uglify)
     .pipe($.concat('foundation.js'))
-    .pipe(gulp.dest('./build/assets/js/'))
-  ;
+    .pipe(gulp.dest('./build/assets/js/'));
 });
 
-gulp.task('uglify:app', function() {
+gulp.task('uglify:app', function () {
   var uglify = $.if(isProduction, $.uglify()
     .on('error', function (e) {
       console.log(e);
@@ -140,12 +135,11 @@ gulp.task('uglify:app', function() {
   return gulp.src(paths.appJS)
     .pipe(uglify)
     .pipe($.concat('app.js'))
-    .pipe(gulp.dest('./build/assets/js/'))
-  ;
+    .pipe(gulp.dest('./build/assets/js/'));
 });
 
 // Starts a test server, which you can view at http://localhost:8079
-gulp.task('server', ['build'], function() {
+gulp.task('server', ['build'], function () {
   gulp.src('./build')
     .pipe($.webserver({
       port: 8080,
@@ -153,12 +147,13 @@ gulp.task('server', ['build'], function() {
       fallback: 'index.html',
       livereload: true,
       open: true
-    }))
-  ;
+    }));
+
+  eureka.register();
 });
 
 // Builds your entire app once, without starting a server
-gulp.task('build', function(cb) {
+gulp.task('build', function (cb) {
   sequence('clean', ['copy', 'copy:foundation', 'sass', 'uglify'], 'copy:templates', cb);
 });
 
