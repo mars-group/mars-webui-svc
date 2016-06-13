@@ -1,6 +1,6 @@
 'use strict';
 
 angular.module('marsApp')
-  .controller('TestCtrl', function ($scope) {
+  .controller('HomeCtrl', function ($scope) {
     $scope.helloWorld = 'Hello World!';
   });
