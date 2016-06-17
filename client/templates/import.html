@@ -8,8 +8,7 @@ controller: ImportCtrl
   <h2>Import files!</h2>
 
   <form name="form">
-    Single file
-    <div class="button" ngf-select ng-model="file" name="file" ngf-max-size="2000MB" >Select</div>
-    <button type="submit" ng-click="upload()">submit</button>
+    <div class="file-upload button" ngf-select ng-model="file" name="file" ngf-max-size="2000MB" >Choose File</div>
+    <button type="submit" ng-click="upload()">upload</button>
   </form>
 </div>
