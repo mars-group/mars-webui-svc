@@ -138,7 +138,7 @@ gulp.task('uglify:app', function () {
     .pipe(gulp.dest('./build/assets/js/'));
 });
 
-// Starts a test server, which you can view at http://localhost:8079
+// Starts a test server, which you can view at http://localhost:8080
 gulp.task('server', ['build'], function () {
   gulp.src('./build')
     .pipe($.webserver({

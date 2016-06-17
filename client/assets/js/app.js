@@ -8,7 +8,10 @@
     //foundation
     'foundation',
     'foundation.dynamicRouting',
-    'foundation.dynamicRouting.animations'
+    'foundation.dynamicRouting.animations',
+
+    // our stuff
+    'ngFileUpload'
   ])
     .config(config)
     .run(run);
