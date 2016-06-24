@@ -28,5 +28,5 @@
       vm.relativeDate = moment(vm.creationDate).fromNow();
     }
   }
-
 })();
+
