@@ -3,8 +3,8 @@
 if [ "$DEVELOPER_EDITION" = "true" ]; then
         npm install
         bower install --allow-root
-        gulp
+        sleep infinity
     else
-        gulp build --production
+        gulp
         node server/app.js
     fi

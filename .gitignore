@@ -1,7 +1,7 @@
-.DS_Store
 node_modules/
-npm-debug.log
 bower_components/
-build/
-.sass-cache
+coverage/
+.sass-cache/
 .idea/
+.tmp/
+dist/
