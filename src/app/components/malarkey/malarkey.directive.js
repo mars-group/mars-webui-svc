@@ -57,7 +57,7 @@
 
       function activate() {
         return getContributors().then(function() {
-          $log.info('Activated Contributors View');
+          // $log.info('Activated Contributors View');
         });
       }
 
