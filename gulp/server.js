@@ -3,6 +3,7 @@
 var path = require('path');
 var gulp = require('gulp');
 var conf = require('./conf');
+var eureka = require('../server/components/eureka');
 
 var browserSync = require('browser-sync');
 var browserSyncSpa = require('browser-sync-spa');
@@ -40,6 +41,8 @@ function browserSyncInit(baseDir, browser) {
     server: server,
     browser: browser
   });
+
+  eureka.register();
 }
 
 browserSync.use(browserSyncSpa({

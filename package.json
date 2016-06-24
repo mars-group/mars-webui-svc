@@ -1,7 +1,19 @@
 {
   "name": "test",
   "version": "0.0.0",
-  "dependencies": {},
+  "description": "Mars frontend",
+  "// Comment your dependencies here:": {
+    "connect": "for production page serving",
+    "os": "for eureka connection",
+    "serve-static": "for production page serving",
+    "superagent": "for eureka connection"
+  },
+  "dependencies": {
+    "connect": "^3.4.1",
+    "os": "^0.1.1",
+    "serve-static": "^1.11.1",
+    "superagent": "^2.0.0"
+  },
   "scripts": {
     "test": "gulp test"
   },
