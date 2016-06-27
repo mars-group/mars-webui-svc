@@ -6,7 +6,9 @@
     .controller('ModelController', ModelController);
 
   /** @ngInject */
-  function ModelController($scope) {
-    $scope.modelHeader = 'Model'
+  function ModelController() {
+    var vm = this;
+
+    vm.modelHeader = 'Model';
   }
 })();
