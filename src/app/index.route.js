@@ -19,6 +19,12 @@
         templateUrl: 'app/model/model.html',
         controller: 'ModelController',
         controllerAs: 'model'
+      })
+      .state('import', {
+        url: '/import',
+        templateUrl: 'app/import/import.html',
+        controller: 'ImportController',
+        controllerAs: 'import'
       });
 
     $urlRouterProvider.otherwise('/');
