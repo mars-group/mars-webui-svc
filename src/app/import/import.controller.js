@@ -6,7 +6,7 @@
     .controller('ImportController', ImportController);
 
   /** @ngInject */
-  function ImportController($log, FileUploader, Metadata, Timeseries) {
+  function ImportController($log, $timeout, FileUploader, Metadata, Timeseries) {
     var vm = this;
     var log = function (e) {
       $log.log(e)
@@ -36,14 +36,16 @@
     vm.data = [];
 
     vm.Data = function () {
-      this.lat = '';
-      this.lng = '';
-      this.privacy = '';
-      this.dataType = '';
-      this.projectId = 1; // todo: add real id
-      this.userId = 1; // todo: add real id
-      this.title = '';
-      this.description = '';
+      return {
+        lat: '',
+        lng : '',
+        privacy : '',
+        dataType : '',
+        projectId : 1, // todo: add real id
+        userId :1, // todo: add real id
+        title : '',
+        description : ''
+      }
     };
 
     // types are: default(white), primary(blue), success(green), info(blue), warning(orange), danger(red)
@@ -84,9 +86,9 @@
     });
 
     vm.uploadFiles = function () {
-      
+
       log(vm.uploader.queue.length);
-      
+
       /** validation */
       for (var i = 0; i < vm.uploader.queue.length; i++) {
         var filename = vm.uploader.queue[i]._file.name;
@@ -116,7 +118,7 @@
     };
 
     /** further processing after upload */
-    vm.uploader.onSuccessItem = function (fileItem, response, status, headers) {
+    vm.uploader.onSuccessItem = function (fileItem, response) {
       /** setting status to processing */
       fileItem.isProcessing = true;
       var importId = response;
@@ -182,7 +184,7 @@
     function checkMetadataWriteStatus(Metadata, importId, interval, maxTries, tries, callback) {
       Metadata.hasStatusWritten(importId, function (hasStatusWritten) {
         if (!hasStatusWritten && tries <= maxTries) {
-          window.setTimeout(function () {
+          $timeout(function () {
             checkMetadataWriteStatus(Metadata, importId, interval, maxTries, tries + 1, callback);
           }, interval);
         }
@@ -200,109 +202,109 @@
       });
     }
 
-    /**
-     * Init map for vm.geoPicker
-     * @param caller jqery selector of calling btn
-     * @returns initialized map object
-     */
-    function initgeoPicker(caller) {
-      vm.markerSet = false;
-      $('#cur-lat').html('');
-      $('#cur-lon').html('');
-      vm.geoPickerCaller = caller;
-
-      //for details on map initialisation
-      //visit: https://github.com/Leaflet/Leaflet.draw
-      var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-        osmAttrib = '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-        osm = L.tileLayer(osmUrl, {maxZoom: 18, attribution: osmAttrib}),
-        map = new L.Map('map', {layers: [osm], center: new L.LatLng(0, 0), zoom: 2});
-
-      var drawnItems = new L.FeatureGroup();
-      map.addLayer(drawnItems);
-
-      var drawControl = new L.Control.Draw({
-        draw: {
-          position: 'topleft',
-          //allow only polygons in draw control
-          polygon: false,
-          polyline: false,
-          rectangle: false,
-          circle: false,
-          marker: {
-            zIndexOffset: 2000,
-            repeatMode: false
-          }
-        },
-        edit: {
-          featureGroup: drawnItems
-        }
-      });
-      map.addControl(drawControl);
-
-      //polygon create event
-      //created polygon is stored in var curSelectedSpatialBoudaries
-      map.on('draw:created', function (e) {
-        var type = e.layerType,
-          layer = e.layer;
-
-        if (vm.markerSet) {
-          console.log('you can only set one marker');
-          return;
-        } else {
-          vm.markerSet = true;
-        }
-
-        $('#cur-lat').html(layer._latlng.lat);
-        $('#cur-lon').html(layer._latlng.lng);
-
-        vm.geoPickerCaller.parent().find('.lat').val(layer._latlng.lat);
-        vm.geoPickerCaller.parent().find('.lon').val(layer._latlng.lng);
-
-        drawnItems.addLayer(layer);
-      });
-
-      //polygon update event
-      map.on('draw:edited', function (e) {
-
-        var layers = e.layers._layers;
-        var layer = layers[Object.keys(layers)[0]];
-
-        $('#cur-lat').html(layer._latlng.lat);
-        $('#cur-lon').html(layer._latlng.lng);
-
-        vm.geoPickerCaller.parent().find('.lat').val(layer._latlng.lat);
-        vm.geoPickerCaller.parent().find('.lon').val(layer._latlng.lng);
-
-      });
-
-      //polygon delete event
-      map.on('draw:deleted', function (e) {
-        var type = e.layerType,
-          layer = e.layer;
-
-        vm.geoPickerCaller.parent().find('.lat').val('');
-        vm.geoPickerCaller.parent().find('.lon').val('');
-
-        drawnItems.removeLayer(layer);
-      });
-
-      return map;
-    }
-
-    //display control for map container
-    vm.opengeoPicker = function (caller) {
-      $('#map-borders').css('display', 'block');
-      vm.geoPicker = initvm.geoPicker(caller);
-    };
-
-    //hide and destroy map container
-    vm.closegeoPicker = function () {
-      $('#map-borders').css('display', 'none');
-      vm.geoPicker.remove();
-      vm.geoPickerCaller = undefined;
-      $('#map').html('');
-    };
+    // /**
+    //  * Init map for vm.geoPicker
+    //  * @param caller jqery selector of calling btn
+    //  * @returns initialized map object
+    //  */
+    // function initgeoPicker(caller) {
+    //   vm.markerSet = false;
+    //   $('#cur-lat').html('');
+    //   $('#cur-lon').html('');
+    //   vm.geoPickerCaller = caller;
+    //
+    //   //for details on map initialisation
+    //   //visit: https://github.com/Leaflet/Leaflet.draw
+    //   var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    //     osmAttrib = '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    //     osm = L.tileLayer(osmUrl, {maxZoom: 18, attribution: osmAttrib}),
+    //     map = new L.Map('map', {layers: [osm], center: new L.LatLng(0, 0), zoom: 2});
+    //
+    //   var drawnItems = new L.FeatureGroup();
+    //   map.addLayer(drawnItems);
+    //
+    //   var drawControl = new L.Control.Draw({
+    //     draw: {
+    //       position: 'topleft',
+    //       //allow only polygons in draw control
+    //       polygon: false,
+    //       polyline: false,
+    //       rectangle: false,
+    //       circle: false,
+    //       marker: {
+    //         zIndexOffset: 2000,
+    //         repeatMode: false
+    //       }
+    //     },
+    //     edit: {
+    //       featureGroup: drawnItems
+    //     }
+    //   });
+    //   map.addControl(drawControl);
+    //
+    //   //polygon create event
+    //   //created polygon is stored in var curSelectedSpatialBoudaries
+    //   map.on('draw:created', function (e) {
+    //     var type = e.layerType,
+    //       layer = e.layer;
+    //
+    //     if (vm.markerSet) {
+    //       console.log('you can only set one marker');
+    //       return;
+    //     } else {
+    //       vm.markerSet = true;
+    //     }
+    //
+    //     $('#cur-lat').html(layer._latlng.lat);
+    //     $('#cur-lon').html(layer._latlng.lng);
+    //
+    //     vm.geoPickerCaller.parent().find('.lat').val(layer._latlng.lat);
+    //     vm.geoPickerCaller.parent().find('.lon').val(layer._latlng.lng);
+    //
+    //     drawnItems.addLayer(layer);
+    //   });
+    //
+    //   //polygon update event
+    //   map.on('draw:edited', function (e) {
+    //
+    //     var layers = e.layers._layers;
+    //     var layer = layers[Object.keys(layers)[0]];
+    //
+    //     $('#cur-lat').html(layer._latlng.lat);
+    //     $('#cur-lon').html(layer._latlng.lng);
+    //
+    //     vm.geoPickerCaller.parent().find('.lat').val(layer._latlng.lat);
+    //     vm.geoPickerCaller.parent().find('.lon').val(layer._latlng.lng);
+    //
+    //   });
+    //
+    //   //polygon delete event
+    //   map.on('draw:deleted', function (e) {
+    //     var type = e.layerType,
+    //       layer = e.layer;
+    //
+    //     vm.geoPickerCaller.parent().find('.lat').val('');
+    //     vm.geoPickerCaller.parent().find('.lon').val('');
+    //
+    //     drawnItems.removeLayer(layer);
+    //   });
+    //
+    //   return map;
+    // }
+    //
+    // //display control for map container
+    // vm.opengeoPicker = function (caller) {
+    //   $('#map-borders').css('display', 'block');
+    //   vm.geoPicker = initvm.geoPicker(caller);
+    // };
+    //
+    // //hide and destroy map container
+    // vm.closegeoPicker = function () {
+    //   $('#map-borders').css('display', 'none');
+    //   vm.geoPicker.remove();
+    //   vm.geoPickerCaller = undefined;
+    //   $('#map').html('');
+    // };
 
   }
 })();
