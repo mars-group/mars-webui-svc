@@ -9,112 +9,140 @@
   <div class="row">
     <div class="col-md-3">
 
-      <uib-alert ng-repeat="alert in main.alerts" type="{{alert.type}}" close="main.closeAlert($index)">{{alert.msg}}</uib-alert>
+      <!-- Error messages -->
+      <uib-alert ng-repeat="alert in main.alerts" type="{{alert.type}}" close="main.closeAlert($index)">
+        {{alert.msg}}
+      </uib-alert>
 
-      <div ng-show="main.uploader.isHTML5">
-        <div nv-file-drop="" uploader="main.uploader">
-          <div nv-file-over="" uploader="main.uploader" over-class="another-file-over-class" class="well my-drop-zone">
-            Drag one or more files here
-          </div>
+      <!-- Upload box -->
+      <div nv-file-drop="" uploader="main.uploader" ng-click="main.clickUpload();">
+        <div nv-file-over="" uploader="main.uploader" over-class="another-file-over-class"
+             class="well my-drop-zone text-center">
+          <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span><br/>
+          <input type="file" id="upload" multiple style="display: none;" nv-file-select="" uploader="main.uploader">
+          <span><strong id="chooseFile">Choose files</strong>​ or drag them here.</span>
         </div>
       </div>
 
-      <div class="well">
-        Or use the upload button
-        <input type="file" nv-file-select="" uploader="main.uploader"/>
+      <!-- Upload accordion settings-->
+      <div class="checkbox" ng-show="main.uploader.queue.length">
+        <div class="well">
+          <label>
+            <input type="checkbox" ng-model="oneAtATime">
+            Open only one Upload at a time
+          </label>
+        </div>
       </div>
     </div>
 
-    <div class="col-md-9" id="file-list">
+    <div class="col-md-9">
 
       <h3>Upload queue</h3>
       <p>Queue length: {{ main.uploader.queue.length }}</p>
 
-      <table class="table">
-        <thead>
-        <tr>
-          <th width="35%">Settings</th>
-          <th width="10%">Name</th>
-          <th ng-show="main.uploader.isHTML5">Size</th>
-          <th ng-show="main.uploader.isHTML5">Progress</th>
-          <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr class="file-row" ng-repeat="item in main.uploader.queue">
-          <td class="file-settings">
-            <label for="dataType">Data Type</label>
-            <select id="dataType" class="privacy-selection" ng-model="main.data[$index].dataType">
-              <option value="">Please select</option>
-              <option value="{{main.CONST_UPLOAD_TIMESERIES}}">time-series data</option>
-              <option value="{{main.CONST_UPLOAD_TABLEBASED}}">table data</option>
-              <option value="{{main.CONST_UPLOAD_GIS}}">GIS data</option>
-            </select>
+      <uib-accordion close-others="oneAtATime">
+        <uib-accordion-group heading="{{upload.file.name}}" ng-init="isOpen = $index === 0" is-open="isOpen"
+                             ng-repeat="upload in main.uploader.queue">
 
-            <div class="geo-picker" ng-model="main.geoPicker"
-                 ng-hide="!main.data[$index].dataType || main.data[$index].dataType === main.CONST_UPLOAD_GIS">
-              <label>Geo-Coords</label>
-              <label>
-                LAT: <input class="latLng" type="text" ng-model="main.lat" id="lat_{{main.hashFilename(item.file.name)}}">
-              </label>
-              <label>
-                LON: <input class="latLng" type="text" ng-model="main.lng" id="lon_{{main.hashFilename(item.file.name)}}">
-              </label>
-              <button class="btn btn-primary btn-sm" ng-click="main.openGeoPicker($(this))">pick</button>
+          <div class="col-md-6">
+            <form>
+              <div class="form-group">
+                <label for="dataType">Data Type</label>
+                <select id="dataType" class="form-control" ng-model="main.data[$index].dataType">
+                  <option value="">Please select</option>
+                  <option value="{{main.CONST_UPLOAD_TIMESERIES}}">time-series data</option>
+                  <option value="{{main.CONST_UPLOAD_TABLEBASED}}">table data</option>
+                  <option value="{{main.CONST_UPLOAD_GIS}}">GIS data</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <div class="geo-picker" ng-model="main.geoPicker"
+                     ng-hide="!main.data[$index].dataType || main.data[$index].dataType === main.CONST_UPLOAD_GIS">
+                  <label>
+                    Geo-Coords
+                    <div class="input-group">
+                      <input type="text" placeholder="LAT" class="form-control" ng-model="main.lat"
+                             id="lat_{{main.hashFilename(upload.file.name)}}">
+                      <span class="input-group-btn" style="width:0;"></span>
+                      <input type="text" placeholder="LON" class="form-control" ng-model="main.lng"
+                             id="lon_{{main.hashFilename(upload.file.name)}}">
+                      <span class="input-group-btn" style="width:0;"></span>
+                      <span class="input-group-btn">
+                      <button class="btn btn-primary" ng-click="main.openGeoPicker($(this))">pick</button>
+                        </span>
+                    </div>
+                  </label>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="privacy">Privacy</label>
+                <select id="privacy" class="form-control" ng-model="main.data[$index].privacy" class="form-control">
+                  <option value="">Please select</option>
+                  <option value="PRIVATE">only for personal use</option>
+                  <option value="PROJECT_PRIVATE">can only be used by project members</option>
+                  <option value="PUBLIC">can be used by everyone</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" id="title" class="form-control" ng-model="main.data[$index].title"
+                       placeholder="Title of this data"
+                       ng-trim="true">
+              </div>
+
+              <div class="form-group">
+                <label>Description</label>
+                <textarea class="form-control" rows="4" ng-model="main.data[$index].description"
+                          placeholder="Description of this data"></textarea>
+              </div>
+            </form>
+          </div>
+
+          <div class="col-md-6">
+            <div class="form-group" ng-show="main.uploader.isHTML5">
+              <label class="control-label">File size:</label>
+              {{ upload.file.size/1024/1024|number:2 }} MB
             </div>
-            <label for="privacy">Privacy</label>
-            <select id="privacy" ng-model="main.data[$index].privacy" class="privacy-selection">
-              <option value="">Please select</option>
-              <option value="PRIVATE">only for personal use</option>
-              <option value="PROJECT_PRIVATE">can only be used by project members</option>
-              <option value="PUBLIC">can be used by everyone</option>
-            </select>
-            <label for="title">Title</label>
-            <input type="text" id="title" ng-model="main.data[$index].title" placeholder="title of this data" ng-trim="true">
-            <label>Description</label>
-                  <textarea ng-model="main.data[$index].description" placeholder="description of this data"></textarea>
-          </td>
-          <td><strong class="filename">{{ item.file.name }}</strong></td>
-          <td ng-show="main.uploader.isHTML5" nowrap>{{ file.size/1024/1024|number:2 }} MB</td>
-          <td ng-show="main.uploader.isHTML5">
-            <div ng-hide="item.isSuccess || item.isCancel || item.isError"
-                 class="progress" style="margin-bottom: 0;">
-              <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+
+            <div ng-show="main.uploader.isHTML5">
+              <div class="form-group" ng-hide="upload.isSuccess || upload.isCancel || upload.isError">
+                <div class="progress-bar" role="progressbar"></div>
+              </div>
+              <div class="alert alert-success" ng-show="upload.isSuccess"><i class="glyphicon glyphicon-ok"></i>
+                ok
+              </div>
+              <div class="alert alert-warning" ng-show="upload.isProcessing"><i class="glyphicon glyphicon-refresh"></i>
+                processing
+              </div>
+              <div class="alert alert-warning" ng-show="upload.isCancel"><i class="glyphicon glyphicon-ban-circle"></i>
+                canceled
+              </div>
+              <div class="alert alert-danger" ng-show="upload.isError"><i class="glyphicon glyphicon-remove"></i>
+                failed
+              </div>
             </div>
-            <div class="alert alert-success" ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i>
-              ok
-            </div>
-            <div class="alert alert-warning" ng-show="item.isProcessing"><i class="glyphicon glyphicon-refresh"></i>
-              processing
-            </div>
-            <div class="alert alert-warning" ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i>
-              canceled
-            </div>
-            <div class="alert alert-danger" ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i>
-              failed
-            </div>
-          </td>
-          <td nowrap>
-            <button type="button" class="btn btn-warning btn-xs" ng-click="item.cancel()"
-                    ng-disabled="!item.isUploading">
+            <button type="button" class="btn btn-warning btn-xs" ng-click="upload.cancel()"
+                    ng-disabled="!upload.isUploading">
               <span class="glyphicon glyphicon-ban-circle"></span> Cancel
             </button>
-            <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove()">
+            <button type="button" class="btn btn-danger btn-xs" ng-click="upload.remove()">
               <span class="glyphicon glyphicon-trash"></span> Remove
             </button>
-          </td>
-        </tr>
-        </tbody>
-      </table>
+          </div>
+        </uib-accordion-group>
+      </uib-accordion>
 
-      <div>
+      <div ng-show="main.uploader.queue.length">
         <button type="button" class="btn btn-success btn-s" ng-click="main.uploadFiles()"
                 ng-disabled="!main.uploader.getNotUploadedItems().length">
-          <span class="glyphicon glyphicon-upload"></span> Upload all
+          <span class="glyphicon glyphicon-upload"></span> Upload
         </button>
         <button type="button" class="btn btn-warning btn-s" ng-click="main.uploader.cancelAll()"
                 ng-disabled="!main.uploader.isUploading">
-          <span class="glyphicon glyphicon-ban-circle"></span> Cancel all
+          <span class="glyphicon glyphicon-ban-circle"></span> Cancel
         </button>
         <button type="button" class="btn btn-danger btn-s" ng-click="main.uploader.clearQueue()"
                 ng-disabled="!main.uploader.queue.length">
@@ -128,12 +156,12 @@
 
 <!--&lt;!&ndash; geo-picker container &ndash;&gt;-->
 <!--<div id="map-borders">-->
-  <!--<div id="map"></div>-->
-  <!--<label>LAT:-->
-    <!--<span id="cur-lat"></span>-->
-  <!--</label>-->
-  <!--<label>LON:-->
-    <!--<span id="cur-lon"></span>-->
-  <!--</label>-->
-  <!--<button class="btn btn-primary" onclick="main.closeGeoPicker()">done</button>-->
+<!--<div id="map"></div>-->
+<!--<label>LAT:-->
+<!--<span id="cur-lat"></span>-->
+<!--</label>-->
+<!--<label>LON:-->
+<!--<span id="cur-lon"></span>-->
+<!--</label>-->
+<!--<button class="btn btn-primary" onclick="main.closeGeoPicker()">done</button>-->
 <!--</div>-->

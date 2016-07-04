@@ -86,9 +86,6 @@
     });
 
     vm.uploadFiles = function () {
-
-      log(vm.uploader.queue.length);
-
       /** validation */
       for (var i = 0; i < vm.uploader.queue.length; i++) {
         var filename = vm.uploader.queue[i]._file.name;
@@ -105,8 +102,6 @@
             return false;
           }
         }
-
-        log(vm.data[i]);
 
         vm.uploader.queue[i].formData.push(vm.data[i]);
 
@@ -201,6 +196,11 @@
         }
       });
     }
+
+    vm.clickUpload = function() {
+      // I know it is dirty, but dunno how to do this a better way
+      document.querySelector('.my-drop-zone input[type=file]').click();
+    };
 
     // /**
     //  * Init map for vm.geoPicker

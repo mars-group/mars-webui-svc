@@ -1,51 +1,43 @@
 #import-container {
+  $default-color: #5AADBB !default;
+
   .my-drop-zone {
-    border: dotted 3px lightgray;
+    margin-top: 1em;
+    outline: dashed 2px lightgray;
+    outline-offset: -.5em;
+
+    span {
+      font-size: 1.2em;
+    }
+
+    .glyphicon {
+      font-size: 5em;
+      margin-bottom: .2em;
+    }
+
+    #chooseFile:hover {
+      color: $default-color;
+    }
   }
 
-  .nv-file-over {
-    border: dotted 3px red;
-  }
-
+  // file drop in hover
   .another-file-over-class {
-    border: dotted 3px green;
+    outline: dashed 2px $default-color;
+    outline-offset: -1em;
+    background-color: #fff;
+
+    span.glyphicon {
+      color: $default-color;
+    }
   }
 
-  #uploadErrorMsg{
-    display: none;
+  // remove strange green on focus
+  .accordion-toggle:hover,
+  .accordion-toggle:focus {
+    color: #000000;
   }
 
-  #uploadErrorMsg button, #uploadErrorMsg button:hover{
-    border: 0px solid transparent;
-    background-color: transparent;
-    float: right;
-    margin-left: 10px;
-  }
-
-  #file-list{
-    margin-bottom: 40px;
-  }
-
-  .file-settings label{
-    margin-top: 10px;
-    display: block;
-  }
-
-  .file-settings input[type=text],
-  .file-settings textarea,
-  .file-settings select
-  {
-    width: 350px;
-  }
-
-  .file-settings textarea{
-    height: 150px;
-  }
-  .latLng {
-    width: 200px;
-  }
-
-  #map-borders{
+  #map-borders {
     position: absolute;
     z-index: 2000;
     display: none;
@@ -54,23 +46,24 @@
     width: 820px;
     height: 620px;
     padding: 10px;
-    background-color: #666
+    background-color: #666;
+
+    label {
+      font-size: 15px;
+      font-weight: bold;
+      color: white;
+
+      span {
+        display: inline-block;
+        width: 170px;
+      }
+    }
   }
 
-  #map-borders label{
-    font-size: 15px;
-    font-weight: bold;
-    color: white;
-  }
-
-  #map-borders label span{
-    display: inline-block;
-    width: 170px;
-  }
-
-  .geo-data-format{
+  .geo-data-format {
     margin: 0;
     padding: 0;
     display: none;
   }
+
 }
