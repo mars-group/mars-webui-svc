@@ -6,11 +6,11 @@
     .controller('ImportController', ImportController);
 
   /** @ngInject */
-  function ImportController($log, $timeout, FileUploader, Metadata, Timeseries) {
+  function ImportController($log, $timeout, $document, FileUploader, Metadata, Timeseries) {
     var vm = this;
-    var log = function (e) {
-      $log.log(e)
-    };
+    // var log = function (e) {
+    //   $log.log(e)
+    // };
 
     /** Will store initialized geoPicker*/
     vm.geoPicker = {};
@@ -199,7 +199,7 @@
 
     vm.clickUpload = function() {
       // I know it is dirty, but dunno how to do this a better way
-      document.querySelector('.my-drop-zone input[type=file]').click();
+      $document.querySelector('.my-drop-zone input[type=file]').click();
     };
 
     // /**
