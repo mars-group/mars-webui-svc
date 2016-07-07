@@ -6,19 +6,46 @@
       </a>
     </div>
 
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-6">
+    <div class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
+
         <li class="active"><a ui-sref="home">Dashboard</a></li>
-        <li><a>Data Management</a></li>
-        <li><a ui-sref="model">Model</a></li>
-        <li><a ui-sref="import">Import</a></li>
-        <li><a>Simulate</a></li>
-        <li><a>Analyze</a></li>
+
+        <li uib-dropdown on-toggle="toggled(open)">
+          <a uib-dropdown-toggle>Data Management <span class="caret"></span></a>
+          <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="simple-dropdown">
+            <li><a ui-sref="import">Import</a></li>
+            <li><a>Datasets (DEIMOS)</a></li>
+          </ul>
+        </li>
+
+        <li uib-dropdown on-toggle="toggled(open)">
+          <a uib-dropdown-toggle>Create Model <span class="caret"></span></a>
+          <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="simple-dropdown">
+            <li><a ui-sref="model">Agents</a></li>
+            <li><a>Layers</a></li>
+          </ul>
+        </li>
+
+        <li uib-dropdown on-toggle="toggled(open)">
+          <a uib-dropdown-toggle>Simulate <span class="caret"></span></a>
+          <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="simple-dropdown">
+            <li><a>Data Mapping</a></li>
+            <li><a>Run</a></li>
+          </ul>
+        </li>
+
       </ul>
 
-      <ul class="nav navbar-nav navbar-right acme-navbar-text">
-        <li>Application was created {{ vm.relativeDate }}.</li>
-      </ul>
+      <form class="navbar-form navbar-right">
+        <div class="form-group">
+          <label class="acme-navbar-text">Current Project: </label>
+          <select class="form-control">
+            <option ng-repeat="project in vm.projects">{{ project.name }}</option>
+          </select>
+        </div>
+      </form>
+
     </div>
   </div>
 </nav>
