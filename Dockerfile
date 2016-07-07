@@ -1,7 +1,10 @@
 FROM artifactory.mars.haw-hamburg.de:5000/debian:jessie
 
-# bzip2 is needed by PhantomJS and git for bower dependencies
-RUN apt-get update && apt-get install -y curl bzip2 git
+# curl            is needed by the command below
+# bzip2           is needed by PhantomJS
+# build-essential is needed by npm dependencied
+# git             is needed by bower dependencies
+RUN apt-get update && apt-get install -y curl bzip2 build-essential git
 
 RUN curl -sL https://deb.nodesource.com/setup_4.x | bash -
 RUN apt-get update && apt-get install -y nodejs
