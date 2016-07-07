@@ -6,7 +6,7 @@
     .controller('ImportController', ImportController);
 
   /** @ngInject */
-  function ImportController($log, $timeout, $document, FileUploader, Metadata, Timeseries) {
+  function ImportController($timeout, $document, FileUploader, Metadata, Timeseries) {
     var vm = this;
     // var log = function (e) {
     //   $log.log(e)
