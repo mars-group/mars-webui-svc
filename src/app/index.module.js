@@ -13,7 +13,9 @@
       'toastr',
 
       // our modules
-      'angularFileUpload'
+      'angularFileUpload',
+      'nemLogging',
+      'ui-leaflet'
     ]);
 
 })();

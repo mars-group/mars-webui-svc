@@ -6,7 +6,7 @@
     .controller('ImportController', ImportController);
 
   /** @ngInject */
-  function ImportController($timeout, $document, FileUploader, Metadata, Timeseries) {
+  function ImportController($timeout, $uibModal, FileUploader, Metadata, Timeseries) {
     var vm = this;
     // var log = function (e) {
     //   $log.log(e)
@@ -151,7 +151,6 @@
           }
         }
       );
-      //console.info('onSuccessItem', fileItem, response, status, headers);
     };
 
     /** Error routine if file cant be added to upload queue */
@@ -199,112 +198,32 @@
 
     vm.clickUpload = function() {
       // I know it is dirty, but dunno how to do this a better way
-      $document.querySelector('.my-drop-zone input[type=file]').click();
+      document.querySelector('.my-drop-zone input[type=file]').click();
     };
 
-    // /**
-    //  * Init map for vm.geoPicker
-    //  * @param caller jqery selector of calling btn
-    //  * @returns initialized map object
-    //  */
-    // function initgeoPicker(caller) {
-    //   vm.markerSet = false;
-    //   $('#cur-lat').html('');
-    //   $('#cur-lon').html('');
-    //   vm.geoPickerCaller = caller;
-    //
-    //   //for details on map initialisation
-    //   //visit: https://github.com/Leaflet/Leaflet.draw
-    //   var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-    //     osmAttrib = '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    //     osm = L.tileLayer(osmUrl, {maxZoom: 18, attribution: osmAttrib}),
-    //     map = new L.Map('map', {layers: [osm], center: new L.LatLng(0, 0), zoom: 2});
-    //
-    //   var drawnItems = new L.FeatureGroup();
-    //   map.addLayer(drawnItems);
-    //
-    //   var drawControl = new L.Control.Draw({
-    //     draw: {
-    //       position: 'topleft',
-    //       //allow only polygons in draw control
-    //       polygon: false,
-    //       polyline: false,
-    //       rectangle: false,
-    //       circle: false,
-    //       marker: {
-    //         zIndexOffset: 2000,
-    //         repeatMode: false
-    //       }
-    //     },
-    //     edit: {
-    //       featureGroup: drawnItems
-    //     }
-    //   });
-    //   map.addControl(drawControl);
-    //
-    //   //polygon create event
-    //   //created polygon is stored in var curSelectedSpatialBoudaries
-    //   map.on('draw:created', function (e) {
-    //     var type = e.layerType,
-    //       layer = e.layer;
-    //
-    //     if (vm.markerSet) {
-    //       console.log('you can only set one marker');
-    //       return;
-    //     } else {
-    //       vm.markerSet = true;
-    //     }
-    //
-    //     $('#cur-lat').html(layer._latlng.lat);
-    //     $('#cur-lon').html(layer._latlng.lng);
-    //
-    //     vm.geoPickerCaller.parent().find('.lat').val(layer._latlng.lat);
-    //     vm.geoPickerCaller.parent().find('.lon').val(layer._latlng.lng);
-    //
-    //     drawnItems.addLayer(layer);
-    //   });
-    //
-    //   //polygon update event
-    //   map.on('draw:edited', function (e) {
-    //
-    //     var layers = e.layers._layers;
-    //     var layer = layers[Object.keys(layers)[0]];
-    //
-    //     $('#cur-lat').html(layer._latlng.lat);
-    //     $('#cur-lon').html(layer._latlng.lng);
-    //
-    //     vm.geoPickerCaller.parent().find('.lat').val(layer._latlng.lat);
-    //     vm.geoPickerCaller.parent().find('.lon').val(layer._latlng.lng);
-    //
-    //   });
-    //
-    //   //polygon delete event
-    //   map.on('draw:deleted', function (e) {
-    //     var type = e.layerType,
-    //       layer = e.layer;
-    //
-    //     vm.geoPickerCaller.parent().find('.lat').val('');
-    //     vm.geoPickerCaller.parent().find('.lon').val('');
-    //
-    //     drawnItems.removeLayer(layer);
-    //   });
-    //
-    //   return map;
-    // }
-    //
-    // //display control for map container
-    // vm.opengeoPicker = function (caller) {
-    //   $('#map-borders').css('display', 'block');
-    //   vm.geoPicker = initvm.geoPicker(caller);
-    // };
-    //
-    // //hide and destroy map container
-    // vm.closegeoPicker = function () {
-    //   $('#map-borders').css('display', 'none');
-    //   vm.geoPicker.remove();
-    //   vm.geoPickerCaller = undefined;
-    //   $('#map').html('');
-    // };
+    vm.openGeoPicker = function (id) {
+
+      var modalInstance = $uibModal.open({
+        templateUrl: 'app/import/geoPicker/geoPicker.html',
+        controller: 'GeoPickerController',
+        controllerAs: 'geoPicker',
+        resolve: {
+          marker: function () {
+            return {
+              lat: vm.data[id].lat,
+              lng: vm.data[id].lng
+            };
+          }
+        }
+      });
+
+      modalInstance.result.then(function (marker) {
+        vm.data[id].lat = marker.lat;
+        vm.data[id].lng = marker.lng;
+      }, function () {
+        // console.log('Modal dismissed at: ' + new Date());
+      });
+    };
 
   }
 })();

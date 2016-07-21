@@ -62,15 +62,15 @@
                   <label>
                     Geo-Coords
                     <div class="input-group">
-                      <input type="text" placeholder="LAT" class="form-control" ng-model="import.lat"
+                      <input type="number" placeholder="LAT" class="form-control" ng-model="import.data[$index].lat"
                              id="lat_{{import.hashFilename(upload.file.name)}}">
                       <span class="input-group-btn" style="width:0;"></span>
-                      <input type="text" placeholder="LON" class="form-control" ng-model="import.lng"
+                      <input type="number" placeholder="LON" class="form-control" ng-model="import.data[$index].lng"
                              id="lon_{{import.hashFilename(upload.file.name)}}">
                       <span class="input-group-btn" style="width:0;"></span>
                       <span class="input-group-btn">
-                      <button class="btn btn-primary" ng-click="import.openGeoPicker($(this))">pick</button>
-                        </span>
+                        <button type="button" class="btn btn-primary" ng-click="import.openGeoPicker($index)">pick</button>
+                      </span>
                     </div>
                   </label>
                 </div>
@@ -154,16 +154,5 @@
 
     </div>
   </div>
-</div>
 
-<!--&lt;!&ndash; geo-picker container &ndash;&gt;-->
-<!--<div id="map-borders">-->
-<!--<div id="map"></div>-->
-<!--<label>LAT:-->
-<!--<span id="cur-lat"></span>-->
-<!--</label>-->
-<!--<label>LON:-->
-<!--<span id="cur-lon"></span>-->
-<!--</label>-->
-<!--<button class="btn btn-primary" onclick="import.closeGeoPicker()">done</button>-->
-<!--</div>-->
+</div>
