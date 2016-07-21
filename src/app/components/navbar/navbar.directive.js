@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -7,22 +7,55 @@
 
   /** @ngInject */
   function acmeNavbar() {
-    var directive = {
+    return {
       restrict: 'E',
       templateUrl: 'app/components/navbar/navbar.html',
       scope: {
-          creationDate: '='
+        creationDate: '='
       },
       controller: NavbarController,
       controllerAs: 'vm',
       bindToController: true
     };
 
-    return directive;
-
     /** @ngInject */
     function NavbarController() {
       var vm = this;
+
+      vm.menuItems = [{
+        title: 'Data Management',
+        url: '',
+        children: [{
+          title: 'Import',
+          url: 'import'
+        },
+          {
+            title: 'Datasets (DEIMOS)',
+            url: ''
+          }]
+      }, {
+        title: 'Create Model',
+        url: '',
+        children: [{
+          title: 'Agents',
+          url: 'model'
+        },
+          {
+            title: 'Layers',
+            url: ''
+          }]
+      }, {
+        title: 'Simulate',
+        url: '',
+        children: [{
+          title: 'Data Mapping',
+          url: ''
+        },
+          {
+            title: 'Run',
+            url: ''
+          }]
+      }];
 
       vm.projects = [{
         name: 'Dummy a'
