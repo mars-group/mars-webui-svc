@@ -8,9 +8,6 @@
   /** @ngInject */
   function ImportController($timeout, $uibModal, FileUploader, Metadata, Timeseries) {
     var vm = this;
-    // var log = function (e) {
-    //   $log.log(e)
-    // };
 
     /** Will store initialized geoPicker*/
     vm.geoPicker = {};
@@ -199,8 +196,24 @@
     }
 
     vm.clickUpload = function () {
-      // I know it is dirty, but dunno how to do this a better way
+      // I know it is not the angular way to do it, but dunno how to do this a better way.
       document.getElementById('upload').click();
+    };
+
+    vm.clearGeoPicker = function (index) {
+      // this removes the geo coordinate, when the user switches the dataType to GIS, since no coordinate is needed.
+      if (vm.data[index].dataType === vm.CONST_UPLOAD_GIS) {
+        vm.data[index].lat = '';
+        vm.data[index].lng = '';
+      }
+    };
+
+    vm.removeUpload = function (index) {
+      vm.data.splice(index, 1);
+    };
+
+    vm.removeAllUploads = function () {
+      vm.data = [];
     };
 
     vm.openGeoPicker = function (id) {
