@@ -15,20 +15,20 @@
       </uib-alert>
 
       <!-- Upload box -->
-      <div nv-file-drop="" uploader="import.uploader" ng-click="import.clickUpload();">
-        <div nv-file-over="" uploader="import.uploader" over-class="another-file-over-class"
-             class="well my-drop-zone text-center">
+      <div nv-file-drop uploader="import.uploader" ng-click="import.clickUpload();">
+        <div nv-file-over uploader="import.uploader" class="well my-drop-zone text-center upload-box">
           <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span><br/>
-          <input type="file" id="upload" multiple style="display: none;" nv-file-select="" uploader="import.uploader">
-          <span><strong id="chooseFile">Choose files</strong>​ or drag them here.</span>
+          <div><strong>Choose files</strong></div>
+          <div>or drag them here.</div>
         </div>
       </div>
+      <input type="file" id="upload" ng-hide="true" multiple nv-file-select uploader="import.uploader">
 
       <!-- Upload accordion settings-->
       <div class="checkbox" ng-show="import.uploader.queue.length">
         <div class="well">
           <label>
-            <input type="checkbox" ng-model="oneAtATime">
+            <input type="checkbox" ng-model="import.showOneUploadAtATime">
             Open only one Upload at a time
           </label>
         </div>
@@ -40,7 +40,7 @@
       <h3>Upload queue</h3>
       <p>Queue length: {{ import.uploader.queue.length }}</p>
 
-      <uib-accordion close-others="oneAtATime">
+      <uib-accordion close-others="import.showOneUploadAtATime">
         <uib-accordion-group heading="{{upload.file.name}}" ng-init="isOpen = $index === 0" is-open="isOpen"
                              ng-repeat="upload in import.uploader.queue">
 
@@ -62,14 +62,13 @@
                   <label>
                     Geo-Coords
                     <div class="input-group">
-                      <input type="number" placeholder="LAT" class="form-control" ng-model="import.data[$index].lat"
-                             id="lat_{{import.hashFilename(upload.file.name)}}">
+                      <input type="number" placeholder="LAT" class="form-control" ng-model="import.data[$index].lat">
                       <span class="input-group-btn" style="width:0;"></span>
-                      <input type="number" placeholder="LON" class="form-control" ng-model="import.data[$index].lng"
-                             id="lon_{{import.hashFilename(upload.file.name)}}">
+                      <input type="number" placeholder="LON" class="form-control" ng-model="import.data[$index].lng">
                       <span class="input-group-btn" style="width:0;"></span>
                       <span class="input-group-btn">
-                        <button type="button" class="btn btn-primary" ng-click="import.openGeoPicker($index)">pick</button>
+                        <button type="button" class="btn btn-primary"
+                                ng-click="import.openGeoPicker($index)">pick</button>
                       </span>
                     </div>
                   </label>

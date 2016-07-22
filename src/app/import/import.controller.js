@@ -35,16 +35,18 @@
     vm.alerts = [];
     vm.data = [];
 
+    vm.showOneUploadAtATime = true;
+
     vm.Data = function () {
       return {
         lat: '',
-        lng : '',
-        privacy : '',
-        dataType : '',
-        projectId : 1, // todo: add real id
-        userId :1, // todo: add real id
-        title : '',
-        description : ''
+        lng: '',
+        privacy: '',
+        dataType: '',
+        projectId: 1, // todo: add real id
+        userId: 1, // todo: add real id
+        title: '',
+        description: ''
       }
     };
 
@@ -196,9 +198,9 @@
       });
     }
 
-    vm.clickUpload = function() {
+    vm.clickUpload = function () {
       // I know it is dirty, but dunno how to do this a better way
-      document.querySelector('.my-drop-zone input[type=file]').click();
+      document.getElementById('upload').click();
     };
 
     vm.openGeoPicker = function (id) {

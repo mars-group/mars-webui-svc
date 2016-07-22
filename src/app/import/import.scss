@@ -21,9 +21,8 @@
   }
 
   // file drop in hover
-  .another-file-over-class {
+  .upload-box:hover {
     outline: dashed 2px $default-color;
-    outline-offset: -1em;
     background-color: #fff;
 
     span.glyphicon {
@@ -35,35 +34,6 @@
   .accordion-toggle:hover,
   .accordion-toggle:focus {
     color: #000000;
-  }
-
-  #map-borders {
-    position: absolute;
-    z-index: 2000;
-    display: none;
-    top: 200px;
-    left: 300px;
-    width: 820px;
-    height: 620px;
-    padding: 10px;
-    background-color: #666;
-
-    label {
-      font-size: 15px;
-      font-weight: bold;
-      color: white;
-
-      span {
-        display: inline-block;
-        width: 170px;
-      }
-    }
-  }
-
-  .geo-data-format {
-    margin: 0;
-    padding: 0;
-    display: none;
   }
 
 }
