@@ -5,6 +5,7 @@
     .controller('GeoPickerController', GeoPickerController);
 
   /** @ngInject */
+  // The use of $scope is needed because of leaflet
   function GeoPickerController($scope, $uibModalInstance, marker) {
     var vm = this;
 

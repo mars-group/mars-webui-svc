@@ -197,7 +197,7 @@
 
     vm.clickUpload = function () {
       // I know it is not the angular way to do it, but dunno how to do this a better way.
-      document.getElementById('upload').click();
+      document.getElementById('uploadBtn').click();
     };
 
     vm.clearGeoPicker = function (index) {
