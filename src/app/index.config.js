@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('test')
+    .module('marsApp')
     .config(config);
 
   /** @ngInject */

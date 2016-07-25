@@ -1,6 +1,7 @@
 'use strict';
 
-angular.module('test')
+angular
+  .module('marsApp')
   .factory('Timeseries', function Scenario($http) {
 
 

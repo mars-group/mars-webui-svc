@@ -1,6 +1,7 @@
 'use strict';
 
-angular.module('test')
+angular
+  .module('marsApp')
   .factory('Metadata', function Scenario($http) {
     return {
       hasStatusWritten: function (importId, callback) {

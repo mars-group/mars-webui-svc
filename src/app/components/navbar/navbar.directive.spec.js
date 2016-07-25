@@ -10,7 +10,7 @@
     var el;
     var timeInMs;
 
-    beforeEach(module('test'));
+    beforeEach(module('marsApp'));
     beforeEach(inject(function($compile, $rootScope) {
 
       timeInMs = new Date();

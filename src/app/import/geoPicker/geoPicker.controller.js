@@ -1,7 +1,8 @@
 (function () {
   'use strict';
 
-  angular.module('test')
+  angular
+    .module('marsApp')
     .controller('GeoPickerController', GeoPickerController);
 
   /** @ngInject */
