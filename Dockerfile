@@ -10,10 +10,12 @@ RUN apt-get update && apt-get install -y curl bzip2 build-essential git
 RUN curl -sL https://deb.nodesource.com/setup_4.x | bash -
 RUN apt-get update && apt-get install -y nodejs
 
+# update npm
+RUN npm install -g npm
+
 # bower   is the frontend tool for dependencies
 # gulp    builds the frontend, dev, production etc.
-# npm     this updates npm
-RUN npm install -g bower gulp npm
+RUN npm install -g bower gulp
 
 # cleanup apt caches
 RUN rm -rf /var/lib/apt/lists/*
