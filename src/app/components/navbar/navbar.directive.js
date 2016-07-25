@@ -31,7 +31,7 @@
         },
           {
             title: 'Datasets (DEIMOS)',
-            url: ''
+            url: 'deimos'
           }]
       }, {
         title: 'Create Model',

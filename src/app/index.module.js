@@ -15,7 +15,8 @@
       // our modules
       'angularFileUpload',
       'nemLogging',
-      'ui-leaflet'
+      'ui-leaflet',
+      'ngTable'
     ]);
 
 })();

@@ -1,0 +1,102 @@
+.deimos {
+
+  div[data-tree-model] ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border: none;
+    overflow: hidden;
+  }
+
+  div[data-tree-model] li {
+    position: relative;
+    padding: 0 0 0 15px;
+    line-height: 20px;
+  }
+
+  div[data-tree-model] li .expanded {
+    padding: 1px 10px;
+    background: url("http://cfile23.uf.tistory.com/image/205B973A50C13F4B19D9BD") no-repeat;
+  }
+
+  div[data-tree-model] li .collapsed {
+    padding: 1px 10px;
+    background: url("http://cfile23.uf.tistory.com/image/1459193A50C13F4B1B05FB") no-repeat;
+  }
+
+  div[data-tree-model] li .normal {
+    padding: 1px 10px;
+    background: url("http://cfile23.uf.tistory.com/image/165B663A50C13F4B196CCA") no-repeat;
+  }
+
+  div[data-tree-model] li i, div[data-tree-model] li span {
+    cursor: pointer;
+  }
+
+  div[data-tree-model] li .selected {
+    background-color: #aaddff;
+    font-weight: bold;
+    padding: 1px 5px;
+  }
+
+  .form-group input.form-control {
+    float: left;
+    width: -moz-calc(100% - 40px);
+    width: -webkit-calc(100% - 40px);
+    width: calc(100% - 40px);
+  }
+
+  .form-group select.form-control {
+    float: left;
+    width: -moz-calc(100% - 40px);
+    width: -webkit-calc(100% - 40px);
+    width: calc(100% - 40px);
+  }
+
+  .datasetCategoryColumn .has-feedback .form-control-feedback {
+    right: 40px;
+    top: 0;
+  }
+
+  .ng-table tr:hover {
+    background-color: #F0F0F0;
+  }
+
+  #map, #vectorGisMap, #rasterGisMap {
+    height: 500px;
+  }
+
+  button.dataCloseButton {
+    position: absolute;
+    margin: 0;
+    top: -23px; /* half height of "X" image, just for nice placing*/
+    right: -23px; /* half width of "X" image, just for nice placing*/
+    opacity: 0.9;
+  }
+
+  button.dataCloseButton:hover {
+    opacity: 1;
+  }
+
+  .headerButtons {
+    margin-bottom: 1em;
+  }
+
+  .numberOfElements {
+    margin-left: 1em;
+  }
+
+  .exportError {
+    border: 1px solid red;
+  }
+
+  .exportMessage {
+    margin-top: 2em;
+    font-weight: bold;
+  }
+
+  .spinnerBox {
+    margin: 2.5em 0;
+  }
+
+}

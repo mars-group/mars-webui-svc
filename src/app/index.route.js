@@ -14,18 +14,25 @@
         controller: 'MainController',
         controllerAs: 'main'
       })
-      .state('model', {
-        url: '/model',
-        templateUrl: 'app/model/model.html',
-        controller: 'ModelController',
-        controllerAs: 'model'
+      .state('deimos', {
+        url: '/deimos',
+        templateUrl: 'app/deimos/deimos.html',
+        controller: 'DeimosController',
+        controllerAs: 'deimos'
       })
       .state('import', {
         url: '/import',
         templateUrl: 'app/import/import.html',
         controller: 'ImportController',
         controllerAs: 'import'
-      });
+      })
+      .state('model', {
+        url: '/model',
+        templateUrl: 'app/model/model.html',
+        controller: 'ModelController',
+        controllerAs: 'model'
+      })
+    ;
 
     $urlRouterProvider.otherwise('/');
   }

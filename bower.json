@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "// Comment your dependencies here:": {
     "angular-file-upload": "import",
-    "ui-leaflet": "angular leaflet directive for import/geoPicker"
+    "ui-leaflet": "angular leaflet directive for import/geoPicker",
+    "ng-table": "data table for deimos"
   },
   "dependencies": {
     "angular-animate": "~1.5.3",
@@ -18,7 +19,8 @@
     "animate.css": "~3.4.0",
     "angular": "~1.5.3",
     "angular-file-upload": "^2.3.4",
-    "ui-leaflet": "^1.0.1"
+    "ui-leaflet": "^1.0.1",
+    "ng-table": "^1.0.0"
   },
   "devDependencies": {
     "angular-mocks": "~1.5.3"
