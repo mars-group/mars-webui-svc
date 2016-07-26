@@ -16,7 +16,8 @@
       'angularFileUpload',
       'nemLogging',
       'ui-leaflet',
-      'ngTable'
+      'ngTable',
+      'treeControl'
     ]);
 
 })();

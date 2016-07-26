@@ -24,56 +24,52 @@
     $scope.errorClass = '';
     $scope.dataExported = false;
     $scope.map = null;
-    $scope.rasterGisData = null; //
+    $scope.rasterGisData = null;
+    $scope.searchFilter = '';
+    $scope.categoryFilter = false;
 
+    $scope.treeOptions = {
+      nodeChildren: "children",
+      dirSelectable: false
+      // multiSelection: true
+    };
 
     // Filter category
     var dataTypes = [
-      {'label': 'AsciiGrid', 'id': 'asc', 'children': [], collapsed: true, "fullName": ''},
-      {'label': 'GeoTiff', 'id': 'gif', 'children': [], collapsed: true, "fullName": ''},
-      {'label': 'Shapefile', 'id': 'shp', 'children': [], collapsed: true, "fullName": ''},
-      {'label': 'Timeserias', 'id': 'table', 'children': [], collapsed: true, "fullName": ''},
-      {'label': 'Tablebased', 'id': 'time', 'children': [], collapsed: true, "fullName": ''}
+      {column: 'type', name: 'AsciiGrid', id: 'AsciiGrid'},
+      {column: 'type', name: 'GeoTiff', id: 'Geotiff'},
+      {column: 'type', name: 'Shapefile', id: 'Shapefile'},
+      {column: 'type', name: 'Timeseries', id: 'timeseries'},
+      {column: 'type', name: 'Tablebased', id: 'tablebased'}
     ];
 
     var privacy = [
-      {'label': 'Private', 'id': 'private', 'children': [], collapsed: true, "fullName": ''},
-      {'label': 'Project', 'id': 'project', 'children': [], collapsed: true, "fullName": ''},
-      {'label': 'Public', 'id': 'public', 'children': [], collapsed: true, "fullName": ''}
+      {column: 'privacy', name: 'Private', id: 'private'},
+      {column: 'privacy', name: 'Project', id: 'project'},
+      {column: 'privacy', name: 'Public', id: 'public'}
     ];
 
     var importStatus = [
-      {'label': 'AsciiGrid', 'id': 'asc', 'children': [], collapsed: true, "fullName": ''},
-      {'label': 'GeoTiff', 'id': 'gif', 'children': [], collapsed: true, "fullName": ''},
-      {'label': 'Shapefile', 'id': 'shp', 'children': [], collapsed: true, "fullName": ''}
+      {column: 'state', name: 'processing', id: 'processing'},
+      {column: 'state', name: 'finished', id: 'finished'}
     ];
 
     $scope.treedata = [
-      {'label': 'Data Types', 'id': 'dataTypes', 'children': dataTypes, collapsed: false, "fullName": ''},
-      {'label': 'Privacy', 'id': 'privacy', 'children': privacy, collapsed: false, "fullName": ''},
-      {'label': 'Import Status', 'id': 'status', 'children': importStatus, collapsed: false, "fullName": ''}
+      {name: 'Data Types', id: 'dataTypes', children: dataTypes},
+      {name: 'Privacy', id: 'privacy', children: privacy},
+      {name: 'Import Status', id: status, children: importStatus}
     ];
 
-    // filter by category
-    $scope.filterByCategory = function (node) {
-      console.log(node);
 
-      dataResults = dataResults.filter(node);
-      $scope.updateTable();
-    };
-
-    $scope.showAllDatasets = function () {
-      $http.get('/metadata/metadata/')
-        .then(function (results) {
-          dataResults = results.data;
-          initTable();
-        }, function (err) {
-          if (err) {
-            console.log(err);
-          }
-        });
-    };
-    $scope.showAllDatasets();
+    $http.get('/metadata/metadata/')
+      .then(function (results) {
+        dataResults = results.data;
+        initTable();
+      }, function (err) {
+        if (err) {
+          console.log(err);
+        }
+      });
 
     var initTable = function () {
       var tableOptions = {
@@ -84,17 +80,234 @@
         }
       };
       $scope.tableParams = new NgTableParams(tableOptions, {dataset: dataResults});
-
-      $scope.updateTable = function () {
-        console.log('update table');
-
-        var term = $scope.filter;
-        // if ($scope.isInvertedSearch){
-        //   term = "!" + term;
-        // }
-        $scope.tableParams.filter({$: term});
-      };
     };
+
+    $scope.updateSearchFilter = function () {
+      // if ($scope.isInvertedSearch){
+      //   term = "!" + term;
+      // }
+      // $scope.tableParams.filter({$: $scope.searchFilter});
+      angular.extend($scope.tableParams.filter(), {$: $scope.searchFilter});
+    };
+
+    // filter by category
+    $scope.updateCategoryFilter = function (node) {
+      $scope.categoryFilter = true;
+
+      var filter = {};
+      filter[node.column] = node.id;
+
+      angular.extend($scope.tableParams.filter(), filter);
+    };
+
+
+// // hide modal data and map tabs, when there is no table data
+//     $scope.$watch('modalTableData', function (newVal) {
+//       if (typeof newVal !== 'undefined' && newVal != null && newVal.length > 0) {
+//         $scope.tableVisability = true;
+//         angular.element('.nav-tabs a[href="#tableView"]').tab('show');
+//       } else {
+//         $scope.tableVisability = false;
+//       }
+//     });
+//
+//     // hide modal gis tab, when there is no gis data
+//     $scope.$watch('rasterGisData', function (newVal) {
+//       if (typeof newVal !== 'undefined' && newVal != null) {
+//         $scope.rasterGisVisability = true;
+//
+//         // wait 0,2 sec till switching tab. This is a workaround for big gis files
+//         setTimeout(function () {
+//           angular.element('.nav-tabs a[href="#rasterGisView"]').tab('show');
+//         }, 200);
+//
+//       } else {
+//         $scope.rasterGisVisability = false;
+//       }
+//     });
+//
+//     $scope.$watch('vectorGisData', function (newVal) {
+//       if (typeof newVal !== 'undefined' && newVal != null) {
+//         $scope.vectorGisVisability = true;
+//
+//         // wait 0,2 sec till switching tab. This is a workaround for big gis files
+//         setTimeout(function () {
+//           angular.element('.nav-tabs a[href="#vectorGisView"]').tab('show');
+//         }, 200);
+//
+//       } else {
+//         $scope.vectorGisVisability = false;
+//       }
+//     });
+//
+// // the leaflet map
+//     angular.element('#previewModal').on('shown.bs.tab', 'a[data-toggle="tab"]', function (e) {
+//
+//       if (e.target.text === 'Map View') {
+//         updateTableData();
+//       } else if (e.target.text === 'raster GIS View') {
+//         updateRasterGisData();
+//       } else if (e.target.text === 'vector GIS View') {
+//         updateVectorGisData();
+//       }
+//     }); // end leaflet map
+
+    // var updateTableData = function () {
+    //   cleanMap('map');
+    //
+    //   // check for geodata in columns.
+    //   if ($scope.modalColumnNames !== null) {
+    //     // check if data contains geo positions
+    //     var latitude;
+    //     var longitude;
+    //     for (var i = 0; i < $scope.modalColumnNames.length; i++) {
+    //       var field = $scope.modalColumnNames[i].SourceName.toLowerCase();
+    //
+    //       if (field === 'latitude' || field === 'lat' || field === 'ddlat' || field === 'y_coord') {
+    //         latitude = i;
+    //       } else if (field === 'longitude' || field === 'long' || field === 'lng' || field === 'lon' || field === 'ddlon' || field === 'x_coord') {
+    //         longitude = i;
+    //       }
+    //     }
+    //   }
+    //
+    //   // place markers on the map
+    //   if ($scope.modalTableData !== null) {
+    //     var markers = [];
+    //     $scope.modalTableData.forEach(function (entry) {
+    //       if (typeof entry[latitude] !== 'undefined' && typeof entry[longitude] !== 'undefined') {
+    //
+    //         var text = '';
+    //         for (var i = 0; i < entry.length; i++) {
+    //           text += $scope.modalColumnNames[i].SourceName + ': ';
+    //           text += entry[i] + '<br />';
+    //         }
+    //
+    //         var marker = L.marker([entry[latitude], entry[longitude]]).bindPopup(text);
+    //         markers.push(marker);
+    //       }
+    //     });
+    //
+    //     if (markers.length > 0) {
+    //       var markerGroup = new L.featureGroup(markers);
+    //
+    //       markerGroup.addTo($scope.map);
+    //       $scope.map.fitBounds(markerGroup);
+    //     }
+    //   }
+    // };
+
+    // var updateRasterGisData = function () {
+    //   cleanMap('rasterGisMap');
+    //
+    //   var layer = L.tileLayer('/websuite/api/deimos/getRasterGisData/' + $scope.rasterGisData + '/{z}/{x}/{y}.png', {
+    //     noWrap: true,
+    //     tms: true,
+    //     maxZoom: 12
+    //   }).addTo($scope.map);
+    //
+    //   // TODO: focus on tile layer
+    // };
+    //
+    // var updateVectorGisData = function () {
+    //   cleanMap('vectorGisMap');
+    //
+    //   var layer = L.geoJson($scope.vectorGisData).addTo($scope.map);
+    //
+    //   $scope.map.fitBounds(layer.getBounds(), {
+    //     padding: [170, 170]
+    //   });
+    // };
+    //
+    // var cleanMap = function (map) {
+    //   // removes the map, so old data doesn't stay
+    //   if ($scope.map !== null) {
+    //     //$scope.map.remove();
+    //   }
+    //
+    //   //$scope.map = L.map(map).setView([51.505, -0.09], 2);
+    //   $scope.map = L.map(map).setView([-25.5, 31.5], 3);
+    //
+    //   L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    //     maxZoom: 12,
+    //     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+    //     '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ',
+    //     id: 'examples.map-i875mjb7',
+    //     noWrap: true
+    //   }).addTo($scope.map);
+    //
+    //   //initMapDrawing(map);
+    // };
+
+
+// // add or remove the selection to the current Export List
+//     $scope.$watchCollection('selected', function () {
+//       angular.forEach($scope.selected, function (value, guid) {
+//         // only push if selected is true and it is not added yet.
+//         if (value && !exportDataContains(guid)) {
+//           var dataset = null;
+//           // some is a forEach loop, that can be broken out of.
+//           // this code fetches the dataset id from guid
+//           dataResults.some(function (e) {
+//             if (e.guid == guid) {
+//               dataset = e;
+//               return true;
+//             }
+//           });
+//
+//           // only add, if the id is not in the list already
+//           if (dataset !== null) {
+//             exportData.push(dataset);
+//           }
+//         } else if (!value && exportDataContains(guid)) {
+//           var indexToDelete = -1;
+//           exportData.some(function (e, index) {
+//             if (e.guid == guid) {
+//               indexToDelete = index;
+//               return true;
+//             }
+//           });
+//
+//           if (indexToDelete >= 0) {
+//             exportData.splice(indexToDelete, 1);
+//           }
+//         }
+//       });
+//     });
+
+    // var exportDataContains = function (guid) {
+    //   var result = false;
+    //   exportData.some(function (e) {
+    //     if (e.guid == guid) {
+    //       result = true;
+    //       return true;
+    //     }
+    //   });
+    //   return result;
+    // };
+    //
+    // $scope.export = function () {
+    //   if (exportData.length < 1) {
+    //     alert('Select some data first!');
+    //     return;
+    //   }
+    //
+    //   $scope.exportStatus = '';
+    //   $scope.dataExported = false;
+    //   $('#cubeNameModal').modal();
+    // };
+    //
+    // $scope.validateExportName = function () {
+    //   $scope.exportStatus = '';
+    //   $scope.errorClass = '';
+    //   if ($scope.exportName == null || $scope.exportName.length < 1) {
+    //     $scope.errorClass = 'exportError';
+    //     $scope.exportStatus += '<br />ERROR: Export name may NOT contain special characters!';
+    //     return;
+    //   }
+    //   exportTheData();
+    // };
+
 
   }
 })();

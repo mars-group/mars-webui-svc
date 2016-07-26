@@ -9,28 +9,27 @@
   <!-- Navigation -->
   <div class="col-md-3 datasetCategoryColumn">
     <div class="form-group has-feedback">
-      <input type="text" class="form-control hasclear" placeholder="Search for..." ng-model="filter"
-             ng-change="updateTable();">
-      <button class="btn btn-default" type="button" ng-click="filter=undefined; updateTable();" ng-show="filter">
+      <input type="text" class="form-control hasclear" placeholder="Search for..." ng-model="searchFilter"
+             ng-change="updateSearchFilter();">
+      <button class="btn btn-default" type="button" ng-click="searchFilter=''; updateSearchFilter();"
+              ng-show="searchFilter">
         <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
       </button>
     </div>
     <br/>
 
     <!-- Category filter -->
-    <div class="well well-sm"
-         data-angular-treeview="true"
-         data-tree-id="dataCategories"
-         data-tree-model="treedata"
-         data-node-id="id"
-         data-node-label="label"
-         data-node-children="children"
-         data-ng-click="filterByCategory(dataCategories.currentNode);">
-    </div>
-    <a class="btn btn-default" role="button" ng-click="showAllDatasets();">
+    <h3>categories</h3>
+    <treecontrol class="tree-classic" tree-model="treedata" options="treeOptions"
+                 on-selection="updateCategoryFilter(node)">
+      {{node.name}}
+    </treecontrol>
+
+    <button type="text" class="btn btn-default"
+            ng-click="tableParams.filter({}); categoryFilter=false; updateSearchFilter(); " ng-show="categoryFilter">
       <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
       reset filter
-    </a>
+    </button>
   </div>
 
   <!-- Content -->
