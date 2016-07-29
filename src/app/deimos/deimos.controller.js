@@ -6,7 +6,7 @@
     .controller('DeimosController', DeimosController);
 
   /** @ngInject */
-  function DeimosController($scope, $http, NgTableParams, $timeout) {
+  function DeimosController($scope, $http, NgTableParams) {
 
     // main table
     $scope.selected = {}; // selected data for export
@@ -30,8 +30,8 @@
 
     $scope.treeOptions = {
       nodeChildren: "children",
-      dirSelectable: false
-      // multiSelection: true
+      dirSelectable: false,
+      multiSelection: true
     };
 
     // Filter category
@@ -60,7 +60,6 @@
       {name: 'Import Status', id: status, children: importStatus}
     ];
 
-
     $http.get('/metadata/metadata/')
       .then(function (results) {
         dataResults = results.data;
@@ -73,31 +72,38 @@
 
     var initTable = function () {
       var tableOptions = {
-        page: 1,            // show first page
-        count: 10,          // count per page
+        count: 10,          // count per page (default: 1ß)
         sorting: {
           title: 'asc'     // initial sorting
-        }
+        },
+        filterOptions: {filterFilterName: "categoryFilter"},
+        dataset: dataResults
       };
-      $scope.tableParams = new NgTableParams(tableOptions, {dataset: dataResults});
+      $scope.tableParams = new NgTableParams({}, tableOptions);
     };
 
     $scope.updateSearchFilter = function () {
-      // if ($scope.isInvertedSearch){
-      //   term = "!" + term;
-      // }
-      // $scope.tableParams.filter({$: $scope.searchFilter});
       angular.extend($scope.tableParams.filter(), {$: $scope.searchFilter});
     };
 
     // filter by category
-    $scope.updateCategoryFilter = function (node) {
+    $scope.updateCategoryFilter = function (node, selected) {
       $scope.categoryFilter = true;
 
-      var filter = {};
-      filter[node.column] = node.id;
-
-      angular.extend($scope.tableParams.filter(), filter);
+      // add filter
+      if (selected) {
+        // create filter
+        if (!$scope.tableParams.filter()[node.column]) {
+          var filter = {};
+          filter[node.column] = [];
+          angular.extend($scope.tableParams.filter(), filter);
+        }
+        $scope.tableParams.filter()[node.column].push(node.id);
+      }
+      // remove filter
+      else {
+        $scope.tableParams.filter()[node.column] = undefined;
+      }
     };
 
 
