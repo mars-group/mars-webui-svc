@@ -25,7 +25,7 @@
             if (hideElement) {
               return false;
             }
-          } else if (filter.hasOwnProperty(key) && filter[key].indexOf(item[key].toLowerCase()) === -1) {
+          } else if (filter.hasOwnProperty(key) && filter[key].indexOf(item[key]) === -1) {
             return false;
           }
         }
