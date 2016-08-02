@@ -56,7 +56,7 @@
       });
     };
 
-    vm.closeAlert = function (index) {
+    vm.removeAlert = function (index) {
       vm.alerts.splice(index, 1);
     };
 
