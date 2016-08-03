@@ -38,113 +38,35 @@
     <!-- Content -->
     <div class="col-md-9">
       <div class="headerButtons">
-        <a class="btn btn-default" href="/websuite/importNew" role="button">
+        <a class="btn btn-default" ui-sref="import" role="button">
           <span class="glyphicon glyphicon-floppy-open" aria-hidden="true"></span>
           Import New
-        </a>
-        <a class="btn btn-default" role="button" ng-click="deimos.export();">
-          <span class="glyphicon glyphicon-export" aria-hidden="true"></span>
-          export selected
-        </a>
-        <a class="btn btn-default" href="/projectView" role="button">
-          <span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span>
-          Project View
         </a>
         <span class="numberOfElements"><strong>Number of elements:</strong> {{deimos.tableParams.total()}}</span>
       </div>
 
-      <!-- modal data preview window -->
-      <div class="modal fade" id="previewModal" tabindex="-1" role="dialog" aria-labelledby="newLabel"
-           aria-hidden="true" data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close dataCloseButton" data-dismiss="modal" aria-hidden="true">
-                <img src="http://expediaholiday.d.seven2.net/_images/modal_close.png"/>
-              </button>
-              <h3>Data preview</h3>
-            </div>
-            <div class="modal-body">
-
-              <ul class="nav nav-tabs" data-tabs="tabs" id="tabContent">
-                <li id="tableTab" class="active" ng-show="deimos.tableVisability">
-                  <a href="#tableView" data-toggle="tab" data-target="#tableView">Tableview</a>
-                </li>
-                <li id="mapTab" ng-show="deimos.tableVisability">
-                  <a href="#mapView" data-toggle="tab" data-target="#mapView">Map View</a>
-                </li>
-                <li id="vectorGisTab" ng-show="deimos.vectorGisVisability">
-                  <a href="#vectorGisView" data-toggle="tab" data-target="#vectorGisView">vector GIS View</a>
-                </li>
-                <li id="rasterGisTab" ng-show="deimos.rasterGisVisability">
-                  <a href="#rasterGisView" data-toggle="tab" data-target="#rasterGisView">raster GIS View</a>
-                </li>
-              </ul>
-              <div class="tab-content">
-                <!-- table view -->
-                <div class="tab-pane active" id="tableView">
-                  <table class="table">
-                    <th ng-repeat="column in deimos.modalColumnNames">
-                      {{column.FinalName}}
-                    </th>
-                    <tr ng-repeat="row in deimos.modalTableData">
-                      <td ng-repeat="column in row track by $index">
-                        {{column}}
-                      </td>
-                    </tr>
-                  </table>
-                </div>
-                <!-- map view -->
-                <div class="tab-pane" id="mapView">
-                  <div id="map"></div>
-                </div>
-                <!-- vector GIS view -->
-                <div class="tab-pane" id="vectorGisView">
-                  <div id="vectorGisMap"></div>
-                </div>
-                <!-- raster GIS view -->
-                <div class="tab-pane" id="rasterGisView">
-                  <div id="rasterGisMap"></div>
-                </div>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <span us-spinner spinner-key="dataLoading"></span>
-
       <!-- main data table -->
       <table ng-table="deimos.tableParams" class="table table-condensed">
-        <tr ng-repeat="row in $data">
-          <td data-title="'export'">
-            <input type="checkbox" ng-model="deimos.selected[row.guid]"/>
-          </td>
-          <td data-title="'Title'" sortable="'title'" data-toggle="modal"
-              ng-click="deimos.getDataById(row.guid, row.type)">
+        <tr ng-repeat="row in $data" ng-click="deimos.openPreviewModal(row.dataId)">
+          <!--<td data-title="'export'">-->
+          <!--<input type="checkbox" ng-model="deimos.selected[row.guid]"/>-->
+          <!--</td>-->
+          <td data-title="'Title'" sortable="'title'" data-toggle="modal">
             {{row.title}}
           </td>
-          <td data-title="'Description'" sortable="'description'" data-toggle="modal"
-              ng-click="getDataById(row.guid, row.type)">
+          <td data-title="'Description'" sortable="'description'" data-toggle="modal">
             {{row.description}}
           </td>
-          <td data-title="'Type'" sortable="'type'" data-toggle="modal"
-              ng-click="deimos.getDataById(row.guid, row.type)">
+          <td data-title="'Type'" sortable="'type'" data-toggle="modal">
             {{row.type}}
           </td>
-          <td data-title="'Privacy'" sortable="'privacy'" data-toggle="modal"
-              ng-click="deimos.getDataById(row.guid, row.type)">
+          <td data-title="'Privacy'" sortable="'privacy'" data-toggle="modal">
             {{row.privacy}}
           </td>
-          <td data-title="'Project ID'" sortable="'projectId'" data-toggle="modal"
-              ng-click="deimos.getDataById(row.guid, row.type)">
+          <td data-title="'Project ID'" sortable="'projectId'" data-toggle="modal">
             {{row.projectId}}
           </td>
-          <td data-title="'Import status'" sortable="'state'" data-toggle="modal"
-              ng-click="deimos.getDataById(row.guid, row.type)">
+          <td data-title="'Import status'" sortable="'state'" data-toggle="modal">
             {{row.state}}
           </td>
           <!--<td data-title="'User ID'" sortable="'userId'" data-toggle="modal" ng-click="getDataById(row.guid, row.type)">-->

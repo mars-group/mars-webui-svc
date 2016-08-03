@@ -1,0 +1,8 @@
+.previewModal {
+
+  // remove strange green on focus
+  a.ng-binding:hover,
+  a.ng-binding:focus {
+    color: #000000;
+  }
+}
