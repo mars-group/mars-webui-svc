@@ -6,35 +6,28 @@
     .controller('DeimosController', DeimosController);
 
   /** @ngInject */
-  function DeimosController($scope, $http, NgTableParams) {
+  function DeimosController($http, NgTableParams) {
+    var vm = this;
 
     // main table
-    $scope.selected = {}; // selected data for export
-    $scope.exportName = ''; // name of the export
-    $scope.exportStatus = ''; // export status message
     var dataResults = []; // data that is displayed in the table
 
     //modal window
-    $scope.modalTableData = null; // data of the modal window
-    $scope.modalColumnNames = null; // column name of the modal data
-    $scope.tableVisability = true; // visability of the table column
-    $scope.vectorGisVisability = true; // visability of the vector gis view
-    $scope.rasterGisVisability = true;
-    $scope.vectorGisData = null; // data for the modal Vector gis map
-    $scope.errorClass = '';
-    $scope.dataExported = false;
-    $scope.map = null;
-    $scope.rasterGisData = null;
-    $scope.searchFilter = '';
-    $scope.categoryFilter = false;
+    vm.modalTableData = null; // data of the modal window
+    vm.modalColumnNames = null; // column name of the modal data
+    vm.tableVisability = true; // visability of the table column
+    vm.vectorGisVisability = true; // visability of the vector gis view
+    vm.rasterGisVisability = true;
+    vm.vectorGisData = null; // data for the modal Vector gis map
+    vm.errorClass = '';
+    vm.dataExported = false;
+    vm.map = null;
+    vm.rasterGisData = null;
+    vm.searchFilter = '';
 
-    $scope.treeOptions = {
-      nodeChildren: "children",
-      dirSelectable: false,
-      multiSelection: true
-    };
 
-    // Filter category
+    // Filter categories
+    // TODO: get from code
     var dataTypes = [
       {column: 'type', name: 'AsciiGrid', id: 'AsciiGrid'},
       {column: 'type', name: 'GeoTiff', id: 'Geotiff'},
@@ -54,56 +47,72 @@
       {column: 'state', name: 'finished', id: 'finished'}
     ];
 
-    $scope.treedata = [
+    vm.categoryTreeData = [
       {name: 'Data Types', id: 'dataTypes', children: dataTypes},
       {name: 'Privacy', id: 'privacy', children: privacy},
       {name: 'Import Status', id: status, children: importStatus}
     ];
 
+    vm.categoryTreeOptions = {
+      nodeChildren: "children",
+      dirSelectable: false,
+      multiSelection: true
+    };
+
+    vm.categoryTreeExpandedNodes = [vm.categoryTreeData];
+
     $http.get('/metadata/metadata/')
       .then(function (results) {
         dataResults = results.data;
-        initTable();
+        initDataTable();
       }, function (err) {
         if (err) {
           console.log(err);
         }
       });
 
-    var initTable = function () {
+    var initDataTable = function () {
       var tableOptions = {
-        count: 10,          // count per page (default: 1ß)
+        count: 10,          // count per page (default: 10)
         sorting: {
           title: 'asc'     // initial sorting
         },
         filterOptions: {filterFilterName: "categoryFilter"},
         dataset: dataResults
       };
-      $scope.tableParams = new NgTableParams({}, tableOptions);
+      vm.tableParams = new NgTableParams({}, tableOptions);
     };
 
-    $scope.updateSearchFilter = function () {
-      angular.extend($scope.tableParams.filter(), {$: $scope.searchFilter});
+    vm.updateSearchFilter = function () {
+      angular.extend(vm.tableParams.filter(), {$: vm.searchFilter});
     };
 
     // filter by category
-    $scope.updateCategoryFilter = function (node, selected) {
-      $scope.categoryFilter = true;
+    vm.updateCategoryFilter = function (node, selected) {
 
       // add filter
       if (selected) {
         // create filter
-        if (!$scope.tableParams.filter()[node.column]) {
+        if (!vm.tableParams.filter()[node.column]) {
           var filter = {};
           filter[node.column] = [];
-          angular.extend($scope.tableParams.filter(), filter);
+          angular.extend(vm.tableParams.filter(), filter);
         }
-        $scope.tableParams.filter()[node.column].push(node.id);
+        vm.tableParams.filter()[node.column].push(node.id);
       }
       // remove filter
       else {
-        $scope.tableParams.filter()[node.column] = undefined;
+        // remove filter from array
+        vm.tableParams.filter()[node.column].splice(node.id, 1);
+
+
+        // remove key from object if there is no filter
+        if (vm.tableParams.filter()[node.column].length < 1) {
+          delete vm.tableParams.filter()[node.column];
+        }
       }
+
+      vm.categoryFilterActive = !angular.equals(vm.tableParams.filter(), {});
     };
 
 
