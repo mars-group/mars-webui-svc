@@ -26,7 +26,7 @@
     };
 
     // on click
-    $scope.$on("leafletDirectiveMap.click", function(event, args){
+    $scope.$on("leafletDirectiveMap.click", function (event, args) {
       var leafEvent = args.leafletEvent;
 
       // keep just one marker

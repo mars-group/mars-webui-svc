@@ -8,7 +8,7 @@ angular
     return {
 
       processData: function (importId, possibleDateTimeColumn, callback) {
-        $http.put('/timeseries-service/timeseries/' + importId, possibleDateTimeColumn).success(function() {
+        $http.put('/timeseries-service/timeseries/' + importId, possibleDateTimeColumn).success(function () {
           callback(false);
         });
       },
@@ -17,12 +17,12 @@ angular
         $http.post('/websuite/api/upload/timeseries/',
           {possibleDateTimeColumn: possibleDateTimeColumn, importId: importId}
         )
-        .success(function() {
-          callback();
-        })
-        .error(function(err){
-          errCallback(err);
-        });
+          .success(function () {
+            callback();
+          })
+          .error(function (err) {
+            errCallback(err);
+          });
       }
     }
   });
