@@ -68,12 +68,12 @@
                   <label>
                     Geo-Coords
                     <div class="input-group">
-                      <input type="number" placeholder="LAT" class="form-control" ng-model="import.data[$index].lat"
-                             name="lat_{{$index}}"
+                      <input type="number" placeholder="LAT" min="-90" max="90"
+                             class="form-control" ng-model="import.data[$index].lat" name="lat_{{$index}}"
                              ng-required="import.data[$index].dataType && import.data[$index].dataType !== import.CONST_UPLOAD_GIS">
                       <span class="input-group-btn" style="width:0;"></span>
-                      <input type="number" placeholder="LON" class="form-control" ng-model="import.data[$index].lng"
-                             name="lng_{{$index}}"
+                      <input type="number" placeholder="LON" min="-180" max="180"
+                             class="form-control" ng-model="import.data[$index].lng" name="lng_{{$index}}"
                              ng-required="import.data[$index].dataType && import.data[$index].dataType !== import.CONST_UPLOAD_GIS">
                       <span class="input-group-btn" style="width:0;"></span>
                       <span class="input-group-btn">
@@ -84,8 +84,14 @@
                   </label>
                 </div>
                 <div ng-show="form.$submitted || form.lat_{{$index}}.$touched || form.lng_{{$index}}.$touched">
-                  <div ng-show="form.lat_{{$index}}.$invalid || form.lng_{{$index}}.$invalid">Please select a Geo
-                    Coordinate
+                  <div ng-show="form.lat_{{$index}}.$error.required || form.lng_{{$index}}.$error.required">
+                    Please select a Geo Coordinate
+                  </div>
+                  <div ng-show="form.lat_{{$index}}.$error.min || form.lat_{{$index}}.$error.max">
+                    Latitude is not valid! Valid range: -90 to 90.
+                  </div>
+                  <div ng-show="form.lng_{{$index}}.$error.min || form.lng_{{$index}}.$error.max">
+                    Longitude is not valid. Valid range: -180 to 180.
                   </div>
                 </div>
               </div>
