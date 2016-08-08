@@ -6,6 +6,6 @@ if [ "$DEVELOPER_EDITION" = "true" ]; then
 #        tail -f /dev/null
     else
         echo "starting production ..."
-        gulp --color
+        gulp
         node server/app.js
     fi
