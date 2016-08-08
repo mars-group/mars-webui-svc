@@ -15,7 +15,7 @@ RUN npm install -g npm
 
 # bower   is the frontend tool for dependencies
 # gulp    builds the frontend, dev, production etc.
-RUN npm install -g bower gulp
+RUN npm install -g bower
 
 # cleanup apt caches
 RUN rm -rf /var/lib/apt/lists/*
