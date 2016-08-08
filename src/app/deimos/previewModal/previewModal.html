@@ -8,26 +8,15 @@
     <uib-tabset active="active">
 
       <!-- JSON view -->
-      <uib-tab heading="Metadata view">
+      <uib-tab heading="Metadata">
         <pre>{{ preview.dataset | json }}</pre>
       </uib-tab>
 
       <!-- map view -->
-      <uib-tab heading="Map view" select="preview.fixMap()">
+      <uib-tab heading="Map" select="preview.fixMap()"
+               ng-show="preview.dataset.type==='tablebased' ||preview.dataset.type==='timeseries'">
         <leaflet lf-center="preview.center" markers="preview.markers" event-broadcast="preview.events" height="480px"
                  width="100%"></leaflet>
-        <p>select your geo coordinate</p>
-        </leaflet>
-      </uib-tab>
-
-      <!-- vector GIS view -->
-      <uib-tab heading="Vector view">
-        <div id="vectorGisMap">VECTOR_MAP</div>
-      </uib-tab>
-
-      <!-- raster GIS view -->
-      <uib-tab heading="Raster view">
-        <div id="rasterGisMap">RASTER_MAP</div>
       </uib-tab>
 
     </uib-tabset>

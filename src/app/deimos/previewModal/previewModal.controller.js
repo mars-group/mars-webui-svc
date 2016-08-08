@@ -44,6 +44,7 @@
           break;
 
         case 'Shapefile':
+          // use WMS
           break;
 
         case 'timeseries':
