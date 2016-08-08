@@ -3,14 +3,15 @@
 </div>
 
 <div class="modal-body">
-  <leaflet lf-center="geoPicker.center" markers="marker" event-broadcast="events" height="480px" width="100%"></leaflet>
+  <leaflet lf-center="geoPicker.center" markers="geoPicker.marker" event-broadcast="geoPicker.events"
+           height="480px" width="100%"></leaflet>
   <p>select your geo coordinate</p>
   </leaflet>
   <label>LAT:
-    <span>{{ marker[0].lat }}</span>
+    <span>{{ geoPicker.marker[0].lat }}</span>
   </label>
   <label>LON:
-    <span>{{ marker[0].lng }}</span>
+    <span>{{ geoPicker.marker[0].lng }}</span>
   </label>
 </div>
 

@@ -6,7 +6,7 @@
     .controller('PreviewModalController', GeoPickerController);
 
   /** @ngInject */
-  function GeoPickerController($uibModalInstance, leafletData, dataset) {
+  function GeoPickerController($uibModalInstance, $timeout, leafletData, dataset) {
     var vm = this;
 
     vm.dataset = dataset.data;
@@ -25,7 +25,7 @@
       leafletData.getMap().then(function (map) {
 
         // No, the 0ms timeout is no mistake, it makes things work ... don't ask!
-        setTimeout(function () {
+        $timeout(function () {
           map.invalidateSize(false);
           initMap();
         }, 0);

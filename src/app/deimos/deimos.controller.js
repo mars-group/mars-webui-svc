@@ -49,7 +49,6 @@
     $http.get('/metadata/metadata/')
       .then(function (results) {
         tableData = results.data;
-        console.log('data:', tableData);
         initDataTable();
       }, function (err) {
         if (err) {
