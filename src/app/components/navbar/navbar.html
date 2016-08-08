@@ -12,8 +12,9 @@
         <li uib-dropdown on-toggle="toggled(open)" ng-repeat="menuItem in vm.menuItems">
           <a href="{{ menuItem.url }}" uib-dropdown-toggle>{{ menuItem.title }} <span class="caret"></span></a>
           <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="simple-dropdown">
-            <li ng-repeat="child in menuItem.children"><a ui-sref="{{ child.url ? child.url : 'home' }}">{{ child.title
-              }}</a></li>
+            <li ng-repeat="child in menuItem.children">
+              <a ui-sref="{{ child.url ? child.url : 'home' }}">{{ child.title }}</a>
+            </li>
           </ul>
         </li>
 

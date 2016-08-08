@@ -18,10 +18,7 @@
         zoom: 2
       },
       events: {},
-      marker: [{
-        lat: 0,
-        lng: 0
-      }]
+      markers: []
     });
 
     vm.fixMap = function () {
@@ -39,21 +36,24 @@
 
       // todo: implement
       switch (vm.dataset.type.toLowerCase()) {
+
         case 'AsciiGrid':
-
           break;
+
         case 'Geotiff':
-
           break;
+
         case 'Shapefile':
-
           break;
+
         case 'timeseries':
-
-          break;
         case 'tablebased':
-
+          vm.markers[0] = {
+            lat: vm.dataset.geoindex.coordinates[0],
+            lng: vm.dataset.geoindex.coordinates[1]
+          };
           break;
+
         default:
 
       }
