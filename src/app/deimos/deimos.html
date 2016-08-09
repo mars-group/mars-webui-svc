@@ -46,32 +46,43 @@
 
       <!-- main data table -->
       <table ng-table="deimos.tableParams" class="table table-condensed">
-        <tr ng-repeat="row in $data" ng-click="deimos.openPreviewModal(row.dataId)">
-          <!--<td data-title="'export'">-->
+        <tr ng-repeat="row in $data">
+          <!--<td data-title="'export'" ng-click="deimos.openPreviewModal(row.dataId)">-->
           <!--<input type="checkbox" ng-model="deimos.selected[row.guid]"/>-->
           <!--</td>-->
-          <td data-title="'Title'" sortable="'title'" data-toggle="modal">
+          <td data-title="'Title'" sortable="'title'" data-toggle="modal"
+              ng-click="deimos.openPreviewModal(row.dataId)">
             {{row.title}}
           </td>
-          <td data-title="'Description'" sortable="'description'" data-toggle="modal">
+          <td data-title="'Description'" sortable="'description'" data-toggle="modal"
+              ng-click="deimos.openPreviewModal(row.dataId)">
             {{row.description}}
           </td>
-          <td data-title="'Type'" sortable="'type'" data-toggle="modal">
+          <td data-title="'Type'" sortable="'type'" data-toggle="modal" ng-click="deimos.openPreviewModal(row.dataId)">
             {{row.type}}
           </td>
-          <td data-title="'Privacy'" sortable="'privacy'" data-toggle="modal">
+          <td data-title="'Privacy'" sortable="'privacy'" data-toggle="modal"
+              ng-click="deimos.openPreviewModal(row.dataId)">
             {{row.privacy}}
           </td>
-          <td data-title="'Project ID'" sortable="'projectId'" data-toggle="modal">
+          <td data-title="'Project ID'" sortable="'projectId'" data-toggle="modal"
+              ng-click="deimos.openPreviewModal(row.dataId)">
             {{row.projectId}}
           </td>
-          <td data-title="'Import status'" sortable="'state'" data-toggle="modal">
+          <td data-title="'Import status'" sortable="'state'" data-toggle="modal"
+              ng-click="deimos.openPreviewModal(row.dataId)">
             {{row.state}}
           </td>
-          <!--<td data-title="'User ID'" sortable="'userId'" data-toggle="modal" ng-click="getDataById(row.guid, row.type)">-->
+          <td data-title="'Delete'">
+            <button type="button" class="btn btn-default" ng-click="deimos.deleteDataset(row)"
+                    uib-popover="This needs Ticket '#MARS-718' to be done!" popover-trigger="mouseenter">
+              <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+            </button>
+          </td>
+          <!--<td data-title="'User ID'" sortable="'userId'" data-toggle="modal" ng-click="deimos.openPreviewModal(row.dataId)">-->
           <!--{{row.userId}}-->
           <!--</td>-->
-          <!--<td data-title="'Download URI'" sortable="'uri'" data-toggle="modal" ng-click="getDataById(row.guid, row.type)">-->
+          <!--<td data-title="'Download URI'" sortable="'uri'" data-toggle="modal" ng-click="deimos.openPreviewModal(row.dataId)">-->
           <!--{{row.uri}}-->
           <!--</td>-->
         </tr>

@@ -8,8 +8,18 @@
     margin-left: 1em;
   }
 
-  .ng-table tr:hover {
-    background-color: #F0F0F0;
+  .ng-table {
+    // all but last td on tr hover
+    tr:hover td:not(:last-child) {
+      background-color: #F0F0F0;
+    }
+
+    // remove blue box on click
+    td:not(:last-child) {
+      &:focus {
+        outline: none;
+      }
+    }
   }
 
 }
