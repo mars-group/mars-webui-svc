@@ -87,19 +87,21 @@
       // remove filter
       else {
         // remove filter from array
-        vm.tableParams.filter()[node.column].splice(node.id, 1);
-
+        var index = vm.tableParams.filter()[node.column].indexOf(node.id);
+        vm.tableParams.filter()[node.column].splice(index, 1);
 
         // remove key from object if there is no filter
         if (vm.tableParams.filter()[node.column].length < 1) {
           delete vm.tableParams.filter()[node.column];
         }
-      }
 
+      }
+      vm.hasCategoryFilter = !!(vm.tableParams.filter().type || vm.tableParams.filter().privacy || vm.tableParams.filter().state);
     };
 
     vm.resetCategoryFilter = function () {
-      vm.tableParams.filter({});
+      vm.tableParams.filter({$: vm.tableParams.filter().$});
+      vm.hasCategoryFilter = false;
       vm.selectedNodes = [];
     };
 
