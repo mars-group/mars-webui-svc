@@ -20,15 +20,14 @@
 
       <!-- Category filter -->
       <h3>categories</h3>
-      <treecontrol class="tree-classic" tree-model="deimos.categoryTreeData"
-                   expanded-nodes="deimos.categoryTreeExpandedNodes"
-                   options="deimos.categoryTreeOptions" on-selection="deimos.updateCategoryFilter(node, selected)">
+      <treecontrol class="tree-boot" tree-model="deimos.categoryTreeData"
+                   expanded-nodes="deimos.categoryTreeExpandedNodes" options="deimos.categoryTreeOptions"
+                   on-selection="deimos.updateCategoryFilter(node, selected)" selected-nodes="deimos.selectedNodes">
         {{node.name}}
       </treecontrol>
 
-      <button type="text" class="btn btn-default"
-              ng-click="deimos.tableParams.filter({}); deimos.updateSearchFilter();"
-              ng-show="deimos.categoryFilterActive">
+      <button type="text" class="btn btn-default" ng-click="deimos.resetCategoryFilter()"
+              ng-show="deimos.tableParams.hasFilter()">
         <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
         reset filter
       </button>

@@ -14,16 +14,16 @@
     // Filter categories
     // TODO: get from code
     var dataTypes = [
-      {column: 'type', name: 'AsciiGrid', id: 'AsciiGrid'},
-      {column: 'type', name: 'GeoTiff', id: 'Geotiff'},
-      {column: 'type', name: 'Shapefile', id: 'Shapefile'},
+      {column: 'type', name: 'AsciiGrid', id: 'asciigrid'},
+      {column: 'type', name: 'GeoTiff', id: 'geotiff'},
+      {column: 'type', name: 'Shapefile', id: 'shapefile'},
       {column: 'type', name: 'Timeseries', id: 'timeseries'},
       {column: 'type', name: 'Tablebased', id: 'tablebased'}
     ];
 
     var privacy = [
       {column: 'privacy', name: 'Private', id: 'private'},
-      {column: 'privacy', name: 'Project', id: 'project'},
+      {column: 'privacy', name: 'Project private', id: 'projectPrivate'},
       {column: 'privacy', name: 'Public', id: 'public'}
     ];
 
@@ -72,7 +72,6 @@
       angular.extend(vm.tableParams.filter(), {$: vm.searchFilter});
     };
 
-    // filter by category
     vm.updateCategoryFilter = function (node, selected) {
 
       // add filter
@@ -97,9 +96,12 @@
         }
       }
 
-      vm.categoryFilterActive = !angular.equals(vm.tableParams.filter(), {});
     };
 
+    vm.resetCategoryFilter = function () {
+      vm.tableParams.filter({});
+      vm.selectedNodes = [];
+    };
 
     vm.openPreviewModal = function (dataId) {
 
@@ -128,7 +130,7 @@
         });
     };
 
-    vm.deleteDataset = function (dataset) {
+    vm.deleteDataset = function (/*dataset*/) {
       // TODO: Implement
       $log.info('This needs Ticket "MARS-718" to be done!');
     }
