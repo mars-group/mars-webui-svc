@@ -24,44 +24,46 @@
 
       vm.menuItems = [{
         title: 'Data Management',
-        url: '',
-        children: [{
-          title: 'Import',
-          url: 'import'
-        },
+        children: [
           {
-            title: 'Datasets (DEIMOS)',
+            title: 'Import',
+            url: 'import'
+          },
+          {
+            title: 'View',
             url: 'deimos'
           }]
       }, {
         title: 'Create Model',
-        url: '',
-        children: [{
-          title: 'Agents',
-          url: 'model'
-        },
+        children: [
+          {
+            title: 'Agents',
+            url: 'model'
+          },
           {
             title: 'Layers',
             url: ''
           }]
       }, {
         title: 'Simulate',
-        url: '',
-        children: [{
-          title: 'Data Mapping',
-          url: ''
-        },
+        children: [
+          {
+            title: 'Data Mapping',
+            url: ''
+          },
           {
             title: 'Run',
             url: ''
           }]
       }];
 
-      vm.projects = [{
-        name: 'Dummy a'
-      }, {
-        name: 'Dummy b'
-      }];
+      vm.projects = [
+        {
+          name: 'Dummy a'
+        },
+        {
+          name: 'Dummy b'
+        }];
 
     }
   }
