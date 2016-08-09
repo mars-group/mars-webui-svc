@@ -9,28 +9,32 @@
   <!-- Navigation -->
   <div class="row">
     <div class="col-md-3">
-      <div class="form-group has-feedback">
-        <input type="text" class="form-control hasclear" placeholder="Search for..." ng-model="deimos.searchFilter"
-               ng-change="deimos.updateSearchFilter();">
-        <button class="btn btn-default" type="button" ng-click="deimos.searchFilter=''; deimos.updateSearchFilter();"
-                ng-show="deimos.searchFilter">
-          <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
-        </button>
+      <div class="searchFilter">
+        <div class="form-group has-feedback">
+          <input type="text" class="form-control hasclear" placeholder="Search for..." ng-model="deimos.searchFilter"
+                 ng-change="deimos.updateSearchFilter();">
+          <button class="btn btn-default" type="button" ng-click="deimos.searchFilter=''; deimos.updateSearchFilter();"
+                  ng-show="deimos.searchFilter">
+            <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+          </button>
+        </div>
       </div>
 
       <!-- Category filter -->
-      <h3>categories</h3>
-      <treecontrol class="tree-boot" tree-model="deimos.categoryTreeData"
-                   expanded-nodes="deimos.categoryTreeExpandedNodes" options="deimos.categoryTreeOptions"
-                   on-selection="deimos.updateCategoryFilter(node, selected)" selected-nodes="deimos.selectedNodes">
-        {{node.name}}
-      </treecontrol>
+      <div class="categoryFilter">
+        <h3>categories</h3>
+        <treecontrol class="tree-boot" tree-model="deimos.categoryTreeData"
+                     expanded-nodes="deimos.categoryTreeExpandedNodes" options="deimos.categoryTreeOptions"
+                     on-selection="deimos.updateCategoryFilter(node, selected)" selected-nodes="deimos.selectedNodes">
+          {{node.name}}
+        </treecontrol>
 
-      <button type="text" class="btn btn-default" ng-click="deimos.resetCategoryFilter()"
-              ng-show="deimos.hasCategoryFilter">
-        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
-        reset filter
-      </button>
+        <button type="text" class="btn btn-default" ng-click="deimos.resetCategoryFilter()"
+                ng-show="deimos.hasCategoryFilter">
+          <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+          reset filter
+        </button>
+      </div>
     </div>
 
     <!-- Content -->

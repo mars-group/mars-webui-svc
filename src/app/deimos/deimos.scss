@@ -1,10 +1,14 @@
 .deimos {
 
-  .form-group input.form-control {
+  .searchFilter .form-group input.form-control {
     float: left;
     width: -moz-calc(100% - 40px);
     width: -webkit-calc(100% - 40px);
     width: calc(100% - 40px);
+  }
+
+  .categoryFilter {
+    margin-bottom: 1em;
   }
 
   .headerButtons {
