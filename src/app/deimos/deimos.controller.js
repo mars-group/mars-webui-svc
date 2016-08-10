@@ -16,6 +16,7 @@
     var dataTypes = [
       {column: 'type', name: 'AsciiGrid', id: 'asciigrid'},
       {column: 'type', name: 'GeoTiff', id: 'geotiff'},
+      {column: 'type', name: 'Model', id: 'model'},
       {column: 'type', name: 'Shapefile', id: 'shapefile'},
       {column: 'type', name: 'Timeseries', id: 'timeseries'},
       {column: 'type', name: 'Tablebased', id: 'tablebased'}
