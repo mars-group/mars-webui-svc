@@ -55,7 +55,15 @@
             title: 'Run',
             url: ''
           }]
-      }];
+      },
+        {
+          title: 'WebGl',
+          children: [
+            {
+              title: 'Test',
+              url: 'webgl'
+            }]
+        }];
 
       vm.projects = [
         {

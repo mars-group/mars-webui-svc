@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en-us">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>Unity WebGL Player | TestCube</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    .emscripten {
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+<canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()"></canvas>
+<script type='text/javascript'>
+  var Module = {
+    TOTAL_MEMORY: 268435456,
+    errorhandler: null,
+    compatibilitycheck: null,
+    dataUrl: "TurningCubes2.data",
+    codeUrl: "TurningCubes2.js",
+    memUrl: "TurningCubes2.mem"
+  };
+</script>
+<script src="UnityLoader.js"></script>
+
+</body>
+</html>

@@ -32,6 +32,10 @@
         controller: 'ModelController',
         controllerAs: 'model'
       })
+      .state('webgl', {
+        url: '/webgl',
+        templateUrl: 'app/webgl/webgl.html'
+      })
     ;
 
     $urlRouterProvider.otherwise('/');
