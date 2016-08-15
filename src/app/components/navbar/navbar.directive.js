@@ -22,40 +22,43 @@
     function NavbarController() {
       var vm = this;
 
-      vm.menuItems = [{
-        title: 'Data Management',
-        children: [
-          {
-            title: 'Import',
-            url: 'import'
-          },
-          {
-            title: 'View',
-            url: 'deimos'
-          }]
-      }, {
-        title: 'Create Model',
-        children: [
-          {
-            title: 'Agents',
-            url: 'model'
-          },
-          {
-            title: 'Layers',
-            url: ''
-          }]
-      }, {
-        title: 'Simulate',
-        children: [
-          {
-            title: 'Data Mapping',
-            url: ''
-          },
-          {
-            title: 'Run',
-            url: ''
-          }]
-      },
+      vm.menuItems = [
+        {
+          title: 'Data Management',
+          children: [
+            {
+              title: 'Import',
+              url: 'import'
+            },
+            {
+              title: 'View',
+              url: 'deimos'
+            }]
+        },
+        {
+          title: 'Create Model',
+          children: [
+            {
+              title: 'Agents',
+              url: 'model'
+            },
+            {
+              title: 'Layers',
+              url: ''
+            }]
+        },
+        {
+          title: 'Simulate',
+          children: [
+            {
+              title: 'Data Mapping',
+              url: ''
+            },
+            {
+              title: 'Run',
+              url: ''
+            }]
+        },
         {
           title: 'WebGl',
           children: [
@@ -63,7 +66,8 @@
               title: 'Test',
               url: 'webgl'
             }]
-        }];
+        }
+      ];
 
       vm.projects = [
         {
