@@ -12,6 +12,7 @@
   "dependencies": {
     "bower-art-resolver": "^2.0.6",
     "connect": "^3.4.1",
+    "eureka-js-client": "^3.1.2",
     "os": "^0.1.1",
     "serve-static": "^1.11.1",
     "superagent": "^2.0.0"
