@@ -1,5 +1,5 @@
 {
-  "name": "marsApp",
+  "name": "mars-app",
   "version": "0.0.0",
   "// Comment your dependencies here:": {
     "angular-file-upload": "import",
