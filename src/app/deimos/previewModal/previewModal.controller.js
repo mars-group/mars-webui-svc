@@ -50,8 +50,8 @@
         case 'timeseries':
         case 'tablebased':
           vm.markers[0] = {
-            lat: vm.dataset.geoindex.coordinates[0],
-            lng: vm.dataset.geoindex.coordinates[1]
+            lng: vm.dataset.geoindex.coordinates[0],
+            lat: vm.dataset.geoindex.coordinates[1]
           };
           break;
 
