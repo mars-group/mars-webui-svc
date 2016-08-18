@@ -53,7 +53,7 @@
         initDataTable();
       }, function (err) {
         if (err) {
-          $log(err);
+          $log.error(err);
         }
       });
 
@@ -121,14 +121,13 @@
           var modalInstance = $uibModal.open(settings);
 
           modalInstance.result.then(function (result) {
-            $log('result:', result);
           }, function () {
             // console.log('Modal dismissed at: ' + new Date());
           });
 
         }, function (err) {
           if (err) {
-            $log(err);
+            $log.error(err);
           }
         });
     };
