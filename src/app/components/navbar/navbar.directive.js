@@ -33,7 +33,12 @@
             {
               title: 'View',
               url: 'deimos'
-            }]
+            },
+            {
+              title: 'Scenario',
+              url: 'scenario'
+            }
+          ]
         },
         {
           title: 'Create Model',
@@ -45,7 +50,8 @@
             {
               title: 'Layers',
               url: ''
-            }]
+            }
+          ]
         },
         {
           title: 'Simulate',
@@ -57,15 +63,17 @@
             {
               title: 'Run',
               url: ''
-            }]
+            }
+          ]
         },
         {
-          title: 'WebGl',
+          title: 'WebGL',
           children: [
             {
               title: 'Test',
               url: 'webgl'
-            }]
+            }
+          ]
         }
       ];
 
@@ -75,7 +83,8 @@
         },
         {
           name: 'Dummy b'
-        }];
+        }
+      ];
 
     }
   }
