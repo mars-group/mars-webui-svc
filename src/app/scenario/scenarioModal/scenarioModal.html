@@ -1,0 +1,52 @@
+<div class="scenarioModal">
+  <div class="modal-header">
+    <h3 class="modal-title">Create Scenario</h3>
+  </div>
+
+  <div class="modal-body">
+    <form name="scenarioForm" novalidate>
+
+      <div class="form-group">
+        <label class="control-label">Name</label>
+        <input type="text" class="form-control" name="name" ng-model="scenarioModal.scenario.name"
+               required placeholder="Name"/>
+        <p class="help-block" ng-if="scenarioForm.name.$error.required">The name is required</p>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label">Description</label>
+        <input type="text" class="form-control" name="Description" ng-model="scenarioModal.scenario.description"/>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label">Simulation Start</label>
+
+        <p class="input-group">
+          <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="startDate"
+                 is-open="popup1.opened" datepicker-options="popup1.dateOptions" ng-required="true" close-text="Close"
+                 alt-input-formats="altInputFormats"/>
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="openDatepicker()">
+              <i class="glyphicon glyphicon-calendar"></i>
+            </button>
+          </span>
+        </p>
+
+        <button type="button" class="btn btn-sm btn-info" ng-click="today()">Today</button>
+        <button type="button" class="btn btn-sm btn-danger" ng-click="clear()">Clear</button>
+      </div>
+
+      <div class="form-group" show-errors='{showSuccess: true}'>
+        <label class="control-label">Email</label>
+        <input type="email" class="form-control" name="email" ng-model="user.email" required placeholder="Email"/>
+        <p class="help-block" ng-if="scenarioForm.email.$error.required">The user's email is required</p>
+        <p class="help-block" ng-if="scenarioForm.email.$error.email">The email address is invalid</p>
+      </div>
+    </form>
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="scenarioModal.save()">Save</button>
+    <button class="btn btn-warning" type="button" ng-click="scenarioModal.cancel()">Cancel</button>
+  </div>
+</div>
