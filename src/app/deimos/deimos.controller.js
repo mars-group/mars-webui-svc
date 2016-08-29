@@ -120,7 +120,7 @@
           settings.resolve.dataset = result;
           var modalInstance = $uibModal.open(settings);
 
-          modalInstance.result.then(function (result) {
+          modalInstance.result.then(function (/*result*/) {
           }, function () {
             // console.log('Modal dismissed at: ' + new Date());
           });

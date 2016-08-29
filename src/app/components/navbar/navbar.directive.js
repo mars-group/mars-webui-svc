@@ -27,25 +27,19 @@
           title: 'Data Management',
           children: [
             {
-              title: 'Import',
+              title: 'Data Import',
               url: 'import'
             },
             {
-              title: 'View',
-              url: 'deimos'
-            }
-          ]
-        },
-        {
-          title: 'Create Model',
-          children: [
-            {
-              title: 'Agents',
+              title: 'Model Import',
               url: 'model'
             },
             {
-              title: 'Layers',
-              url: ''
+              divider: 'divider'
+            },
+            {
+              title: 'View Imports',
+              url: 'deimos'
             }
           ]
         },

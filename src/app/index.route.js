@@ -21,13 +21,13 @@
         controllerAs: 'deimos'
       })
       .state('import', {
-        url: '/import',
+        url: '/data-import',
         templateUrl: 'app/import/import.html',
         controller: 'ImportController',
         controllerAs: 'import'
       })
       .state('model', {
-        url: '/model',
+        url: '/model-import',
         templateUrl: 'app/model/model.html',
         controller: 'ModelController',
         controllerAs: 'model'
