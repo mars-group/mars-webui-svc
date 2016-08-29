@@ -6,7 +6,7 @@
     .controller('ImportController', ImportController);
 
   /** @ngInject */
-  function ImportController($timeout, $uibModal, FileUploader, Metadata, Timeseries) {
+  function ImportController($timeout, $uibModal, $document, FileUploader, Metadata, Timeseries) {
     var vm = this;
 
     /** Will store initialized geoPicker*/
@@ -17,9 +17,9 @@
     vm.markerSet = false;
 
     /** upload type constants */
-    vm.CONST_UPLOAD_TIMESERIES = 'timeseries';
-    vm.CONST_UPLOAD_TABLEBASED = 'tablebased';
-    vm.CONST_UPLOAD_GIS = 'gis';
+    vm.CONST_UPLOAD_TIMESERIES = 'TIME_SERIES';
+    vm.CONST_UPLOAD_TABLEBASED = 'TABLE_BASED';
+    vm.CONST_UPLOAD_GIS = 'GIS';
 
     /** file ending constants */
     vm.CONST_FILE_ENDING_CSV = 'csv';
@@ -196,8 +196,7 @@
     }
 
     vm.clickUpload = function () {
-      // I know it is not the angular way to do it, but dunno how to do this a better way.
-      document.getElementById('uploadBtn').click();
+      $document[0].getElementById('uploadBtn').click();
     };
 
     vm.clearGeoPicker = function (index) {

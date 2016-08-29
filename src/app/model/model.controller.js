@@ -6,7 +6,7 @@
     .controller('ModelController', ModelController);
 
   /** @ngInject */
-  function ModelController($timeout, FileUploader, Metadata) {
+  function ModelController($timeout, $document, FileUploader, Metadata) {
     var vm = this;
 
     vm.uploader = new FileUploader();
@@ -131,8 +131,7 @@
     }
 
     vm.clickUpload = function () {
-      // I know it is not the angular way to do it, but dunno how to do this a better way.
-      document.getElementById('uploadBtn').click();
+      $document[0].getElementById('uploadBtn').click();
     };
 
 
