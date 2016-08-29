@@ -24,7 +24,7 @@ ADD . /app
 WORKDIR /app
 RUN chmod +x entrypoint.sh
 
-RUN npm install && bower install --allow-root
+RUN npm install -s -y && bower install --allow-root -s -y
 
 EXPOSE 3000 3001
 
