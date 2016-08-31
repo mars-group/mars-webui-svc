@@ -19,7 +19,7 @@
     vm.Data = function () {
       return {
         privacy: '',
-        dataType: 'model',
+        dataType: 'MODEL',
         projectId: 1, // todo: add real id
         userId: 1, // todo: add real id
         title: '',
