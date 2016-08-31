@@ -49,16 +49,11 @@ const client = new Eureka({
   }
 });
 
-module.exports = {
-  register: function () {
+exports.register = function () {
+  client.start();
 
-    setTimeout(function () {
-      client.start();
+  setInterval(function () {
+    client.renew();
+  }, 30000);
 
-      setInterval(function () {
-        client.renew();
-      }, 30000);
-    },40000);
-
-  }
 };
