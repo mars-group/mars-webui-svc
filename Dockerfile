@@ -24,10 +24,6 @@ ADD . /app
 WORKDIR /app
 RUN chmod +x entrypoint.sh
 
-# use https instead of git! needed for the "lodash/merge" npm package
-RUN git config url."https://github.com/".insteadOf git@github.com:
-RUN git config url."https://".insteadOf git://
-
 RUN npm install -s && bower install --allow-root -s
 
 EXPOSE 3000 3001
