@@ -13,6 +13,10 @@ if [ "$DEVELOPER_EDITION" = "true" ]; then
 else
   echo "starting production ..."
 
+  # temporarily fix npm lodash issue
+  rm -rf node_modules/lodash.merge
+  npm install
+
   # build dist
   gulp
 
