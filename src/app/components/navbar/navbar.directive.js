@@ -39,7 +39,7 @@
             },
             {
               title: 'View Imports',
-              url: 'deimos'
+              url: 'importView'
             }
           ]
         },

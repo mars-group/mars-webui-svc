@@ -3,10 +3,10 @@
 
   angular
     .module('marsApp')
-    .controller('DeimosController', DeimosController);
+    .controller('ImportViewController', ImportViewController);
 
   /** @ngInject */
-  function DeimosController($http, $log, $uibModal, NgTableParams) {
+  function ImportViewController($http, $log, $uibModal, NgTableParams) {
     var vm = this;
 
     var tableData = []; // data that is displayed in the table
@@ -109,7 +109,7 @@
     vm.openPreviewModal = function (dataId) {
 
       var settings = {
-        templateUrl: 'app/deimos/previewModal/previewModal.html',
+        templateUrl: 'app/import/view/previewModal/previewModal.html',
         controller: 'PreviewModalController',
         controllerAs: 'preview',
         resolve: {}
