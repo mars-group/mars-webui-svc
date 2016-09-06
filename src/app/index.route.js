@@ -20,17 +20,17 @@
         controller: 'DeimosController',
         controllerAs: 'deimos'
       })
-      .state('import', {
+      .state('importData', {
         url: '/data-import',
-        templateUrl: 'app/import/import.html',
-        controller: 'ImportController',
-        controllerAs: 'import'
+        templateUrl: 'app/import/data/data.html',
+        controller: 'ImportDataController',
+        controllerAs: 'importData'
       })
-      .state('model', {
+      .state('importModel', {
         url: '/model-import',
-        templateUrl: 'app/model/model.html',
-        controller: 'ModelController',
-        controllerAs: 'model'
+        templateUrl: 'app/import/model/model.html',
+        controller: 'ImportModelController',
+        controllerAs: 'importModel'
       })
       .state('webgl', {
         url: '/webgl',

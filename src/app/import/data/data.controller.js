@@ -3,10 +3,10 @@
 
   angular
     .module('marsApp')
-    .controller('ImportController', ImportController);
+    .controller('ImportDataController', ImportDataController);
 
   /** @ngInject */
-  function ImportController($timeout, $uibModal, $document, FileUploader, Metadata, Timeseries) {
+  function ImportDataController($timeout, $uibModal, $document, FileUploader, Metadata, Timeseries) {
     var vm = this;
 
     /** Will store initialized geoPicker*/
@@ -218,7 +218,7 @@
     vm.openGeoPicker = function (id) {
 
       var modalInstance = $uibModal.open({
-        templateUrl: 'app/import/geoPicker/geoPicker.html',
+        templateUrl: 'app/import/data/geoPicker/geoPicker.html',
         controller: 'GeoPickerController',
         controllerAs: 'geoPicker',
         resolve: {

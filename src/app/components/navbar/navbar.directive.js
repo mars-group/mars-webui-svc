@@ -28,11 +28,11 @@
           children: [
             {
               title: 'Data Import',
-              url: 'import'
+              url: 'importData'
             },
             {
               title: 'Model Import',
-              url: 'model'
+              url: 'importModel'
             },
             {
               divider: 'divider'

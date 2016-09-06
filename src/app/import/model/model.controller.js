@@ -3,10 +3,10 @@
 
   angular
     .module('marsApp')
-    .controller('ModelController', ModelController);
+    .controller('ImportModelController', ImportModelController);
 
   /** @ngInject */
-  function ModelController($timeout, $document, FileUploader, Metadata) {
+  function ImportModelController($timeout, $document, FileUploader, Metadata) {
     var vm = this;
 
     vm.uploader = new FileUploader();
