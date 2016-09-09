@@ -32,6 +32,12 @@
         controller: 'ImportViewController',
         controllerAs: 'importView'
       })
+      .state('mapping', {
+        url: '/mapping',
+        templateUrl: 'app/mapping/mapping.html',
+        controller: 'MappingController',
+        controllerAs: 'mapping'
+      })
       .state('webgl', {
         url: '/webgl',
         templateUrl: 'app/webgl/webgl.html'

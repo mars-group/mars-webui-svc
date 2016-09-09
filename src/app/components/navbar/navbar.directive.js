@@ -48,7 +48,7 @@
           children: [
             {
               title: 'Data Mapping',
-              url: ''
+              url: 'mapping'
             },
             {
               title: 'Run',
