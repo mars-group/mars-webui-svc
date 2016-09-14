@@ -7,6 +7,10 @@ if [ "$DEVELOPER_EDITION" = "true" ]; then
   npm install
   bower install --allow-root
 
+  # temporarily fix npm lodash issue
+  rm -rf node_modules/lodash.merge
+  npm install
+
   gulp serve --color
 #  tail -f /dev/null
 
