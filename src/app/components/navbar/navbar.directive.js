@@ -44,6 +44,15 @@
           ]
         },
         {
+          title:'Model',
+          children: [
+            {
+              title:'Agents',
+              url:'modelAgents'
+            }
+          ]
+        },
+        {
           title: 'Simulate',
           children: [
             {

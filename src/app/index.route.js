@@ -32,6 +32,12 @@
         controller: 'ImportViewController',
         controllerAs: 'importView'
       })
+      .state('modelAgents',{
+        url:'/model-agents',
+        templateUrl:'app/modeling/agents/agents.html',
+        controller:'AgentController',
+        controllerAs:'agents'
+      })
       .state('mapping', {
         url: '/mapping',
         templateUrl: 'app/mapping/mapping.html',
