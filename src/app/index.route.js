@@ -14,23 +14,29 @@
         controller: 'MainController',
         controllerAs: 'main'
       })
-      .state('deimos', {
-        url: '/deimos',
-        templateUrl: 'app/deimos/deimos.html',
-        controller: 'DeimosController',
-        controllerAs: 'deimos'
+      .state('importData', {
+        url: '/data-import',
+        templateUrl: 'app/import/data/data.html',
+        controller: 'ImportDataController',
+        controllerAs: 'importData'
       })
-      .state('import', {
-        url: '/import',
-        templateUrl: 'app/import/import.html',
-        controller: 'ImportController',
-        controllerAs: 'import'
+      .state('importModel', {
+        url: '/model-import',
+        templateUrl: 'app/import/model/model.html',
+        controller: 'ImportModelController',
+        controllerAs: 'importModel'
       })
-      .state('model', {
-        url: '/model',
-        templateUrl: 'app/model/model.html',
-        controller: 'ModelController',
-        controllerAs: 'model'
+      .state('importView', {
+        url: '/view-import',
+        templateUrl: 'app/import/view/view.html',
+        controller: 'ImportViewController',
+        controllerAs: 'importView'
+      })
+      .state('mapping', {
+        url: '/mapping',
+        templateUrl: 'app/mapping/mapping.html',
+        controller: 'MappingController',
+        controllerAs: 'mapping'
       })
       .state('scenario', {
         url: '/scenario',

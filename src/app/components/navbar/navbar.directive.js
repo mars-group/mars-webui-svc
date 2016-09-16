@@ -27,45 +27,43 @@
           title: 'Data Management',
           children: [
             {
-              title: 'Import',
-              url: 'import'
+              title: 'Data Import',
+              url: 'importData'
             },
             {
-              title: 'View',
-              url: 'deimos'
-            }]
-        },
-        {
-          title: 'Create Model',
-          children: [
-            {
-              title: 'Agents',
-              url: 'model'
+              title: 'Model Import',
+              url: 'importModel'
             },
             {
-              title: 'Layers',
-              url: ''
-            }]
+              divider: 'divider'
+            },
+            {
+              title: 'View Imports',
+              url: 'importView'
+            }
+          ]
         },
         {
           title: 'Simulate',
           children: [
             {
               title: 'Data Mapping',
-              url: ''
+              url: 'mapping'
             },
             {
               title: 'Run',
               url: ''
-            }]
+            }
+          ]
         },
         {
-          title: 'WebGl',
+          title: 'WebGL',
           children: [
             {
               title: 'Test',
               url: 'webgl'
-            }]
+            }
+          ]
         }
       ];
 
@@ -75,7 +73,8 @@
         },
         {
           name: 'Dummy b'
-        }];
+        }
+      ];
 
     }
   }

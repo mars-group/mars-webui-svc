@@ -3,10 +3,10 @@
 
   angular
     .module('marsApp')
-    .controller('DeimosController', DeimosController);
+    .controller('ImportViewController', ImportViewController);
 
   /** @ngInject */
-  function DeimosController($http, $log, $uibModal, NgTableParams) {
+  function ImportViewController($http, $log, $uibModal, NgTableParams) {
     var vm = this;
 
     var tableData = []; // data that is displayed in the table
@@ -14,23 +14,23 @@
     // Filter categories
     // TODO: get from code
     var dataTypes = [
-      {column: 'type', name: 'AsciiGrid', id: 'asciigrid'},
-      {column: 'type', name: 'GeoTiff', id: 'geotiff'},
-      {column: 'type', name: 'Model', id: 'model'},
-      {column: 'type', name: 'Shapefile', id: 'shapefile'},
-      {column: 'type', name: 'Timeseries', id: 'timeseries'},
-      {column: 'type', name: 'Tablebased', id: 'tablebased'}
+      {column: 'type', name: 'AsciiGrid', id: 'ASCIIGRID'},
+      {column: 'type', name: 'GeoTiff', id: 'GEOTIFF'},
+      {column: 'type', name: 'Model', id: 'MODEL'},
+      {column: 'type', name: 'Shapefile', id: 'SHAPEFILE'},
+      {column: 'type', name: 'Timeseries', id: 'TIME_SERIES'},
+      {column: 'type', name: 'Tablebased', id: 'TABLE_BASED'}
     ];
 
     var privacy = [
-      {column: 'privacy', name: 'Private', id: 'private'},
-      {column: 'privacy', name: 'Project private', id: 'projectPrivate'},
-      {column: 'privacy', name: 'Public', id: 'public'}
+      {column: 'privacy', name: 'Private', id: 'PRIVATE'},
+      {column: 'privacy', name: 'Project private', id: 'PROJECT_PRIVATE'},
+      {column: 'privacy', name: 'Public', id: 'PUBLIC'}
     ];
 
     var importStatus = [
-      {column: 'state', name: 'processing', id: 'processing'},
-      {column: 'state', name: 'finished', id: 'finished'}
+      {column: 'state', name: 'processing', id: 'PROCESSING'},
+      {column: 'state', name: 'finished', id: 'FINISHED'}
     ];
 
     vm.categoryTreeData = [
@@ -53,7 +53,7 @@
         initDataTable();
       }, function (err) {
         if (err) {
-          $log(err);
+          $log.error(err);
         }
       });
 
@@ -109,7 +109,7 @@
     vm.openPreviewModal = function (dataId) {
 
       var settings = {
-        templateUrl: 'app/deimos/previewModal/previewModal.html',
+        templateUrl: 'app/import/view/previewModal/previewModal.html',
         controller: 'PreviewModalController',
         controllerAs: 'preview',
         resolve: {}
@@ -120,15 +120,14 @@
           settings.resolve.dataset = result;
           var modalInstance = $uibModal.open(settings);
 
-          modalInstance.result.then(function (result) {
-            $log('result:', result);
+          modalInstance.result.then(function (/*result*/) {
           }, function () {
             // console.log('Modal dismissed at: ' + new Date());
           });
 
         }, function (err) {
           if (err) {
-            $log(err);
+            $log.error(err);
           }
         });
     };

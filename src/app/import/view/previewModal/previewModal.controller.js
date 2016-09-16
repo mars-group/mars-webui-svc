@@ -34,7 +34,6 @@
 
     var initMap = function () {
 
-      // todo: implement
       switch (vm.dataset.type.toLowerCase()) {
 
         case 'AsciiGrid':

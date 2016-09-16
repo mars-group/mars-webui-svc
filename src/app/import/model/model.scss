@@ -1,4 +1,4 @@
-#import-container {
+#import-model-container {
   $default-color: #5AADBB !default;
 
   .my-drop-zone {
@@ -28,12 +28,6 @@
     span.glyphicon {
       color: $default-color;
     }
-  }
-
-  // remove strange green on focus
-  .accordion-toggle:hover,
-  .accordion-toggle:focus {
-    color: #000000;
   }
 
 }

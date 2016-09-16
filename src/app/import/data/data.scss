@@ -1,0 +1,39 @@
+#import-data-container {
+  $default-color: #5AADBB !default;
+
+  .my-drop-zone {
+    margin-top: 1em;
+    outline: dashed 2px lightgray;
+    outline-offset: -.5em;
+
+    span {
+      font-size: 1.2em;
+    }
+
+    .glyphicon {
+      font-size: 5em;
+      margin-bottom: .2em;
+    }
+
+    #chooseFile:hover {
+      color: $default-color;
+    }
+  }
+
+  // file drop in hover
+  .upload-box:hover {
+    outline: dashed 2px $default-color;
+    background-color: #fff;
+
+    span.glyphicon {
+      color: $default-color;
+    }
+  }
+
+  // remove strange green on focus
+  .accordion-toggle:hover,
+  .accordion-toggle:focus {
+    color: #000000;
+  }
+
+}
