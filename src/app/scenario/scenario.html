@@ -11,13 +11,16 @@
   <table ng-table="scenario.tableParams" class="table" show-filter="true">
     <tr ng-repeat="scenario in $data">
       <td title="'Name'" filter="{ name: 'text'}" sortable="'name'">
-        {{scenario.name}}
+        {{scenario.Name}}
       </td>
       <td title="'Description'" filter="{ description: 'text'}" sortable="'description'">
-        {{scenario.description}}
+        {{scenario.Description}}
       </td>
       <td title="'Model'" filter="{ model: 'text'}" sortable="'model'">
-        {{scenario.model}}
+        {{scenario.Model}}
+      </td>
+      <td title="'Owner'" filter="{ owner: 'text'}" sortable="'owner'">
+        {{scenario.Owner}}
       </td>
     </tr>
   </table>

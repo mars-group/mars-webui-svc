@@ -9,7 +9,7 @@
   function ScenarioController($uibModal, NgTableParams, Scenario) {
     var vm = this;
 
-    vm.scenario = [];
+    vm.scenarios = [];
 
     // TODO: create project service
     var project = 42;
@@ -17,13 +17,12 @@
 
     var loadScenarios = function () {
       Scenario.getScenarios(project, function (scenarios) {
-        console.log(scenarios);
+        vm.scenarios = scenarios;
+        vm.tableParams = new NgTableParams({}, {dataset: vm.scenarios});
       });
-
     };
-    loadScenarios();
 
-    vm.tableParams = new NgTableParams({}, {dataset: vm.scenario});
+    loadScenarios();
 
     vm.openScenarioModal = function () {
       var modalInstance = $uibModal.open({
@@ -37,14 +36,12 @@
         }
       });
 
-      modalInstance.result.then(function (scenario) {
-        vm.scenario.push(scenario);
-        vm.tableParams = new NgTableParams({}, {dataset: vm.scenario});
+      modalInstance.result.then(function () {
+        loadScenarios();
       }, function () {
         // console.log('Modal dismissed at: ' + new Date());
       });
     };
-    // vm.openScenarioModal();
 
   }
 })();

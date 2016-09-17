@@ -11,6 +11,9 @@
 
     vm.scenario = {};
 
+    // TODO: write project service
+    var project = "42";
+
     // TODO: write models service
     vm.models = ['mock_A', 'mock_B', 'mock_C'];
 
@@ -21,26 +24,18 @@
 
     vm.save = function () {
       persist(function () {
-        $uibModalInstance.close(vm.scenario);
+        $uibModalInstance.close();
       });
     };
 
     var persist = function (callback) {
       var data = {
         Owner: 'me',
-        Project: 42,
+        Project: project,
         Name: vm.scenario.name
       };
 
-      var config = {
-        // params: data,
-        headers: {
-          'Accept': 'application/json'
-        }
-      };
-
-      $http.post('/scenario-management/scenarios', data).then(function (results) {
-        console.log('POST results:', results.data);
+      $http.post('/scenario-management/scenarios', data).then(function () {
         callback();
       }, function (err) {
         if (err) {
