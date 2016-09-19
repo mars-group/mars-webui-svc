@@ -4,13 +4,15 @@
   </div>
 
   <div class="modal-body">
-    <form name="scenarioForm" novalidate>
 
+    <form name="scenarioModal.form" class="simple-form" novalidate>
       <div class="form-group">
         <label class="control-label">Name</label>
         <input type="text" class="form-control" name="name" ng-model="scenarioModal.scenario.name"
                required placeholder="Name"/>
-        <p class="help-block" ng-if="scenarioForm.name.$error.required">The name is required</p>
+        <div ng-show="(scenarioModal.form.$submitted || scenarioModal.form.name.$touched)
+          && scenarioModal.form.name.$invalid">Please insert a name.
+        </div>
       </div>
 
       <div class="form-group">
@@ -24,13 +26,19 @@
         <select id="scenarioModel" class="form-control" ng-model="scenarioModal.scenario.model" name="model" required>
           <option ng-repeat="model in scenarioModal.models" value="{{model}}">{{model}}</option>
         </select>
+        <div ng-show="(scenarioModal.form.$submitted || scenarioModal.form.model.$touched)
+        && scenarioModal.form.model.$invalid">
+          Please select a Model. If there are no models, you have to upload one first.
+        </div>
       </div>
-
     </form>
+
   </div>
 
   <div class="modal-footer">
     <button class="btn btn-warning" type="button" ng-click="scenarioModal.cancel()">Cancel</button>
-    <button class="btn btn-primary" type="button" ng-click="scenarioModal.save()">Save</button>
+    <button class="btn btn-primary" type="submit" ng-click="scenarioModal.save()"
+            data-ng-disabled="scenarioModal.form.$invalid">Save
+    </button>
   </div>
 </div>

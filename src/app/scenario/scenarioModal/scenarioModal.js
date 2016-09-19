@@ -23,9 +23,11 @@
     };
 
     vm.save = function () {
-      persist(function () {
-        $uibModalInstance.close();
-      });
+      if (vm.form.$valid) {
+        persist(function () {
+          $uibModalInstance.close();
+        });
+      }
     };
 
     var persist = function (callback) {

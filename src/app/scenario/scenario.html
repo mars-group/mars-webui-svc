@@ -8,18 +8,18 @@
 
   <button class="btn btn-default" ng-click="scenario.openScenarioModal()">Create new Scenario</button>
 
-  <table ng-table="scenario.tableParams" class="table" show-filter="true">
+  <table ng-table="scenario.tableParams" class="table" data-show-filter="true">
     <tr ng-repeat="scenario in $data">
-      <td title="'Name'" filter="{ name: 'text'}" sortable="'name'">
+      <td title="'Name'" data-filter="{ Name: 'text'}" data-sortable="'Name'">
         {{scenario.Name}}
       </td>
-      <td title="'Description'" filter="{ description: 'text'}" sortable="'description'">
+      <td title="'Description'" data-filter="{ Description: 'text'}" data-sortable="'Description'">
         {{scenario.Description}}
       </td>
-      <td title="'Model'" filter="{ model: 'text'}" sortable="'model'">
+      <td title="'Model'" data-filter="{ Model: 'text'}" data-sortable="'Model'">
         {{scenario.Model}}
       </td>
-      <td title="'Owner'" filter="{ owner: 'text'}" sortable="'owner'">
+      <td title="'Owner'" data-filter="{ Owner: 'text'}" data-sortable="'Owner'">
         {{scenario.Owner}}
       </td>
     </tr>
