@@ -34,7 +34,7 @@
       })
       .state('modelAgents',{
         url:'/model-agents',
-        templateUrl:'app/modeling/agents/agents.html',
+        templateUrl:'app/modeling/agents/agent.html',
         controller:'AgentController',
         controllerAs:'agents'
       })
