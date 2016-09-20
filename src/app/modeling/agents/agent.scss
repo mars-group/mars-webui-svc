@@ -1,3 +1,31 @@
-h1{
-  margin-bottom: 1em;
+#agents-view-container {
+  h1 {
+    margin-bottom: 1em;
+  }
+
+  #generalAgentContainer {
+
+    input.ng-invalid {
+      border: 1px solid red;
+    }
+
+    input.ng-valid {
+      border: 1px solid green;
+    }
+
+    input.ng-pristine{
+      border: 1px solid grey;
+    }
+
+    td{
+      text-align: center;
+    }
+
+    table{
+      border: none;
+    }
+
+  }
+  #buttonPrivacy {
+  }
 }

@@ -10,55 +10,94 @@
 
     <div class="col-md-3">
 
-        <form>
+      <form id="generalAgentContainer">
 
-          <div class="form-group">
-            <label>
-              Name
-            </label>
-            <input type="text" class="form-control" data-ng-model="agents.currentAgent.name">
-          </div>
+        <div class="form-group">
+          <label>
+            Name
+          </label>
+          <input type="text" class="form-control" data-ng-model="agents.currentAgent.name" required>
+        </div>
 
-          <div class="form-group">
-            <label>
-              ID
-            </label>
-            <input type="text" class="form-control" data-ng-model="agents.currentAgent.id">
-          </div>
+        <div class="form-group">
+          <label>
+            ID
+          </label>
+          <input type="text" class="form-control" data-ng-model="agents.currentAgent.id" required>
+        </div>
 
-          <div class="form-group">
-            <label>
-              Group ID
-            </label>
-            <input type="text" class="form-control" data-ng-model="agents.currentAgent.groupId">
-          </div>
+        <div class="form-group">
+          <label>
+            Group ID
+          </label>
+          <input type="text" class="form-control" data-ng-model="agents.currentAgent.groupId" required>
+        </div>
 
-          <div class="form-group">
-            <label>
-              Privacy
-            </label>
-            <input type="text" class="form-control" data-ng-model="agents.currentAgent.privacy">
-          </div>
+        <div class="form-group">
 
-          <div class="form-group">
-            <label>
-              Parent Type
-            </label>
-            <input type="text" class="form-control" data-ng-model="agents.currentAgent.parentType">
-          </div>
+          <table class="table table-hover" cellpadding="0">
+            <tr>
+              <td>Private</td>
+              <td>Group Private</td>
+              <td>Public</td>
+            </tr>
+            <tr>
+              <td>
+                <input type="checkbox">
+              </td>
+              <td>
+                <input type="checkbox">
+              </td>
+              <td>
+                <input type="checkbox">
+              </td>
+            </tr>
+          </table>
 
-        </form>
-      </div>
+        </div>
+
+        <div class="form-group">
+          <label>
+            Parent Type
+          </label>
+          <input type="text" class="form-control" data-ng-model="agents.currentAgent.parentType">
+        </div>
+
+      </form>
+    </div>
 
 
     <div class="col-md-9">
       <uib-accordion>
         <div uib-accordion-group class="panel-default" heading="State Variables" is-open="true">
 
-          <div class="form-group" data-ng-repeat="stateVariable in agents.currentAgent.stateVariables">
-            <label>
-              {{stateVariable.title}}
-            </label>
+          <div class="form-group">
+            <table class="table table-hover">
+              <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Value</th>
+                <th>Externally Initialized</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr data-ng-repeat="stateVariable in agents.currentAgent.stateVariables">
+                <td>
+                  {{stateVariable.name}}
+                </td>
+                <td>
+                  {{stateVariable.type}}
+                </td>
+                <td>
+                  <input type="text" data-ng-model="stateVariable.default.expression">
+                </td>
+                <td>
+                  <input type="checkbox" data-ng-model="stateVariable.externallyInitialized">
+                </td>
+              </tr>
+              </tbody>
+            </table>
           </div>
 
         </div>
@@ -66,6 +105,7 @@
 
       <uib-accordion>
         <div uib-accordion-group class="panel-default" heading="Active Actions" is-open="true">
+
 
         </div>
       </uib-accordion>
@@ -75,6 +115,8 @@
 
         </div>
       </uib-accordion>
+
+
     </div>
   </div>
 </div>

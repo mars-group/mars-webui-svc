@@ -21,8 +21,8 @@
       parentType:"",
       stateVariables:[
         {
-          type:"int",
-          name:"myInt1",
+          type:"float",
+          name:"marulaFloat",
           enumValues:[
             "option 1",
             "option 2"
@@ -32,6 +32,32 @@
             expression:"1.5"
           },
           externallyInitialized:false
+        },
+        {
+          type:"int",
+          name:"marulaInt",
+          enumValues:[
+            "option 1",
+            "option 2"
+          ],
+          default:{
+            mode:"code",
+            expression:"10"
+          },
+          externallyInitialized:false
+        },
+        {
+          type:"enum",
+          name:"marulaEnum",
+          enumValues:[
+            "option 1",
+            "option 2"
+          ],
+          default:{
+            mode:"code",
+            expression:"1.5"
+          },
+          externallyInitialized:true
         }
       ],
       agentLogic:"",
