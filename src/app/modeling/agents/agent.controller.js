@@ -3,6 +3,14 @@
 
   angular
     .module('marsApp')
+
+    .directive('helloWorld', function () {
+      return {
+        restrict:'E',
+        template: '<div>Hello fromt Directive</div>'
+      };
+    })
+
     .controller('AgentController', AgentController);
 
   /** @ngInject */

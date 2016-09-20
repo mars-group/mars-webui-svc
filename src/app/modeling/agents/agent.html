@@ -63,6 +63,13 @@
           <input type="text" class="form-control" data-ng-model="agents.currentAgent.parentType">
         </div>
 
+        <div class="form-group">
+          <label>Directive Test</label>
+
+          <hello-world></hello-world>
+
+        </div>
+
       </form>
     </div>
 
@@ -107,11 +114,20 @@
         <div uib-accordion-group class="panel-default" heading="Active Actions" is-open="true">
 
 
+
         </div>
       </uib-accordion>
 
       <uib-accordion>
         <div uib-accordion-group class="panel-default" heading="Passive Actions" is-open="true">
+
+          <div class="form-group">
+            <label>Dynamic Tooltip Text</label>
+            <select>
+              <option>Option 1</option>
+              <option>Option 2</option>
+            </select>
+          </div>
 
         </div>
       </uib-accordion>
