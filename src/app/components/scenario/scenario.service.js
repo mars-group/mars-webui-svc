@@ -6,21 +6,39 @@
     .module('marsApp')
     .factory('Scenario', function Scenario($http) {
       return {
-        getScenarios: function (project, callback) {
+        getScenarios: function (scenario, callback) {
 
           var config = {
             params: {
-              Project: project
+              Project: scenario
             },
             headers: {
               'Accept': 'application/json'
             }
           };
 
-          $http.get('/scenario-management/scenarios', config).success(function (res) {
-            return callback(res);
+          $http.get('/scenario-management/scenarios', config)
+            .then(function successCallback (res) {
+            callback(res.data);
+          }, function errorCallback (err) {
+            if (err) {
+              $log.error(err);
+              callback(err);
+            }
+          });
+        },
+        postScenario: function  (scenario, callback) {
+          $http.post('/scenario-management/scenarios', scenario)
+            .then(function successCallback (res) {
+            callback(res.data);
+          }, function errorCallback (err) {
+            if (err) {
+              $log.error(err);
+              callback(err);
+            }
           });
         }
+
       };
     });
 

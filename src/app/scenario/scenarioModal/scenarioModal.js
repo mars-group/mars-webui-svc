@@ -6,13 +6,13 @@
     .controller('ScenarioModalController', ScenarioModalController);
 
   /** @ngInject */
-  function ScenarioModalController($http, $log, $uibModalInstance) {
+  function ScenarioModalController($uibModalInstance, Scenario) {
     var vm = this;
 
     vm.scenario = {};
 
     // TODO: write project service
-    var project = "42";
+    var project = '42';
 
     // TODO: write models service
     vm.models = ['mock_A', 'mock_B', 'mock_C'];
@@ -37,13 +37,8 @@
         Name: vm.scenario.name
       };
 
-      $http.post('/scenario-management/scenarios', data).then(function () {
+      Scenario.postScenario(data, function (/* res */) {
         callback();
-      }, function (err) {
-        if (err) {
-          $log.error(err);
-          callback();
-        }
       });
     };
 
