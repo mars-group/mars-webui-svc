@@ -1,9 +1,38 @@
-<div class="container">
+<div id="mapping-container" class="container">
 
   <div>
     <acme-navbar></acme-navbar>
   </div>
 
-  test
+  <div class="row">
 
+    <div class="col-md-3">
+      <treecontrol class="tree-boot" tree-model="mapping.treeData"
+                   expanded-nodes="mapping.treeExpandedNodes" options="mapping.treeOptions"
+                   on-selection="mapping.createMapping(node)"
+                   selected-node="mapping.selectedNode">
+        {{node.LayerName}} {{node.name}}
+      </treecontrol>
+    </div>
+
+    <div class="col-md-3">
+      <h3>{{mapping.selectedNode.LayerName}}</h3>
+
+      <form name="form" class="simple-form" novalidate>
+
+        <h4>Agents</h4>
+        <div class="form-group" data-ng-class="{ 'has-error': form.{{agent.Name}}.$invalid }" data-ng-repeat="agent in mapping.selectedNode.Agents">
+          <label class="control-label">Name: {{agent.Name}}</label>
+          <input type="text" class="form-control" name="{{agent.Name}}" ng-model="mapping.data[mapping.selectedNode.LayerName][agent.Name]" placeholder="{{agent.Name}}" required/>
+        </div>
+
+        <button class="btn btn-warning" type="button" ng-click="mapping.cancel()">Cancel</button>
+        <button class="btn btn-primary" type="submit" ng-click="mapping.save()"
+                data-ng-disabled="mapping.form.$invalid">Save
+        </button>
+      </form>
+
+    </div>
+
+  </div>
 </div>
