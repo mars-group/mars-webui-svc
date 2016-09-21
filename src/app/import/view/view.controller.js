@@ -135,7 +135,7 @@
     vm.deleteDataset = function (/*dataset*/) {
       // TODO: Implement
       $log.info('This needs Ticket "MARS-718" to be done!');
-    }
+    };
 
   }
 })();

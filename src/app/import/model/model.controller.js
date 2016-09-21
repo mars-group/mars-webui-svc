@@ -24,7 +24,7 @@
         userId: 1, // todo: add real id
         title: '',
         description: ''
-      }
+      };
     };
 
     vm.addAlert = function (message, type) {

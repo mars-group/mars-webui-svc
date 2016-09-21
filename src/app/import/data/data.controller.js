@@ -44,7 +44,7 @@
         userId: 1, // todo: add real id
         title: '',
         description: ''
-      }
+      };
     };
 
     // types are: default(white), primary(blue), success(green), info(blue), warning(orange), danger(red)
@@ -68,8 +68,8 @@
         var split = item.name.split('.');
         var fileEnding = split[split.length - 1];
         fileEnding = fileEnding.toLowerCase();
-        return fileEnding == vm.CONST_FILE_ENDING_CSV || fileEnding == vm.CONST_FILE_ENDING_ZIP
-          || fileEnding == vm.CONST_FILE_ENDING_GEOTIFF || fileEnding == vm.CONST_FILE_ENDING_ASC;
+        return fileEnding == vm.CONST_FILE_ENDING_CSV || fileEnding == vm.CONST_FILE_ENDING_ZIP ||
+          fileEnding == vm.CONST_FILE_ENDING_GEOTIFF || fileEnding == vm.CONST_FILE_ENDING_ASC;
       }
     }, {
       name: 'uniqueFilenameFilter',
@@ -135,15 +135,15 @@
                     fileItem.isError = false;
                     vm.addAlert(err);
                   }
-                )
+                );
               } else {
                 vm.addAlert('Timeseries File "' + fileItem._file.name + '" does not contain a valid DateTime Column');
               }
             });
           }
           /** if uploaded data was table-based */
-          if (fileItem.formData[0].type == vm.CONST_UPLOAD_TABLEBASED
-            || fileItem.formData[0].type == vm.CONST_UPLOAD_GIS) {
+          if (fileItem.formData[0].type == vm.CONST_UPLOAD_TABLEBASED ||
+            fileItem.formData[0].type == vm.CONST_UPLOAD_GIS) {
             /** display upload success */
             fileItem.isProcessing = false;
             fileItem.isSuccess = true;

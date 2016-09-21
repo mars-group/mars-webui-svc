@@ -1,23 +1,27 @@
-'use strict';
+(function () {
 
-angular
-  .module('marsApp')
-  .factory('Scenario', function Scenario($http) {
-    return {
-      getScenarios: function (project, callback) {
+  'use strict';
 
-        var config = {
-          params: {
-            Project: project
-          },
-          headers: {
-            'Accept': 'application/json'
-          }
-        };
+  angular
+    .module('marsApp')
+    .factory('Scenario', function Scenario($http) {
+      return {
+        getScenarios: function (project, callback) {
 
-        $http.get('/scenario-management/scenarios', config).success(function (res) {
-          return callback(res);
-        });
-      }
-    }
-  });
+          var config = {
+            params: {
+              Project: project
+            },
+            headers: {
+              'Accept': 'application/json'
+            }
+          };
+
+          $http.get('/scenario-management/scenarios', config).success(function (res) {
+            return callback(res);
+          });
+        }
+      };
+    });
+
+})();
