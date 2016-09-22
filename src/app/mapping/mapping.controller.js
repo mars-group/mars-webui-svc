@@ -9,8 +9,9 @@
   function MappingController(Mapping) {
     var vm = this;
 
-    vm.selectedNode = null;
     vm.data = null;
+    vm.selectedNode = null;
+    vm.selectedField = null;
 
     var initMappingData = function () {
       vm.treeOptions = {
@@ -36,13 +37,18 @@
 
       // for debugging only
       vm.selectedNode = vm.treeData[0].children[1];
-      console.log(vm.treeData);
-      console.log(vm.selectedNode);
+      console.log('treeData:', vm.treeData);
+      console.log('selectedNode', vm.selectedNode);
     });
 
     vm.save = function () {
       console.log(vm.data);
       // TODO: write data back to original structure
+    };
+
+    vm.selectField = function (field) {
+      vm.selectedField = field;
+      console.log(field);
     };
 
   }
