@@ -10,6 +10,7 @@
     "superagent": "Eureka connection"
   },
   "dependencies": {
+    "lodash": "~3.10.1",
     "bower-art-resolver": "~2.0.6",
     "connect": "~3.4.1",
     "eureka-js-client": "~3.1.2",
@@ -21,7 +22,6 @@
     "test": "gulp test"
   },
   "devDependencies": {
-    "lodash": "~3.10.1",
     "estraverse": "~4.1.0",
     "gulp": "~3.9.0",
     "gulp-autoprefixer": "~3.0.2",
