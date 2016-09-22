@@ -4,7 +4,7 @@
 
   angular
     .module('marsApp')
-    .factory('Scenario', function Scenario($http) {
+    .factory('Scenario', function Scenario($http, $log) {
       return {
         getScenarios: function (scenario, callback) {
 
