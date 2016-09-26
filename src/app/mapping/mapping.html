@@ -4,73 +4,61 @@
     <acme-navbar></acme-navbar>
   </div>
 
-  <div class="row">
-
-    <div class="col-md-3">
-      <h3>Mapping fields</h3>
-      <treecontrol class="tree-boot" tree-model="mapping.treeData"
-                   expanded-nodes="mapping.treeExpandedNodes" options="mapping.treeOptions"
-                   on-selection="mapping.createMapping(node)"
-                   selected-node="mapping.selectedNode">
-        {{node.LayerName}} {{node.name}}
-      </treecontrol>
-    </div>
-
-    <div class="col-md-4">
-      <h3>{{mapping.selectedNode.LayerName}}</h3>
-
-      <form name="form" class="simple-form" novalidate>
-
-        <div class="row">
-          <div class="col-md-6">
-            <h4>Agents</h4>
-          </div>
-          <div class="col-md-3">
-            <h4>Override</h4>
-          </div>
-          <div class="col-md-3">
-            <h4>Value</h4>
-          </div>
-        </div>
-
-        <hr/>
-
-        <div class="form-group" data-ng-class="{ 'has-error': form.{{agent.Name}}.$invalid }"
-             data-ng-repeat="agent in mapping.selectedNode.Agents">
-
-          <div class="row">
-            <div class="col-md-6">
-              <span>{{agent.Name}}:</span>
-            </div>
-
-            <div class="col-md-3">
-              <label for="{{agent.Name}}.override"></label>
-              <input id="{{agent.Name}}.override"
-                     type="checkbox" ng-model="mapping.data[mapping.selectedNode.LayerName][agent.Name].override">
-            </div>
-
-            <div class="col-md-3">
-              <button ng-click="mapping.selectField(agent)">map it</button>
-            </div>
-          </div>
-
-        </div>
-
-        <hr/>
-
-        <div class="text-right">
-          <button class="btn btn-warning" type="button" ng-click="mapping.cancel()">Cancel</button>
-          <button class="btn btn-primary" type="submit" ng-click="mapping.save()"
-                  data-ng-disabled="mapping.form.$invalid">Save
-          </button>
-        </div>
-      </form>
-
-    </div>
-
-    <div class="col-md-4">
-      <h3>Mapping data</h3>
-    </div>
-
+  <div class="col-md-3">
+    <h3>Mapping fields</h3>
+    <treecontrol class="tree-boot" tree-model="mapping.treeData"
+                 expanded-nodes="mapping.treeExpandedNodes" options="mapping.treeOptions"
+                 on-selection=""
+                 selected-node="mapping.selectedNode">
+      {{node.LayerName}} {{node.Name}}
+    </treecontrol>
   </div>
+
+  <div class="col-md-6" ng-show="mapping.selectedNode">
+    <form name="mappingForm" class="simple-form" novalidate>
+      <h3>{{mapping.selectedNode.Name}}</h3>
+
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th>Fields</th>
+          <th>Selected Dataset</th>
+          <th>Override value</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="form-group" data-ng-repeat="field in mapping.selectedNode.ConstructorParameterMapping">
+          <td class="col-md-4">
+            <span>{{field.Name}}:</span>
+          </td>
+          <td class="col-md-4">
+            <label for="{{field.ColumnName}}"></label>
+            <input id="{{field.ColumnName}}" type="text" ng-model="mapping.data[agent.FullName].override">
+          </td>
+          <td class="col-md-4">
+            <label for="{{field.TableName}}"></label>
+            <input id="{{field.TableName}}" type="text" ng-model="mapping.data[agent.FullName].override">
+          </td>
+        </tr>
+        <tr class="text-right">
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+            <button class="btn btn-warning" type="button" ng-click="mapping.cancel()">Cancel</button>
+            <button class="btn btn-primary" type="submit" ng-click="mapping.save()"
+                    data-ng-disabled="mapping.form.$invalid">Save
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </form>
+  </div>
+
+  <div class="col-md-3" ng-show="mapping.selectedNode">
+    <h3>Select Data</h3>
+  </div>
+
 </div>
