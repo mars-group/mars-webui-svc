@@ -121,7 +121,7 @@
         function () {
           /** if uploaded data was time-series */
           if (fileItem.formData[0].type == vm.CONST_UPLOAD_TIMESERIES) {
-            Metadata.getPossibleDateColumn(importId, function (possibleDateTimeColumn) {
+            Metadata.getDateColumn(importId, function (possibleDateTimeColumn) {
               if (possibleDateTimeColumn) {
                 Timeseries.processDataOverNode(importId, possibleDateTimeColumn,
                   function () {
