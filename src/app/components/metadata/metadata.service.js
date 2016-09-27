@@ -4,25 +4,50 @@
   angular
     .module('marsApp')
     .factory('Metadata', function Scenario($http) {
+
+      var getMetadata = function (dataId, callback) {
+        var url = '/metadata/metadata/';
+        if(dataId){
+          url += dataId;
+        }
+
+        $http.get(url).then(function (res) {
+          callback(res);
+        });
+      };
+
+
       return {
-        hasStatusWritten: function (dataId, callback) {
-          $http.get('/metadata/metadata/' + dataId).success(function (res) {
-            if (angular.isUndefined(res.state)) {
-              if (res.state == 'finished' || res.state == 'preprocessingFinished') {
-                return callback(true);
-              }
-            }
-            return callback(false);
+        getAll: function (callback) {
+          getMetadata(null, function (res) {
+            callback(res);
           });
         },
 
-        getPossibleDateColumn: function (dataId, callback) {
+        getOne: function (dataId, callback) {
+          getMetadata(dataId, function (res) {
+            callback(res);
+          });
+        },
+
+        hasStatusWritten: function (dataId, callback) {
+          getMetadata(dataId, function () {
+            if (angular.isUndefined(res.state)) {
+              if (res.state == 'finished' || res.state == 'preprocessingFinished') {
+                callback(true);
+              }
+            }
+            callback(false);
+          });
+        },
+
+        getDateColumn: function (dataId, callback) {
           $http.get('/metadata/metadata/' + dataId).success(function (res) {
             var pdtc = res.additionalTypeSpecificData.possibleDateTimeColumn;
             if (angular.isUndefined(pdtc)) {
-              return callback(pdtc);
+              callback(pdtc);
             }
-            return callback(false);
+            callback(false);
           });
         }
       };
