@@ -31,7 +31,7 @@
         },
 
         hasStatusWritten: function (dataId, callback) {
-          getMetadata(dataId, function () {
+          getMetadata(dataId, function (res) {
             if (angular.isUndefined(res.state)) {
               if (res.state == 'finished' || res.state == 'preprocessingFinished') {
                 callback(true);
