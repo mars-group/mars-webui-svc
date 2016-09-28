@@ -10,13 +10,13 @@
                  expanded-nodes="mapping.treeExpandedNodes" options="mapping.treeOptions"
                  on-selection=""
                  selected-node="mapping.selectedNode">
-      {{node.LayerName}} {{node.Name}}
+      {{ node.LayerName }} {{ node.Name }}
     </treecontrol>
   </div>
 
   <div class="col-md-6" ng-show="mapping.selectedNode">
     <form name="mappingForm" class="simple-form" novalidate>
-      <h3>{{mapping.selectedNode.Name}}</h3>
+      <h3>{{ mapping.selectedNode.Name }}</h3>
 
       <table class="table table-striped">
         <thead>
@@ -29,15 +29,22 @@
         <tbody>
         <tr class="form-group" data-ng-repeat="field in mapping.selectedNode.ConstructorParameterMapping">
           <td class="col-md-4">
-            <span>{{field.Name}}:</span>
+            <span>{{ field.Name }}:</span>
           </td>
           <td class="col-md-4">
-            <label for="{{field.ColumnName}}"></label>
-            <input id="{{field.ColumnName}}" type="text" ng-model="mapping.data[agent.FullName].override">
+            <div class="input-group">
+              <button class="btn btn-default" ng-model="field.TableName" ng-click="mapping.selectedField=field"
+                      defaultValue="asdg">
+                {{ field.TableName ? field.TableName : 'select'}}
+              </button>
+            </div>
           </td>
           <td class="col-md-4">
-            <label for="{{field.TableName}}"></label>
-            <input id="{{field.TableName}}" type="text" ng-model="mapping.data[agent.FullName].override">
+            <div class="input-group">
+              <label for="{{ field.TableName }}"></label>
+              <input id="{{ field.TableName }}" class="form-control" type="text"
+                     ng-model="mapping.data[agent.FullName].override">
+            </div>
           </td>
         </tr>
         <tr class="text-right">
@@ -59,6 +66,24 @@
 
   <div class="col-md-3" ng-show="mapping.selectedNode">
     <h3>Select Data</h3>
+
+    <label>Filter:</label>
+    <input type="text" class="form-control"/>
+
+    <uib-accordion close-others="true">
+      <uib-accordion-group class="panel-default" ng-repeat="dataset in mapping.metadata">
+        <uib-accordion-heading>
+          {{ dataset.title }}
+          <div class="pull-right btn-group btn-group-xs"
+               ng-click="$event.stopPropagation(); $event.preventDefault(); mapping.createMapping(dataset)">
+            <button class="btn btn-success btn-xs">add</button>
+          </div>
+        </uib-accordion-heading>
+        <div>type: {{ dataset.type }}</div>
+        <div>description: {{ dataset.description }}</div>
+      </uib-accordion-group>
+    </uib-accordion>
+
   </div>
 
 </div>

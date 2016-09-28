@@ -6,26 +6,15 @@
     .controller('MappingController', MappingController);
 
   /** @ngInject */
-  function MappingController(Mapping) {
+  function MappingController(Mapping, Metadata) {
     var vm = this;
 
     vm.data = null;
-    vm.selectedNode = null;
-    vm.selectedAgent = null;
+    vm.metadata = null;
     vm.treeExpandedNodes = [];
+    vm.selectedNode = null;
+    vm.selectedField = null;
 
-
-    Object.prototype.renameProperty = function (oldName, newName) {
-      if (oldName == newName) {
-        return this;
-      }
-
-      if (this.hasOwnProperty(oldName)) {
-        this[newName] = this[oldName];
-        delete this[oldName];
-      }
-      return this;
-    };
 
     var initMappingData = function () {
       vm.treeOptions = {
@@ -57,7 +46,7 @@
 
         angular.forEach(layerType.children, function layers(value2, key2) {
 
-          layerType.children[key2].renameProperty('Agents', 'children');
+          renameProperty(layerType.children[key2], 'Agents', 'children');
         });
 
         tmpTreeData.push(layerType);
@@ -67,8 +56,20 @@
       callback();
     };
 
+    var renameProperty = function (objRef, oldName, newName) {
+      if (oldName == newName) {
+        return objRef;
+      }
+
+      if (objRef.hasOwnProperty(oldName)) {
+        objRef[newName] = objRef[oldName];
+        delete objRef[oldName];
+      }
+      return objRef;
+    };
+
     var configureTreeView = function () {
-      angular.forEach(vm.treeData, function (value, key) {
+      angular.forEach(vm.treeData, function (value /*, key*/) {
         vm.treeExpandedNodes.push(value);
       });
 
@@ -77,14 +78,23 @@
       vm.treeExpandedNodes = [vm.treeData[0], vm.treeData[1], vm.treeData[2], vm.treeData[0].children[1]];
     };
 
-    vm.save = function () {
-      console.log(vm.data);
-      // TODO: write data back to original structure
+    Metadata.getAll(function getAllFinishedImports(res) {
+      var metadata = [];
+      angular.forEach(res.data, function (element) {
+        if (angular.equals(element.state, 'FINISHED')) {
+          metadata.push(element);
+        }
+      });
+      vm.metadata = metadata;
+    });
+
+    vm.createMapping = function (dataset) {
+      vm.selectedField.TableName =  dataset.title;
     };
 
-    vm.startMapping = function (agent) {
-      vm.selectedAgent = agent;
-      console.log('selectedAgent:', agent);
+    vm.save = function () {
+      // console.log(vm.data);
+      // TODO: write data back to original structure
     };
 
   }

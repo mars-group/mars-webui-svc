@@ -1,3 +1,9 @@
 #mapping-container {
 
+  // remove strange green on focus
+  .accordion-toggle:hover,
+  .accordion-toggle:focus {
+    color: #000000;
+  }
+
 }
