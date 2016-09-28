@@ -1,0 +1,32 @@
+
+
+<div class="form-group">
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Value</th>
+      <th>Externally Initialized</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr data-ng-repeat="stateVariable in agentStateVariables">
+      <td>
+        {{stateVariable.name}}
+      </td>
+      <td>
+        {{stateVariable.type}}
+      </td>
+      <td>
+        <input type="text" data-ng-model="stateVariable.default.expression">
+      </td>
+      <td>
+        <input type="checkbox" data-ng-model="stateVariable.externallyInitialized">
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<button class="btn btn-primary" ng-click="addStateVariable()">Add</button>

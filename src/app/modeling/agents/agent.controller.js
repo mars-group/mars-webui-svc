@@ -4,12 +4,7 @@
   angular
     .module('marsApp')
 
-    .directive('helloWorld', function () {
-      return {
-        restrict:'E',
-        template: '<div>Hello fromt Directive</div>'
-      };
-    })
+
 
     .controller('AgentController', AgentController);
 
@@ -17,6 +12,8 @@
   function AgentController() {
     var vm = this;
     vm.title = 'Agent Editor';
+
+    vm.name = 'Hello World',
 
 
     vm.myTest = { title : "World"};
