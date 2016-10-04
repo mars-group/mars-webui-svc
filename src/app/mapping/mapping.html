@@ -44,7 +44,8 @@
           <td class="col-md-4">
             <div class="input-group">
               <div class="checkbox">
-                <label><input type="checkbox" ng-model="field.override"></label>
+                <label><input type="checkbox" ng-model="field.override" ng-click="mapping.toggleHandsetValue(field)">
+                </label>
               </div>
             </div>
           </td>
@@ -57,7 +58,7 @@
           <td>
             <button class="btn btn-warning" type="button" ng-click="mapping.cancel()">Cancel</button>
             <button class="btn btn-primary" type="submit" ng-click="mapping.save()"
-                    data-ng-disabled="mapping.form.$invalid">Save
+                    data-ng-disabled="mappingForm.$invalid">Save
             </button>
           </td>
         </tr>

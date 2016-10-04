@@ -9,6 +9,8 @@
   function MappingController(Mapping, Metadata) {
     var vm = this;
 
+    var DEV_EDITION = true;
+
     vm.metadata = null;
     vm.treeExpandedNodes = [];
     vm.selectedNode = null;
@@ -18,8 +20,9 @@
     var initMappingData = function () {
       vm.treeOptions = {
         dirSelectable: false,
+        nodeChildren: 'Agents',
         isLeaf: function (node) {
-          return !node.hasOwnProperty('children');
+          return !node.hasOwnProperty('Agents');
         }
       };
     };
@@ -37,8 +40,10 @@
       expandTopLevelNodes();
 
       // for debugging only
-      vm.selectedNode = vm.treeData[0].children[0].children[0];
-      vm.treeExpandedNodes.push(vm.treeData[0].children[0]);
+      if (DEV_EDITION) {
+        vm.selectedNode = vm.treeData[0].Agents[0].Agents[0];
+        vm.treeExpandedNodes.push(vm.treeData[0].Agents[0]);
+      }
     };
 
     var expandTopLevelNodes = function () {
@@ -47,7 +52,7 @@
       });
     };
 
-    var loadMappingDatasets = function() {
+    var loadMappingDatasets = function () {
       Metadata.getAll(function getAllFinishedImports(res) {
         var metadata = [];
         angular.forEach(res.data, function (element) {
@@ -61,12 +66,21 @@
     };
     loadMappingDatasets();
 
+    vm.toggleHandsetValue = function (field) {
+      if (field.override) {
+        field.TableName = null;
+      } else {
+        field.Value = null;
+      }
+    };
+
     vm.createMapping = function (dataset) {
       vm.selectedField.TableName = dataset.title;
     };
 
     vm.save = function () {
       // TODO: write data back to original structure
+      // console.log(vm.selectedNode);
     };
 
   }
