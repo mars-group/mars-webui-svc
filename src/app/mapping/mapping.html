@@ -22,8 +22,8 @@
         <thead>
         <tr>
           <th>Fields</th>
-          <th>Selected Dataset</th>
-          <th>Override value</th>
+          <th>Select Dataset</th>
+          <th>Handset value</th>
         </tr>
         </thead>
         <tbody>
@@ -32,18 +32,20 @@
             <span>{{ field.Name }}:</span>
           </td>
           <td class="col-md-4">
-            <div class="input-group">
-              <button class="btn btn-default" ng-model="field.TableName" ng-click="mapping.selectedField=field"
-                      defaultValue="asdg">
+            <div class="input-group" ng-hide="field.override">
+              <button class="btn btn-default" ng-model="field.TableName" ng-click="mapping.selectedField=field">
                 {{ field.TableName ? field.TableName : 'select'}}
               </button>
+            </div>
+            <div class="input-group" ng-show="field.override">
+              <label><input type="text" class="form-control" ng-model="field.Value"/></label>
             </div>
           </td>
           <td class="col-md-4">
             <div class="input-group">
-              <label for="{{ field.TableName }}"></label>
-              <input id="{{ field.TableName }}" class="form-control" type="text"
-                     ng-model="mapping.data[agent.FullName].override">
+              <div class="checkbox">
+                <label><input type="checkbox" ng-model="field.override"></label>
+              </div>
             </div>
           </td>
         </tr>
@@ -67,8 +69,7 @@
   <div class="col-md-3" ng-show="mapping.selectedNode">
     <h3>Select Data</h3>
 
-    <label>Filter:</label>
-    <input type="text" class="form-control"/>
+    <label>Filter:<input type="text" class="form-control"/></label>
 
     <uib-accordion close-others="true">
       <uib-accordion-group class="panel-default" ng-repeat="dataset in mapping.metadata">

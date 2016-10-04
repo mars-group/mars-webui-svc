@@ -1,1387 +1,502 @@
 {
-  "BasicLayers": [
-    {
-      "Agents": [
+  "Group": "",
+  "InitializationDescription": {
+    "BasicLayers": [
+      {
+        "Agents": [
+          {
+            "ConstructorParameterMapping": [
+              {
+                "AllowedValues": {
+                  "type": "string"
+                },
+                "ColumnName": null,
+                "MappingType": "ColumnParameterMapping",
+                "MetaDataId": null,
+                "Name": "env",
+                "TableName": null,
+                "ValidationResults": "not or invalid mapped",
+                "ValidationSuccessful": false
+              },
+              {
+                "AllowedValues": {
+                  "type": "string"
+                },
+                "ColumnName": null,
+                "MappingType": "ColumnParameterMapping",
+                "MetaDataId": null,
+                "Name": "id",
+                "TableName": null,
+                "ValidationResults": "not or invalid mapped",
+                "ValidationSuccessful": false
+              },
+              {
+                "AllowedValues": {
+                  "type": "number"
+                },
+                "ColumnName": null,
+                "MappingType": "ColumnParameterMapping",
+                "MetaDataId": null,
+                "Name": "lat",
+                "TableName": null,
+                "ValidationResults": "not or invalid mapped",
+                "ValidationSuccessful": false
+              },
+              {
+                "AllowedValues": {
+                  "type": "number"
+                },
+                "ColumnName": null,
+                "MappingType": "ColumnParameterMapping",
+                "MetaDataId": null,
+                "Name": "lon",
+                "TableName": null,
+                "ValidationResults": "not or invalid mapped",
+                "ValidationSuccessful": false
+              },
+              {
+                "AllowedValues": {
+                  "type": "number"
+                },
+                "ColumnName": null,
+                "MappingType": "ColumnParameterMapping",
+                "MetaDataId": null,
+                "Name": "heightInM",
+                "TableName": null,
+                "ValidationResults": "not or invalid mapped",
+                "ValidationSuccessful": false
+              },
+              {
+                "AllowedValues": {
+                  "maximum": 2147483647,
+                  "minimum": -2147483648,
+                  "type": "integer"
+                },
+                "ColumnName": null,
+                "MappingType": "ColumnParameterMapping",
+                "MetaDataId": null,
+                "Name": "ageInDays",
+                "TableName": null,
+                "ValidationResults": "not or invalid mapped",
+                "ValidationSuccessful": false
+              },
+              {
+                "AllowedValues": {
+                  "type": "number"
+                },
+                "ColumnName": null,
+                "MappingType": "ColumnParameterMapping",
+                "MetaDataId": null,
+                "Name": "stemDiameterInM",
+                "TableName": null,
+                "ValidationResults": "not or invalid mapped",
+                "ValidationSuccessful": false
+              },
+              {
+                "AllowedValues": {
+                  "maximum": 2147483647,
+                  "minimum": -2147483648,
+                  "type": "integer"
+                },
+                "ColumnName": null,
+                "MappingType": "ColumnParameterMapping",
+                "MetaDataId": null,
+                "Name": "sex",
+                "TableName": null,
+                "ValidationResults": "not or invalid mapped",
+                "ValidationSuccessful": false
+              }
+            ],
+            "FullName": "KNPMarulaTreeLayer.Agents.MarulaTree, KNPMarulaTreeLayer, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "InstanceCount": null,
+            "Name": "MarulaTree"
+          }
+        ],
+        "LayerName": "MarulaLayer"
+      },
+      {
+        "Agents": [],
+        "LayerName": "GridPotentialFieldLayer"
+      },
+      {
+        "Agents": [],
+        "LayerName": "ShadeLayer"
+      },
+      {
+        "Agents": [],
+        "LayerName": "WaterPotentialLayer"
+      },
+      {
+        "Agents": [
+          {
+            "ConstructorParameterMapping": [
+              {
+                "AllowedValues": {
+                  "type": "string"
+                },
+                "ColumnName": null,
+                "MappingType": "ColumnParameterMapping",
+                "MetaDataId": null,
+                "Name": "environment",
+                "TableName": null,
+                "ValidationResults": "not or invalid mapped",
+                "ValidationSuccessful": false
+              },
+              {
+                "AllowedValues": {
+                  "type": "string"
+                },
+                "ColumnName": null,
+                "MappingType": "ColumnParameterMapping",
+                "MetaDataId": null,
+                "Name": "id",
+                "TableName": null,
+                "ValidationResults": "not or invalid mapped",
+                "ValidationSuccessful": false
+              },
+              {
+                "AllowedValues": {
+                  "type": "number"
+                },
+                "ColumnName": null,
+                "MappingType": "ColumnParameterMapping",
+                "MetaDataId": null,
+                "Name": "lat",
+                "TableName": null,
+                "ValidationResults": "not or invalid mapped",
+                "ValidationSuccessful": false
+              },
+              {
+                "AllowedValues": {
+                  "type": "number"
+                },
+                "ColumnName": null,
+                "MappingType": "ColumnParameterMapping",
+                "MetaDataId": null,
+                "Name": "lon",
+                "TableName": null,
+                "ValidationResults": "not or invalid mapped",
+                "ValidationSuccessful": false
+              },
+              {
+                "AllowedValues": {
+                  "maximum": 2147483647,
+                  "minimum": -2147483648,
+                  "type": "integer"
+                },
+                "ColumnName": null,
+                "MappingType": "ColumnParameterMapping",
+                "MetaDataId": null,
+                "Name": "herdId",
+                "TableName": null,
+                "ValidationResults": "not or invalid mapped",
+                "ValidationSuccessful": false
+              },
+              {
+                "AllowedValues": {
+                  "type": "string"
+                },
+                "ColumnName": null,
+                "MappingType": "ColumnParameterMapping",
+                "MetaDataId": null,
+                "Name": "elephantType",
+                "TableName": null,
+                "ValidationResults": "not or invalid mapped",
+                "ValidationSuccessful": false
+              },
+              {
+                "AllowedValues": {
+                  "type": "boolean"
+                },
+                "ColumnName": null,
+                "MappingType": "ColumnParameterMapping",
+                "MetaDataId": null,
+                "Name": "isLeading",
+                "TableName": null,
+                "ValidationResults": "not or invalid mapped",
+                "ValidationSuccessful": false
+              },
+              {
+                "AllowedValues": {
+                  "type": "string"
+                },
+                "ColumnName": null,
+                "MappingType": "ColumnParameterMapping",
+                "MetaDataId": null,
+                "Name": "reproductionYears",
+                "TableName": null,
+                "ValidationResults": "not or invalid mapped",
+                "ValidationSuccessful": false
+              }
+            ],
+            "FullName": "KNPElephantLayer.Agents.Elephant, KNPElephantLayer, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "InstanceCount": null,
+            "Name": "Elephant"
+          }
+        ],
+        "LayerName": "ElephantLayer"
+      },
+      {
+        "Agents": [],
+        "LayerName": "GeoPotentialFieldLayer"
+      },
+      {
+        "Agents": [],
+        "LayerName": "KNPObstacleLayer"
+      },
+      {
+        "Agents": [
+          {
+            "ConstructorParameterMapping": [
+              {
+                "AllowedValues": {
+                  "type": "string"
+                },
+                "ColumnName": null,
+                "MappingType": "ColumnParameterMapping",
+                "MetaDataId": null,
+                "Name": "id",
+                "TableName": null,
+                "ValidationResults": "not or invalid mapped",
+                "ValidationSuccessful": false
+              },
+              {
+                "AllowedValues": {
+                  "type": "string"
+                },
+                "ColumnName": null,
+                "MappingType": "ColumnParameterMapping",
+                "MetaDataId": null,
+                "Name": "waterPointName",
+                "TableName": null,
+                "ValidationResults": "not or invalid mapped",
+                "ValidationSuccessful": false
+              },
+              {
+                "AllowedValues": {
+                  "maximum": 2147483647,
+                  "minimum": -2147483648,
+                  "type": "integer"
+                },
+                "ColumnName": null,
+                "MappingType": "ColumnParameterMapping",
+                "MetaDataId": null,
+                "Name": "waterPointType",
+                "TableName": null,
+                "ValidationResults": "not or invalid mapped",
+                "ValidationSuccessful": false
+              },
+              {
+                "AllowedValues": {
+                  "maximum": 2147483647,
+                  "minimum": -2147483648,
+                  "type": "integer"
+                },
+                "ColumnName": null,
+                "MappingType": "ColumnParameterMapping",
+                "MetaDataId": null,
+                "Name": "waterPointPurpose",
+                "TableName": null,
+                "ValidationResults": "not or invalid mapped",
+                "ValidationSuccessful": false
+              },
+              {
+                "AllowedValues": {
+                  "maximum": 2147483647,
+                  "minimum": -2147483648,
+                  "type": "integer"
+                },
+                "ColumnName": null,
+                "MappingType": "ColumnParameterMapping",
+                "MetaDataId": null,
+                "Name": "currentStatus",
+                "TableName": null,
+                "ValidationResults": "not or invalid mapped",
+                "ValidationSuccessful": false
+              },
+              {
+                "AllowedValues": {
+                  "maximum": 2147483647,
+                  "minimum": -2147483648,
+                  "type": "integer"
+                },
+                "ColumnName": null,
+                "MappingType": "ColumnParameterMapping",
+                "MetaDataId": null,
+                "Name": "waterPointFuture",
+                "TableName": null,
+                "ValidationResults": "not or invalid mapped",
+                "ValidationSuccessful": false
+              },
+              {
+                "AllowedValues": {
+                  "type": "number"
+                },
+                "ColumnName": null,
+                "MappingType": "ColumnParameterMapping",
+                "MetaDataId": null,
+                "Name": "lat",
+                "TableName": null,
+                "ValidationResults": "not or invalid mapped",
+                "ValidationSuccessful": false
+              },
+              {
+                "AllowedValues": {
+                  "type": "number"
+                },
+                "ColumnName": null,
+                "MappingType": "ColumnParameterMapping",
+                "MetaDataId": null,
+                "Name": "lon",
+                "TableName": null,
+                "ValidationResults": "not or invalid mapped",
+                "ValidationSuccessful": false
+              }
+            ],
+            "FullName": "KNPWaterPointLayer.Agents.WaterPoint, KNPWaterPointLayer, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "InstanceCount": null,
+            "Name": "WaterPoint"
+          }
+        ],
+        "LayerName": "WaterPointLayer"
+      }
+    ],
+    "GISLayers": [],
+    "LogicalChangeTime": 0,
+    "TimeSeriesLayers": [
+      {
+        "ColumnClearName": null,
+        "ColumnName": null,
+        "LayerName": "TimeSeriesLayer",
+        "MetaDataId": null,
+        "TableName": null,
+        "ValidationResults": "not or invalid mapped",
+        "ValidationSuccessful": false
+      },
+      {
+        "ColumnClearName": null,
+        "ColumnName": null,
+        "LayerName": "PrecipitationLayer",
+        "MetaDataId": null,
+        "TableName": null,
+        "ValidationResults": "not or invalid mapped",
+        "ValidationSuccessful": false
+      },
+      {
+        "ColumnClearName": null,
+        "ColumnName": null,
+        "LayerName": "TemperatureTimeSeriesLayer",
+        "MetaDataId": null,
+        "TableName": null,
+        "ValidationResults": "not or invalid mapped",
+        "ValidationSuccessful": false
+      }
+    ]
+  },
+  "ModelMetaData": "27ca5a71-6530-48b0-ad68-3e3b753f2439",
+  "Name": "TestScenarioForLennart",
+  "Owner": "9999",
+  "ParameterizationDescription": {
+    "Agents": [
+      {
+        "Name": "MarulaTree",
+        "Parameters": []
+      },
+      {
+        "Name": "Elephant",
+        "Parameters": []
+      },
+      {
+        "Name": "WaterPoint",
+        "Parameters": []
+      }
+    ],
+    "Global": {
+      "Name": "Global",
+      "Parameters": [
         {
-          "ConstructorParameterMapping": [
-            {
-              "AllowedValues": {
-                "type": "string"
-              },
-              "ColumnName": null,
-              "Name": "identifier",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "type": "string"
-              },
-              "ColumnName": null,
-              "Name": "format",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "type": "string"
-              },
-              "ColumnName": null,
-              "Name": "source",
-              "TableName": null
-            }
-          ],
-          "FullName": "ImmuneSystemModel.AntigenInformationLayer.AntigenInformationProviderAgent",
-          "InstanceCount": null,
-          "MetaDataId": null,
-          "Name": "AntigenInformationProviderAgent"
+          "AllowedValues": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "Name": "SimulationStartDateTime",
+          "Required": true,
+          "ValidationResult": "no value",
+          "ValidationSuccessful": false,
+          "Value": null
+        },
+        {
+          "AllowedValues": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "Name": "SimulationEndDateTime",
+          "Required": true,
+          "ValidationResult": "no value",
+          "ValidationSuccessful": false,
+          "Value": null
+        },
+        {
+          "AllowedValues": {
+            "format": "int64",
+            "minimum": 0,
+            "type": "integer"
+          },
+          "Name": "DeltaT",
+          "Required": true,
+          "ValidationResult": "no value",
+          "ValidationSuccessful": false,
+          "Value": null
         }
-      ],
-      "LayerName": "AntigenInformationLayer"
+      ]
     },
-    {
-      "Agents": [
-        {
-          "ConstructorParameterMapping": [
-            {
-              "AllowedValues": {
-                "type": "string"
-              },
-              "ColumnName": null,
-              "Name": "areaName",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "activateAfter",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "numOfCopies",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "type": "number"
-              },
-              "ColumnName": null,
-              "Name": "x",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "type": "number"
-              },
-              "ColumnName": null,
-              "Name": "y",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "type": "number"
-              },
-              "ColumnName": null,
-              "Name": "z",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "lifeZone1",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "lifeZone2",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "lifeZone3",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "durationAbZone1",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "durationAb1Zone2",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "durationAb2Zone2",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "durationAbZone3",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "numberOfClones",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "type": "string"
-              },
-              "ColumnName": null,
-              "Name": "bcellReceptorIdentifier",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "type": "string"
-              },
-              "ColumnName": null,
-              "Name": "parameterSetName",
-              "TableName": null
-            }
-          ],
-          "FullName": "ImmuneSystemModel.ImmuneSystemLayer.BCell",
-          "InstanceCount": null,
-          "MetaDataId": null,
-          "Name": "BCell"
-        },
-        {
-          "ConstructorParameterMapping": [
-            {
-              "AllowedValues": {
-                "type": "string"
-              },
-              "ColumnName": null,
-              "Name": "areaName",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "activateAfter",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "numOfCopies",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "type": "number"
-              },
-              "ColumnName": null,
-              "Name": "x",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "type": "number"
-              },
-              "ColumnName": null,
-              "Name": "y",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "type": "number"
-              },
-              "ColumnName": null,
-              "Name": "z",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "durationCK1Zone1",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "durationCK1Zone2",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "lifeZone1",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "lifeZone2",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "numberOfCTLToProduce",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "numberOfTicksNoCK1orPK1",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "type": "string"
-              },
-              "ColumnName": null,
-              "Name": "parameterSetName",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "type": "string"
-              },
-              "ColumnName": null,
-              "Name": "tCellReceptorName",
-              "TableName": null
-            }
-          ],
-          "FullName": "ImmuneSystemModel.ImmuneSystemLayer.CytotoxicTCell",
-          "InstanceCount": null,
-          "MetaDataId": null,
-          "Name": "CytotoxicTCell"
-        },
-        {
-          "ConstructorParameterMapping": [
-            {
-              "AllowedValues": {
-                "type": "string"
-              },
-              "ColumnName": null,
-              "Name": "areaName",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "activateAfter",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "numOfCopies",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "type": "number"
-              },
-              "ColumnName": null,
-              "Name": "x",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "type": "number"
-              },
-              "ColumnName": null,
-              "Name": "y",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "type": "number"
-              },
-              "ColumnName": null,
-              "Name": "z",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "durationMK1Zone1",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "durationMK2Zone1",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "lifeZone1",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "lifeZone2",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "numberOfDendriticCellsToSend",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "numberOfMakrophagesToSend",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "numberOfNaturalKillerCellsToSend",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "type": "boolean"
-              },
-              "ColumnName": null,
-              "Name": "inflammatory",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "apoptosisThreshold",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "durationMKZone2",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "type": "string"
-              },
-              "ColumnName": null,
-              "Name": "parameterSetName",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "maxNumberOfTCellContacts",
-              "TableName": null
-            }
-          ],
-          "FullName": "ImmuneSystemModel.ImmuneSystemLayer.DendriticCell",
-          "InstanceCount": null,
-          "MetaDataId": null,
-          "Name": "DendriticCell"
-        },
-        {
-          "ConstructorParameterMapping": [
-            {
-              "AllowedValues": {
-                "type": "string"
-              },
-              "ColumnName": null,
-              "Name": "areaName",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "activateAfter",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "numOfCopies",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "type": "number"
-              },
-              "ColumnName": null,
-              "Name": "x",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "type": "number"
-              },
-              "ColumnName": null,
-              "Name": "y",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "type": "number"
-              },
-              "ColumnName": null,
-              "Name": "z",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "lifeZone1",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "type": "string"
-              },
-              "ColumnName": null,
-              "Name": "parameterSetName",
-              "TableName": null
-            }
-          ],
-          "FullName": "ImmuneSystemModel.ImmuneSystemLayer.Granulocyte",
-          "InstanceCount": null,
-          "MetaDataId": null,
-          "Name": "Granulocyte"
-        },
-        {
-          "ConstructorParameterMapping": [
-            {
-              "AllowedValues": {
-                "type": "string"
-              },
-              "ColumnName": null,
-              "Name": "areaName",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "activateAfter",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "numOfCopies",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "type": "number"
-              },
-              "ColumnName": null,
-              "Name": "x",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "type": "number"
-              },
-              "ColumnName": null,
-              "Name": "y",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "type": "number"
-              },
-              "ColumnName": null,
-              "Name": "z",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "lifeZone1",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "durationMK1ProductionZone1",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "durationMK2ProductionZone1",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "makrophage1To2ApoptosisThreshold",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "type": "string"
-              },
-              "ColumnName": null,
-              "Name": "parameterSetName",
-              "TableName": null
-            }
-          ],
-          "FullName": "ImmuneSystemModel.ImmuneSystemLayer.Makrophage",
-          "InstanceCount": null,
-          "MetaDataId": null,
-          "Name": "Makrophage"
-        },
-        {
-          "ConstructorParameterMapping": [
-            {
-              "AllowedValues": {
-                "type": "string"
-              },
-              "ColumnName": null,
-              "Name": "areaName",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "activateAfter",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "numOfCopies",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "type": "number"
-              },
-              "ColumnName": null,
-              "Name": "x",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "type": "number"
-              },
-              "ColumnName": null,
-              "Name": "y",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "type": "number"
-              },
-              "ColumnName": null,
-              "Name": "z",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "lifeZone1",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "durationCK1ProductionZone1",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "maxNumOfTicksWithoutKill",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "killLimit",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "type": "string"
-              },
-              "ColumnName": null,
-              "Name": "parameterSetName",
-              "TableName": null
-            }
-          ],
-          "FullName": "ImmuneSystemModel.ImmuneSystemLayer.NaturalKillerCell",
-          "InstanceCount": null,
-          "MetaDataId": null,
-          "Name": "NaturalKillerCell"
-        },
-        {
-          "ConstructorParameterMapping": [
-            {
-              "AllowedValues": {
-                "type": "string"
-              },
-              "ColumnName": null,
-              "Name": "areaName",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "activateAfter",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "numOfCopies",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "type": "number"
-              },
-              "ColumnName": null,
-              "Name": "x",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "type": "number"
-              },
-              "ColumnName": null,
-              "Name": "y",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "type": "number"
-              },
-              "ColumnName": null,
-              "Name": "z",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "type": "string"
-              },
-              "ColumnName": null,
-              "Name": "synchronizedSignalsList",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "type": "string"
-              },
-              "ColumnName": null,
-              "Name": "passingAgentsList",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "type": "boolean"
-              },
-              "ColumnName": null,
-              "Name": "outputPortal",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "type": "number"
-              },
-              "ColumnName": null,
-              "Name": "checkParenchymalCellsRadius",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "numberOfPCThresholdToFunction",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "type": "string"
-              },
-              "ColumnName": null,
-              "Name": "watchedAgentsList",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "type": "string"
-              },
-              "ColumnName": null,
-              "Name": "watchedSignalsList",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "type": "string"
-              },
-              "ColumnName": null,
-              "Name": "parameterSetName",
-              "TableName": null
-            }
-          ],
-          "FullName": "ImmuneSystemModel.ImmuneSystemLayer.Portal",
-          "InstanceCount": null,
-          "MetaDataId": null,
-          "Name": "Portal"
-        },
-        {
-          "ConstructorParameterMapping": [
-            {
-              "AllowedValues": {
-                "type": "string"
-              },
-              "ColumnName": null,
-              "Name": "areaName",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "activateAfter",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "numOfCopies",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "type": "number"
-              },
-              "ColumnName": null,
-              "Name": "x",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "type": "number"
-              },
-              "ColumnName": null,
-              "Name": "y",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "type": "number"
-              },
-              "ColumnName": null,
-              "Name": "z",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "lifeZone1",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "lifeZone2",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "lifeMemoryCellZone2",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "durationCK1Zone2",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "durationCK2Zone2",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "CK1Threshold",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "CK2Threshold",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "maxNumberOfKills",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "extraLifeForFirstKill",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "type": "string"
-              },
-              "ColumnName": null,
-              "Name": "tCellReceptor",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "numT1ToSend",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "numT2ToSend",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "type": "string"
-              },
-              "ColumnName": null,
-              "Name": "parameterSetName",
-              "TableName": null
-            }
-          ],
-          "FullName": "ImmuneSystemModel.ImmuneSystemLayer.THelperCell",
-          "InstanceCount": null,
-          "MetaDataId": null,
-          "Name": "THelperCell"
-        },
-        {
-          "ConstructorParameterMapping": [
-            {
-              "AllowedValues": {
-                "type": "string"
-              },
-              "ColumnName": null,
-              "Name": "areaName",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "activateAfter",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "numOfCopies",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "type": "number"
-              },
-              "ColumnName": null,
-              "Name": "x",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "type": "number"
-              },
-              "ColumnName": null,
-              "Name": "y",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "type": "number"
-              },
-              "ColumnName": null,
-              "Name": "z",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "type": "string"
-              },
-              "ColumnName": null,
-              "Name": "antigenIdentifier",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "type": "string"
-              },
-              "ColumnName": null,
-              "Name": "targets",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "life",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "viralInfectionThreshold",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "numberToReproduce",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "type": "string"
-              },
-              "ColumnName": null,
-              "Name": "parameterSetName",
-              "TableName": null
-            }
-          ],
-          "FullName": "ImmuneSystemModel.ImmuneSystemLayer.Virus",
-          "InstanceCount": null,
-          "MetaDataId": null,
-          "Name": "Virus"
-        },
-        {
-          "ConstructorParameterMapping": [
-            {
-              "AllowedValues": {
-                "type": "string"
-              },
-              "ColumnName": null,
-              "Name": "areaName",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "activateAfter",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "numOfCopies",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "type": "number"
-              },
-              "ColumnName": null,
-              "Name": "x",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "type": "number"
-              },
-              "ColumnName": null,
-              "Name": "y",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "type": "number"
-              },
-              "ColumnName": null,
-              "Name": "z",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "stressDuration",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "ab1LysisThreshold",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "maximum": 2147483647,
-                "minimum": -2147483648,
-                "type": "integer"
-              },
-              "ColumnName": null,
-              "Name": "regenerationTime",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "type": "string"
-              },
-              "ColumnName": null,
-              "Name": "parameterSetName",
-              "TableName": null
-            }
-          ],
-          "FullName": "ImmuneSystemModel.ImmuneSystemLayer.ParenchymalCell",
-          "InstanceCount": null,
-          "MetaDataId": null,
-          "Name": "ParenchymalCell"
-        }
-      ],
-      "LayerName": "ImmuneSystemLayer"
-    },
-    {
-      "Agents": [
-        {
-          "ConstructorParameterMapping": [
-            {
-              "AllowedValues": {
-                "type": "string"
-              },
-              "ColumnName": null,
-              "Name": "name",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "type": "number"
-              },
-              "ColumnName": null,
-              "Name": "width",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "type": "number"
-              },
-              "ColumnName": null,
-              "Name": "height",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "type": "number"
-              },
-              "ColumnName": null,
-              "Name": "depth",
-              "TableName": null
-            },
-            {
-              "AllowedValues": {
-                "type": "boolean"
-              },
-              "ColumnName": null,
-              "Name": "toroidal",
-              "TableName": null
-            }
-          ],
-          "FullName": "AreaLayer.AreaPropertiesProviderAgent",
-          "InstanceCount": null,
-          "MetaDataId": null,
-          "Name": "AreaPropertiesProviderAgent"
-        }
-      ],
-      "LayerName": "AreaLayer"
-    }
-  ],
-  "GISLayers": [],
-  "TimeSeriesLayers": []
+    "Layers": [
+      {
+        "Name": "MarulaLayer",
+        "Parameters": []
+      },
+      {
+        "Name": "ElephantLayer",
+        "Parameters": []
+      },
+      {
+        "Name": "GeoPotentialFieldLayer",
+        "Parameters": []
+      },
+      {
+        "Name": "TimeSeriesLayer",
+        "Parameters": []
+      },
+      {
+        "Name": "WaterPotentialLayer",
+        "Parameters": []
+      },
+      {
+        "Name": "PrecipitationLayer",
+        "Parameters": []
+      },
+      {
+        "Name": "TemperatureTimeSeriesLayer",
+        "Parameters": []
+      },
+      {
+        "Name": "WaterPointLayer",
+        "Parameters": []
+      },
+      {
+        "Name": "KNPObstacleLayer",
+        "Parameters": []
+      },
+      {
+        "Name": "GridPotentialFieldLayer",
+        "Parameters": []
+      },
+      {
+        "Name": "ShadeLayer",
+        "Parameters": []
+      }
+    ],
+    "LogicalChangeTime": 0
+  },
+  "Project": "42"
 }
