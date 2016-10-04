@@ -79,34 +79,7 @@
       <uib-accordion>
         <div uib-accordion-group class="panel-default" heading="State Variables" is-open="true">
 
-          <div class="form-group">
-            <table class="table table-hover">
-              <thead>
-              <tr>
-                <th>Name</th>
-                <th>Type</th>
-                <th>Value</th>
-                <th>Externally Initialized</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr data-ng-repeat="stateVariable in agents.currentAgent.stateVariables">
-                <td>
-                  {{stateVariable.name}}
-                </td>
-                <td>
-                  {{stateVariable.type}}
-                </td>
-                <td>
-                  <input type="text" data-ng-model="stateVariable.default.expression">
-                </td>
-                <td>
-                  <input type="checkbox" data-ng-model="stateVariable.externallyInitialized">
-                </td>
-              </tr>
-              </tbody>
-            </table>
-          </div>
+          <state-variable-directive agent-state-variables="agents.currentAgent.stateVariables"></state-variable-directive>
 
         </div>
       </uib-accordion>
@@ -114,7 +87,7 @@
       <uib-accordion>
         <div uib-accordion-group class="panel-default" heading="Active Actions" is-open="true">
 
-          <state-variable-directive agent-state-variables="agents.currentAgent.stateVariables"></state-variable-directive>
+
 
         </div>
       </uib-accordion>

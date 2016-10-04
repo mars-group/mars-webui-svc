@@ -9,25 +9,35 @@
 
     .directive("stateVariableDirective", function () {
 
-      var linkDing = function (scope,element,attrs) {
+      var linkDing = function (scope, element, http) {
         element.on('click', function (event) {
           console.log(scope.agentStateVariables);
         }),
 
-        scope.addStateVariable = function () {
-          console.log('Button click executed');
-          scope.agentStateVariables.push({type:"int",name:"juliusInt", enumValues:[],default:{mode:"code",expression:"hello"},externallyInitialized:true});
-        }
+          scope.addStateVariable = function () {
+            console.log('Button click executed');
+            scope.agentStateVariables.push({
+              type: "int",
+              name: "juliusInt",
+              enumValues: [],
+              default: {mode: "code", expression: "hello"},
+              externallyInitialized: true
+            });
+          },
+
+          scope.getInfos = function (http) {
+
+          }
       };
 
-      return{
-        restrict:'AE',
-        scope:{
-          agentStateVariables:'=',
-          addStateVariable:'&'
+      return {
+        restrict: 'AE',
+        scope: {
+          agentStateVariables: '=',
+          addStateVariable: '&'
         },
-        templateUrl:'app/modeling/agents/templates/agentStateVariables.html',
-        link:linkDing
+        templateUrl: 'app/modeling/agents/templates/agentStateVariables.html',
+        link: linkDing
       }
     });
 })();
