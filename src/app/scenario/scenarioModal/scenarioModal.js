@@ -34,7 +34,9 @@
       var data = {
         Owner: 'me',
         Project: project,
-        Name: vm.scenario.name
+        Name: vm.scenario.name,
+        Description: vm.scenario.description,
+        ModelIdentifier: vm.scenario.model
       };
 
       Scenario.postScenario(data, function (/* res */) {

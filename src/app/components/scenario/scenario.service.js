@@ -18,25 +18,24 @@
           };
 
           $http.get('/scenario-management/scenarios', config)
-            .then(function successCallback (res) {
-            callback(res.data);
-          }, function errorCallback (err) {
-            if (err) {
-              $log.error(err);
-              callback(err);
-            }
-          });
+            .then(function successCallback(res) {
+              callback(res.data);
+            }, function errorCallback(err) {
+              if (err) {
+                $log.error(err);
+              }
+            });
         },
-        postScenario: function  (scenario, callback) {
+        postScenario: function (scenario, callback) {
           $http.post('/scenario-management/scenarios', scenario)
-            .then(function successCallback (res) {
-            callback(res.data);
-          }, function errorCallback (err) {
-            if (err) {
-              $log.error(err);
-              callback(err);
-            }
-          });
+            .then(function successCallback(res) {
+              callback(res.data);
+            }, function errorCallback(err) {
+              if (err) {
+                $log.error(err);
+                callback(err);
+              }
+            });
         }
 
       };
