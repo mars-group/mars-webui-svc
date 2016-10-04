@@ -6,16 +6,22 @@
     .controller('MappingController', MappingController);
 
   /** @ngInject */
-  function MappingController(Mapping, Metadata) {
+  function MappingController(Mapping, Metadata, Alert) {
     var vm = this;
 
     var DEV_EDITION = true;
 
+    vm.alert = Alert;
     vm.metadata = null;
     vm.treeExpandedNodes = [];
     vm.selectedNode = null;
     vm.selectedField = null;
 
+    if(!DEV_EDITION) {
+      vm.alert.add('Select a Layer on the left. In the appearing area, push the "select" button and match a field ' +
+        'with the desired dataset on the right. Alternatively set a manual value, by selecting the checkbox next to ' +
+        'the field.');
+    }
 
     var initMappingData = function () {
       vm.treeOptions = {
@@ -41,8 +47,8 @@
 
       // for debugging only
       if (DEV_EDITION) {
-        vm.selectedNode = vm.treeData[0].Agents[0].Agents[0];
         vm.treeExpandedNodes.push(vm.treeData[0].Agents[0]);
+        vm.selectedNode = vm.treeData[0].Agents[0].Agents[0];
       }
     };
 

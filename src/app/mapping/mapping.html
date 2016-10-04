@@ -14,8 +14,13 @@
     </treecontrol>
   </div>
 
-  <div class="col-md-6" ng-show="mapping.selectedNode">
-    <form name="mappingForm" class="simple-form" novalidate>
+  <div class="col-md-6">
+    <!-- Error messages -->
+    <uib-alert ng-repeat="alert in mapping.alert.get()" type="{{alert.type}}" close="mapping.alert.remove($index)">
+      {{alert.msg}}
+    </uib-alert>
+
+    <form name="mappingForm" class="simple-form" novalidate ng-show="mapping.selectedNode">
       <h3>{{ mapping.selectedNode.Name }}</h3>
 
       <table class="table table-striped">
@@ -36,6 +41,7 @@
               <button class="btn btn-default" ng-model="field.TableName" ng-click="mapping.selectedField=field">
                 {{ field.TableName ? field.TableName : 'select'}}
               </button>
+              <button class="btn btn-link" ng-click="field.TableName=null" ng-show="field.TableName">X</button>
             </div>
             <div class="input-group" ng-show="field.override">
               <label><input type="text" class="form-control" ng-model="field.Value"/></label>

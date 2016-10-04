@@ -10,7 +10,7 @@
     <div class="col-md-3">
 
       <!-- Error messages -->
-      <uib-alert ng-repeat="alert in importModel.alerts" type="{{alert.type}}" close="importModel.removeAlert($index)">
+      <uib-alert ng-repeat="alert in importModel.alert.get()" type="{{alert.type}}" close="importModel.alert.remove($index)">
         {{alert.msg}}
       </uib-alert>
 
