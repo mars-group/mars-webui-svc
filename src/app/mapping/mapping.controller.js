@@ -11,7 +11,7 @@
 
     var DEV_EDITION = true;
 
-    vm.alert = Alert;
+    vm.alert = new Alert();
     vm.metadata = null;
     vm.treeExpandedNodes = [];
     vm.selectedNode = null;

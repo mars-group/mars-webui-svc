@@ -9,7 +9,7 @@
   function ImportModelController($timeout, $document, FileUploader, Metadata, Alert) {
     var vm = this;
 
-    vm.alert = Alert;
+    vm.alert = new Alert();
     vm.uploader = new FileUploader();
     vm.file = null;
     vm.data = [];

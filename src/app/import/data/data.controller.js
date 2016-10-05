@@ -29,7 +29,7 @@
 
     vm.uploader = new FileUploader();
     vm.file = null;
-    vm.alert = Alert;
+    vm.alert = new Alert();
     vm.data = [];
     vm.showOneUploadAtATime = true;
 
