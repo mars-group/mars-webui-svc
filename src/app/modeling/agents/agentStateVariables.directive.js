@@ -10,9 +10,9 @@
     .directive("stateVariableDirective", function () {
 
       var linkDing = function (scope, element, http) {
-        element.on('click', function (event) {
-          console.log(scope.agentStateVariables);
-        }),
+
+
+          scope.stateVariableTypes = ['float', 'double', 'string', 'enum', 'boolean', 'int'],
 
           scope.addStateVariable = function () {
             console.log('Button click executed');
