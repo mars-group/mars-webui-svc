@@ -9,10 +9,10 @@
 
     .directive("stateVariableDirective", function () {
 
-      var linkDing = function (scope, element, http) {
+      var linkDing = function (scope) {
 
 
-          scope.stateVariableTypes = ['float', 'double', 'string', 'enum', 'boolean', 'int'],
+        scope.stateVariableTypes = ['float', 'double', 'string', 'enum', 'boolean', 'int'],
 
           scope.addStateVariable = function () {
             console.log('Button click executed');
@@ -25,14 +25,14 @@
             });
           },
 
-            scope.removeStateVariable = function (key) {
-              console.log('State Variable deleted',key)
-              scope.agentStateVariables.splice(0,1);
-              console.log(scope.agentStateVariables);
-            },
-
-          scope.getInfos = function (http) {
-
+          scope.removeStateVariable = function (agentName) {
+            console.log('State Variable deleted', agentName)
+            for (var i = 0; i < scope.agentStateVariables.length; i++) {
+              if (scope.agentStateVariables[i].name === agentName) {
+                scope.agentStateVariables.splice(i, 1);
+              }
+            }
+            console.log(scope.agentStateVariables);
           }
       };
 
@@ -40,7 +40,7 @@
         restrict: 'AE',
         scope: {
           agentStateVariables: '=',
-          addStateVariable: '&'
+          openModal:'&'
         },
         templateUrl: 'app/modeling/agents/templates/agentStateVariables.html',
         link: linkDing

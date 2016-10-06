@@ -8,8 +8,21 @@
     .controller('AgentController', AgentController);
 
   /** @ngInject */
-  function AgentController() {
+  function AgentController($uibModal) {
     var vm = this;
+
+    vm.openStateVariableModal = function () {
+      console.log('openStateVariableModal()')
+      var settings = {
+        templateUrl: 'app/modeling/agents/stateVariableModal/newAgentStateVariableModal.html',
+        controller: 'modalCtrl',
+        controllerAs: 'modalController'
+      };
+
+      var modalInstance = $uibModal.open(settings);
+    },
+
+
     vm.title = 'Agent Editor',
 
       vm.name = 'Hello World',
@@ -71,7 +84,7 @@
     vm.currentAgent = vm.testAgent;
 
     vm.loadAgentFromJson = function () {
-
+      console.log('loadAgentFromJSON')
     }
 
   }

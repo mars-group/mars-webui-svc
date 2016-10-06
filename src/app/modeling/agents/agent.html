@@ -62,15 +62,6 @@
           </label>
           <input type="text" class="form-control" data-ng-model="agents.currentAgent.parentType">
         </div>
-
-        <div class="form-group">
-          <label>Directive Test</label>
-
-          <!-- <hello-world></hello-world> -->
-          <state-variables>Hello</state-variables>
-
-        </div>
-
       </form>
     </div>
 
@@ -79,7 +70,7 @@
       <uib-accordion>
         <div uib-accordion-group class="panel-default" heading="State Variables" is-open="true">
 
-          <state-variable-directive agent-state-variables="agents.currentAgent.stateVariables"></state-variable-directive>
+          <state-variable-directive open-modal="agents.openStateVariableModal()" agent-state-variables="agents.currentAgent.stateVariables"></state-variable-directive>
 
         </div>
       </uib-accordion>
@@ -105,9 +96,8 @@
           </div>
 
         </div>
+        <button class="btn" ng-click="agents.openStateVariableModal()">Hallo</button>
       </uib-accordion>
-
-
     </div>
   </div>
 </div>

@@ -11,7 +11,7 @@
     <tbody>
     <tr data-ng-repeat="stateVariable in agentStateVariables">
       <td>
-        {{stateVariable.name}}
+        <input data-ng-model="stateVariable.name" class="form-control">
       </td>
       <td>
         <select class="form-control" ng-model="stateVariable.type">
@@ -38,6 +38,7 @@
       <td></td>
       <td>
         <button class="btn btn-primary pull-right" ng-click="addStateVariable()">Add</button>
+        <button class="btn btn-primary pull-right" ng-click="openModal()">Hallo</button>
       </td>
     </tr>
     </tbody>
