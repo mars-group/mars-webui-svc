@@ -66,7 +66,7 @@
     vm.uploader.onSuccessItem = function (fileItem, response) {
       /** setting status to processing */
       fileItem.isProcessing = true;
-      checkMetadataWriteStatus(Metadata, response, 100, 5, 0,
+      checkMetadataWriteStatus(Metadata, response, 500, 20, 0,
         /** callback when metadata is written*/
         function () {
           /** display upload success */

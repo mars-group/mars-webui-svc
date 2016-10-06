@@ -103,7 +103,7 @@
       /** setting status to processing */
       fileItem.isProcessing = true;
       var importId = response;
-      checkMetadataWriteStatus(Metadata, importId, 100, 5, 0,
+      checkMetadataWriteStatus(Metadata, importId, 500, 20, 0,
         /** callback when metadata is written*/
         function () {
           /** if uploaded data was time-series */

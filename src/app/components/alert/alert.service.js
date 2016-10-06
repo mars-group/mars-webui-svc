@@ -4,7 +4,7 @@
   angular.module('marsApp')
     .factory('Alert', function Alert() {
 
-      return function () {
+      return function Alert () {
         var vm = this;
 
         vm.alerts = [];
@@ -13,6 +13,12 @@
           return vm.alerts;
         };
 
+        /**
+         *
+         * @param message
+         * @param type are: default(white), primary(blue), success(green), info(blue), warning(orange), danger(red).
+         * defaults to info, if type is not set
+         */
         vm.add = function (message, type) {
           vm.alerts.push({
             msg: message,
