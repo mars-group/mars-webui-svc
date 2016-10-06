@@ -6,15 +6,15 @@
     .controller('ImportModelController', ImportModelController);
 
   /** @ngInject */
-  function ImportModelController($timeout, $document, FileUploader, Metadata) {
+  function ImportModelController($timeout, $document, FileUploader, Metadata, Alert) {
     var vm = this;
 
+    vm.alert = new Alert();
     vm.uploader = new FileUploader();
     vm.file = null;
-    vm.alerts = [];
     vm.data = [];
-
     vm.showOneUploadAtATime = true;
+
 
     vm.Data = function () {
       return {
@@ -24,18 +24,7 @@
         userId: 1, // todo: add real id
         title: '',
         description: ''
-      }
-    };
-
-    vm.addAlert = function (message, type) {
-      vm.alerts.push({
-        msg: message,
-        type: type
-      });
-    };
-
-    vm.removeAlert = function (index) {
-      vm.alerts.splice(index, 1);
+      };
     };
 
     vm.uploader.filters.push({
@@ -77,7 +66,7 @@
     vm.uploader.onSuccessItem = function (fileItem, response) {
       /** setting status to processing */
       fileItem.isProcessing = true;
-      checkMetadataWriteStatus(Metadata, response, 100, 5, 0,
+      checkMetadataWriteStatus(Metadata, response, 500, 20, 0,
         /** callback when metadata is written*/
         function () {
           /** display upload success */
@@ -91,11 +80,11 @@
     vm.uploader.onWhenAddingFileFailed = function (item, filter) {
       /** if filter 'allowedFilesFilter' was not passed*/
       if (filter.name == 'allowedFilesFilter') {
-        vm.addAlert('Only ZIP files are allowed');
+        vm.alert.add('Only ZIP files are allowed');
       }
       /** if filter 'uniqueFilenameFilter' was not passed*/
       if (filter.name == 'uniqueFilenameFilter') {
-        vm.addAlert(item.name + ' is already in the upload queue');
+        vm.alert.add(item.name + ' is already in the upload queue');
       }
     };
 
@@ -125,7 +114,7 @@
         }
 
         if (tries > maxTries) {
-          vm.addAlert('max. tries of ' + maxTries + ' reached in Metadadata write-check for import ' + importId);
+          vm.alert.add('max. tries of ' + maxTries + ' reached in Metadadata write-check for import ' + importId);
         }
       });
     }

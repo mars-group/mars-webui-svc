@@ -6,7 +6,7 @@
     .controller('ImportViewController', ImportViewController);
 
   /** @ngInject */
-  function ImportViewController($http, $log, $uibModal, NgTableParams) {
+  function ImportViewController($http, $log, $uibModal, NgTableParams, Metadata) {
     var vm = this;
 
     var tableData = []; // data that is displayed in the table
@@ -47,15 +47,10 @@
 
     vm.categoryTreeExpandedNodes = [vm.categoryTreeData[0], vm.categoryTreeData[1], vm.categoryTreeData[2]];
 
-    $http.get('/metadata/metadata/')
-      .then(function (results) {
-        tableData = results.data;
-        initDataTable();
-      }, function (err) {
-        if (err) {
-          $log.error(err);
-        }
-      });
+    Metadata.getAll(function (res) {
+      tableData = res.data;
+      initDataTable();
+    });
 
     var initDataTable = function () {
       var tableOptions = {
@@ -115,27 +110,22 @@
         resolve: {}
       };
 
-      $http.get('/metadata/metadata/' + dataId)
-        .then(function (result) {
-          settings.resolve.dataset = result;
-          var modalInstance = $uibModal.open(settings);
+      Metadata.getOne(dataId, function (res) {
+        settings.resolve.dataset = res;
+        var modalInstance = $uibModal.open(settings);
 
-          modalInstance.result.then(function (/*result*/) {
-          }, function () {
-            // console.log('Modal dismissed at: ' + new Date());
-          });
-
-        }, function (err) {
-          if (err) {
-            $log.error(err);
-          }
+        modalInstance.result.then(function (/*result*/) {
+        }, function () {
+          // console.log('Modal dismissed at: ' + new Date());
         });
+      });
+
     };
 
     vm.deleteDataset = function (/*dataset*/) {
       // TODO: Implement
       $log.info('This needs Ticket "MARS-718" to be done!');
-    }
+    };
 
   }
 })();

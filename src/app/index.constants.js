@@ -2,6 +2,6 @@
   'use strict';
 
   angular
-    .module('marsApp')
 
+    .module('marsApp');
 })();

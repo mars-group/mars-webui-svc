@@ -56,6 +56,10 @@
           title: 'Simulate',
           children: [
             {
+              title: 'Scenario management',
+              url: 'scenario'
+            },
+            {
               title: 'Data Mapping',
               url: 'mapping'
             },

@@ -1,9 +1,123 @@
-<div class="container">
+<div id="mapping-container" class="container">
 
   <div>
     <acme-navbar></acme-navbar>
   </div>
 
-  test
+  <div class="col-md-3">
+    <h3>Mapping fields</h3>
+    <treecontrol class="tree-boot" tree-model="mapping.treeData"
+                 expanded-nodes="mapping.treeExpandedNodes" options="mapping.treeOptions"
+                 on-selection=""
+                 selected-node="mapping.selectedNode">
+      {{ node.LayerName }} {{ node.Name }}
+    </treecontrol>
+  </div>
+
+  <div class="col-md-6">
+    <!-- Error messages -->
+    <uib-alert ng-repeat="alert in mapping.alerts.get()" type="{{alert.type}}" close="mapping.alerts.remove($index)">
+      {{alert.msg}}
+    </uib-alert>
+
+    <form name="mappingForm" class="simple-form" novalidate ng-show="mapping.selectedNode">
+      <h3>{{ mapping.selectedNode.Name }}</h3>
+
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th>Fields</th>
+          <th>Select Dataset</th>
+          <th>Set value manually</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="form-group" data-ng-repeat="field in mapping.selectedNode.ConstructorParameterMapping">
+          <td class="col-md-4">
+            <span>{{ field.Name }}:</span>
+          </td>
+          <td class="col-md-4">
+            <div class="input-group" ng-hide="field.override">
+              <button class="btn btn-default" ng-click="mapping.selectedField=field">
+                {{ field.TableName ? field.TableName : 'select'}}
+              </button>
+              <button class="btn btn-link" ng-click="field.TableName=null" ng-show="field.TableName">X</button>
+            </div>
+            <div class="input-group" ng-show="field.override">
+              <label><input type="text" class="form-control" ng-model="field.Value"/></label>
+            </div>
+          </td>
+          <td class="col-md-4">
+            <div class="input-group">
+              <div class="checkbox">
+                <label><input type="checkbox" ng-model="field.override" ng-click="mapping.toggleManuallyValue(field)">
+                </label>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr class="form-group" ng-hide="mapping.selectedNode.ConstructorParameterMapping">
+          <td class="col-md-4">
+            <span>{{ mapping.selectedNode.LayerName }}:</span>
+          </td>
+          <td class="col-md-4">
+            <div class="input-group">
+              <button class="btn btn-default" ng-click="mapping.selectedField=mapping.selectedNode">
+                {{ mapping.selectedNode.TableName ? mapping.selectedNode.TableName : 'select'}}
+              </button>
+              <button class="btn btn-link" ng-click="mapping.selectedNode.TableName=null"
+                      ng-show="mapping.selectedNode.TableName">X
+              </button>
+            </div>
+          </td>
+          <td class="col-md-4">
+            <div class="input-group">
+              <div class="checkbox">
+                <label><input type="checkbox" ng-model="field.override" ng-click="mapping.toggleManuallyValue(field)"
+                              ng-disabled="true" class="disabled"></label>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr class="text-right">
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+            <button class="btn btn-warning" type="button" ng-click="mapping.cancel()">Cancel</button>
+            <button class="btn btn-primary" type="submit" ng-click="mapping.save()"
+                    data-ng-disabled="mappingForm.$invalid">Save
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </form>
+  </div>
+
+  <div class="col-md-3" ng-show="mapping.selectedNode">
+    <h3>Select Data</h3>
+
+    <div class="form-group">
+      <label for="filter" class="filter">Filter:</label>
+      <input class="form-control" id="filter" type="text">
+    </div>
+
+    <uib-accordion close-others="true">
+      <uib-accordion-group class="panel-default" ng-repeat="dataset in mapping.metadata">
+        <uib-accordion-heading>
+          {{ dataset.title }}
+          <div class="pull-right btn-group btn-group-xs"
+               ng-click="$event.stopPropagation(); $event.preventDefault(); mapping.createMapping(dataset)">
+            <button class="btn btn-success btn-xs">add</button>
+          </div>
+        </uib-accordion-heading>
+        <div>type: {{ dataset.type }}</div>
+        <div>description: {{ dataset.description }}</div>
+      </uib-accordion-group>
+    </uib-accordion>
+
+  </div>
 
 </div>

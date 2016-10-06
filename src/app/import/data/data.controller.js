@@ -6,7 +6,7 @@
     .controller('ImportDataController', ImportDataController);
 
   /** @ngInject */
-  function ImportDataController($timeout, $uibModal, $document, FileUploader, Metadata, Timeseries) {
+  function ImportDataController($timeout, $uibModal, $document, FileUploader, Metadata, Timeseries, Alert) {
     var vm = this;
 
     /** Will store initialized geoPicker*/
@@ -29,10 +29,10 @@
 
     vm.uploader = new FileUploader();
     vm.file = null;
-    vm.alerts = [];
+    vm.alert = new Alert();
     vm.data = [];
-
     vm.showOneUploadAtATime = true;
+
 
     vm.Data = function () {
       return {
@@ -44,20 +44,7 @@
         userId: 1, // todo: add real id
         title: '',
         description: ''
-      }
-    };
-
-    // types are: default(white), primary(blue), success(green), info(blue), warning(orange), danger(red)
-    // defaults to info, if type is not set
-    vm.addAlert = function (message, type) {
-      vm.alerts.push({
-        msg: message,
-        type: type
-      });
-    };
-
-    vm.removeAlert = function (index) {
-      vm.alerts.splice(index, 1);
+      };
     };
 
     vm.uploader.filters.push({
@@ -68,8 +55,8 @@
         var split = item.name.split('.');
         var fileEnding = split[split.length - 1];
         fileEnding = fileEnding.toLowerCase();
-        return fileEnding == vm.CONST_FILE_ENDING_CSV || fileEnding == vm.CONST_FILE_ENDING_ZIP
-          || fileEnding == vm.CONST_FILE_ENDING_GEOTIFF || fileEnding == vm.CONST_FILE_ENDING_ASC;
+        return fileEnding == vm.CONST_FILE_ENDING_CSV || fileEnding == vm.CONST_FILE_ENDING_ZIP ||
+          fileEnding == vm.CONST_FILE_ENDING_GEOTIFF || fileEnding == vm.CONST_FILE_ENDING_ASC;
       }
     }, {
       name: 'uniqueFilenameFilter',
@@ -90,14 +77,14 @@
         var filename = vm.uploader.queue[i]._file.name;
         /** title must be set */
         if (vm.title === '') {
-          vm.addAlert('Please provide a title for data file \'' + filename + '\'');
+          vm.alert.add('Please provide a title for data file \'' + filename + '\'');
           return false;
         }
         /** geo coords must be set and valid if data type is TimeSeries*/
         if (vm.data[i].dataType == vm.CONST_UPLOAD_TIMESERIES) {
           var patternDecimal = /-?[0-9]+\.[0-9]+/;
           if (!patternDecimal.test(vm.data[i].lat) || !patternDecimal.test(vm.data[i].lng)) {
-            vm.addAlert('Please provide valid LAT and LON (decimals) for data file \'' + filename + '\'');
+            vm.alert.add('Please provide valid LAT and LON (decimals) for data file \'' + filename + '\'');
             return false;
           }
         }
@@ -116,12 +103,12 @@
       /** setting status to processing */
       fileItem.isProcessing = true;
       var importId = response;
-      checkMetadataWriteStatus(Metadata, importId, 100, 5, 0,
+      checkMetadataWriteStatus(Metadata, importId, 500, 20, 0,
         /** callback when metadata is written*/
         function () {
           /** if uploaded data was time-series */
           if (fileItem.formData[0].type == vm.CONST_UPLOAD_TIMESERIES) {
-            Metadata.getPossibleDateColumn(importId, function (possibleDateTimeColumn) {
+            Metadata.getDateColumn(importId, function (possibleDateTimeColumn) {
               if (possibleDateTimeColumn) {
                 Timeseries.processDataOverNode(importId, possibleDateTimeColumn,
                   function () {
@@ -133,17 +120,17 @@
                     fileItem.isProcessing = false;
                     fileItem.isSuccess = false;
                     fileItem.isError = false;
-                    vm.addAlert(err);
+                    vm.alert.add(err);
                   }
-                )
+                );
               } else {
-                vm.addAlert('Timeseries File "' + fileItem._file.name + '" does not contain a valid DateTime Column');
+                vm.alert.add('Timeseries File "' + fileItem._file.name + '" does not contain a valid DateTime Column');
               }
             });
           }
           /** if uploaded data was table-based */
-          if (fileItem.formData[0].type == vm.CONST_UPLOAD_TABLEBASED
-            || fileItem.formData[0].type == vm.CONST_UPLOAD_GIS) {
+          if (fileItem.formData[0].type == vm.CONST_UPLOAD_TABLEBASED ||
+            fileItem.formData[0].type == vm.CONST_UPLOAD_GIS) {
             /** display upload success */
             fileItem.isProcessing = false;
             fileItem.isSuccess = true;
@@ -156,11 +143,11 @@
     vm.uploader.onWhenAddingFileFailed = function (item, filter) {
       /** if filter 'allowedFilesFilter' was not passed*/
       if (filter.name == 'allowedFilesFilter') {
-        vm.addAlert('Only AsciiGrid, GeoTiff, CSV and ZIP files are allowed');
+        vm.alert.add('Only AsciiGrid, GeoTiff, CSV and ZIP files are allowed');
       }
       /** if filter 'uniqueFilenameFilter' was not passed*/
       if (filter.name == 'uniqueFilenameFilter') {
-        vm.addAlert(item.name + ' is already in the upload queue');
+        vm.alert.add(item.name + ' is already in the upload queue');
       }
     };
 
@@ -190,7 +177,7 @@
         }
 
         if (tries > maxTries) {
-          vm.addAlert('max. tries of ' + maxTries + ' reached in Metadadata write-check for import ' + importId);
+          vm.alert.add('max. tries of ' + maxTries + ' reached in Metadadata write-check for import ' + importId);
         }
       });
     }

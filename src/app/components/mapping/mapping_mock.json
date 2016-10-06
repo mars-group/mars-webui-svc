@@ -1,0 +1,502 @@
+{
+  "Group": "",
+  "InitializationDescription": {
+    "BasicLayers": [
+      {
+        "Agents": [
+          {
+            "ConstructorParameterMapping": [
+              {
+                "AllowedValues": {
+                  "type": "string"
+                },
+                "ColumnName": null,
+                "MappingType": "ColumnParameterMapping",
+                "MetaDataId": null,
+                "Name": "env",
+                "TableName": null,
+                "ValidationResults": "not or invalid mapped",
+                "ValidationSuccessful": false
+              },
+              {
+                "AllowedValues": {
+                  "type": "string"
+                },
+                "ColumnName": null,
+                "MappingType": "ColumnParameterMapping",
+                "MetaDataId": null,
+                "Name": "id",
+                "TableName": null,
+                "ValidationResults": "not or invalid mapped",
+                "ValidationSuccessful": false
+              },
+              {
+                "AllowedValues": {
+                  "type": "number"
+                },
+                "ColumnName": null,
+                "MappingType": "ColumnParameterMapping",
+                "MetaDataId": null,
+                "Name": "lat",
+                "TableName": null,
+                "ValidationResults": "not or invalid mapped",
+                "ValidationSuccessful": false
+              },
+              {
+                "AllowedValues": {
+                  "type": "number"
+                },
+                "ColumnName": null,
+                "MappingType": "ColumnParameterMapping",
+                "MetaDataId": null,
+                "Name": "lon",
+                "TableName": null,
+                "ValidationResults": "not or invalid mapped",
+                "ValidationSuccessful": false
+              },
+              {
+                "AllowedValues": {
+                  "type": "number"
+                },
+                "ColumnName": null,
+                "MappingType": "ColumnParameterMapping",
+                "MetaDataId": null,
+                "Name": "heightInM",
+                "TableName": null,
+                "ValidationResults": "not or invalid mapped",
+                "ValidationSuccessful": false
+              },
+              {
+                "AllowedValues": {
+                  "maximum": 2147483647,
+                  "minimum": -2147483648,
+                  "type": "integer"
+                },
+                "ColumnName": null,
+                "MappingType": "ColumnParameterMapping",
+                "MetaDataId": null,
+                "Name": "ageInDays",
+                "TableName": null,
+                "ValidationResults": "not or invalid mapped",
+                "ValidationSuccessful": false
+              },
+              {
+                "AllowedValues": {
+                  "type": "number"
+                },
+                "ColumnName": null,
+                "MappingType": "ColumnParameterMapping",
+                "MetaDataId": null,
+                "Name": "stemDiameterInM",
+                "TableName": null,
+                "ValidationResults": "not or invalid mapped",
+                "ValidationSuccessful": false
+              },
+              {
+                "AllowedValues": {
+                  "maximum": 2147483647,
+                  "minimum": -2147483648,
+                  "type": "integer"
+                },
+                "ColumnName": null,
+                "MappingType": "ColumnParameterMapping",
+                "MetaDataId": null,
+                "Name": "sex",
+                "TableName": null,
+                "ValidationResults": "not or invalid mapped",
+                "ValidationSuccessful": false
+              }
+            ],
+            "FullName": "KNPMarulaTreeLayer.Agents.MarulaTree, KNPMarulaTreeLayer, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "InstanceCount": null,
+            "Name": "MarulaTree"
+          }
+        ],
+        "LayerName": "MarulaLayer"
+      },
+      {
+        "Agents": [],
+        "LayerName": "GridPotentialFieldLayer"
+      },
+      {
+        "Agents": [],
+        "LayerName": "ShadeLayer"
+      },
+      {
+        "Agents": [],
+        "LayerName": "WaterPotentialLayer"
+      },
+      {
+        "Agents": [
+          {
+            "ConstructorParameterMapping": [
+              {
+                "AllowedValues": {
+                  "type": "string"
+                },
+                "ColumnName": null,
+                "MappingType": "ColumnParameterMapping",
+                "MetaDataId": null,
+                "Name": "environment",
+                "TableName": null,
+                "ValidationResults": "not or invalid mapped",
+                "ValidationSuccessful": false
+              },
+              {
+                "AllowedValues": {
+                  "type": "string"
+                },
+                "ColumnName": null,
+                "MappingType": "ColumnParameterMapping",
+                "MetaDataId": null,
+                "Name": "id",
+                "TableName": null,
+                "ValidationResults": "not or invalid mapped",
+                "ValidationSuccessful": false
+              },
+              {
+                "AllowedValues": {
+                  "type": "number"
+                },
+                "ColumnName": null,
+                "MappingType": "ColumnParameterMapping",
+                "MetaDataId": null,
+                "Name": "lat",
+                "TableName": null,
+                "ValidationResults": "not or invalid mapped",
+                "ValidationSuccessful": false
+              },
+              {
+                "AllowedValues": {
+                  "type": "number"
+                },
+                "ColumnName": null,
+                "MappingType": "ColumnParameterMapping",
+                "MetaDataId": null,
+                "Name": "lon",
+                "TableName": null,
+                "ValidationResults": "not or invalid mapped",
+                "ValidationSuccessful": false
+              },
+              {
+                "AllowedValues": {
+                  "maximum": 2147483647,
+                  "minimum": -2147483648,
+                  "type": "integer"
+                },
+                "ColumnName": null,
+                "MappingType": "ColumnParameterMapping",
+                "MetaDataId": null,
+                "Name": "herdId",
+                "TableName": null,
+                "ValidationResults": "not or invalid mapped",
+                "ValidationSuccessful": false
+              },
+              {
+                "AllowedValues": {
+                  "type": "string"
+                },
+                "ColumnName": null,
+                "MappingType": "ColumnParameterMapping",
+                "MetaDataId": null,
+                "Name": "elephantType",
+                "TableName": null,
+                "ValidationResults": "not or invalid mapped",
+                "ValidationSuccessful": false
+              },
+              {
+                "AllowedValues": {
+                  "type": "boolean"
+                },
+                "ColumnName": null,
+                "MappingType": "ColumnParameterMapping",
+                "MetaDataId": null,
+                "Name": "isLeading",
+                "TableName": null,
+                "ValidationResults": "not or invalid mapped",
+                "ValidationSuccessful": false
+              },
+              {
+                "AllowedValues": {
+                  "type": "string"
+                },
+                "ColumnName": null,
+                "MappingType": "ColumnParameterMapping",
+                "MetaDataId": null,
+                "Name": "reproductionYears",
+                "TableName": null,
+                "ValidationResults": "not or invalid mapped",
+                "ValidationSuccessful": false
+              }
+            ],
+            "FullName": "KNPElephantLayer.Agents.Elephant, KNPElephantLayer, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "InstanceCount": null,
+            "Name": "Elephant"
+          }
+        ],
+        "LayerName": "ElephantLayer"
+      },
+      {
+        "Agents": [],
+        "LayerName": "GeoPotentialFieldLayer"
+      },
+      {
+        "Agents": [],
+        "LayerName": "KNPObstacleLayer"
+      },
+      {
+        "Agents": [
+          {
+            "ConstructorParameterMapping": [
+              {
+                "AllowedValues": {
+                  "type": "string"
+                },
+                "ColumnName": null,
+                "MappingType": "ColumnParameterMapping",
+                "MetaDataId": null,
+                "Name": "id",
+                "TableName": null,
+                "ValidationResults": "not or invalid mapped",
+                "ValidationSuccessful": false
+              },
+              {
+                "AllowedValues": {
+                  "type": "string"
+                },
+                "ColumnName": null,
+                "MappingType": "ColumnParameterMapping",
+                "MetaDataId": null,
+                "Name": "waterPointName",
+                "TableName": null,
+                "ValidationResults": "not or invalid mapped",
+                "ValidationSuccessful": false
+              },
+              {
+                "AllowedValues": {
+                  "maximum": 2147483647,
+                  "minimum": -2147483648,
+                  "type": "integer"
+                },
+                "ColumnName": null,
+                "MappingType": "ColumnParameterMapping",
+                "MetaDataId": null,
+                "Name": "waterPointType",
+                "TableName": null,
+                "ValidationResults": "not or invalid mapped",
+                "ValidationSuccessful": false
+              },
+              {
+                "AllowedValues": {
+                  "maximum": 2147483647,
+                  "minimum": -2147483648,
+                  "type": "integer"
+                },
+                "ColumnName": null,
+                "MappingType": "ColumnParameterMapping",
+                "MetaDataId": null,
+                "Name": "waterPointPurpose",
+                "TableName": null,
+                "ValidationResults": "not or invalid mapped",
+                "ValidationSuccessful": false
+              },
+              {
+                "AllowedValues": {
+                  "maximum": 2147483647,
+                  "minimum": -2147483648,
+                  "type": "integer"
+                },
+                "ColumnName": null,
+                "MappingType": "ColumnParameterMapping",
+                "MetaDataId": null,
+                "Name": "currentStatus",
+                "TableName": null,
+                "ValidationResults": "not or invalid mapped",
+                "ValidationSuccessful": false
+              },
+              {
+                "AllowedValues": {
+                  "maximum": 2147483647,
+                  "minimum": -2147483648,
+                  "type": "integer"
+                },
+                "ColumnName": null,
+                "MappingType": "ColumnParameterMapping",
+                "MetaDataId": null,
+                "Name": "waterPointFuture",
+                "TableName": null,
+                "ValidationResults": "not or invalid mapped",
+                "ValidationSuccessful": false
+              },
+              {
+                "AllowedValues": {
+                  "type": "number"
+                },
+                "ColumnName": null,
+                "MappingType": "ColumnParameterMapping",
+                "MetaDataId": null,
+                "Name": "lat",
+                "TableName": null,
+                "ValidationResults": "not or invalid mapped",
+                "ValidationSuccessful": false
+              },
+              {
+                "AllowedValues": {
+                  "type": "number"
+                },
+                "ColumnName": null,
+                "MappingType": "ColumnParameterMapping",
+                "MetaDataId": null,
+                "Name": "lon",
+                "TableName": null,
+                "ValidationResults": "not or invalid mapped",
+                "ValidationSuccessful": false
+              }
+            ],
+            "FullName": "KNPWaterPointLayer.Agents.WaterPoint, KNPWaterPointLayer, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "InstanceCount": null,
+            "Name": "WaterPoint"
+          }
+        ],
+        "LayerName": "WaterPointLayer"
+      }
+    ],
+    "GISLayers": [],
+    "LogicalChangeTime": 0,
+    "TimeSeriesLayers": [
+      {
+        "ColumnClearName": null,
+        "ColumnName": null,
+        "LayerName": "TimeSeriesLayer",
+        "MetaDataId": null,
+        "TableName": null,
+        "ValidationResults": "not or invalid mapped",
+        "ValidationSuccessful": false
+      },
+      {
+        "ColumnClearName": null,
+        "ColumnName": null,
+        "LayerName": "PrecipitationLayer",
+        "MetaDataId": null,
+        "TableName": null,
+        "ValidationResults": "not or invalid mapped",
+        "ValidationSuccessful": false
+      },
+      {
+        "ColumnClearName": null,
+        "ColumnName": null,
+        "LayerName": "TemperatureTimeSeriesLayer",
+        "MetaDataId": null,
+        "TableName": null,
+        "ValidationResults": "not or invalid mapped",
+        "ValidationSuccessful": false
+      }
+    ]
+  },
+  "ModelMetaData": "27ca5a71-6530-48b0-ad68-3e3b753f2439",
+  "Name": "TestScenarioForLennart",
+  "Owner": "9999",
+  "ParameterizationDescription": {
+    "Agents": [
+      {
+        "Name": "MarulaTree",
+        "Parameters": []
+      },
+      {
+        "Name": "Elephant",
+        "Parameters": []
+      },
+      {
+        "Name": "WaterPoint",
+        "Parameters": []
+      }
+    ],
+    "Global": {
+      "Name": "Global",
+      "Parameters": [
+        {
+          "AllowedValues": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "Name": "SimulationStartDateTime",
+          "Required": true,
+          "ValidationResult": "no value",
+          "ValidationSuccessful": false,
+          "Value": null
+        },
+        {
+          "AllowedValues": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "Name": "SimulationEndDateTime",
+          "Required": true,
+          "ValidationResult": "no value",
+          "ValidationSuccessful": false,
+          "Value": null
+        },
+        {
+          "AllowedValues": {
+            "format": "int64",
+            "minimum": 0,
+            "type": "integer"
+          },
+          "Name": "DeltaT",
+          "Required": true,
+          "ValidationResult": "no value",
+          "ValidationSuccessful": false,
+          "Value": null
+        }
+      ]
+    },
+    "Layers": [
+      {
+        "Name": "MarulaLayer",
+        "Parameters": []
+      },
+      {
+        "Name": "ElephantLayer",
+        "Parameters": []
+      },
+      {
+        "Name": "GeoPotentialFieldLayer",
+        "Parameters": []
+      },
+      {
+        "Name": "TimeSeriesLayer",
+        "Parameters": []
+      },
+      {
+        "Name": "WaterPotentialLayer",
+        "Parameters": []
+      },
+      {
+        "Name": "PrecipitationLayer",
+        "Parameters": []
+      },
+      {
+        "Name": "TemperatureTimeSeriesLayer",
+        "Parameters": []
+      },
+      {
+        "Name": "WaterPointLayer",
+        "Parameters": []
+      },
+      {
+        "Name": "KNPObstacleLayer",
+        "Parameters": []
+      },
+      {
+        "Name": "GridPotentialFieldLayer",
+        "Parameters": []
+      },
+      {
+        "Name": "ShadeLayer",
+        "Parameters": []
+      }
+    ],
+    "LogicalChangeTime": 0
+  },
+  "Project": "42"
+}

@@ -5,8 +5,8 @@
     .module('marsApp')
     .config(routerConfig);
 
-  /** @ngInject */
   function routerConfig($stateProvider, $urlRouterProvider) {
+    /** @ngInject */
     $stateProvider
       .state('home', {
         url: '/',
@@ -43,6 +43,12 @@
         templateUrl: 'app/mapping/mapping.html',
         controller: 'MappingController',
         controllerAs: 'mapping'
+      })
+      .state('scenario', {
+        url: '/scenario',
+        templateUrl: 'app/scenario/scenario.html',
+        controller: 'ScenarioController',
+        controllerAs: 'scenario'
       })
       .state('webgl', {
         url: '/webgl',
