@@ -25,6 +25,12 @@
             });
           },
 
+            scope.removeStateVariable = function (key) {
+              console.log('State Variable deleted',key)
+              scope.agentStateVariables.splice(0,1);
+              console.log(scope.agentStateVariables);
+            },
+
           scope.getInfos = function (http) {
 
           }

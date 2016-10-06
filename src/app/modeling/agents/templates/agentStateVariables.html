@@ -27,9 +27,21 @@
       <td class="centeredCheckbox">
         <input type="checkbox" data-ng-model="stateVariable.externallyInitialized">
       </td>
+      <td>
+        <button ng-click="removeStateVariable(stateVariable.name)" type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>
+        <button class="btn btn-primary pull-right" ng-click="addStateVariable()">Add</button>
+      </td>
     </tr>
     </tbody>
   </table>
 </div>
 
-<button class="btn btn-primary" ng-click="addStateVariable()">Add</button>
+
