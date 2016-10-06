@@ -4,13 +4,13 @@
   angular.module('marsApp')
     .factory('Alert', function Alert() {
 
-      return function Alert () {
+      return function Alert() {
         var vm = this;
 
-        vm.alerts = [];
+        var alerts = [];
 
         vm.get = function () {
-          return vm.alerts;
+          return alerts;
         };
 
         /**
@@ -20,14 +20,14 @@
          * defaults to info, if type is not set
          */
         vm.add = function (message, type) {
-          vm.alerts.push({
+          alerts.push({
             msg: message,
             type: type
           });
         };
 
         vm.remove = function (index) {
-          vm.alerts.splice(index, 1);
+          alerts.splice(index, 1);
         };
       };
     });

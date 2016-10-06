@@ -11,14 +11,16 @@
 
     var DEV_EDITION = true;
 
-    vm.alert = new Alert();
+    var mapping = new Mapping();
+    vm.alerts = new Alert();
     vm.metadata = null;
     vm.treeExpandedNodes = [];
     vm.selectedNode = null;
     vm.selectedField = null;
 
-    if(!DEV_EDITION) {
-      vm.alert.add('Select a Layer on the left. In the appearing area, push the "select" button and match a field ' +
+
+    if (!DEV_EDITION) {
+      vm.alerts.add('Select a Layer on the left. In the appearing area, push the "select" button and match a field ' +
         'with the desired dataset on the right. Alternatively set a manual value, by selecting the checkbox next to ' +
         'the field.');
     }
@@ -35,7 +37,7 @@
     initMappingData();
 
     var loadMappingFields = function () {
-      Mapping.getMapping(function (mapping) {
+      mapping.getMapping(function (mapping) {
         vm.treeData = mapping;
         configureTreeView();
       });
@@ -48,7 +50,8 @@
       // for debugging only
       if (DEV_EDITION) {
         vm.treeExpandedNodes.push(vm.treeData[0].Agents[0]);
-        vm.selectedNode = vm.treeData[0].Agents[0].Agents[0];
+        // vm.selectedNode = vm.treeData[0].Agents[0].Agents[0];
+        vm.selectedNode = vm.treeData[2].Agents[0];
       }
     };
 
@@ -62,7 +65,7 @@
       Metadata.getAll(function getAllFinishedImports(res) {
         var metadata = [];
         angular.forEach(res.data, function (element) {
-          if (angular.equals(element.state, 'FINISHED')) {
+          if (angular.equals(element.state, 'FINISHED') && !angular.equals(element.type, 'MODEL')) {
             // writes to tmp to prevent constant refreshing in the view
             metadata.push(element);
           }
@@ -72,7 +75,7 @@
     };
     loadMappingDatasets();
 
-    vm.toggleHandsetValue = function (field) {
+    vm.toggleManuallyValue = function (field) {
       if (field.override) {
         field.TableName = null;
       } else {
@@ -81,12 +84,15 @@
     };
 
     vm.createMapping = function (dataset) {
-      vm.selectedField.TableName = dataset.title;
+      if (vm.selectedField) {
+        vm.selectedField.TableName = dataset.title;
+      } else {
+        vm.alerts.add('You need to select a field first.', 'info');
+      }
     };
 
     vm.save = function () {
-      // TODO: write data back to original structure
-      // console.log(vm.selectedNode);
+      mapping.setMapping(vm.treeData);
     };
 
   }

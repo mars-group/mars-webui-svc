@@ -16,7 +16,7 @@
 
   <div class="col-md-6">
     <!-- Error messages -->
-    <uib-alert ng-repeat="alert in mapping.alert.get()" type="{{alert.type}}" close="mapping.alert.remove($index)">
+    <uib-alert ng-repeat="alert in mapping.alerts.get()" type="{{alert.type}}" close="mapping.alerts.remove($index)">
       {{alert.msg}}
     </uib-alert>
 
@@ -28,7 +28,7 @@
         <tr>
           <th>Fields</th>
           <th>Select Dataset</th>
-          <th>Handset value</th>
+          <th>Set value manually</th>
         </tr>
         </thead>
         <tbody>
@@ -38,7 +38,7 @@
           </td>
           <td class="col-md-4">
             <div class="input-group" ng-hide="field.override">
-              <button class="btn btn-default" ng-model="field.TableName" ng-click="mapping.selectedField=field">
+              <button class="btn btn-default" ng-click="mapping.selectedField=field">
                 {{ field.TableName ? field.TableName : 'select'}}
               </button>
               <button class="btn btn-link" ng-click="field.TableName=null" ng-show="field.TableName">X</button>
@@ -50,8 +50,31 @@
           <td class="col-md-4">
             <div class="input-group">
               <div class="checkbox">
-                <label><input type="checkbox" ng-model="field.override" ng-click="mapping.toggleHandsetValue(field)">
+                <label><input type="checkbox" ng-model="field.override" ng-click="mapping.toggleManuallyValue(field)">
                 </label>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr class="form-group" ng-hide="mapping.selectedNode.ConstructorParameterMapping">
+          <td class="col-md-4">
+            <span>{{ mapping.selectedNode.LayerName }}:</span>
+          </td>
+          <td class="col-md-4">
+            <div class="input-group">
+              <button class="btn btn-default" ng-click="mapping.selectedField=mapping.selectedNode">
+                {{ mapping.selectedNode.TableName ? mapping.selectedNode.TableName : 'select'}}
+              </button>
+              <button class="btn btn-link" ng-click="mapping.selectedNode.TableName=null"
+                      ng-show="mapping.selectedNode.TableName">X
+              </button>
+            </div>
+          </td>
+          <td class="col-md-4">
+            <div class="input-group">
+              <div class="checkbox">
+                <label><input type="checkbox" ng-model="field.override" ng-click="mapping.toggleManuallyValue(field)"
+                              ng-disabled="true" class="disabled"></label>
               </div>
             </div>
           </td>
@@ -76,7 +99,10 @@
   <div class="col-md-3" ng-show="mapping.selectedNode">
     <h3>Select Data</h3>
 
-    <label>Filter:<input type="text" class="form-control"/></label>
+    <div class="form-group">
+      <label for="filter" class="filter">Filter:</label>
+      <input class="form-control" id="filter" type="text">
+    </div>
 
     <uib-accordion close-others="true">
       <uib-accordion-group class="panel-default" ng-repeat="dataset in mapping.metadata">
