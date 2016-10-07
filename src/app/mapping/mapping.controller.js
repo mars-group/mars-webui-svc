@@ -9,7 +9,7 @@
   function MappingController(Mapping, Metadata, Alert) {
     var vm = this;
 
-    var DEV_EDITION = true;
+    vm.DEV_MODE = true;
 
     var mapping = new Mapping();
     vm.alerts = new Alert();
@@ -19,7 +19,7 @@
     vm.selectedField = null;
 
 
-    if (!DEV_EDITION) {
+    if (!vm.DEV_MODE) {
       vm.alerts.add('Select a Layer on the left. In the appearing area, push the "select" button and match a field ' +
         'with the desired dataset on the right. Alternatively set a manual value, by selecting the checkbox next to ' +
         'the field.');
@@ -48,10 +48,12 @@
       expandTopLevelNodes();
 
       // for debugging only
-      if (DEV_EDITION) {
+      if (vm.DEV_MODE) {
         vm.treeExpandedNodes.push(vm.treeData[0].Agents[0]);
-        // vm.selectedNode = vm.treeData[0].Agents[0].Agents[0];
-        vm.selectedNode = vm.treeData[2].Agents[0];
+        vm.selectedNode = vm.treeData[0].Agents[0].Agents[0];
+        // vm.selectedNode = vm.treeData[2].Agents[0];
+
+        vm.selectFirstField(vm.selectedNode);
       }
     };
 
@@ -75,21 +77,42 @@
     };
     loadMappingDatasets();
 
-    vm.toggleManuallyValue = function (field) {
-      if (field.override) {
-        field.TableName = null;
+    vm.selectFirstField = function (node) {
+      if (node.hasOwnProperty('ConstructorParameterMapping')) {
+        vm.selectedField = node.ConstructorParameterMapping[0];
       } else {
-        field.Value = null;
+        vm.selectedField = node;
       }
     };
 
-    vm.createMapping = function (dataset) {
-      if (vm.selectedField) {
-        vm.selectedField.TableName = dataset.title;
-      } else {
-        vm.alerts.add('You need to select a field first.', 'info');
-      }
+    var selectNextField = function () {
+      // TODO: implement
     };
+
+    vm.resetField = function (field) {
+      field.TableName = null;
+      field.ColumnName = null;
+      field.Value = null;
+    };
+
+    vm.createMapping = function (dataset) {
+      if (!vm.selectedField) {
+        vm.alerts.add('You need to select a field first.', 'info');
+        return;
+      }
+
+      var hasMappingType = vm.selectedField.hasOwnProperty('MappingType');
+      var isCollumnParameterMapping = vm.selectedField.MappingType === 'ColumnParameterMapping';
+
+      if (hasMappingType && isCollumnParameterMapping || !hasMappingType) {
+        // TODO: get real values from backend
+        vm.selectedField.TableName = dataset.title;
+        vm.selectedField.ColumnName = dataset.title;
+      }
+
+      selectNextField();
+    };
+
 
     vm.save = function () {
       mapping.setMapping(vm.treeData);

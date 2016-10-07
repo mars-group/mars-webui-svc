@@ -8,13 +8,13 @@
     <h3>Mapping fields</h3>
     <treecontrol class="tree-boot" tree-model="mapping.treeData"
                  expanded-nodes="mapping.treeExpandedNodes" options="mapping.treeOptions"
-                 on-selection=""
+                 on-selection="mapping.selectFirstField(node)"
                  selected-node="mapping.selectedNode">
       {{ node.LayerName }} {{ node.Name }}
     </treecontrol>
   </div>
 
-  <div class="col-md-6">
+  <div class="col-md-5">
     <!-- Error messages -->
     <uib-alert ng-repeat="alert in mapping.alerts.get()" type="{{alert.type}}" close="mapping.alerts.remove($index)">
       {{alert.msg}}
@@ -37,20 +37,24 @@
             <span>{{ field.Name }}:</span>
           </td>
           <td class="col-md-4">
-            <div class="input-group" ng-hide="field.override">
+            <div class="input-group" ng-hide="field.MappingType === 'ValueParameterMapping'">
               <button class="btn btn-default" ng-click="mapping.selectedField=field">
                 {{ field.TableName ? field.TableName : 'select'}}
               </button>
-              <button class="btn btn-link" ng-click="field.TableName=null" ng-show="field.TableName">X</button>
+              <button class="btn btn-link" ng-click="mapping.resetField(field)"
+                      ng-show="field.TableName">X
+              </button>
             </div>
-            <div class="input-group" ng-show="field.override">
+            <div class="input-group" ng-show="field.MappingType === 'ValueParameterMapping'">
               <label><input type="text" class="form-control" ng-model="field.Value"/></label>
             </div>
           </td>
           <td class="col-md-4">
             <div class="input-group">
               <div class="checkbox">
-                <label><input type="checkbox" ng-model="field.override" ng-click="mapping.toggleManuallyValue(field)">
+                <label><input type="checkbox" ng-model="field.MappingType" ng-click="mapping.resetField(field)"
+                              data-ng-true-value="'ValueParameterMapping'"
+                              data-ng-false-value="'ColumnParameterMapping'">
                 </label>
               </div>
             </div>
@@ -63,9 +67,9 @@
           <td class="col-md-4">
             <div class="input-group">
               <button class="btn btn-default" ng-click="mapping.selectedField=mapping.selectedNode">
-                {{ mapping.selectedNode.TableName ? mapping.selectedNode.TableName : 'select'}}
+                {{ mapping.selectedNode.TableName ? mapping.selectedNode.TableName : 'select' }}
               </button>
-              <button class="btn btn-link" ng-click="mapping.selectedNode.TableName=null"
+              <button class="btn btn-link" ng-click="mapping.resetField(mapping.selectedNode)"
                       ng-show="mapping.selectedNode.TableName">X
               </button>
             </div>
@@ -73,8 +77,7 @@
           <td class="col-md-4">
             <div class="input-group">
               <div class="checkbox">
-                <label><input type="checkbox" ng-model="field.override" ng-click="mapping.toggleManuallyValue(field)"
-                              ng-disabled="true" class="disabled"></label>
+                <label><input type="checkbox" class="disabled" ng-disabled="true"></label>
               </div>
             </div>
           </td>
@@ -96,7 +99,7 @@
     </form>
   </div>
 
-  <div class="col-md-3" ng-show="mapping.selectedNode">
+  <div class="col-md-4" ng-show="mapping.selectedNode">
     <h3>Select Data</h3>
 
     <div class="form-group">
@@ -115,8 +118,16 @@
         </uib-accordion-heading>
         <div>type: {{ dataset.type }}</div>
         <div>description: {{ dataset.description }}</div>
+        <!-- for debugging only -->
+        <div ng-show="mapping.DEV_MODE">
+          <hr/>
+          dataset: {{ dataset |json }}
+        </div>
       </uib-accordion-group>
     </uib-accordion>
+
+    <!-- for debugging only -->
+    <div ng-show="mapping.DEV_MODE">selected field: {{ mapping.selectedField |json }}</div>
 
   </div>
 
