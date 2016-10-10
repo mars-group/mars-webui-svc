@@ -14,12 +14,13 @@
         creationDate: '='
       },
       controller: NavbarController,
-      controllerAs: 'vm',
+      controllerAs: 'navigation',
       bindToController: true
     };
 
     /** @ngInject */
-    function NavbarController() {
+    // TODO: find a way to remove the $scope
+    function NavbarController(Scenario, $scope) {
       var vm = this;
 
       vm.menuItems = [
@@ -79,6 +80,19 @@
           name: 'Dummy b'
         }
       ];
+
+      // TODO: create project service
+      var project = 42;
+      Scenario.getScenarios(project, function (scenarios) {
+        vm.scenarios = scenarios;
+        $scope.currentScenario = vm.scenarios[0];
+      });
+
+      $scope.currentScenario = Scenario.getCurrentScenario();
+
+      vm.setCurrentScenario = function () {
+        Scenario.setCurrentScenario($scope.currentScenario);
+      };
 
     }
   }

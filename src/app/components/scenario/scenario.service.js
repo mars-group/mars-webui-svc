@@ -4,9 +4,11 @@
   angular
     .module('marsApp')
     .factory('Scenario', function Scenario($http, $log) {
-      return {
-        getScenarios: function (scenario, callback) {
+      // TODO: persist in cookie
+      var currentScenario = {};
 
+      return {
+        getScenarios: function loadScenarios (scenario, callback) {
           var config = {
             params: {
               Project: scenario
@@ -22,7 +24,7 @@
               }
             });
         },
-        postScenario: function (scenario, callback) {
+        postScenario: function createScenario (scenario, callback) {
           $http.post('/scenario-management/scenarios', scenario)
             .then(function successCallback(res) {
               callback(res.data);
@@ -32,6 +34,12 @@
                 callback(err);
               }
             });
+        },
+        setCurrentScenario: function (scenario) {
+          currentScenario = scenario;
+        },
+        getCurrentScenario: function () {
+          return currentScenario;
         }
 
       };
