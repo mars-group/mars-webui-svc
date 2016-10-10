@@ -3,7 +3,7 @@
 
   angular
     .module('marsApp')
-    .factory('Mapping', function Mapping($http) {
+    .factory('Mapping', function Mapping($http, $log) {
       return function Mapping() {
         var vm = this;
 
@@ -48,12 +48,19 @@
             });
         };
 
-        vm.setMapping = function (data) {
+        vm.saveMapping = function (data, callback) {
           var result = convertToRemoteStructure(data);
 
-          if (!angular.equals(result, originalData)) {
-            // TODO: Send to backend
-          }
+            console.log('sendingData');
+
+            $http.post('/scenario-management/scenarios', result)
+              .then(function successCallback(res) {
+                console.log('success');
+                callback(res.data);
+              }, function errorCallback(err) {
+                $log.error(err);
+                callback(err);
+              });
 
         };
 

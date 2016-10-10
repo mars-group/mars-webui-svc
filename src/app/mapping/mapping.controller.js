@@ -6,7 +6,7 @@
     .controller('MappingController', MappingController);
 
   /** @ngInject */
-  function MappingController(Mapping, Metadata, Alert) {
+  function MappingController(Mapping, Metadata, Alert, $log) {
     var vm = this;
 
     vm.DEV_MODE = true;
@@ -115,7 +115,11 @@
 
 
     vm.save = function () {
-      mapping.setMapping(vm.treeData);
+      mapping.saveMapping(vm.treeData, function (res) {
+        if (res.start !== 500) {
+          $log.error(res.status, res.statusText);
+        }
+      });
     };
 
   }
