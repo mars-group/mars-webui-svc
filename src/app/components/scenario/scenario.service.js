@@ -10,9 +10,6 @@
           var config = {
             params: {
               Project: scenario
-            },
-            headers: {
-              'Accept': 'application/json'
             }
           };
 

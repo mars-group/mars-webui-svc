@@ -6,7 +6,7 @@
     .controller('ScenarioModalController', ScenarioModalController);
 
   /** @ngInject */
-  function ScenarioModalController($uibModalInstance, Scenario) {
+  function ScenarioModalController($uibModalInstance, Scenario, Metadata) {
     var vm = this;
 
     vm.scenario = {};
@@ -14,9 +14,12 @@
     // TODO: write project service
     var project = '42';
 
-    // TODO: write models service
-    vm.models = ['mock_A', 'mock_B', 'mock_C'];
-
+    var params = {
+      type: 'MODEL'
+    };
+    Metadata.getFiltered(params, function (res) {
+      vm.models = res.data;
+    });
 
     vm.cancel = function () {
       $uibModalInstance.dismiss('cancel');
