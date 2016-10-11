@@ -40,7 +40,7 @@
 
         setCurrentScenario: function (scenario) {
           currentScenario = scenario;
-          $window.sessionStorage.setItem('curScenario', JSON.stringify(scenario));
+          $window.sessionStorage.setItem('currentScenario', scenario.toJSON());
           for (var i = 0; i < onChangeListener.length; i++) {
             onChangeListener[i]();
           }
@@ -48,15 +48,15 @@
 
         clearScenarioSelection: function () {
           currentScenario = {};
-          $window.sessionStorage.removeItem('curScenario');
+          $window.sessionStorage.removeItem('currentScenario');
           for (var i = 0; i < onChangeListener.length; i++) {
             onChangeListener[i]();
           }
         },
 
         getCurrentScenario: function () {
-          if (currentScenario.name === undefined && $window.sessionStorage.getItem('curScenario') !== undefined) {
-            currentScenario = JSON.parse($window.sessionStorage.getItem('curScenario'));
+          if (angular.isUndefined(currentScenario.name) && angular.isDefined($window.sessionStorage.getItem('currentScenario'))) {
+            currentScenario = angular.fromJson($window.sessionStorage.getItem('currentScenario'));
           }
           return currentScenario;
         },

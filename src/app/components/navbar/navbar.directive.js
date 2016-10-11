@@ -17,8 +17,7 @@
     };
 
     /** @ngInject */
-    // TODO: find a way to remove the $scope
-    function NavbarController(Scenario, $scope) {
+    function NavbarController(Scenario) {
       var vm = this;
 
       vm.menuItems = [
@@ -85,14 +84,14 @@
         vm.scenarios = scenarios;
       });
 
-      $scope.currentScenario = Scenario.getCurrentScenario();
+      vm.currentScenario = Scenario.getCurrentScenario();
 
       Scenario.registerOnChangeListener(function () {
-        $scope.currentScenario = Scenario.getCurrentScenario();
+        vm.currentScenario = Scenario.getCurrentScenario();
       });
 
       vm.setCurrentScenario = function () {
-        Scenario.setCurrentScenario($scope.currentScenario);
+        Scenario.setCurrentScenario(vm.currentScenario);
       };
 
     }

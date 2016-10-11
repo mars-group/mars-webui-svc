@@ -32,7 +32,7 @@
           </div>
           <div class="form-group scenario">
             <label for="scenario" class="acme-navbar-text">Scenario: </label>
-            <select class="form-control" id="scenario" ng-model="currentScenario"
+            <select class="form-control" id="scenario" ng-model="navigation.currentScenario"
                     data-ng-options="o.Name for o in navigation.scenarios track by o.ScenarioId"
                     data-ng-change="navigation.setCurrentScenario(o)">
             </select>
