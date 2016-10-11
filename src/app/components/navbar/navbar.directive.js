@@ -10,9 +10,7 @@
     return {
       restrict: 'E',
       templateUrl: 'app/components/navbar/navbar.html',
-      scope: {
-        creationDate: '='
-      },
+      scope: {},
       controller: NavbarController,
       controllerAs: 'navigation',
       bindToController: true
@@ -85,10 +83,13 @@
       var project = 42;
       Scenario.getScenarios(project, function (scenarios) {
         vm.scenarios = scenarios;
-        $scope.currentScenario = vm.scenarios[0];
       });
 
       $scope.currentScenario = Scenario.getCurrentScenario();
+
+      Scenario.registerOnChangeListener(function () {
+        $scope.currentScenario = Scenario.getCurrentScenario();
+      });
 
       vm.setCurrentScenario = function () {
         Scenario.setCurrentScenario($scope.currentScenario);

@@ -51,9 +51,11 @@
         vm.saveMapping = function (data, callback) {
           var result = convertToRemoteStructure(data);
 
-          $http.post('/scenario-management/scenarios', result)
+          var scenarioId = null;
+
+          $http.put('/scenario-management/scenarios/' + scenarioId + '/mapping', result)
             .then(function successCallback(res) {
-              callback(res.data);
+              callback(res);
             }, function errorCallback(err) {
               $log.error(err);
               callback(err);

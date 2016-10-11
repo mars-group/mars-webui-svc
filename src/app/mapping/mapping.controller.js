@@ -6,7 +6,7 @@
     .controller('MappingController', MappingController);
 
   /** @ngInject */
-  function MappingController(Mapping, Metadata, Alert, $log) {
+  function MappingController($log, Mapping, Metadata, Alert, Scenario) {
     var vm = this;
 
     vm.DEV_MODE = true;
@@ -36,13 +36,15 @@
     };
     initMappingData();
 
-    var loadMappingFields = function () {
+    var loadMapping = function () {
+      var scenario = Scenario.getCurrentScenario();
+
       mapping.getMapping(function (mapping) {
         vm.treeData = mapping;
         configureTreeView();
       });
     };
-    loadMappingFields();
+    loadMapping();
 
     var configureTreeView = function () {
       expandTopLevelNodes();
@@ -120,7 +122,7 @@
 
     vm.save = function () {
       mapping.saveMapping(vm.treeData, function (res) {
-        if (res.start !== 500) {
+        if (res.status !== 200) {
           $log.error(res.status, res.statusText);
         }
       });

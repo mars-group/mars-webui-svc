@@ -32,10 +32,9 @@
           </div>
           <div class="form-group scenario">
             <label for="scenario" class="acme-navbar-text">Scenario: </label>
-                    <!--ng-options="currentScenario.Name for currentScenario in navigation.scenarios track by currentScenario.Name"-->
-            <select class="form-control" id="scenario"
-                    ng-options="currentScenario.Name for currentScenario in navigation.scenarios"
-                    ng-model="currentScenario" ng-change="navigation.setCurrentScenario()">
+            <select class="form-control" id="scenario" ng-model="currentScenario"
+                    data-ng-options="o.Name for o in navigation.scenarios track by o.Name"
+                    data-ng-change="navigation.setCurrentScenario(o)">
             </select>
           </div>
         </form>
