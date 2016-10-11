@@ -68,7 +68,7 @@
         var metadata = [];
         angular.forEach(res.data, function (element) {
           if (angular.equals(element.state, 'FINISHED') &&
-            angular.equals(element.type, 'TIME_SERIES') ||  angular.equals(element.type, 'TABLE_BASED')) {
+            angular.equals(element.type, 'TIME_SERIES') || angular.equals(element.type, 'TABLE_BASED')) {
             // writes to tmp to prevent constant refreshing in the view
             metadata.push(element);
           }
@@ -106,13 +106,9 @@
       var isCollumnParameterMapping = vm.selectedField.MappingType === 'ColumnParameterMapping';
 
       if (hasMappingType && isCollumnParameterMapping || !hasMappingType) {
-        var tmp = angular.copy(vm.selectedField);
         vm.selectedField.TableName = dataset.additionalTypeSpecificData.tableName;
         vm.selectedField.ColumnName = dataset.additionalTypeSpecificData.columnNames[index].dbCloumnName;
         vm.selectedField.MetaDataId = dataset.dataId;
-
-        // tmp.
-        vm.selectedField.ColumnName = dataset.additionalTypeSpecificData.columnNames[index].dbCloumnName;
 
         if (vm.selectedField.hasOwnProperty('ColumnClearName')) {
           vm.selectedField.ColumnClearName = dataset.additionalTypeSpecificData.columnNames[index].clearColumnName;
@@ -121,7 +117,6 @@
 
       selectNextField();
     };
-
 
     vm.save = function () {
       mapping.saveMapping(vm.treeData, function (res) {

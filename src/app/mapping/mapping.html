@@ -38,7 +38,7 @@
           </td>
           <td class="col-md-4">
             <div class="input-group" ng-hide="field.MappingType === 'ValueParameterMapping'">
-              <button class="btn btn-default" ng-click="mapping.selectedField=field">
+              <button class="btn btn-info" ng-click="mapping.selectedField=field">
                 {{ field.ColumnName ? field.ColumnName : 'select'}}
               </button>
               <button class="btn btn-link" ng-click="mapping.resetField(field)"
@@ -66,7 +66,7 @@
           </td>
           <td class="col-md-4">
             <div class="input-group">
-              <button class="btn btn-default" ng-click="mapping.selectedField=mapping.selectedNode">
+              <button class="btn btn-info" ng-click="mapping.selectedField=mapping.selectedNode">
                 {{ mapping.selectedNode.ColumnName ? mapping.selectedNode.ColumnName : 'select' }}
               </button>
               <button class="btn btn-link" ng-click="mapping.resetField(mapping.selectedNode)"
@@ -115,7 +115,6 @@
         <div>Type: {{ dataset.type }}</div>
         <div>Description: {{ dataset.description }}</div>
         <div ng-show="dataset.additionalTypeSpecificData.databaseName">
-          <div>DatabaseName: {{ dataset.type === 'TIME_SERIES' || dataset.type === 'TABLE_BASED' }}</div>
           <div>ColumnNames:</div>
           <ul>
             <li ng-repeat="field in dataset.additionalTypeSpecificData.columnNames">{{ field.clearColumnName }}
