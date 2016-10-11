@@ -67,7 +67,8 @@
       Metadata.getAll(function getAllFinishedImports(res) {
         var metadata = [];
         angular.forEach(res.data, function (element) {
-          if (angular.equals(element.state, 'FINISHED') && !angular.equals(element.type, 'MODEL')) {
+          if (angular.equals(element.state, 'FINISHED') &&
+            angular.equals(element.type, 'TIME_SERIES') ||  angular.equals(element.type, 'TABLE_BASED')) {
             // writes to tmp to prevent constant refreshing in the view
             metadata.push(element);
           }
@@ -95,7 +96,7 @@
       field.Value = null;
     };
 
-    vm.createMapping = function (dataset) {
+    vm.createMapping = function (dataset, index) {
       if (!vm.selectedField) {
         vm.alerts.add('You need to select a field first.', 'info');
         return;
@@ -105,9 +106,17 @@
       var isCollumnParameterMapping = vm.selectedField.MappingType === 'ColumnParameterMapping';
 
       if (hasMappingType && isCollumnParameterMapping || !hasMappingType) {
-        // TODO: get real values from backend
-        vm.selectedField.TableName = dataset.title;
-        vm.selectedField.ColumnName = dataset.title;
+        var tmp = angular.copy(vm.selectedField);
+        vm.selectedField.TableName = dataset.additionalTypeSpecificData.tableName;
+        vm.selectedField.ColumnName = dataset.additionalTypeSpecificData.columnNames[index].dbCloumnName;
+        vm.selectedField.MetaDataId = dataset.dataId;
+
+        // tmp.
+        vm.selectedField.ColumnName = dataset.additionalTypeSpecificData.columnNames[index].dbCloumnName;
+
+        if (vm.selectedField.hasOwnProperty('ColumnClearName')) {
+          vm.selectedField.ColumnClearName = dataset.additionalTypeSpecificData.columnNames[index].clearColumnName;
+        }
       }
 
       selectNextField();

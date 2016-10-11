@@ -39,10 +39,10 @@
           <td class="col-md-4">
             <div class="input-group" ng-hide="field.MappingType === 'ValueParameterMapping'">
               <button class="btn btn-default" ng-click="mapping.selectedField=field">
-                {{ field.TableName ? field.TableName : 'select'}}
+                {{ field.ColumnName ? field.ColumnName : 'select'}}
               </button>
               <button class="btn btn-link" ng-click="mapping.resetField(field)"
-                      ng-show="field.TableName">X
+                      ng-show="field.ColumnName">X
               </button>
             </div>
             <div class="input-group" ng-show="field.MappingType === 'ValueParameterMapping'">
@@ -67,10 +67,10 @@
           <td class="col-md-4">
             <div class="input-group">
               <button class="btn btn-default" ng-click="mapping.selectedField=mapping.selectedNode">
-                {{ mapping.selectedNode.TableName ? mapping.selectedNode.TableName : 'select' }}
+                {{ mapping.selectedNode.ColumnName ? mapping.selectedNode.ColumnName : 'select' }}
               </button>
               <button class="btn btn-link" ng-click="mapping.resetField(mapping.selectedNode)"
-                      ng-show="mapping.selectedNode.TableName">X
+                      ng-show="mapping.selectedNode.ColumnName">X
               </button>
             </div>
           </td>
@@ -111,17 +111,17 @@
       <uib-accordion-group class="panel-default" ng-repeat="dataset in mapping.metadata">
         <uib-accordion-heading>
           {{ dataset.title }}
-          <div class="pull-right btn-group btn-group-xs"
-               ng-click="$event.stopPropagation(); $event.preventDefault(); mapping.createMapping(dataset)">
-            <button class="btn btn-success btn-xs">add</button>
-          </div>
         </uib-accordion-heading>
-        <div>type: {{ dataset.type }}</div>
-        <div>description: {{ dataset.description }}</div>
-        <!-- for debugging only -->
-        <div ng-show="mapping.DEV_MODE">
-          <hr/>
-          dataset: {{ dataset |json }}
+        <div>Type: {{ dataset.type }}</div>
+        <div>Description: {{ dataset.description }}</div>
+        <div ng-show="dataset.additionalTypeSpecificData.databaseName">
+          <div>DatabaseName: {{ dataset.type === 'TIME_SERIES' || dataset.type === 'TABLE_BASED' }}</div>
+          <div>ColumnNames:</div>
+          <ul>
+            <li ng-repeat="field in dataset.additionalTypeSpecificData.columnNames">{{ field.clearColumnName }}
+              <button class="btn btn-success btn-xs" ng-click="mapping.createMapping(dataset, $index)">add</button>
+            </li>
+          </ul>
         </div>
       </uib-accordion-group>
     </uib-accordion>

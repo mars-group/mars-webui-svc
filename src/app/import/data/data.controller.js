@@ -6,7 +6,7 @@
     .controller('ImportDataController', ImportDataController);
 
   /** @ngInject */
-  function ImportDataController($timeout, $uibModal, $document, FileUploader, Metadata, Timeseries, Alert) {
+  function ImportDataController($timeout, $uibModal, $document, $log, FileUploader, Metadata, Timeseries, Alert) {
     var vm = this;
 
     /** Will store initialized geoPicker*/
@@ -137,6 +137,12 @@
           }
         }
       );
+    };
+
+    vm.uploader.onErrorItem = function (item, response, status) {
+      $log.error('item:', item);
+      $log.error('response:', response);
+      $log.error('status:', status);
     };
 
     /** Error routine if file cant be added to upload queue */
