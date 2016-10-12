@@ -51,14 +51,6 @@
 
     var configureTreeView = function () {
       expandTopLevelNodes();
-
-      // for debugging only
-      if (vm.DEV_MODE) {
-        vm.treeExpandedNodes.push(vm.treeData[2].Agents[1]);
-        vm.selectedNode = vm.treeData[2].Agents[1].Agents[0];
-
-        vm.selectFirstField(vm.selectedNode);
-      }
     };
 
     var expandTopLevelNodes = function () {
@@ -123,12 +115,7 @@
     };
 
     vm.save = function () {
-      mapping.saveMapping(vm.treeData)
-        .then(function (res) {
-          if (res.status !== 200) {
-            $log.error(res.status, res.statusText);
-          }
-        });
+      mapping.saveMapping(vm.treeData);
     };
 
   }

@@ -32,6 +32,7 @@
         </tr>
         </thead>
         <tbody>
+        <!-- render basic layer agent fields -->
         <tr class="form-group" data-ng-repeat="field in mapping.selectedNode.ConstructorParameterMapping">
           <td class="col-md-4">
             <span>{{ field.Name }}:</span>
@@ -60,9 +61,13 @@
             </div>
           </td>
         </tr>
-        <tr class="form-group" ng-hide="mapping.selectedNode.ConstructorParameterMapping">
+        <!-- render other layer fields -->
+        <tr class="form-group" ng-hide="mapping.selectedNode.hasOwnProperty('ConstructorParameterMapping')
+        ||mapping.selectedNode.hasOwnProperty('Parameters')
+        ||mapping.selectedNode.hasOwnProperty('ValidationResult')">
           <td class="col-md-4">
-            <span>{{ mapping.selectedNode.LayerName }}:</span>
+            dgsg: {{ mapping.selectedNode.Parameters }}
+            <span>{{ mapping.selectedNode.LayerName }}{{ mapping.selectedNode.Name }}:</span>
           </td>
           <td class="col-md-4">
             <div class="input-group">
@@ -82,6 +87,9 @@
             </div>
           </td>
         </tr>
+
+        <!-- TODO: render parameters -->
+
         <tr class="text-right">
           <td>
           </td>
@@ -126,7 +134,8 @@
     </uib-accordion>
 
     <!-- for debugging only -->
-    <div ng-show="mapping.DEV_MODE">selected field: {{ mapping.selectedField |json }}</div>
+    <div ng-show="mapping.DEV_MODE">selected Node: {{ mapping.selectedNode |json }}</div>
+    <!--<div ng-show="mapping.DEV_MODE">selected field: {{ mapping.selectedField |json }}</div>-->
 
   </div>
 
