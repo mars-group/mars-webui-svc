@@ -6,7 +6,7 @@
     .controller('MappingController', MappingController);
 
   /** @ngInject */
-  function MappingController($log, Mapping, Metadata, Alert, Scenario) {
+  function MappingController($log, Mapping, Metadata, Alert) {
     var vm = this;
 
     vm.DEV_MODE = true;
@@ -37,10 +37,13 @@
     initMappingData();
 
     var loadMapping = function () {
-      var scenario = Scenario.getCurrentScenario();
+      mapping.getMapping().then(function (res) {
+        if (res.status > 299) {
+          $log.error('error:', res);
+          return;
+        }
 
-      mapping.getMapping(function (mapping) {
-        vm.treeData = mapping;
+        vm.treeData = res;
         configureTreeView();
       });
     };
@@ -51,9 +54,8 @@
 
       // for debugging only
       if (vm.DEV_MODE) {
-        vm.treeExpandedNodes.push(vm.treeData[0].Agents[0]);
-        vm.selectedNode = vm.treeData[0].Agents[0].Agents[0];
-        // vm.selectedNode = vm.treeData[2].Agents[0];
+        vm.treeExpandedNodes.push(vm.treeData[2].Agents[1]);
+        vm.selectedNode = vm.treeData[2].Agents[1].Agents[0];
 
         vm.selectFirstField(vm.selectedNode);
       }
@@ -121,11 +123,12 @@
     };
 
     vm.save = function () {
-      mapping.saveMapping(vm.treeData, function (res) {
-        if (res.status !== 200) {
-          $log.error(res.status, res.statusText);
-        }
-      });
+      mapping.saveMapping(vm.treeData)
+        .then(function (res) {
+          if (res.status !== 200) {
+            $log.error(res.status, res.statusText);
+          }
+        });
     };
 
   }

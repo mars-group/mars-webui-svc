@@ -3,13 +3,13 @@
 
   angular
     .module('marsApp')
-    .factory('Mapping', function Mapping($http, $log) {
+    .factory('Mapping', function Mapping($http, $log, Scenario) {
       return function Mapping() {
         var vm = this;
 
         var originalData = {};
 
-        var convertToLocalStructure = function (data, callback) {
+        var convertToLocalStructure = function (data) {
           var tmpTreeData = [];
           angular.forEach(data.InitializationDescription, function layerTypes(value, key) {
             // there is no continue in JS... too bad
@@ -21,7 +21,7 @@
               tmpTreeData.push(layerType);
             }
           });
-          callback(tmpTreeData);
+          return tmpTreeData;
         };
 
         var convertToRemoteStructure = function (data) {
@@ -37,28 +37,39 @@
           return tmp;
         };
 
-        vm.getMapping = function (callback) {
-          // TODO: Replace with real backend
-          $http.get('app/components/mapping/mapping_mock.json')
-            .then(function (res) {
-              originalData = res.data;
-              convertToLocalStructure(originalData, function (treeData) {
-                return callback(treeData);
-              });
+        vm.getMapping = function () {
+          var scenarioId = Scenario.getCurrentScenario().ScenarioId;
+          if (!scenarioId) {
+            return 'Mapping.get(): ' + 'No Scenario selected!';
+          }
+
+          // return $http.get('app/components/mapping/mapping_mock.json')
+          return $http.get('scenario-management/scenarios/' + scenarioId)
+            .then(function successCallback(res) {
+              return convertToLocalStructure(res.data);
+            })
+            .catch(function errorCallback(res) {
+              return res;
             });
         };
 
-        vm.saveMapping = function (data, callback) {
-          var result = convertToRemoteStructure(data);
+        vm.saveMapping = function (data) {
+          var mapping = convertToRemoteStructure(data);
 
-          var scenarioId = null;
+          var scenarioId = Scenario.getCurrentScenario().ScenarioId;
+          if (!scenarioId) {
+            return 'Mapping.get(): ' + 'No Scenario selected!';
+          }
 
-          $http.put('/scenario-management/scenarios/' + scenarioId + '/mapping', result)
+          $http.put('/scenario-management/scenarios/' + scenarioId + '/mapping', mapping)
             .then(function successCallback(res) {
-              callback(res);
-            }, function errorCallback(err) {
-              $log.error(err);
-              callback(err);
+              return res.data;
+            })
+            .catch(function errorCallback(res) {
+              $log.error(res);
+              return {
+                error: 'Mapping.saveMapping(): ' + res.status + ': ' + res.statusText
+              };
             });
 
         };
