@@ -6,7 +6,7 @@
     .controller('MappingController', MappingController);
 
   /** @ngInject */
-  function MappingController($log, Mapping, Metadata, Alert) {
+  function MappingController($log, Mapping, Metadata, Alert, Scenario) {
     var vm = this;
 
     vm.DEV_MODE = true;
@@ -25,6 +25,11 @@
         'the field.');
     }
 
+    Scenario.registerOnChangeListener(function () {
+      vm.currentScenario = Scenario.getCurrentScenario();
+      loadMapping();
+    });
+
     var initMappingData = function () {
       vm.treeOptions = {
         dirSelectable: false,
@@ -37,6 +42,11 @@
     initMappingData();
 
     var loadMapping = function () {
+      if (!Scenario.getCurrentScenario()) {
+        vm.alerts.add('Please select a Scenario in the top right corner or create one');
+        return;
+      }
+
       mapping.getMapping().then(function (res) {
         if (res.status > 299) {
           $log.error('error:', res);

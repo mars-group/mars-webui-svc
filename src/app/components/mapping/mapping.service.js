@@ -67,9 +67,12 @@
         };
 
         vm.getMapping = function () {
-          var scenarioId = Scenario.getCurrentScenario().ScenarioId;
+          var scenarioId;
+          if (Scenario.getCurrentScenario()) {
+            scenarioId = Scenario.getCurrentScenario().ScenarioId;
+          }
           if (!scenarioId) {
-            return 'Mapping.get(): ' + 'No Scenario selected!';
+            return;
           }
 
           return $http.get('scenario-management/scenarios/' + scenarioId)
