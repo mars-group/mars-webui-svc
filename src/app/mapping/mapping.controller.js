@@ -99,6 +99,7 @@
     vm.resetField = function (field) {
       field.TableName = null;
       field.ColumnName = null;
+      field.ColumnClearName = null;
       field.Value = null;
     };
 
@@ -114,6 +115,7 @@
       if (hasMappingType && isCollumnParameterMapping || !hasMappingType) {
         vm.selectedField.TableName = dataset.additionalTypeSpecificData.tableName;
         vm.selectedField.ColumnName = dataset.additionalTypeSpecificData.columnNames[index].dbCloumnName;
+        vm.selectedField.ColumnClearName = dataset.additionalTypeSpecificData.columnNames[index].clearColumnName;
         vm.selectedField.MetaDataId = dataset.dataId;
 
         if (vm.selectedField.hasOwnProperty('ColumnClearName')) {

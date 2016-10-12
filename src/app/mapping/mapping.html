@@ -40,10 +40,10 @@
           <td class="col-md-4">
             <div class="input-group" ng-hide="field.MappingType === 'ValueParameterMapping'">
               <button class="btn btn-info" ng-click="mapping.selectedField=field">
-                {{ field.ColumnName ? field.ColumnName : 'select'}}
+                {{ field.ColumnClearName ? field.ColumnClearName : 'select'}}
               </button>
               <button class="btn btn-link" ng-click="mapping.resetField(field)"
-                      ng-show="field.ColumnName">X
+                      ng-show="field.ColumnClearName">X
               </button>
             </div>
             <div class="input-group" ng-show="field.MappingType === 'ValueParameterMapping'">
@@ -72,10 +72,10 @@
           <td class="col-md-4">
             <div class="input-group">
               <button class="btn btn-info" ng-click="mapping.selectedField=mapping.selectedNode">
-                {{ mapping.selectedNode.ColumnName ? mapping.selectedNode.ColumnName : 'select' }}
+                {{ mapping.selectedNode.ColumnClearName ? mapping.selectedNode.ColumnClearName : 'select' }}
               </button>
               <button class="btn btn-link" ng-click="mapping.resetField(mapping.selectedNode)"
-                      ng-show="mapping.selectedNode.ColumnName">X
+                      ng-show="mapping.selectedNode.ColumnClearName">X
               </button>
             </div>
           </td>
@@ -134,8 +134,8 @@
     </uib-accordion>
 
     <!-- for debugging only -->
-    <div ng-show="mapping.DEV_MODE">selected Node: {{ mapping.selectedNode |json }}</div>
-    <!--<div ng-show="mapping.DEV_MODE">selected field: {{ mapping.selectedField |json }}</div>-->
+    <!--<div ng-show="mapping.DEV_MODE">selected Node: {{ mapping.selectedNode |json }}</div>-->
+    <div ng-show="mapping.DEV_MODE">selected field: {{ mapping.selectedField |json }}</div>
 
   </div>
 
