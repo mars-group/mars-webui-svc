@@ -48,7 +48,6 @@
               tmpTreeData[1].Agents.push(layerType);
             }
           });
-          console.log(tmpTreeData);
           return tmpTreeData;
         };
 
@@ -59,9 +58,9 @@
           tmp.InitializationDescription.GISLayers = data[0].Agents[1].Agents;
           tmp.InitializationDescription.BasicLayers = data[0].Agents[2].Agents;
 
-          tmp.ParameterizationDescription.Agents = data[1].Agents[0].Agents;
+          tmp.ParameterizationDescription.Layers = data[1].Agents[0].Agents;
           tmp.ParameterizationDescription.Global.Parameters = data[1].Agents[1].Agents;
-          tmp.ParameterizationDescription.Layers = data[1].Agents[2].Agents;
+          tmp.ParameterizationDescription.Agents = data[1].Agents[2].Agents;
 
           return tmp;
         };

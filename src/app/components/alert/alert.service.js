@@ -9,8 +9,12 @@
 
         var alerts = [];
 
-        vm.get = function () {
+        vm.getAll = function () {
           return alerts;
+        };
+
+        vm.getOne = function (index) {
+          return alerts[index];
         };
 
         /**
@@ -29,6 +33,15 @@
         vm.remove = function (index) {
           alerts.splice(index, 1);
         };
+
+        vm.removeByName = function (name) {
+          angular.forEach(alerts, function (e) {
+            if (angular.equals(e.msg, name)) {
+              vm.remove(alerts.indexOf(e));
+            }
+          });
+        };
+
       };
     });
 

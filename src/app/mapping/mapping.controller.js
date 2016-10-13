@@ -6,7 +6,7 @@
     .controller('MappingController', MappingController);
 
   /** @ngInject */
-  function MappingController($log, Mapping, Metadata, Alert, Scenario) {
+  function MappingController($log, $rootScope, Mapping, Metadata, Alert, Scenario) {
     var vm = this;
 
     vm.DEV_MODE = true;
@@ -18,12 +18,24 @@
     vm.selectedNode = null;
     vm.selectedField = null;
 
+    var initialInfo = 'Select a Layer on the left. In the appearing area, push the "select" button and match a field ' +
+      'with the desired dataset on the right. Alternatively set a manual value, by selecting the checkbox next to ' +
+      'the field.';
 
     if (!vm.DEV_MODE) {
-      vm.alerts.add('Select a Layer on the left. In the appearing area, push the "select" button and match a field ' +
-        'with the desired dataset on the right. Alternatively set a manual value, by selecting the checkbox next to ' +
-        'the field.');
+      vm.alerts.add(initialInfo);
     }
+
+    var removeInitialWarningOnNodeSelection = function () {
+      $rootScope.$watch(function () {
+        return vm.selectedNode;
+      }, function (newValue, oldValue) {
+        if (oldValue === null && newValue !== null) {
+          vm.alerts.removeByName(initialInfo);
+        }
+      });
+    };
+    removeInitialWarningOnNodeSelection();
 
     Scenario.registerOnChangeListener(function () {
       vm.currentScenario = Scenario.getCurrentScenario();

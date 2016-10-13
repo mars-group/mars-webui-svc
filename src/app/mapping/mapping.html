@@ -16,7 +16,7 @@
 
   <div class="col-md-5">
     <!-- Error messages -->
-    <uib-alert ng-repeat="alert in mapping.alerts.get()" type="{{alert.type}}" close="mapping.alerts.remove($index)">
+    <uib-alert ng-repeat="alert in mapping.alerts.getAll()" type="{{alert.type}}" close="mapping.alerts.remove($index)">
       {{alert.msg}}
     </uib-alert>
 
@@ -90,18 +90,17 @@
 
         <!-- TODO: render parameters -->
 
-        <tr class="text-right">
-          <td>
-          </td>
-          <td>
-          </td>
-          <td>
-            <button class="btn btn-warning" type="button" ng-click="mapping.cancel()">Cancel</button>
-            <button class="btn btn-primary" type="submit" ng-click="mapping.save()"
-                    data-ng-disabled="mappingForm.$invalid">Save
-            </button>
-          </td>
-        </tr>
+        <!--<tr class="text-right">-->
+        <!--<td>-->
+        <!--</td>-->
+        <!--<td>-->
+        <!--</td>-->
+        <!--<td>-->
+        <!--<button class="btn btn-primary" type="submit" ng-click="mapping.save()"-->
+        <!--data-ng-disabled="mappingForm.$invalid">Save-->
+        <!--</button>-->
+        <!--</td>-->
+        <!--</tr>-->
         </tbody>
       </table>
     </form>
