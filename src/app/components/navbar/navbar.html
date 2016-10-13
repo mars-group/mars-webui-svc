@@ -1,34 +1,44 @@
-<nav class="navbar navbar-static-top navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" ui-sref="home">
-        <span class="glyphicon glyphicon-home"></span> MARS Dashboard
-      </a>
+<div id="navigation-container">
+  <nav class="navbar navbar-static-top navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" ui-sref="home">
+          <span class="glyphicon glyphicon-home"></span> MARS Dashboard
+        </a>
+      </div>
+
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+
+          <li uib-dropdown data-on-toggle="toggled(open)" ng-repeat="menuItem in navigation.menuItems">
+            <a href="menuItem.url" uib-dropdown-toggle>{{ menuItem.title }} <span class="caret"></span></a>
+            <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="simple-dropdown">
+              <li ng-repeat="child in menuItem.children" ng-class="child.divider">
+                <a ng-hide="child.divider" data-ui-sref="{{ child.url ? child.url : 'home' }}">{{ child.title }}</a>
+              </li>
+            </ul>
+          </li>
+
+        </ul>
+
+        <form class="navbar-form navbar-right">
+          <div class="form-group">
+          </div>
+          <div class="form-group">
+            <label for="project" class="acme-navbar-text">Project: </label>
+            <select class="form-control" id="project">
+              <option ng-repeat="project in navigation.projects">{{ project.name }}</option>
+            </select>
+          </div>
+          <div class="form-group scenario">
+            <label for="scenario" class="acme-navbar-text">Scenario: </label>
+            <select class="form-control" id="scenario" ng-model="navigation.currentScenario"
+                    data-ng-options="o.Name for o in navigation.scenarios track by o.ScenarioId"
+                    data-ng-change="navigation.setCurrentScenario(o)">
+            </select>
+          </div>
+        </form>
+      </div>
     </div>
-
-    <div class="collapse navbar-collapse">
-      <ul class="nav navbar-nav">
-
-        <li uib-dropdown on-toggle="toggled(open)" ng-repeat="menuItem in vm.menuItems">
-          <a href="{{ menuItem.url }}" uib-dropdown-toggle>{{ menuItem.title }} <span class="caret"></span></a>
-          <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="simple-dropdown">
-            <li ng-repeat="child in menuItem.children" ng-class="child.divider">
-              <a ng-hide="child.divider" ui-sref="{{ child.url ? child.url : 'home' }}">{{ child.title }}</a>
-            </li>
-          </ul>
-        </li>
-
-      </ul>
-
-      <form class="navbar-form navbar-right">
-        <div class="form-group">
-          <label class="acme-navbar-text">Current Project: </label>
-          <select class="form-control">
-            <option ng-repeat="project in vm.projects">{{ project.name }}</option>
-          </select>
-        </div>
-      </form>
-
-    </div>
-  </div>
-</nav>
+  </nav>
+</div>

@@ -5,25 +5,27 @@
   </div>
 
   <div class="col-md-3">
-    <h3>Mapping fields</h3>
+    <h3>Model Aspects</h3>
     <treecontrol class="tree-boot" tree-model="mapping.treeData"
                  expanded-nodes="mapping.treeExpandedNodes" options="mapping.treeOptions"
-                 on-selection=""
+                 on-selection="mapping.selectFirstField(node)"
                  selected-node="mapping.selectedNode">
       {{ node.LayerName }} {{ node.Name }}
     </treecontrol>
   </div>
 
-  <div class="col-md-6">
+  <div class="col-md-5">
     <!-- Error messages -->
-    <uib-alert ng-repeat="alert in mapping.alerts.get()" type="{{alert.type}}" close="mapping.alerts.remove($index)">
+    <uib-alert ng-repeat="alert in mapping.alerts.getAll()" type="{{alert.type}}" close="mapping.alerts.remove($index)">
       {{alert.msg}}
     </uib-alert>
 
     <form name="mappingForm" class="simple-form" novalidate ng-show="mapping.selectedNode">
       <h3>{{ mapping.selectedNode.Name }}</h3>
 
-      <table class="table table-striped">
+      <!-- render basic layer agent fields -->
+      <table class="table table-striped" ng-hide="mapping.selectedNode.Parameters ||
+      mapping.selectedNode.hasOwnProperty('LayerName')">
         <thead>
         <tr>
           <th>Fields</th>
@@ -37,55 +39,114 @@
             <span>{{ field.Name }}:</span>
           </td>
           <td class="col-md-4">
-            <div class="input-group" ng-hide="field.override">
-              <button class="btn btn-default" ng-click="mapping.selectedField=field">
-                {{ field.TableName ? field.TableName : 'select'}}
+            <div class="input-group" ng-hide="field.MappingType === 'ValueParameterMapping'">
+              <button class="btn btn-info" ng-click="mapping.selectedField=field">
+                {{ field.ColumnClearName ? field.ColumnClearName : 'select'}}
               </button>
-              <button class="btn btn-link" ng-click="field.TableName=null" ng-show="field.TableName">X</button>
+              <button class="btn btn-link" ng-click="mapping.resetField(field)"
+                      ng-show="field.ColumnClearName">X
+              </button>
             </div>
-            <div class="input-group" ng-show="field.override">
+            <div class="input-group" ng-show="field.MappingType === 'ValueParameterMapping'">
               <label><input type="text" class="form-control" ng-model="field.Value"/></label>
             </div>
           </td>
           <td class="col-md-4">
             <div class="input-group">
               <div class="checkbox">
-                <label><input type="checkbox" ng-model="field.override" ng-click="mapping.toggleManuallyValue(field)">
+                <label><input type="checkbox" ng-model="field.MappingType" ng-click="mapping.resetField(field)"
+                              data-ng-true-value="'ValueParameterMapping'"
+                              data-ng-false-value="'ColumnParameterMapping'">
                 </label>
               </div>
             </div>
           </td>
         </tr>
-        <tr class="form-group" ng-hide="mapping.selectedNode.ConstructorParameterMapping">
-          <td class="col-md-4">
+        <tr class="text-right">
+          <td></td>
+          <td></td>
+          <td>
+            <button class="btn btn-primary" type="submit" ng-click="mapping.save()"
+                    data-ng-disabled="mappingForm.$invalid">Save
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
+      <!-- render layer fields -->
+      <table class="table table-striped" ng-show="mapping.selectedNode.hasOwnProperty('LayerName')">
+        <thead>
+        <tr>
+          <th>Fields</th>
+          <th>Select Dataset</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="form-group">
+          <td class="col-md-6">
             <span>{{ mapping.selectedNode.LayerName }}:</span>
           </td>
-          <td class="col-md-4">
+          <td class="col-md-6">
             <div class="input-group">
-              <button class="btn btn-default" ng-click="mapping.selectedField=mapping.selectedNode">
-                {{ mapping.selectedNode.TableName ? mapping.selectedNode.TableName : 'select'}}
+              <button class="btn btn-info" ng-click="mapping.selectedField=mapping.selectedNode">
+                {{ mapping.selectedNode.ColumnClearName ? mapping.selectedNode.ColumnClearName : 'select' }}
               </button>
-              <button class="btn btn-link" ng-click="mapping.selectedNode.TableName=null"
-                      ng-show="mapping.selectedNode.TableName">X
+              <button class="btn btn-link" ng-click="mapping.resetField(mapping.selectedNode)"
+                      ng-show="mapping.selectedNode.ColumnClearName">X
               </button>
-            </div>
-          </td>
-          <td class="col-md-4">
-            <div class="input-group">
-              <div class="checkbox">
-                <label><input type="checkbox" ng-model="field.override" ng-click="mapping.toggleManuallyValue(field)"
-                              ng-disabled="true" class="disabled"></label>
-              </div>
             </div>
           </td>
         </tr>
         <tr class="text-right">
+          <td></td>
           <td>
+            <button class="btn btn-primary" type="submit" ng-click="mapping.save()"
+                    data-ng-disabled="mappingForm.$invalid">Save
+            </button>
           </td>
-          <td>
+        </tr>
+        </tbody>
+      </table>
+
+      <!-- render parameters -->
+      <table class="table table-striped" ng-show="mapping.selectedNode.Parameters">
+        <thead>
+        <tr>
+          <th>Key</th>
+          <th>Value</th>
+          <th>Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="form-group" data-ng-repeat="field in mapping.selectedNode.Parameters">
+          <td class="col-md-5">
+            <div class="input-group">
+              <label><input type="text" class="form-control" ng-model="field.Name" data-ng-disabled="field.Required" />
+              </label>
+            </div>
           </td>
+          <td class="col-md-5">
+            <div class="input-group">
+              <label><input type="text" class="form-control" ng-model="field.Value"/></label>
+            </div>
+          </td>
+          <td class="col-md-2">
+            <div class="input-group">
+              <button class="btn btn-link" ng-click="mapping.removeParameter(field)"
+                      data-ng-disabled="field.Required">X</button>
+            </div>
+          </td>
+        </tr>
+        <tr>
           <td>
-            <button class="btn btn-warning" type="button" ng-click="mapping.cancel()">Cancel</button>
+            <button class="btn btn-primary" ng-click="mapping.addParameter()">Add Parameter</button>
+          </td>
+          <td></td>
+        </tr>
+        <tr class="text-right">
+          <td></td>
+          <td>
             <button class="btn btn-primary" type="submit" ng-click="mapping.save()"
                     data-ng-disabled="mappingForm.$invalid">Save
             </button>
@@ -96,7 +157,7 @@
     </form>
   </div>
 
-  <div class="col-md-3" ng-show="mapping.selectedNode">
+  <div class="col-md-4" ng-show="mapping.selectedNode">
     <h3>Select Data</h3>
 
     <div class="form-group">
@@ -108,15 +169,23 @@
       <uib-accordion-group class="panel-default" ng-repeat="dataset in mapping.metadata">
         <uib-accordion-heading>
           {{ dataset.title }}
-          <div class="pull-right btn-group btn-group-xs"
-               ng-click="$event.stopPropagation(); $event.preventDefault(); mapping.createMapping(dataset)">
-            <button class="btn btn-success btn-xs">add</button>
-          </div>
         </uib-accordion-heading>
-        <div>type: {{ dataset.type }}</div>
-        <div>description: {{ dataset.description }}</div>
+        <div>Type: {{ dataset.type }}</div>
+        <div>Description: {{ dataset.description }}</div>
+        <div ng-show="dataset.additionalTypeSpecificData.databaseName">
+          <div>ColumnNames:</div>
+          <ul>
+            <li ng-repeat="field in dataset.additionalTypeSpecificData.columnNames">{{ field.clearColumnName }}
+              <button class="btn btn-success btn-xs" ng-click="mapping.createMapping(dataset, $index)">add</button>
+            </li>
+          </ul>
+        </div>
       </uib-accordion-group>
     </uib-accordion>
+
+    <!-- for debugging only -->
+    <!--<div ng-show="mapping.DEV_MODE">selected Node: {{ mapping.selectedNode |json }}</div>-->
+    <div ng-show="mapping.DEV_MODE">selected field: {{ mapping.selectedField |json }}</div>
 
   </div>
 

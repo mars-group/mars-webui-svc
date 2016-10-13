@@ -24,7 +24,7 @@
       <div class="form-group">
         <label for="scenarioModel" class="control-label">Model</label>
         <select id="scenarioModel" class="form-control" ng-model="scenarioModal.scenario.model" name="model" required>
-          <option ng-repeat="model in scenarioModal.models" value="{{model}}">{{model}}</option>
+          <option ng-repeat="model in scenarioModal.models" value="{{model.dataId}}">{{model.title}}</option>
         </select>
         <div ng-show="(scenarioModal.form.$submitted || scenarioModal.form.model.$touched)
         && scenarioModal.form.model.$invalid">

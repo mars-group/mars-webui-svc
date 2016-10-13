@@ -10,16 +10,14 @@
     return {
       restrict: 'E',
       templateUrl: 'app/components/navbar/navbar.html',
-      scope: {
-        creationDate: '='
-      },
+      scope: {},
       controller: NavbarController,
-      controllerAs: 'vm',
+      controllerAs: 'navigation',
       bindToController: true
     };
 
     /** @ngInject */
-    function NavbarController() {
+    function NavbarController(Scenario) {
       var vm = this;
 
       vm.menuItems = [
@@ -84,7 +82,22 @@
         }
       ];
 
+      // TODO: create project service
+      var project = 42;
+      Scenario.getScenarios(project, function (scenarios) {
+        vm.scenarios = scenarios;
+      });
+
+      vm.currentScenario = Scenario.getCurrentScenario();
+
+      Scenario.registerOnChangeListener(function () {
+        vm.currentScenario = Scenario.getCurrentScenario();
+      });
+
+      vm.setCurrentScenario = function () {
+        Scenario.setCurrentScenario(vm.currentScenario);
+      };
+
     }
   }
 })();
-

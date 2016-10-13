@@ -1,17 +1,15 @@
-.acme-navbar-text {
-  color: white;
-}
+#navigation-container {
 
-a {
-  color: black;
-}
+  .acme-navbar-text {
+    color: white;
+  }
 
-h1 {
-  font-size: 2em;
-  margin: 0;
-  line-height: 1.25em;
-}
+  .form-group {
+    color: white;
+  }
 
-a:hover, a:focus {
-  color: greenyellow;
+  .scenario {
+    margin-left: 1em;
+  }
+
 }

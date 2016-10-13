@@ -5,10 +5,11 @@
     .module('marsApp')
     .factory('Metadata', function Scenario($http) {
 
-      var getMetadata = function (dataId, callback) {
+      var getMetadataFromPathvariable = function (pathVariable, callback) {
         var url = '/metadata/metadata/';
-        if(dataId){
-          url += dataId;
+
+        if (pathVariable) {
+          url += pathVariable;
         }
 
         $http.get(url).then(function (res) {
@@ -16,22 +17,38 @@
         });
       };
 
+      var getMetadataFromParams = function (params, callback) {
+        var url = '/metadata/metadata';
+
+        var request = {
+          params: params
+        };
+        $http.get(url, request).then(function (res) {
+          callback(res);
+        });
+      };
 
       return {
         getAll: function (callback) {
-          getMetadata(null, function (res) {
+          getMetadataFromPathvariable(null, function (res) {
+            callback(res);
+          });
+        },
+
+        getFiltered: function (params, callback) {
+          getMetadataFromParams(params, function (res) {
             callback(res);
           });
         },
 
         getOne: function (dataId, callback) {
-          getMetadata(dataId, function (res) {
+          getMetadataFromPathvariable(dataId, function (res) {
             callback(res);
           });
         },
 
         hasStatusWritten: function (dataId, callback) {
-          getMetadata(dataId, function (res) {
+          getMetadataFromPathvariable(dataId, function (res) {
             if (angular.isUndefined(res.state)) {
               if (res.state == 'finished' || res.state == 'preprocessingFinished') {
                 callback(true);
