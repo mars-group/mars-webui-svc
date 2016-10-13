@@ -34,20 +34,23 @@
             }
           });
 
-          // convert ParameterizationDescription global parameters to array
-          data.ParameterizationDescription.Global = data.ParameterizationDescription.Global.Parameters;
-
           // convert ParameterizationDescription to array
           angular.forEach(data.ParameterizationDescription, function layerTypes(value, key) {
             // there is no continue in JS... too bad
-            if (!angular.equals(key, 'LogicalChangeTime')) {
+            if (!angular.equals(key, 'LogicalChangeTime') && !angular.equals(key, 'Global')) {
               var layerType = {
                 Name: key,
                 Agents: value
               };
               tmpTreeData[1].Agents.push(layerType);
             }
+
+            //keep global parameters how they are
+            if (angular.equals(key, 'Global')) {
+              tmpTreeData[1].Agents.push(value);
+            }
           });
+
           return tmpTreeData;
         };
 
@@ -59,7 +62,7 @@
           tmp.InitializationDescription.BasicLayers = data[0].Agents[2].Agents;
 
           tmp.ParameterizationDescription.Layers = data[1].Agents[0].Agents;
-          tmp.ParameterizationDescription.Global.Parameters = data[1].Agents[1].Agents;
+          tmp.ParameterizationDescription.Global.Parameters = data[1].Agents[1].Parameters;
           tmp.ParameterizationDescription.Agents = data[1].Agents[2].Agents;
 
           return tmp;
@@ -74,12 +77,11 @@
             return;
           }
 
-          return $http.get('scenario-management/scenarios/' + scenarioId)
+          return $http.get('/scenario-management/scenarios/' + scenarioId)
             .then(function successCallback(res) {
               originalData = res.data;
 
-              console.log('original:', res.data.ParameterizationDescription);
-
+              $log.info('loaded data:', res.data.ParameterizationDescription);
               return convertToLocalStructure(res.data);
             })
             .catch(function errorCallback(res) {
@@ -90,7 +92,7 @@
         vm.saveMapping = function (data) {
           var mapping = convertToRemoteStructure(data);
 
-          // console.log('saving:', mapping);
+          $log.info('saving:', mapping);
 
           var scenarioId = Scenario.getCurrentScenario().ScenarioId;
           if (!scenarioId) {
@@ -116,7 +118,6 @@
         };
 
         var saveParameters = function (scenarioId, mapping) {
-          console.log('saving:', mapping.ParameterizationDescription);
           return $http.put('/scenario-management/scenarios/' + scenarioId + '/parameter', mapping.ParameterizationDescription)
             .then(function successCallback(res) {
               $log.info('ParameterizationDescription saved');

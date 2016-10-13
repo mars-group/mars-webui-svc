@@ -6,7 +6,7 @@
     .controller('MappingController', MappingController);
 
   /** @ngInject */
-  function MappingController($log, $rootScope, Mapping, Metadata, Alert, Scenario) {
+  function MappingController($log, $scope, Mapping, Metadata, Alert, Scenario) {
     var vm = this;
 
     vm.DEV_MODE = true;
@@ -27,11 +27,14 @@
     }
 
     var removeInitialWarningOnNodeSelection = function () {
-      $rootScope.$watch(function () {
-        return vm.selectedNode;
+
+      var keyBinding = $scope.$watch(function () {
+        return mapping.selectedNode;
       }, function (newValue, oldValue) {
         if (oldValue === null && newValue !== null) {
           vm.alerts.removeByName(initialInfo);
+          // clear binding: https://stackoverflow.com/questions/14957614/angularjs-clear-watch
+          keyBinding();
         }
       });
     };
@@ -122,9 +125,9 @@
       }
 
       var hasMappingType = vm.selectedField.hasOwnProperty('MappingType');
-      var isCollumnParameterMapping = vm.selectedField.MappingType === 'ColumnParameterMapping';
+      var isColumnParameterMapping = vm.selectedField.MappingType === 'ColumnParameterMapping';
 
-      if (hasMappingType && isCollumnParameterMapping || !hasMappingType) {
+      if (hasMappingType && isColumnParameterMapping || !hasMappingType) {
         vm.selectedField.TableName = dataset.additionalTypeSpecificData.tableName;
         vm.selectedField.ColumnName = dataset.additionalTypeSpecificData.columnNames[index].dbCloumnName;
         vm.selectedField.ColumnClearName = dataset.additionalTypeSpecificData.columnNames[index].clearColumnName;
@@ -140,6 +143,18 @@
 
     vm.save = function () {
       mapping.saveMapping(vm.treeData);
+    };
+
+    vm.addParameter = function () {
+    var parameter = {
+      "Name": '',
+      "Value": ''
+    };
+      vm.selectedNode.Parameters.push(parameter);
+    };
+
+    vm.removeParameter = function (parameter) {
+      vm.selectedNode.Parameters.splice(vm.selectedNode.Parameters.indexOf(parameter), 1);
     };
 
   }
