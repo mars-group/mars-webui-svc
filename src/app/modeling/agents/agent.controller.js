@@ -3,8 +3,6 @@
 
   angular
     .module('marsApp')
-
-
     .controller('AgentController', AgentController);
 
   /** @ngInject */
@@ -22,8 +20,7 @@
       var modalInstance = $uibModal.open(settings);
     },
 
-
-    vm.title = 'Agent Editor',
+      vm.title = 'Agent Editor',
 
       vm.name = 'Hello World',
 

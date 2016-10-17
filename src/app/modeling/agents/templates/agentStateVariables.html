@@ -1,4 +1,6 @@
 <div id="stateVariableContainer" class="form-group">
+
+  <!--Table which holds all state variable information-->
   <table class="table table-hover">
     <thead>
     <tr>
@@ -8,7 +10,11 @@
       <th>Externally Initialized</th>
     </tr>
     </thead>
+
+    <!--Data part for the table-->
     <tbody>
+
+    <!--Retrieves each variable from the metamodels array for the state variables-->
     <tr data-ng-repeat="stateVariable in agentStateVariables">
       <td>
         <input data-ng-model="stateVariable.name" class="form-control">
@@ -28,6 +34,7 @@
         <input type="checkbox" data-ng-model="stateVariable.externallyInitialized">
       </td>
       <td>
+        <!--Remove "cross/ x" at the end of each row-->
         <button ng-click="removeStateVariable(stateVariable.name)" type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
       </td>
     </tr>
@@ -37,8 +44,9 @@
       <td></td>
       <td></td>
       <td>
-        <button class="btn btn-primary pull-right" ng-click="addStateVariable()">Add</button>
-        <button class="btn btn-primary pull-right" ng-click="openModal()">Hallo</button>
+        <!--Button for adding a variable-->
+        <!--<button class="btn btn-primary pull-right" ng-click="addStateVariable()">Add</button>-->
+        <button class="btn btn-primary pull-right" ng-click="openModal()">Add</button>
       </td>
     </tr>
     </tbody>
