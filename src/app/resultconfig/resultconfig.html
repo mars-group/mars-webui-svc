@@ -4,6 +4,119 @@
     <acme-navbar></acme-navbar>
   </div>
 
-  {{resultconfig.test}}
 
+  <!-- Error window. Shows up, if the 'error' boolean is set. -->
+  <div id="ErrorDialog" ng-show="resultconfig.error">
+    <h2>Error</h2>
+    <h3>The parser result for the currently selected model could not be loaded.</h3>
+    <p>
+      The parser result contains information about the agent types contained in
+      your model, their properties and fields available for output. These data are
+      necessary to show the configuration view. <br /><br />
+      If you see this message, it means that either the model archive you uploaded
+      is corrupted or a critical parser failure has occured.
+    </p>
+  </div>
+
+  <div id="RCS-Main" ng-hide="resultconfig.error">
+    <h2>Result Output Configuration</h2>
+
+      <div id="ConfigurationDialog">
+      <uib-tabset>
+        <uib-tab ng-repeat="agent in resultconfig.AgentTypes" index="$index" heading="{{agent.AgentType}}">
+          <div class="row" id="configPane">
+
+            <!-- The left side pane. -->
+            <div class="col-sm-6">
+
+              <table class="agentData">
+                <tr><td>Selected agent:</td><td>{{agent.AgentType}}</td></tr>
+                <tr><td>Agent layer:</td><td>{{agent.AgentLayer}}</td></tr>
+                <tr><td>Spatial:</td><td>{{agent.IsSpatial}}</td></tr>
+              </table>
+
+              <!-- Output enable/disable master switch. -->
+              <div style="height: 45px;">
+                <h5 style="float: left; font-size: 13pt; font-weight: normal;">Enable agent output</h5>
+                <toggle-switch ng-model="resultconfig.SelectedConfig.Agents[$index].OutputEnabled" style="margin: 6px 0 0 30px;"></toggle-switch>
+              </div>
+
+
+              <!-- Left result configuration pane. The availability is governed by the switch above. -->
+              <fieldset class="RCS-Options" ng-disabled="!resultconfig.SelectedConfig.Agents[$index].OutputEnabled">
+                Frequency: &nbsp; &nbsp; every <input type="number" min="1" step="1" value="1"
+                                                      onkeypress="return (event.charCode === 8 || event.charCode === 0) ? null : event.charCode >= 48 && event.charCode <= 57"
+                                                      ng-model="resultconfig.SelectedConfig.Agents[$index].Frequency"
+                                                      style="max-width: 48px; text-align: center;" /> tick(s)
+
+
+                <!-- Spatial output and visualization options are only available to spatial agent types. -->
+                <fieldset class="RCS-Options" ng-disabled="!agent.IsSpatial">
+                  <div class="checkbox">
+                    <label class="reslbl"><input type="checkbox" ng-model="resultconfig.SelectedConfig.Agents[$index].SpatialOutput" />Output spatial information</label>
+                  </div>
+                  <fieldset class="RCS-Options" ng-disabled="!resultconfig.SelectedConfig.Agents[$index].SpatialOutput">
+                    <div class="form-group">
+                      <label class="radio-inline"><input type="radio" name="{{agent.AgentType}}" ng-model="resultconfig.SelectedConfig.Agents[$index].SpatialType" value="stationary" />stationary</label>
+                      <label class="radio-inline"><input type="radio" name="{{agent.AgentType}}" ng-model="resultconfig.SelectedConfig.Agents[$index].SpatialType" value="mobile" />mobile</label>
+                    </div>
+                    <div class="checkbox">
+                      <label class="reslbl"><input type="checkbox" ng-model="resultconfig.SelectedConfig.Agents[$index].EnableVisualization">Enable 3D visualization</label>
+                    </div>
+                    <fieldset class="RCS-Options" ng-disabled="!resultconfig.SelectedConfig.Agents[$index].EnableVisualization">
+                      <label for="comment">Additional visualization parameters: <span class="glyphicon glyphicon-info-sign" title="info"></span></label>
+                      <textarea class="form-control" rows="4" id="comment" ng-model="resultconfig.SelectedConfig.Agents[$index].VisualizationParams"></textarea>
+                    </fieldset>
+                  </fieldset>
+                </fieldset>
+
+              </fieldset>
+            </div>
+
+
+            <!-- Right column with property table and notice. Also switched on/off by the master output switch. -->
+            <fieldset class="col-sm-6 RCS-Options" ng-disabled="!resultconfig.SelectedConfig.Agents[$index].OutputEnabled">
+              <p class="reslbl">Custom agent properties:</p>
+              <table class="table">
+                <thead>
+                <tr>
+                  <th>Property</th>
+                  <th style="width: 68pt;">Data Type</th>
+                  <th style="width: 1%">Output?</th>
+                  <th style="width: 1%">Fixed?</th>
+                </tr>
+                </thead>
+                <tr ng-repeat="property in resultconfig.SelectedConfig.Agents[$index].OutputProperties">
+                  <td>{{property.Name}}</td>
+                  <td>{{property.Type}}</td>
+                  <td style="text-align: center;"><input type="checkbox" ng-model="property.Selected" /></td>
+                  <td style="text-align: center;"><input type="checkbox" ng-model="property.Static" /></td>
+                </tr>
+              </table>
+              <p class="info">To have an agent property appear in this pane, make sure it is a public C# property.</p>
+            </fieldset>
+
+          </div>
+        </uib-tab>
+      </uib-tabset>
+    </div>
+
+
+    <div id="ConfigManagement">
+      <h3>Available configurations</h3>
+
+      <select ng-options="i.ConfigName as (i.ConfigName) for i in resultconfig.ResultConfigs" ng-click="resultconfig.SelectionChanged()" ng-model="resultconfig.SelectedConfigStr" id="ConfigSelection" class="input-sm"></select>
+      <button type="button" class="btn btn-primary btn-sm" ng-click="resultconfig.CreateNew()"><span class="glyphicon glyphicon-duplicate"></span>&nbsp; Create New</button>
+      <button type="button" class="btn btn-primary btn-sm" ng-click="resultconfig.SaveConfig()" ng-disabled="resultconfig.SelectedConfig.ConfigName=='--default--'"><span class="glyphicon glyphicon-floppy-disk"></span>&nbsp; Save</button>
+      <button type="button" class="btn btn-danger btn-sm"  ng-click="resultconfig.DeleteConfig()" ng-disabled="resultconfig.SelectedConfig.ConfigName=='--default--'"><span class="glyphicon glyphicon-remove"></span>&nbsp; Delete</button>
+    </div>
+
+
+  </div>
+
+
+  <!-- Create new configuration file dialogue. -->
+  <script type="text/ng-template" id="NewConfigDialogue">
+
+  </script>
 </div>

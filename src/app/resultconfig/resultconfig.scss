@@ -1,5 +1,6 @@
 #resultconfig-container {
 
+  h2 { margin-bottom: 35px; }
 
   #ConfigurationDialog { max-width: 900px; }
   #configPane { margin: 5px; }
@@ -20,6 +21,18 @@
     padding: 0 8px;
   }
 
+  .agentData {
+    td {
+      vertical-align: top;
+      line-height: 15pt;
+    }
+    td:nth-child(1) {
+      font-weight: bold;
+      padding-right: 12px;
+    }
+    margin: 7px 0 14px 0;
+    font-size: 10pt;
+  }
 
   #ConfigManagement {
     margin-top: 20px;
