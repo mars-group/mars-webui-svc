@@ -15,12 +15,13 @@
     vm.treeExpandedNodes = [];
     vm.selectedNode = null;
     vm.selectedField = null;
+    vm.dataFilter = {};
 
     var initialInfo = 'Select a Layer on the left. In the appearing area, push the "select" button and match a field ' +
       'with the desired dataset on the right. Alternatively set a manual value, by selecting the checkbox next to ' +
       'the field.';
 
-      vm.alerts.add(initialInfo);
+    vm.alerts.add(initialInfo);
 
     var removeInitialWarningOnNodeSelection = function () {
 
@@ -95,11 +96,28 @@
     };
     loadMappingDatasets();
 
-    vm.selectFirstField = function (node) {
+    vm.onNodeSelection = function (node) {
+      selectFirstField(node);
+      setDataFilter(node);
+    };
+
+    var selectFirstField = function (node) {
       if (node.hasOwnProperty('ConstructorParameterMapping')) {
         vm.selectedField = node.ConstructorParameterMapping[0];
       } else {
         vm.selectedField = node;
+      }
+    };
+
+    var setDataFilter = function (node) {
+      console.log(node.LayerType);
+      switch (node.LayerType) {
+        case 'BasicLayers':
+          vm.dataFilter.type = 'TABLE_BASED';
+          break;
+        case 'TimeSeriesLayers':
+          vm.dataFilter.type = 'TIME_SERIES';
+          break;
       }
     };
 
@@ -142,10 +160,10 @@
     };
 
     vm.addParameter = function () {
-    var parameter = {
-      "Name": '',
-      "Value": ''
-    };
+      var parameter = {
+        "Name": '',
+        "Value": ''
+      };
       vm.selectedNode.Parameters.push(parameter);
     };
 

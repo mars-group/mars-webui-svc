@@ -34,6 +34,9 @@
             // add layerType to fields
             angular.forEach(layerMapping[layerType], function (layer) {
               layer.LayerType = layerType;
+              angular.forEach(layer.Agents, function (agent) {
+                agent.LayerType = layerType;
+              });
             });
 
             var tmpLayerType = {
@@ -83,6 +86,9 @@
           angular.forEach(layerData, function (layerType) {
             angular.forEach(layerType, function (layer) {
               delete layer.LayerType;
+              angular.forEach(layer.Agents, function (agent) {
+                delete agent.LayerType;
+              });
             });
           });
 

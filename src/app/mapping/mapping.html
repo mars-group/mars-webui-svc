@@ -8,7 +8,7 @@
     <h3>Model Aspects</h3>
     <treecontrol class="tree-boot" tree-model="mapping.treeData"
                  expanded-nodes="mapping.treeExpandedNodes" options="mapping.treeOptions"
-                 on-selection="mapping.selectFirstField(node)"
+                 on-selection="mapping.onNodeSelection(node)"
                  selected-node="mapping.selectedNode">
       {{ node.LayerName }} {{ node.Name }}
     </treecontrol>
@@ -164,16 +164,17 @@
     </form>
   </div>
 
-  <div class="col-md-4" ng-show="mapping.selectedNode">
+  <div class="col-md-4" ng-show="mapping.selectedNode && !mapping.selectedNode.Parameters">
     <h3>Select Data</h3>
 
     <div class="form-group">
       <label for="filter" class="filter">Filter:</label>
-      <input class="form-control" id="filter" type="text">
+      <input class="form-control" id="filter" type="text" ng-model="mapping.dataFilter.title">
     </div>
 
     <uib-accordion close-others="true">
-      <uib-accordion-group class="panel-default" ng-repeat="dataset in mapping.metadata track by $index">
+      <uib-accordion-group class="panel-default" ng-repeat="dataset in mapping.metadata |filter:mapping.dataFilter
+      track by $index">
         <uib-accordion-heading>
           {{ dataset.title }}
         </uib-accordion-heading>
@@ -182,7 +183,9 @@
         <div ng-show="dataset.additionalTypeSpecificData.databaseName">
           <div>ColumnNames:</div>
           <ul>
-            <li ng-repeat="field in dataset.additionalTypeSpecificData.columnNames track by $index">{{
+            <li
+              ng-repeat="field in dataset.additionalTypeSpecificData.columnNames track by $index ">
+              {{
               field.clearColumnName }}
               <button class="btn btn-success btn-xs" ng-click="mapping.createMapping(dataset, $index)">add</button>
             </li>
@@ -190,11 +193,6 @@
         </div>
       </uib-accordion-group>
     </uib-accordion>
-    Filter by: {{mapping.selectedField.LayerType}}
-    <hr/>
-    {{ mapping.selectedField |json }}
-    <hr/>
-    {{ mapping.selectedNode |json }}
   </div>
 
 
