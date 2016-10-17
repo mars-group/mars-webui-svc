@@ -53,6 +53,10 @@
               url: 'mapping'
             },
             {
+              title: 'Result Configuration',
+              url: 'resultconfig'
+            },
+            {
               title: 'Run',
               url: ''
             }

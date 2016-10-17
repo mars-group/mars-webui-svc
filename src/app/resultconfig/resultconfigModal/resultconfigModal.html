@@ -1,0 +1,15 @@
+<div class="resultconfigModal">
+  <div class="modal-header">
+    <h3 class="modal-title">Create New Result Configuration</h3>
+  </div>
+  <form>
+    <div class="modal-body">
+      <label for="NewConfigName">Name: </label>
+      <input id="NewConfigName" type="text" ng-model="resultconfigModal.ConfigName"/>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" type="submit" ng-disabled="resultconfigModal.ConfigName=='' || resultconfigModal.ConfigName=='--default--'" ng-click="resultconfigModal.ok()">Create</button>
+      <button class="btn btn-default" type="button" ng-click="resultconfigModal.cancel()">Cancel</button>
+    </div>
+  </form>
+</div>

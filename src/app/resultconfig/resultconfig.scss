@@ -1,0 +1,118 @@
+#resultconfig-container {
+
+  h2 { margin-bottom: 35px; }
+
+  #ConfigurationDialog { max-width: 900px; }
+  #configPane { margin: 5px; }
+
+  /* Adjust label fontsize for the options. */
+  .reslbl { font-size: 13pt; }
+
+  /* Set disabled elements to a light grey color. */
+  .RCS-Options[disabled],
+  .RCS-Options[disabled] .info { color: lightgrey; }
+
+  /* Display the info message in a grey and italic font. */
+  .info {
+    border-left: 2px solid lightgrey;
+    color: grey;
+    font-style: italic;
+    margin-left: 7px;
+    padding: 0 8px;
+  }
+
+  .agentData {
+    td {
+      vertical-align: top;
+      line-height: 15pt;
+    }
+    td:nth-child(1) {
+      font-weight: bold;
+      padding-right: 12px;
+    }
+    margin: 7px 0 14px 0;
+    font-size: 10pt;
+  }
+
+  #ConfigManagement {
+    margin-top: 20px;
+  }
+  #ConfigManagement h3 {
+    font-size: 18px;
+  }
+  #ConfigSelection {
+    width: 350px;
+    margin-right: 25px;
+  }
+
+
+  /*---------------------------------------------------------------------------*/
+
+  /* CSS rules for the toggle switch. */
+  .toggle-switch {
+    border: 1px solid grey;
+    border-radius: 6px;
+    cursor: pointer;
+    display: inline-block;
+    text-align: left;
+    overflow: hidden;
+    line-height: 8px;
+    min-width: 80px;
+  }
+
+  .toggle-switch.disabled > div > span.knob {
+    background: #AAA;
+  }
+
+  .toggle-switch span {
+    cursor: pointer;
+    display: inline-block;
+    float: left;
+    height: 100%;
+    line-height: 14px;
+    padding: 4px;
+    text-align: center;
+    width: 33%;
+    white-space: nowrap;
+    box-sizing: border-box;
+  }
+
+  .toggle-switch > div {
+    position: relative;
+    width: 150%;
+  }
+
+  .toggle-switch .knob {
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    background-color: #f5f5f5;
+    width: 34%;
+    z-index: 100;
+  }
+
+  .toggle-switch .switch-on {
+    left: 0;
+  }
+
+  .toggle-switch .switch-off {
+    left: -50%
+  }
+
+  .toggle-switch .switch-left, .toggle-switch .switch-right {
+    z-index: 1;
+  }
+
+  .toggle-switch .switch-left {
+    color: #fff;
+    background: #005fcc;
+  }
+
+  .toggle-switch .switch-right {
+    color: #333;
+    background: #f0f0f0;
+  }
+
+  .toggle-switch-animate {
+    transition: left 0.5s;
+  }
+}

@@ -38,6 +38,12 @@
         controller: 'MappingController',
         controllerAs: 'mapping'
       })
+      .state('resultconfig', {
+        url: '/resultconfig',
+        templateUrl: 'app/resultconfig/resultconfig.html',
+        controller: 'ResultConfigController',
+        controllerAs: 'resultconfig'
+      })
       .state('scenario', {
         url: '/scenario',
         templateUrl: 'app/scenario/scenario.html',
