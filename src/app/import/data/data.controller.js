@@ -228,7 +228,6 @@
         vm.data[id].lat = marker.lat;
         vm.data[id].lng = marker.lng;
       }, function () {
-        // console.log('Modal dismissed at: ' + new Date());
       });
     };
 

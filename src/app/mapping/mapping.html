@@ -1,4 +1,4 @@
-<div id="mapping-container" class="container">
+<div id="mapping-container">
 
   <div>
     <acme-navbar></acme-navbar>
@@ -16,7 +16,8 @@
 
   <div class="col-md-5">
     <!-- Error messages -->
-    <uib-alert ng-repeat="alert in mapping.alerts.getAll()" type="{{alert.type}}" close="mapping.alerts.remove($index)">
+    <uib-alert ng-repeat="alert in mapping.alerts.getAll() track by $index" type="{{alert.type}}"
+               close="mapping.alerts.remove($index)">
       {{alert.msg}}
     </uib-alert>
 
@@ -30,12 +31,13 @@
         <tr>
           <th>Fields</th>
           <th>Select Dataset</th>
-          <th>Set value manually</th>
+          <th>manually</th>
         </tr>
         </thead>
         <tbody>
-        <tr class="form-group" data-ng-repeat="field in mapping.selectedNode.ConstructorParameterMapping">
-          <td class="col-md-4">
+        <tr class="form-group"
+            data-ng-repeat="field in mapping.selectedNode.ConstructorParameterMapping track by $index">
+          <td class="col-md-6">
             <span>{{ field.Name }}:</span>
           </td>
           <td class="col-md-4">
@@ -51,7 +53,7 @@
               <label><input type="text" class="form-control" ng-model="field.Value"/></label>
             </div>
           </td>
-          <td class="col-md-4">
+          <td class="col-md-2">
             <div class="input-group">
               <div class="checkbox">
                 <label><input type="checkbox" ng-model="field.MappingType" ng-click="mapping.resetField(field)"
@@ -119,14 +121,14 @@
         </tr>
         </thead>
         <tbody>
-        <tr class="form-group" data-ng-repeat="field in mapping.selectedNode.Parameters">
-          <td class="col-md-5">
+        <tr class="form-group" data-ng-repeat="field in mapping.selectedNode.Parameters track by $index">
+          <td class="col-md-6">
             <div class="input-group">
-              <label><input type="text" class="form-control" ng-model="field.Name" data-ng-disabled="field.Required" />
+              <label><input type="text" class="form-control" ng-model="field.Name" data-ng-disabled="field.Required"/>
               </label>
             </div>
           </td>
-          <td class="col-md-5">
+          <td class="col-md-4">
             {{ mappingForm.Value.$invalid }}
             <div class="input-group" ng-class="{ 'has-error': mappingForm.Value{{$index}}.$invalid }">
               <label><input type="text" name="Value{{$index}}" class="form-control" ng-model="field.Value" required/>
@@ -136,7 +138,8 @@
           <td class="col-md-2">
             <div class="input-group">
               <button class="btn btn-link" ng-click="mapping.removeParameter(field)"
-                      data-ng-disabled="field.Required">X</button>
+                      data-ng-disabled="field.Required">X
+              </button>
             </div>
           </td>
         </tr>
@@ -144,7 +147,7 @@
           <td></td>
           <td></td>
           <td>
-            <button class="btn btn-primary" ng-click="mapping.addParameter()">Add Parameter</button>
+            <button class="btn btn-primary" ng-click="mapping.addParameter()">Add</button>
           </td>
         </tr>
         <tr class="text-right">
@@ -152,7 +155,8 @@
           <td></td>
           <td>
             <button class="btn btn-primary" type="submit" ng-click="mapping.save()"
-                    data-ng-disabled="mappingForm.$invalid">Save</button>
+                    data-ng-disabled="mappingForm.$invalid">Save
+            </button>
           </td>
         </tr>
         </tbody>
@@ -169,7 +173,7 @@
     </div>
 
     <uib-accordion close-others="true">
-      <uib-accordion-group class="panel-default" ng-repeat="dataset in mapping.metadata">
+      <uib-accordion-group class="panel-default" ng-repeat="dataset in mapping.metadata track by $index">
         <uib-accordion-heading>
           {{ dataset.title }}
         </uib-accordion-heading>
@@ -178,13 +182,20 @@
         <div ng-show="dataset.additionalTypeSpecificData.databaseName">
           <div>ColumnNames:</div>
           <ul>
-            <li ng-repeat="field in dataset.additionalTypeSpecificData.columnNames">{{ field.clearColumnName }}
+            <li ng-repeat="field in dataset.additionalTypeSpecificData.columnNames track by $index">{{
+              field.clearColumnName }}
               <button class="btn btn-success btn-xs" ng-click="mapping.createMapping(dataset, $index)">add</button>
             </li>
           </ul>
         </div>
       </uib-accordion-group>
     </uib-accordion>
+    Filter by: {{mapping.selectedField.LayerType}}
+    <hr/>
+    {{ mapping.selectedField |json }}
+    <hr/>
+    {{ mapping.selectedNode |json }}
   </div>
+
 
 </div>

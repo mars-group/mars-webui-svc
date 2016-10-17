@@ -1,10 +1,6 @@
 (function () {
   'use strict';
 
-
-  /**
-   * TODO: Clean this whole mess up!
-   */
   angular
     .module('marsApp')
     .factory('Mapping', function Mapping($http, $log, Scenario) {
@@ -14,56 +10,89 @@
         var originalData = [];
 
         var convertToLocalStructure = function (data) {
-          var tmpTreeData = [{
+          return [
+            convertInitializationToArray(data.InitializationDescription),
+            convertParameterizationToArray(data.ParameterizationDescription)
+          ];
+        };
+
+        var convertInitializationToArray = function (layerMapping) {
+          var tmp = {
             Name: 'Layer',
             Agents: []
-          }, {
-            Name: 'Parameter',
-            Agents: []
-          }];
+          };
+
+          // exclude LogicalChangeTime
+          delete layerMapping.LogicalChangeTime;
+
+          // makes sure the object of layerTypes is processed in order
+          var layerTypeKeys = Object.keys(layerMapping);
+          layerTypeKeys.sort();
 
           // convert InitializationDescription to array
-          angular.forEach(data.InitializationDescription, function layerTypes(value, key) {
-            // there is no continue in JS... too bad
-            if (!angular.equals(key, 'LogicalChangeTime')) {
-              var layerType = {
-                Name: key,
-                Agents: value
-              };
-              tmpTreeData[0].Agents.push(layerType);
+          angular.forEach(layerTypeKeys, function (layerType) {
+            // add layerType to fields
+            angular.forEach(layerMapping[layerType], function (layer) {
+              layer.LayerType = layerType;
+            });
+
+            var tmpLayerType = {
+              Name: layerType,
+              Agents: layerMapping[layerType]
+            };
+            tmp.Agents.push(tmpLayerType);
+          });
+
+          return tmp;
+        };
+
+        var convertParameterizationToArray = function (parameterMapping) {
+          var tmp = {
+            Name: 'Parameter',
+            Agents: []
+          };
+
+          // makes sure the object of layerTypes is processed in order
+          var parameterTypeKeys = Object.keys(parameterMapping);
+          parameterTypeKeys.sort();
+
+          angular.forEach(parameterTypeKeys, function layerTypes(parameterType) {
+            if (!angular.equals(parameterType, 'LogicalChangeTime')) {
+              // keep global parameters how they are
+              var result = parameterMapping[parameterType];
+              if (!angular.equals(parameterType, 'Global')) {
+                result = {
+                  Name: parameterType,
+                  Agents: parameterMapping[parameterType]
+                };
+              }
+              tmp.Agents.push(result);
             }
           });
 
-          // convert ParameterizationDescription to array
-          angular.forEach(data.ParameterizationDescription, function layerTypes(value, key) {
-            // there is no continue in JS... too bad
-            if (!angular.equals(key, 'LogicalChangeTime') && !angular.equals(key, 'Global')) {
-              var layerType = {
-                Name: key,
-                Agents: value
-              };
-              tmpTreeData[1].Agents.push(layerType);
-            }
-
-            //keep global parameters how they are
-            if (angular.equals(key, 'Global')) {
-              tmpTreeData[1].Agents.push(value);
-            }
-          });
-
-          return tmpTreeData;
+          return tmp;
         };
 
         var convertToRemoteStructure = function (data) {
           var tmp = angular.copy(originalData);
 
-          tmp.InitializationDescription.TimeSeriesLayers = data[0].Agents[0].Agents;
-          tmp.InitializationDescription.GISLayers = data[0].Agents[1].Agents;
-          tmp.InitializationDescription.BasicLayers = data[0].Agents[2].Agents;
+          var layerData = tmp.InitializationDescription;
+          var parameterData = tmp.ParameterizationDescription;
 
-          tmp.ParameterizationDescription.Layers = data[1].Agents[0].Agents;
-          tmp.ParameterizationDescription.Global.Parameters = data[1].Agents[1].Parameters;
-          tmp.ParameterizationDescription.Agents = data[1].Agents[2].Agents;
+          // remove layerType from fields
+          angular.forEach(layerData, function (layerType) {
+            angular.forEach(layerType, function (layer) {
+              delete layer.LayerType;
+            });
+          });
+
+          layerData.BasicLayers = data[0].Agents[0].Agents;
+          layerData.GISLayers = data[0].Agents[1].Agents;
+          layerData.TimeSeriesLayers = data[0].Agents[2].Agents;
+
+          parameterData.Agents = data[1].Agents[0].Agents;
+          parameterData.Global.Parameters = data[1].Agents[1].Parameters;
+          parameterData.Layers = data[1].Agents[2].Agents;
 
           return tmp;
         };
@@ -106,6 +135,7 @@
         };
 
         var saveMapping = function (scenarioId, mapping) {
+          mapping = angular.toJson(mapping);
           return $http.put('/scenario-management/scenarios/' + scenarioId + '/mapping', mapping.InitializationDescription)
             .then(function successCallback(res) {
               $log.info('InitializationDescription saved');
@@ -118,6 +148,7 @@
         };
 
         var saveParameters = function (scenarioId, mapping) {
+          mapping = angular.toJson(mapping);
           return $http.put('/scenario-management/scenarios/' + scenarioId + '/parameter', mapping.ParameterizationDescription)
             .then(function successCallback(res) {
               $log.info('ParameterizationDescription saved');
