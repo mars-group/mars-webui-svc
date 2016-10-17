@@ -127,8 +127,10 @@
             </div>
           </td>
           <td class="col-md-5">
-            <div class="input-group">
-              <label><input type="text" class="form-control" ng-model="field.Value"/></label>
+            {{ mappingForm.Value.$invalid }}
+            <div class="input-group" ng-class="{ 'has-error': mappingForm.Value{{$index}}.$invalid }">
+              <label><input type="text" name="Value{{$index}}" class="form-control" ng-model="field.Value" required/>
+              </label>
             </div>
           </td>
           <td class="col-md-2">
@@ -138,18 +140,19 @@
             </div>
           </td>
         </tr>
-        <tr>
+        <tr class="text-right">
+          <td></td>
+          <td></td>
           <td>
             <button class="btn btn-primary" ng-click="mapping.addParameter()">Add Parameter</button>
           </td>
-          <td></td>
         </tr>
         <tr class="text-right">
           <td></td>
+          <td></td>
           <td>
             <button class="btn btn-primary" type="submit" ng-click="mapping.save()"
-                    data-ng-disabled="mappingForm.$invalid">Save
-            </button>
+                    data-ng-disabled="mappingForm.$invalid">Save</button>
           </td>
         </tr>
         </tbody>
@@ -182,11 +185,6 @@
         </div>
       </uib-accordion-group>
     </uib-accordion>
-
-    <!-- for debugging only -->
-    <!--<div ng-show="mapping.DEV_MODE">selected Node: {{ mapping.selectedNode |json }}</div>-->
-    <div ng-show="mapping.DEV_MODE">selected field: {{ mapping.selectedField |json }}</div>
-
   </div>
 
 </div>

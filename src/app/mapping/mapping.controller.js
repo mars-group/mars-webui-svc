@@ -9,8 +9,6 @@
   function MappingController($log, $scope, Mapping, Metadata, Alert, Scenario) {
     var vm = this;
 
-    vm.DEV_MODE = true;
-
     var mapping = new Mapping();
     vm.alerts = new Alert();
     vm.metadata = null;
@@ -22,9 +20,7 @@
       'with the desired dataset on the right. Alternatively set a manual value, by selecting the checkbox next to ' +
       'the field.';
 
-    if (!vm.DEV_MODE) {
       vm.alerts.add(initialInfo);
-    }
 
     var removeInitialWarningOnNodeSelection = function () {
 
