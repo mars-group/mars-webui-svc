@@ -1,24 +1,14 @@
-FROM artifactory.mars.haw-hamburg.de:5000/debian:jessie
+FROM artifactory.mars.haw-hamburg.de:5000/node:argon-slim
 
-# curl            is needed by the command below
 # bzip2           is needed by PhantomJS
-# build-essential is needed by npm dependencied
-# git             is needed by bower dependencies
-RUN apt-get update && apt-get install -y curl bzip2 build-essential git
-
-# install nodeJS
-RUN curl -sL https://deb.nodesource.com/setup_4.x | bash -
-RUN apt-get update && apt-get install -y nodejs
-
-# update npm
-RUN npm install -g npm
+RUN apt-get update && apt-get install -y bzip2
 
 # bower   is the frontend tool for dependencies
 # gulp    builds the frontend, dev, production etc.
 RUN npm install -g bower gulp
 
 # cleanup apt caches
-RUN rm -rf /var/lib/apt/lists/*
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ADD . /app
 WORKDIR /app
