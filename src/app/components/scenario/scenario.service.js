@@ -8,6 +8,12 @@
       var currentScenario = {};
       var onChangeListener = [];
 
+      var triggerOnChangeListener = function () {
+        for (var i = 0; i < onChangeListener.length; i++) {
+          onChangeListener[i]();
+        }
+      };
+
       return {
         getScenarios: function loadScenarios(scenario, callback) {
           var config = {
@@ -29,6 +35,7 @@
         postScenario: function createScenario(scenario, callback) {
           $http.post('/scenario-management/scenarios', scenario)
             .then(function successCallback(res) {
+              triggerOnChangeListener();
               callback(res.data);
             }, function errorCallback(err) {
               if (err) {
@@ -41,17 +48,13 @@
         setCurrentScenario: function (scenario) {
           currentScenario = scenario;
           $window.sessionStorage.setItem('currentScenario', angular.toJson(scenario));
-          for (var i = 0; i < onChangeListener.length; i++) {
-            onChangeListener[i]();
-          }
+          triggerOnChangeListener();
         },
 
         clearScenarioSelection: function () {
           currentScenario = {};
           $window.sessionStorage.removeItem('currentScenario');
-          for (var i = 0; i < onChangeListener.length; i++) {
-            onChangeListener[i]();
-          }
+          triggerOnChangeListener();
         },
 
         getCurrentScenario: function () {

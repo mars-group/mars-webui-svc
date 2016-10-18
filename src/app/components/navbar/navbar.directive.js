@@ -84,13 +84,17 @@
 
       // TODO: create project service
       var project = 42;
-      Scenario.getScenarios(project, function (scenarios) {
-        vm.scenarios = scenarios;
-      });
+      var getScenarios = function () {
+        Scenario.getScenarios(project, function (scenarios) {
+          vm.scenarios = scenarios;
+        });
+      };
+      getScenarios();
 
       vm.currentScenario = Scenario.getCurrentScenario();
 
       Scenario.registerOnChangeListener(function () {
+        getScenarios();
         vm.currentScenario = Scenario.getCurrentScenario();
       });
 
