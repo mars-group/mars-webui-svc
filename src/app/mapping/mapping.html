@@ -21,6 +21,17 @@
       {{alert.msg}}
     </uib-alert>
 
+    <div ng-hide="mapping.currentScenario">
+      <label for="scenario" class="acme-navbar-text">Please select a Scenario: </label>
+      <select class="form-control" id="scenario" ng-model="mapping.currentScenario"
+              data-ng-options="o.Name for o in mapping.scenarios track by o.ScenarioId"
+              data-ng-change="mapping.setCurrentScenario(o)">
+      </select>
+      <div>
+        <div>Or create one <a ui-sref="scenario">here</a>.</div>
+      </div>
+    </div>
+
     <form name="mappingForm" class="simple-form" novalidate ng-show="mapping.selectedNode">
       <h3>{{ mapping.selectedNode.Name }}</h3>
 

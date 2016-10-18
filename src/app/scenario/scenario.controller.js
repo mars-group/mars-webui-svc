@@ -11,12 +11,8 @@
 
     vm.scenarios = [];
 
-    // TODO: create project service
-    var project = 42;
-
-
     var loadScenarios = function () {
-      Scenario.getScenarios(project, function (scenarios) {
+      Scenario.getScenarios(function (scenarios) {
         vm.scenarios = scenarios;
         vm.tableParams = new NgTableParams({}, {dataset: vm.scenarios});
       });

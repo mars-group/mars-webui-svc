@@ -37,10 +37,18 @@
     };
     removeInitialWarningOnNodeSelection();
 
+    Scenario.getScenarios(function (scenarios) {
+      vm.scenarios = scenarios;
+    });
+
     Scenario.registerOnChangeListener(function () {
       vm.currentScenario = Scenario.getCurrentScenario();
       loadMapping();
     });
+
+    vm.setCurrentScenario = function () {
+      Scenario.setCurrentScenario(vm.currentScenario);
+    };
 
     var initMappingData = function () {
       vm.treeOptions = {

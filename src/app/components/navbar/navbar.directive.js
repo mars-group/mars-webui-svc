@@ -82,10 +82,8 @@
         }
       ];
 
-      // TODO: create project service
-      var project = 42;
       var getScenarios = function () {
-        Scenario.getScenarios(project, function (scenarios) {
+        Scenario.getScenarios(function (scenarios) {
           vm.scenarios = scenarios;
         });
       };

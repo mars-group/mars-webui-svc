@@ -8,6 +8,9 @@
       var currentScenario = {};
       var onChangeListener = [];
 
+      //TODO create scenario service
+      var project = 42;
+
       var triggerOnChangeListener = function () {
         for (var i = 0; i < onChangeListener.length; i++) {
           onChangeListener[i]();
@@ -15,10 +18,10 @@
       };
 
       return {
-        getScenarios: function loadScenarios(scenario, callback) {
+        getScenarios: function loadScenarios(callback) {
           var config = {
             params: {
-              Project: scenario
+              Project: project
             }
           };
 
