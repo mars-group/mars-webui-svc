@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 if [ "$DEVELOPER_EDITION" = "true" ]; then
-
   echo "starting development ..."
 
   npm install
@@ -13,21 +12,29 @@ if [ "$DEVELOPER_EDITION" = "true" ]; then
 else
   echo "starting production ..."
 
-  # build dist
-  gulp
+  if [ -f package.json ]; then
+    # build dist
+    gulp
 
-  # move prod files
-  mkdir /prod
-  cd /prod
-  mv /app/server .
-  mv /app/dist .
-  mv /app/package.json .
+    # move prod files
+    mkdir /prod
+    mv server /prod/
+    mv dist /prod/
+    mv package.json /prod/
+    mv .npmrc /prod/
 
-  # install production dependencies
-  npm install --only=production
+    # remove sources
+    find . ! -name "entrypoint.sh" -exec rm -rf {} \;
 
-  # remove sources
-  rm -rf /app
+    cd /prod
+
+    # install production dependencies
+    npm install --only=production
+
+  else
+    cd /prod
+
+  fi
 
   # start server
   node server/app.js
