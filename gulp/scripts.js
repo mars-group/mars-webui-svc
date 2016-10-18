@@ -26,7 +26,7 @@
     ])
       .pipe($.eslint())
       .pipe($.eslint.format())
-      .pipe($.size())
+      .pipe($.size());
   }
 
 })();

@@ -185,8 +185,7 @@
           <ul>
             <li
               ng-repeat="field in dataset.additionalTypeSpecificData.columnNames track by $index ">
-              {{
-              field.clearColumnName }}
+              {{ field.clearColumnName }}
               <button class="btn btn-success btn-xs" ng-click="mapping.createMapping(dataset, $index)">add</button>
             </li>
           </ul>

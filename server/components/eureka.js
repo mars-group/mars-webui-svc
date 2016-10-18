@@ -49,13 +49,9 @@
     }
   });
 
+
   exports.register = function () {
     client.start();
-
-    setInterval(function () {
-      client.renew();
-    }, 30000);
-
   };
 
 })();
