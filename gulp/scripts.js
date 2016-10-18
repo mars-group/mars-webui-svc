@@ -1,29 +1,32 @@
-'use strict';
+(function () {
+  'use strict';
 
-var path = require('path');
-var gulp = require('gulp');
-var conf = require('./conf');
+  var path = require('path');
+  var gulp = require('gulp');
+  var conf = require('./conf');
 
-var browserSync = require('browser-sync');
+  var browserSync = require('browser-sync');
 
-var $ = require('gulp-load-plugins')();
+  var $ = require('gulp-load-plugins')();
 
 
-gulp.task('scripts-reload', function () {
-  return buildScripts()
-    .pipe(browserSync.stream());
-});
+  gulp.task('scripts-reload', function () {
+    return buildScripts()
+      .pipe(browserSync.stream());
+  });
 
-gulp.task('scripts', function () {
-  return buildScripts();
-});
+  gulp.task('scripts', function () {
+    return buildScripts();
+  });
 
-function buildScripts() {
-  return gulp.src([
-    path.join(conf.paths.src, '/app/**/*.js'),
-    path.join('!' + conf.paths.src, '/app/webgl/data/UnityLoader.js')
-  ])
-    .pipe($.eslint())
-    .pipe($.eslint.format())
-    .pipe($.size())
-}
+  function buildScripts() {
+    return gulp.src([
+      path.join(conf.paths.src, '/app/**/*.js'),
+      path.join('!' + conf.paths.src, '/app/webgl/data/UnityLoader.js')
+    ])
+      .pipe($.eslint())
+      .pipe($.eslint.format())
+      .pipe($.size())
+  }
+
+})();
