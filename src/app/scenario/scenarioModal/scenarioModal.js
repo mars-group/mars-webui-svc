@@ -15,10 +15,11 @@
     var project = '42';
 
     var params = {
-      type: 'MODEL'
+      type:'MODEL',
+      state: 'FINISHED'
     };
     Metadata.getFiltered(params, function (res) {
-      vm.models = res.data;
+      vm.models = res;
     });
 
     vm.cancel = function () {
