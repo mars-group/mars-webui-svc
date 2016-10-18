@@ -31,19 +31,19 @@
       return {
         getAll: function (callback) {
           getMetadataFromPathvariable(null, function (res) {
-            callback(res);
+            callback(res.data);
           });
         },
 
         getFiltered: function (params, callback) {
           getMetadataFromParams(params, function (res) {
-            callback(res);
+            callback(res.data);
           });
         },
 
         getOne: function (dataId, callback) {
           getMetadataFromPathvariable(dataId, function (res) {
-            callback(res);
+            callback(res.data);
           });
         },
 

@@ -82,16 +82,12 @@
     };
 
     var loadMappingDatasets = function () {
-      Metadata.getAll(function getAllFinishedImports(res) {
-        var metadata = [];
-        angular.forEach(res.data, function (element) {
-          if (angular.equals(element.state, 'FINISHED') &&
-            angular.equals(element.type, 'TIME_SERIES') || angular.equals(element.type, 'TABLE_BASED')) {
-            // writes to tmp to prevent constant refreshing in the view
-            metadata.push(element);
-          }
-        });
-        vm.metadata = metadata;
+      var params = {
+        state: 'FINISHED'
+      };
+
+      Metadata.getFiltered(params, function (res) {
+        vm.metadata = res;
       });
     };
     loadMappingDatasets();
@@ -110,7 +106,6 @@
     };
 
     var setDataFilter = function (node) {
-      console.log(node.LayerType);
       switch (node.LayerType) {
         case 'BasicLayers':
           vm.dataFilter.type = 'TABLE_BASED';

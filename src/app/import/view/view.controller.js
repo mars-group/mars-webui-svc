@@ -6,7 +6,7 @@
     .controller('ImportViewController', ImportViewController);
 
   /** @ngInject */
-  function ImportViewController($http, $log, $uibModal, NgTableParams, Metadata) {
+  function ImportViewController($log, $uibModal, NgTableParams, Metadata) {
     var vm = this;
 
     var tableData = []; // data that is displayed in the table
@@ -48,7 +48,7 @@
     vm.categoryTreeExpandedNodes = [vm.categoryTreeData[0], vm.categoryTreeData[1], vm.categoryTreeData[2]];
 
     Metadata.getAll(function (res) {
-      tableData = res.data;
+      tableData = res;
       initDataTable();
     });
 

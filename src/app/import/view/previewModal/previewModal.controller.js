@@ -9,7 +9,7 @@
   function GeoPickerController($uibModalInstance, $timeout, leafletData, dataset) {
     var vm = this;
 
-    vm.dataset = dataset.data;
+    vm.dataset = dataset;
 
     angular.extend(vm, {
       center: {
