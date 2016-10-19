@@ -3,6 +3,8 @@
 if [ "$DEVELOPER_EDITION" = "true" ]; then
   echo "starting development ..."
 
+  cd /app
+
   npm install
   bower install --allow-root
 
@@ -11,30 +13,6 @@ if [ "$DEVELOPER_EDITION" = "true" ]; then
 
 else
   echo "starting production ..."
-
-  if [ -f package.json ]; then
-    # build dist
-    gulp
-
-    # move prod files
-    mkdir /prod
-    mv server /prod/
-    mv dist /prod/
-    mv package.json /prod/
-    mv .npmrc /prod/
-
-    # remove sources
-    find . ! -name "entrypoint.sh" -exec rm -rf {} \;
-
-    cd /prod
-
-    # install production dependencies
-    npm install --only=production
-
-  else
-    cd /prod
-
-  fi
 
   # start server
   node server/app.js
