@@ -15,7 +15,7 @@
     var project = '42';
 
     var params = {
-      type:'MODEL',
+      type: 'MODEL',
       state: 'FINISHED'
     };
     Metadata.getFiltered(params, function (res) {
@@ -28,8 +28,8 @@
 
     vm.save = function () {
       if (vm.form.$valid) {
-        persist(function () {
-          $uibModalInstance.close();
+        persist(function (err) {
+          $uibModalInstance.close(err);
         });
       }
     };
@@ -43,7 +43,10 @@
         ModelIdentifier: vm.scenario.model
       };
 
-      Scenario.postScenario(data, function (/* res */) {
+      Scenario.postScenario(data, function (res) {
+        if (res.status !== 200) {
+          callback(angular.fromJson(angular.fromJson(res.data)));
+        }
         callback();
       });
     };

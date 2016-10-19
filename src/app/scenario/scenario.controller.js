@@ -6,8 +6,9 @@
     .controller('ScenarioController', ScenarioController);
 
   /** @ngInject */
-  function ScenarioController($uibModal, NgTableParams, Scenario) {
+  function ScenarioController($uibModal, NgTableParams, Scenario, Alert) {
     var vm = this;
+    vm.alerts = new Alert();
 
     vm.scenarios = [];
 
@@ -32,8 +33,12 @@
         }
       });
 
-      modalInstance.result.then(function () {
-        loadScenarios();
+      modalInstance.result.then(function (err) {
+        if (err) {
+          vm.alerts.add('Error: ' + err.Description, 'danger');
+        } else {
+          loadScenarios();
+        }
       }, function () {
         // console.log('Modal dismissed at: ' + new Date());
       });

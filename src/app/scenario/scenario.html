@@ -4,9 +4,18 @@
     <acme-navbar></acme-navbar>
   </div>
 
-  <h2>Scenarios</h2>
+  <div class="col-md-4">
+    <h2>Scenarios</h2>
 
-  <button class="btn btn-default" ng-click="scenario.openScenarioModal()">Create new Scenario</button>
+    <button class="btn btn-default" ng-click="scenario.openScenarioModal()">Create new Scenario</button>
+  </div>
+  <div class="col-md-8">
+    <!-- Error messages -->
+    <uib-alert ng-repeat="alert in scenario.alerts.getAll() track by $index" type="{{alert.type}}"
+               close="mapping.alerts.remove($index)">
+      {{alert.msg}}
+    </uib-alert>
+  </div>
 
   <table ng-table="scenario.tableParams" class="table" data-show-filter="true">
     <tr ng-repeat="scenario in $data">
