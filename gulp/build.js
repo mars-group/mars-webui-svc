@@ -69,13 +69,22 @@
       .pipe($.size({title: path.join(conf.paths.dist, '/'), showFiles: true}));
   });
 
-// Only applies for fonts from bower dependencies
-// Custom fonts are handled by the "other" task
+  // Only applies for fonts from bower dependencies
+  // Custom fonts are handled by the "other" task
   gulp.task('fonts', function () {
     return gulp.src($.mainBowerFiles())
       .pipe($.filter('**/*.{eot,otf,svg,ttf,woff,woff2}'))
       .pipe($.flatten())
       .pipe(gulp.dest(path.join(conf.paths.dist, '/fonts/')));
+  });
+
+  // Only applies for images from bower dependencies
+  // Custom images are handled by the "other" task
+  gulp.task('images', function () {
+    return gulp.src('/app/bower_components/**/*')
+      .pipe($.filter('**/*.{png, jpg, jpeg}'))
+      .pipe($.flatten())
+      .pipe(gulp.dest(path.join(conf.paths.dist, '/images/')));
   });
 
   gulp.task('other', function () {
@@ -95,6 +104,6 @@
     return $.del([path.join(conf.paths.dist, '/'), path.join(conf.paths.tmp, '/')]);
   });
 
-  gulp.task('build', ['html', 'fonts', 'other']);
+  gulp.task('build', ['html', 'fonts', 'images', 'other']);
 
 })();
