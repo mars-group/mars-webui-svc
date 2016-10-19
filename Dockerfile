@@ -1,5 +1,7 @@
 FROM artifactory.mars.haw-hamburg.de:5000/node:argon-slim
 
+ENV NPM_CONFIG_LOGLEVEL warn
+
 # bzip2           is needed by PhantomJS
 RUN apt-get update && apt-get install -y bzip2
 
