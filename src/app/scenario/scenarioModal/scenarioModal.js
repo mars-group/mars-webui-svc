@@ -45,7 +45,7 @@
 
       Scenario.postScenario(data, function (res) {
         if (res.status !== 200) {
-          callback(angular.fromJson(angular.fromJson(res.data)));
+          callback(res.data);
         }
         callback();
       });
