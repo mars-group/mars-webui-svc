@@ -75,15 +75,6 @@
             </div>
           </td>
         </tr>
-        <tr class="text-right">
-          <td></td>
-          <td></td>
-          <td>
-            <button class="btn btn-primary" type="submit" ng-click="mapping.save()"
-                    data-ng-disabled="mappingForm.$invalid">Save
-            </button>
-          </td>
-        </tr>
         </tbody>
       </table>
 
@@ -111,14 +102,6 @@
             </div>
           </td>
         </tr>
-        <tr class="text-right">
-          <td></td>
-          <td>
-            <button class="btn btn-primary" type="submit" ng-click="mapping.save()"
-                    data-ng-disabled="mappingForm.$invalid">Save
-            </button>
-          </td>
-        </tr>
         </tbody>
       </table>
 
@@ -126,27 +109,35 @@
       <table class="table table-striped" ng-show="mapping.selectedNode.Parameters">
         <thead>
         <tr>
-          <th>Key</th>
-          <th>Value</th>
-          <th>Delete</th>
+          <th class="text-center">Key</th>
+          <th class="text-center">Value</th>
+          <th class="text-center">Validation</th>
+          <th class="text-center">Delete</th>
         </tr>
         </thead>
         <tbody>
         <tr class="form-group" data-ng-repeat="field in mapping.selectedNode.Parameters track by $index">
-          <td class="col-md-6">
+          <td>
             <div class="input-group">
               <label><input type="text" class="form-control" ng-model="field.Name" data-ng-disabled="field.Required"/>
               </label>
             </div>
           </td>
-          <td class="col-md-4">
-            {{ mappingForm.Value.$invalid }}
+          <td>
             <div class="input-group" ng-class="{ 'has-error': mappingForm.Value{{$index}}.$invalid }">
               <label><input type="text" name="Value{{$index}}" class="form-control" ng-model="field.Value" required/>
               </label>
             </div>
           </td>
-          <td class="col-md-2">
+          <td>
+            <div class="input-group">
+              <span class="glyphicon glyphicon-ok" aria-hidden="true" ng-show="field.ValidationSuccessful"></span>
+              <span class="glyphicon glyphicon-remove" aria-hidden="true" ng-hide="field.ValidationSuccessful"
+                    uib-popover="{{field.ValidationResult}}" data-popover-placement="bottom"
+                    data-popover-trigger="mouseenter"></span>
+            </div>
+          </td>
+          <td>
             <div class="input-group">
               <button class="btn btn-link" ng-click="mapping.removeParameter(field)"
                       data-ng-disabled="field.Required">X
@@ -154,26 +145,20 @@
             </div>
           </td>
         </tr>
-        <tr class="text-right">
-          <td></td>
-          <td></td>
-          <td>
-            <button class="btn btn-primary" ng-click="mapping.addParameter()">Add</button>
-          </td>
-        </tr>
-        <tr class="text-right">
-          <td></td>
-          <td></td>
-          <td>
-            <button class="btn btn-primary" type="submit" ng-click="mapping.save()"
-                    data-ng-disabled="mappingForm.$invalid">Save
-            </button>
-          </td>
-        </tr>
         </tbody>
       </table>
+      <div class="text-right" ng-show="mapping.selectedNode.Parameters">
+        <button class="btn btn-primary" ng-click="mapping.addParameter()">Add</button>
+      </div>
+      <div class="text-right">
+        <button class="btn btn-primary" type="submit" ng-click="mapping.save()"
+                data-ng-disabled="mappingForm.$invalid">Validate & Save
+        </button>
+      </div>
     </form>
   </div>
+
+  <pre data-pretty-json="mapping.selectedNode"></pre>
 
   <div class="col-md-4" ng-show="mapping.selectedNode && !mapping.selectedNode.Parameters">
     <h3>Select Data</h3>
