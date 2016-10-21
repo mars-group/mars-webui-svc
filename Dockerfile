@@ -7,7 +7,8 @@ ENV NPM_CONFIG_LOGLEVEL warn
 # Install tool Dependencies
 #
 # bzip2:  is needed by PhantomJS
-RUN apt-get update && apt-get install -y bzip2
+# git:    is needed by bower dependency
+RUN apt-get update && apt-get install -y bzip2 git
 
 # bower:   is the frontend tool for dependencies
 # gulp:    builds the frontend, dev, production etc.

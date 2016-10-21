@@ -18,7 +18,8 @@
       'nemLogging',
       'ui-leaflet',
       'ngTable',
-      'treeControl'
+      'treeControl',
+      'ngPrettyJson'
     ]);
 
 })();
