@@ -9,6 +9,9 @@
   <!-- Navigation -->
   <div class="row">
     <div class="col-md-3">
+
+      <!-- Search filter -->
+      <h4>Search Filter</h4>
       <div class="searchFilter">
         <div class="form-group has-feedback">
           <input type="text" class="form-control hasclear" placeholder="Search for..."
@@ -23,8 +26,8 @@
       </div>
 
       <!-- Category filter -->
+      <h4>Category Filter</h4>
       <div class="categoryFilter">
-        <h3>categories</h3>
         <treecontrol class="tree-boot" tree-model="importView.categoryTreeData"
                      expanded-nodes="importView.categoryTreeExpandedNodes" options="importView.categoryTreeOptions"
                      on-selection="importView.updateCategoryFilter(node, selected)"
