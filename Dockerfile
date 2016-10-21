@@ -19,8 +19,10 @@ RUN npm install -g bower gulp
 #
 ADD . /app
 ADD entrypoint.sh /
-
 RUN chmod +x /entrypoint.sh
+
+#convert DOS lineendings to UNIX
+RUN sed -i $'s/\r$//' /entrypoint.sh
 
 
 #
