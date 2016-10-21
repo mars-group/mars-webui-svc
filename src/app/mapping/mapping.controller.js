@@ -6,7 +6,7 @@
     .controller('MappingController', MappingController);
 
   /** @ngInject */
-  function MappingController($log, $scope, Mapping, Metadata, Alert, Scenario) {
+  function MappingController($log, Mapping, Metadata, Alert, Scenario) {
     var vm = this;
 
     var mapping = new Mapping();
@@ -17,25 +17,11 @@
     vm.selectedField = null;
     vm.dataFilter = {};
 
-    var initialInfo = 'Select a Layer on the left. In the appearing area, push the "select" button and match a field ' +
+    var selectNodeInfoMessage = 'Select a Layer on the left. In the appearing area, push the "select" button and match a field ' +
       'with the desired dataset on the right. Alternatively set a manual value, by selecting the checkbox next to ' +
       'the field.';
+    var selectScenarioInfoMessage = 'Please select a Scenario in the top right corner or create one';
 
-    vm.alerts.add(initialInfo);
-
-    var removeInitialWarningOnNodeSelection = function () {
-
-      var keyBinding = $scope.$watch(function () {
-        return mapping.selectedNode;
-      }, function (newValue, oldValue) {
-        if (oldValue === null && newValue !== null) {
-          vm.alerts.removeByName(initialInfo);
-          // clear binding: https://stackoverflow.com/questions/14957614/angularjs-clear-watch
-          keyBinding();
-        }
-      });
-    };
-    removeInitialWarningOnNodeSelection();
 
     Scenario.getScenarios(function (scenarios) {
       vm.scenarios = scenarios;
@@ -47,7 +33,9 @@
     });
 
     vm.setCurrentScenario = function () {
+      vm.alerts.removeByName(selectScenarioInfoMessage);
       Scenario.setCurrentScenario(vm.currentScenario);
+      vm.alerts.add(selectNodeInfoMessage);
     };
 
     var initMappingData = function () {
@@ -62,8 +50,9 @@
     initMappingData();
 
     var loadMapping = function () {
-      if (!Scenario.getCurrentScenario()) {
-        vm.alerts.add('Please select a Scenario in the top right corner or create one');
+      vm.currentScenario = Scenario.getCurrentScenario();
+      if (!vm.currentScenario) {
+        vm.alerts.add(selectScenarioInfoMessage);
         return;
       }
 
@@ -101,6 +90,8 @@
     loadMappingDatasets();
 
     vm.onNodeSelection = function (node) {
+      vm.alerts.removeByName(selectNodeInfoMessage);
+
       selectFirstField(node);
       setDataFilter(node);
     };
