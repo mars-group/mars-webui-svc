@@ -45,7 +45,8 @@
       host: 'eureka',
       port: 8080,
       servicePath: '/eureka/apps/',
-      fetchRegistry: true
+      fetchRegistry: true,
+      maxRetries: 1000
     }
   });
 
