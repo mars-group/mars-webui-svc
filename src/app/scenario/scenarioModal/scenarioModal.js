@@ -15,7 +15,7 @@
 
     var params = {
       type: 'MODEL',
-      state: 'FINISHED'
+      states: 'FINISHED'
     };
     Metadata.getFiltered(params, function (res) {
       vm.models = res;
