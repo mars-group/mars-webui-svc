@@ -6,7 +6,7 @@
     .factory('Project', function Project() {
 
       var currentProject = {
-        id: 42
+        id: '42'
       };
 
       // TODO: implement it for real

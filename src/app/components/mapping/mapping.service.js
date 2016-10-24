@@ -9,6 +9,43 @@
 
         var originalData = [];
 
+        vm.getMapping = function () {
+          var scenarioId;
+          if (Scenario.getCurrentScenario()) {
+            scenarioId = Scenario.getCurrentScenario().ScenarioId;
+          }
+          if (!scenarioId) {
+            return;
+          }
+
+          return $http.get('/scenario-management/scenarios/' + scenarioId)
+            .then(function successCallback(res) {
+              originalData = angular.copy(res.data);
+
+              $log.info('loaded data:', originalData.InitializationDescription);
+
+              return convertToLocalStructure(res.data);
+            })
+            .catch(function errorCallback(res) {
+              return res;
+            });
+        };
+
+        vm.saveMapping = function (data) {
+          var mapping = convertToRemoteStructure(data);
+
+          removeAngularHashKeyRecursive(mapping);
+
+          var scenarioId = Scenario.getCurrentScenario().ScenarioId;
+          if (!scenarioId) {
+            return 'Mapping.get(): ' + 'No Scenario selected!';
+          }
+
+          // TODO: clean this callback mess up
+          saveMapping(scenarioId, mapping.InitializationDescription);
+          saveParameters(scenarioId, mapping.ParameterizationDescription);
+        };
+
         var convertToLocalStructure = function (data) {
           return [
             convertInitializationToArray(data.InitializationDescription),
@@ -103,46 +140,10 @@
           return tmp;
         };
 
-        vm.getMapping = function () {
-          var scenarioId;
-          if (Scenario.getCurrentScenario()) {
-            scenarioId = Scenario.getCurrentScenario().ScenarioId;
-          }
-          if (!scenarioId) {
-            return;
-          }
-
-          return $http.get('/scenario-management/scenarios/' + scenarioId)
-            .then(function successCallback(res) {
-              originalData = res.data;
-
-              $log.info('loaded data:', res.data.ParameterizationDescription);
-              return convertToLocalStructure(res.data);
-            })
-            .catch(function errorCallback(res) {
-              return res;
-            });
-        };
-
-        vm.saveMapping = function (data) {
-          var mapping = convertToRemoteStructure(data);
-
-          $log.info('saving:', mapping);
-
-          var scenarioId = Scenario.getCurrentScenario().ScenarioId;
-          if (!scenarioId) {
-            return 'Mapping.get(): ' + 'No Scenario selected!';
-          }
-
-          // TODO: clean this callback mess up
-          saveMapping(scenarioId, mapping);
-          saveParameters(scenarioId, mapping);
-          return 'saving ...';
-        };
-
         var saveMapping = function (scenarioId, mapping) {
-          mapping = angular.toJson(mapping);
-          return $http.put('/scenario-management/scenarios/' + scenarioId + '/mapping', mapping.InitializationDescription)
+          $log.info('saving InitializationDescription:', mapping);
+
+          return $http.put('/scenario-management/scenarios/' + scenarioId + '/mapping', mapping)
             .then(function successCallback(res) {
               $log.info('InitializationDescription saved');
               return res.data;
@@ -154,8 +155,9 @@
         };
 
         var saveParameters = function (scenarioId, mapping) {
-          mapping = angular.toJson(mapping);
-          return $http.put('/scenario-management/scenarios/' + scenarioId + '/parameter', mapping.ParameterizationDescription)
+          $log.info('saving ParameterizationDescription:', mapping);
+
+          return $http.put('/scenario-management/scenarios/' + scenarioId + '/parameter', mapping)
             .then(function successCallback(res) {
               $log.info('ParameterizationDescription saved');
               return res.data;
@@ -164,6 +166,18 @@
               $log.error(res);
               return res;
             });
+        };
+
+        var removeAngularHashKeyRecursive = function (obj) {
+          for (var property in obj) {
+            if (obj.hasOwnProperty(property)) {
+              if (typeof obj[property] == "object")
+                removeAngularHashKeyRecursive(obj[property]);
+              else if (angular.equals(property, '$$hashKey')) {
+                delete obj[property];
+              }
+            }
+          }
         };
 
       };
