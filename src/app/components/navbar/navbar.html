@@ -11,7 +11,7 @@
         <ul class="nav navbar-nav">
 
           <li uib-dropdown data-on-toggle="toggled(open)" ng-repeat="menuItem in navigation.menuItems">
-            <a href="menuItem.url" uib-dropdown-toggle>{{ menuItem.title }} <span class="caret"></span></a>
+            <a ng-href="menuItem.url" uib-dropdown-toggle>{{ menuItem.title }} <span class="caret"></span></a>
             <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="simple-dropdown">
               <li ng-repeat="child in menuItem.children" ng-class="child.divider">
                 <a ng-hide="child.divider" data-ui-sref="{{ child.url ? child.url : 'home' }}">{{ child.title }}</a>
@@ -24,7 +24,7 @@
         <form class="navbar-form navbar-right">
           <div class="form-group">
           </div>
-          <div class="form-group">
+          <div class="form-group project">
             <label for="project" class="acme-navbar-text">Project: </label>
             <select class="form-control" id="project">
               <option ng-repeat="project in navigation.projects">{{ project.name }}</option>
