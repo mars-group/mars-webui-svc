@@ -70,10 +70,12 @@
         };
 
         var convertToLocalStructure = function (data) {
-          return [
-            convertInitializationToArray(data.InitializationDescription),
-            convertParameterizationToArray(data.ParameterizationDescription)
-          ];
+          var initializationDescription = convertInitializationToArray(data.InitializationDescription);
+          var basicLayers = extractBasicLayers(initializationDescription);
+          var otherLayers = removeBasicLayer(initializationDescription);
+          var parameters = convertParameterizationToArray(data.ParameterizationDescription);
+
+          return [basicLayers, otherLayers, parameters];
         };
 
         var convertInitializationToArray = function (layerMapping) {
@@ -107,6 +109,17 @@
           });
 
           return tmp;
+        };
+
+        var extractBasicLayers = function (layers) {
+          layers.Agents[0].Name = 'Agent';
+          return layers.Agents[0];
+        };
+
+        var removeBasicLayer = function (layers) {
+          layers.Agents.splice(0, 1);
+
+          return layers;
         };
 
         var convertParameterizationToArray = function (parameterMapping) {
@@ -152,13 +165,14 @@
             });
           });
 
-          layerData.BasicLayers = data[0].Agents[0].Agents;
-          layerData.GISLayers = data[0].Agents[1].Agents;
-          layerData.TimeSeriesLayers = data[0].Agents[2].Agents;
+          layerData.BasicLayers = data[0].Agents;
 
-          parameterData.Agents = data[1].Agents[0].Agents;
-          parameterData.Global.Parameters = data[1].Agents[1].Parameters;
-          parameterData.Layers = data[1].Agents[2].Agents;
+          layerData.GISLayers = data[1].Agents[0].Agents;
+          layerData.TimeSeriesLayers = data[1].Agents[1].Agents;
+
+          parameterData.Agents = data[2].Agents[0].Agents;
+          parameterData.Global.Parameters = data[2].Agents[1].Parameters;
+          parameterData.Layers = data[2].Agents[2].Agents;
 
           return tmp;
         };
