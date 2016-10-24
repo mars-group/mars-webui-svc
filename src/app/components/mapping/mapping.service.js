@@ -31,19 +31,42 @@
             });
         };
 
-        vm.saveMapping = function (data) {
-          var mapping = convertToRemoteStructure(data);
-
+        vm.putMapping = function (mapping, callback) {
+          mapping = convertToRemoteStructure(mapping);
+          mapping = mapping.InitializationDescription;
           removeAngularHashKeyRecursive(mapping);
+          $log.info('saving InitializationDescription:', mapping);
 
           var scenarioId = Scenario.getCurrentScenario().ScenarioId;
-          if (!scenarioId) {
-            return 'Mapping.get(): ' + 'No Scenario selected!';
-          }
 
-          // TODO: clean this callback mess up
-          saveMapping(scenarioId, mapping.InitializationDescription);
-          saveParameters(scenarioId, mapping.ParameterizationDescription);
+          $http.put('/scenario-management/scenarios/' + scenarioId + '/mapping', mapping)
+            .then(function successCallback() {
+              $log.info('InitializationDescription saved');
+              callback();
+            })
+            .catch(function errorCallback(res) {
+              $log.error(res);
+              callback(res);
+            });
+        };
+
+        vm.putParameter = function (mapping, callback) {
+          mapping = convertToRemoteStructure(mapping);
+          mapping = mapping.ParameterizationDescription;
+          removeAngularHashKeyRecursive(mapping);
+          $log.info('saving ParameterizationDescription:', mapping);
+
+          var scenarioId = Scenario.getCurrentScenario().ScenarioId;
+
+          $http.put('/scenario-management/scenarios/' + scenarioId + '/parameter', mapping)
+            .then(function successCallback() {
+              $log.info('ParameterizationDescription saved');
+              callback();
+            })
+            .catch(function errorCallback(res) {
+              $log.error(res);
+              callback(res);
+            });
         };
 
         var convertToLocalStructure = function (data) {
@@ -140,34 +163,6 @@
           return tmp;
         };
 
-        var saveMapping = function (scenarioId, mapping) {
-          $log.info('saving InitializationDescription:', mapping);
-
-          return $http.put('/scenario-management/scenarios/' + scenarioId + '/mapping', mapping)
-            .then(function successCallback(res) {
-              $log.info('InitializationDescription saved');
-              return res.data;
-            })
-            .catch(function errorCallback(res) {
-              $log.error(res);
-              return res;
-            });
-        };
-
-        var saveParameters = function (scenarioId, mapping) {
-          $log.info('saving ParameterizationDescription:', mapping);
-
-          return $http.put('/scenario-management/scenarios/' + scenarioId + '/parameter', mapping)
-            .then(function successCallback(res) {
-              $log.info('ParameterizationDescription saved');
-              return res.data;
-            })
-            .catch(function errorCallback(res) {
-              $log.error(res);
-              return res;
-            });
-        };
-
         var removeAngularHashKeyRecursive = function (obj) {
           for (var property in obj) {
             if (obj.hasOwnProperty(property)) {
@@ -182,5 +177,4 @@
 
       };
     });
-
 })();

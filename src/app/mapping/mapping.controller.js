@@ -80,7 +80,7 @@
 
     var loadMappingDatasets = function () {
       var params = {
-        state: 'FINISHED'
+        states: 'FINISHED'
       };
 
       Metadata.getFiltered(params, function (res) {
@@ -149,8 +149,28 @@
       selectNextField();
     };
 
-    vm.save = function () {
-      mapping.saveMapping(vm.treeData);
+    vm.saveMapping = function () {
+      console.log('saveMapping()');
+      mapping.putMapping(vm.treeData, function (err) {
+        if (err) {
+          vm.alerts.add('A call to: "' + err.config.url + '" caused the following error: "' + err.data.Description + '"', 'danger');
+        } else {
+          vm.alerts.add('Mapping saved', 'info');
+          loadMapping();
+        }
+      });
+    };
+
+    vm.saveParameter = function () {
+      console.log('saveParameter()');
+      mapping.putParameter(vm.treeData, function (err) {
+        if (err) {
+          vm.alerts.add('A call to: "' + err.config.url + '" caused the following error: "' + err.data.Description + '"', 'danger');
+        } else {
+          vm.alerts.add('Parameter saved', 'info');
+          loadMapping();
+        }
+      });
     };
 
     vm.addParameter = function () {
