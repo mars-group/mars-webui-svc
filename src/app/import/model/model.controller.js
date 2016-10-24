@@ -6,7 +6,7 @@
     .controller('ImportModelController', ImportModelController);
 
   /** @ngInject */
-  function ImportModelController($timeout, $document, FileUploader, Metadata, Alert) {
+  function ImportModelController($timeout, $document, FileUploader, Metadata, Alert, Project) {
     var vm = this;
 
     vm.alert = new Alert();
@@ -20,7 +20,7 @@
       return {
         privacy: '',
         dataType: 'MODEL',
-        projectId: 1, // todo: add real id
+        projectId: Project.getCurrentProject().id,
         userId: 1, // todo: add real id
         title: '',
         description: ''

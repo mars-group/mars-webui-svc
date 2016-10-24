@@ -6,13 +6,12 @@
     .controller('ScenarioModalController', ScenarioModalController);
 
   /** @ngInject */
-  function ScenarioModalController($uibModalInstance, Scenario, Metadata) {
+  function ScenarioModalController($uibModalInstance, Scenario, Metadata, Project) {
     var vm = this;
 
     vm.scenario = {};
 
-    // TODO: write project service
-    var project = '42';
+    var project = Project.getCurrentProject().id;
 
     var params = {
       type: 'MODEL',

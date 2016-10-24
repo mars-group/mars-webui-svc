@@ -3,13 +3,11 @@
 
   angular
     .module('marsApp')
-    .factory('Scenario', function Scenario($http, $log, $window) {
-      // TODO: persist in cookie
+    .factory('Scenario', function Scenario($http, $log, $window, Project) {
       var currentScenario = {};
       var onChangeListener = [];
 
-      //TODO create scenario service
-      var project = 42;
+      var project = Project.getCurrentProject().id;
 
       var triggerOnChangeListener = function () {
         for (var i = 0; i < onChangeListener.length; i++) {

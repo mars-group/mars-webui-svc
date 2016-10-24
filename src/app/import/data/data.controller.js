@@ -6,7 +6,7 @@
     .controller('ImportDataController', ImportDataController);
 
   /** @ngInject */
-  function ImportDataController($timeout, $uibModal, $document, $log, FileUploader, Metadata, Timeseries, Alert) {
+  function ImportDataController($timeout, $uibModal, $document, $log, FileUploader, Metadata, Timeseries, Alert, Project) {
     var vm = this;
 
     /** Will store initialized geoPicker*/
@@ -40,7 +40,7 @@
         lng: '',
         privacy: '',
         dataType: '',
-        projectId: 1, // todo: add real id
+        projectId: Project.getCurrentProject().id,
         userId: 1, // todo: add real id
         title: '',
         description: ''
