@@ -1,6 +1,6 @@
 FROM artifactory.mars.haw-hamburg.de:5000/node:argon-slim
 
-ENV NPM_CONFIG_LOGLEVEL warn
+ENV NPM_CONFIG_LOGLEVEL silent
 
 
 #
