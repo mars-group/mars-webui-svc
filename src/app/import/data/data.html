@@ -70,11 +70,13 @@
                     <span class="input-group">
                       <input type="text" placeholder="LAT" min="-90" max="90"
                              class="form-control" ng-model="importData.data[$index].lat" name="lat_{{$index}}"
-                             ng-required="importData.data[$index].dataType && importData.data[$index].dataType !== importData.CONST_UPLOAD_GIS">
+                             ng-required="importData.data[$index].dataType
+                             && importData.data[$index].dataType !== importData.GIS">
                       <span class="input-group-btn" style="width:0;"></span>
                       <input type="text" placeholder="LON" min="-180" max="180"
                              class="form-control" ng-model="importData.data[$index].lng" name="lng_{{$index}}"
-                             ng-required="importData.data[$index].dataType && importData.data[$index].dataType !== importData.CONST_UPLOAD_GIS">
+                             ng-required="importData.data[$index].dataType
+                             && importData.data[$index].dataType !== importData.GIS">
                       <span class="input-group-btn" style="width:0;"></span>
                       <span class="input-group-btn">
                         <button type="button" class="btn btn-primary"
