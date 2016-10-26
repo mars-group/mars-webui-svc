@@ -5,6 +5,7 @@
     .module('marsApp')
     .controller('MappingController', MappingController);
 
+
   /** @ngInject */
   function MappingController($log, Mapping, Metadata, Alert, Scenario) {
     var vm = this;
@@ -111,6 +112,18 @@
           break;
         case 'TimeSeriesLayers':
           vm.dataFilter.type = 'TIME_SERIES';
+          break;
+        case 'GeoPotentialFieldLayers':
+          vm.dataFilter.type = 'GEO_POTENTIAL_FIELD';
+          break;
+        case 'GridPotentialFieldLayers':
+          vm.dataFilter.type = 'GRID_POTENTIAL_FIELD';
+          break;
+        case 'ObstacleLayers':
+          vm.dataFilter.type = 'OBSTACLE_LAYER';
+          break;
+        case 'GISLayers':
+          vm.dataFilter.type = 'GIS';
           break;
       }
     };
