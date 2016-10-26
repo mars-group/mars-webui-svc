@@ -64,19 +64,19 @@
               <div class="form-group"
                    ng-class="{ 'has-error': form.lat_{{$index}}.$invalid || form.lng_{{$index}}.$invalid }">
                 <div class="geo-picker" ng-model="importData.geoPicker"
-                     ng-hide="!importData.data[$index].dataType || importData.data[$index].dataType === importData.GIS">
+                     ng-show="importData.data[$index].dataType && importData.data[$index].dataType === importData.TIME_SERIES">
                   <label>
                     Geo-Coords
                     <span class="input-group">
                       <input type="text" placeholder="LAT" min="-90" max="90"
                              class="form-control" ng-model="importData.data[$index].lat" name="lat_{{$index}}"
                              ng-required="importData.data[$index].dataType
-                             && importData.data[$index].dataType !== importData.GIS">
+                             && importData.data[$index].dataType === importData.TIME_SERIES">
                       <span class="input-group-btn" style="width:0;"></span>
                       <input type="text" placeholder="LON" min="-180" max="180"
                              class="form-control" ng-model="importData.data[$index].lng" name="lng_{{$index}}"
                              ng-required="importData.data[$index].dataType
-                             && importData.data[$index].dataType !== importData.GIS">
+                             && importData.data[$index].dataType === importData.TIME_SERIES">
                       <span class="input-group-btn" style="width:0;"></span>
                       <span class="input-group-btn">
                         <button type="button" class="btn btn-primary"

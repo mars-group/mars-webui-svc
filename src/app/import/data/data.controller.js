@@ -80,7 +80,7 @@
           return false;
         }
         /** geo coords must be set and valid if data type is TimeSeries*/
-        if (vm.data[i].dataType == vm.TIME_SERIES) {
+        if (vm.data[i].dataType === vm.TIME_SERIES) {
           var patternDecimal = /-?[0-9]+\.[0-9]+/;
           if (!patternDecimal.test(vm.data[i].lat) || !patternDecimal.test(vm.data[i].lng)) {
             vm.alerts.add('Please provide valid LAT and LON (decimals) for data file \'' + filename + '\'');
@@ -190,8 +190,7 @@
     };
 
     vm.clearGeoPicker = function (index) {
-      // this removes the geo coordinate, when the user switches the dataType to GIS, since no coordinate is needed.
-      if (vm.data[index].dataType === vm.GIS) {
+      if (vm.data[index].dataType !== vm.TIME_SERIES) {
         vm.data[index].lat = '';
         vm.data[index].lng = '';
       }
