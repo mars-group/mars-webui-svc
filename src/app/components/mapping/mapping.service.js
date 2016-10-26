@@ -168,7 +168,10 @@
           layerData.BasicLayers = data[0].Agents;
 
           layerData.GISLayers = data[1].Agents[0].Agents;
-          layerData.TimeSeriesLayers = data[1].Agents[1].Agents;
+          layerData.GeoPotentialFieldLayers = data[1].Agents[1].Agents;
+          layerData.GridPotentialFieldLayers = data[1].Agents[2].Agents;
+          layerData.ObstacleLayers = data[1].Agents[3].Agents;
+          layerData.TimeSeriesLayers = data[1].Agents[4].Agents;
 
           parameterData.Agents = data[2].Agents[0].Agents;
           parameterData.Global.Parameters = data[2].Agents[1].Parameters;

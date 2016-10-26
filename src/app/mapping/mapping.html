@@ -188,14 +188,15 @@
       track by $index">
         <uib-accordion-heading>
           {{ dataset.title }}
+          <button class="btn btn-success btn-xs" ng-click="mapping.createMapping(dataset, $index)"
+                  ng-hide="dataset.additionalTypeSpecificData.databaseName">add</button>
         </uib-accordion-heading>
         <div>Type: {{ dataset.type }}</div>
         <div>Description: {{ dataset.description }}</div>
         <div ng-show="dataset.additionalTypeSpecificData.databaseName">
           <div>ColumnNames:</div>
           <ul>
-            <li
-              ng-repeat="field in dataset.additionalTypeSpecificData.columnNames track by $index ">
+            <li ng-repeat="field in dataset.additionalTypeSpecificData.columnNames track by $index ">
               {{ field.clearColumnName }}
               <button class="btn btn-success btn-xs" ng-click="mapping.createMapping(dataset, $index)">add</button>
             </li>

@@ -148,7 +148,7 @@
       var hasMappingType = vm.selectedField.hasOwnProperty('MappingType');
       var isColumnParameterMapping = vm.selectedField.MappingType === 'ColumnParameterMapping';
 
-      if (hasMappingType && isColumnParameterMapping || !hasMappingType) {
+      if ((hasMappingType && isColumnParameterMapping || !hasMappingType) && dataset.additionalTypeSpecificData) {
         vm.selectedField.TableName = dataset.additionalTypeSpecificData.tableName;
         vm.selectedField.ColumnName = dataset.additionalTypeSpecificData.columnNames[index].dbCloumnName;
         vm.selectedField.ColumnClearName = dataset.additionalTypeSpecificData.columnNames[index].clearColumnName;
@@ -157,6 +157,9 @@
         if (vm.selectedField.hasOwnProperty('ColumnClearName')) {
           vm.selectedField.ColumnClearName = dataset.additionalTypeSpecificData.columnNames[index].clearColumnName;
         }
+      } else {
+        vm.selectedField.MetaDataId = dataset.dataId;
+        // vm.selectedField.ColumnClearName = dataset.title;
       }
 
       selectNextField();
