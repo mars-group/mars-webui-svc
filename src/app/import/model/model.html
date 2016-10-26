@@ -15,16 +15,16 @@
       </uib-alert>
 
       <!-- Upload box -->
-      <div nv-file-drop uploader="importModel.uploader" ng-click="importModel.clickUpload();"
+      <div nv-file-drop data-uploader="importModel.uploader" ng-click="importModel.clickUpload();"
            ng-show="importModel.uploader.isHTML5">
-        <div nv-file-over uploader="importModel.uploader" class="well my-drop-zone text-center upload-box">
+        <div nv-file-over data-uploader="importModel.uploader" class="well my-drop-zone text-center upload-box">
           <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span><br/>
           <div><strong>Choose files</strong></div>
           <div>or drag them here.</div>
         </div>
       </div>
       <input type="file" id="uploadBtn" ng-hide="importModel.uploader.isHTML5" multiple nv-file-select
-             uploader="importModel.uploader">
+             data-uploader="importModel.uploader">
 
       <!-- Upload accordion settings-->
       <div class="checkbox" ng-show="importModel.uploader.queue.length">
@@ -51,7 +51,6 @@
               <div class="form-group" ng-class="{ 'has-error': form.privacy_{{$index}}.$invalid }">
                 <label for="privacy">Privacy</label>
                 <select id="privacy" class="form-control" ng-model="importModel.data[$index].privacy"
-                        class="form-control"
                         name="privacy_{{$index}}" required>
                   <option value="">Please select</option>
                   <option value="PRIVATE">only for personal use</option>

@@ -17,19 +17,18 @@
     vm.markerSet = false;
 
     /** upload type constants */
-    vm.CONST_UPLOAD_TIMESERIES = 'TIME_SERIES';
-    vm.CONST_UPLOAD_TABLEBASED = 'TABLE_BASED';
-    vm.CONST_UPLOAD_GIS = 'GIS';
+    vm.GEO_POTENTIAL_FIELD = 'GEO_POTENTIAL_FIELD';
+    vm.GIS = 'GIS';
+    vm.GRID_POTENTIAL_FIELD = 'GRID_POTENTIAL_FIELD';
+    vm.OBSTACLE_LAYER = 'OBSTACLE_LAYER';
+    vm.TABLE_BASED = 'TABLE_BASED';
+    vm.TIME_SERIES = 'TIME_SERIES';
 
-    /** file ending constants */
-    vm.CONST_FILE_ENDING_CSV = 'csv';
-    vm.CONST_FILE_ENDING_ZIP = 'zip';
-    vm.CONST_FILE_ENDING_GEOTIFF = 'tif';
-    vm.CONST_FILE_ENDING_ASC = 'asc';
+    var fileEndings = ['asc', 'csv', 'tif', 'zip'];
 
     vm.uploader = new FileUploader();
     vm.file = null;
-    vm.alert = new Alert();
+    vm.alerts = new Alert();
     vm.data = [];
     vm.showOneUploadAtATime = true;
 
@@ -55,8 +54,8 @@
         var split = item.name.split('.');
         var fileEnding = split[split.length - 1];
         fileEnding = fileEnding.toLowerCase();
-        return fileEnding == vm.CONST_FILE_ENDING_CSV || fileEnding == vm.CONST_FILE_ENDING_ZIP ||
-          fileEnding == vm.CONST_FILE_ENDING_GEOTIFF || fileEnding == vm.CONST_FILE_ENDING_ASC;
+
+        return !angular.equals(fileEndings.indexOf(fileEnding), -1);
       }
     }, {
       name: 'uniqueFilenameFilter',
@@ -77,14 +76,14 @@
         var filename = vm.uploader.queue[i]._file.name;
         /** title must be set */
         if (vm.title === '') {
-          vm.alert.add('Please provide a title for data file \'' + filename + '\'');
+          vm.alerts.add('Please provide a title for data file \'' + filename + '\'');
           return false;
         }
         /** geo coords must be set and valid if data type is TimeSeries*/
-        if (vm.data[i].dataType == vm.CONST_UPLOAD_TIMESERIES) {
+        if (vm.data[i].dataType == vm.TIME_SERIES) {
           var patternDecimal = /-?[0-9]+\.[0-9]+/;
           if (!patternDecimal.test(vm.data[i].lat) || !patternDecimal.test(vm.data[i].lng)) {
-            vm.alert.add('Please provide valid LAT and LON (decimals) for data file \'' + filename + '\'');
+            vm.alerts.add('Please provide valid LAT and LON (decimals) for data file \'' + filename + '\'');
             return false;
           }
         }
@@ -107,7 +106,7 @@
         /** callback when metadata is written*/
         function () {
           /** if uploaded data was time-series */
-          if (fileItem.formData[0].type == vm.CONST_UPLOAD_TIMESERIES) {
+          if (fileItem.formData[0].type == vm.TIME_SERIES) {
             Metadata.getDateColumn(importId, function (possibleDateTimeColumn) {
               if (possibleDateTimeColumn) {
                 Timeseries.processDataOverNode(importId, possibleDateTimeColumn,
@@ -120,17 +119,14 @@
                     fileItem.isProcessing = false;
                     fileItem.isSuccess = false;
                     fileItem.isError = false;
-                    vm.alert.add(err);
+                    vm.alerts.add(err);
                   }
                 );
               } else {
-                vm.alert.add('Timeseries File "' + fileItem._file.name + '" does not contain a valid DateTime Column');
+                vm.alerts.add('Timeseries File "' + fileItem._file.name + '" does not contain a valid DateTime Column');
               }
             });
-          }
-          /** if uploaded data was table-based */
-          if (fileItem.formData[0].type == vm.CONST_UPLOAD_TABLEBASED ||
-            fileItem.formData[0].type == vm.CONST_UPLOAD_GIS) {
+          } else {
             /** display upload success */
             fileItem.isProcessing = false;
             fileItem.isSuccess = true;
@@ -143,17 +139,18 @@
       $log.error('item:', item);
       $log.error('response:', response);
       $log.error('status:', status);
+      vm.alerts.add('There was an error while processing ' + item + '. The error was: ' + response, 'danger');
     };
 
     /** Error routine if file cant be added to upload queue */
     vm.uploader.onWhenAddingFileFailed = function (item, filter) {
       /** if filter 'allowedFilesFilter' was not passed*/
       if (filter.name == 'allowedFilesFilter') {
-        vm.alert.add('Only AsciiGrid, GeoTiff, CSV and ZIP files are allowed');
+        vm.alerts.add('Only AsciiGrid, GeoTiff, CSV and ZIP files are allowed');
       }
       /** if filter 'uniqueFilenameFilter' was not passed*/
       if (filter.name == 'uniqueFilenameFilter') {
-        vm.alert.add(item.name + ' is already in the upload queue');
+        vm.alerts.add(item.name + ' is already in the upload queue');
       }
     };
 
@@ -183,7 +180,7 @@
         }
 
         if (tries > maxTries) {
-          vm.alert.add('max. tries of ' + maxTries + ' reached in Metadadata write-check for import ' + importId);
+          vm.alerts.add('max. tries of ' + maxTries + ' reached in Metadadata write-check for import ' + importId);
         }
       });
     }
@@ -194,7 +191,7 @@
 
     vm.clearGeoPicker = function (index) {
       // this removes the geo coordinate, when the user switches the dataType to GIS, since no coordinate is needed.
-      if (vm.data[index].dataType === vm.CONST_UPLOAD_GIS) {
+      if (vm.data[index].dataType === vm.GIS) {
         vm.data[index].lat = '';
         vm.data[index].lng = '';
       }
