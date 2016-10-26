@@ -113,9 +113,6 @@
           callback();
         }
 
-        if (tries > maxTries) {
-          vm.alert.add('max. tries of ' + maxTries + ' reached in Metadadata write-check for import ' + importId);
-        }
       });
     }
 
