@@ -159,7 +159,7 @@
         }
       } else {
         vm.selectedField.MetaDataId = dataset.dataId;
-        // vm.selectedField.ColumnClearName = dataset.title;
+        vm.selectedField.ClearName = dataset.title;
       }
 
       selectNextField();
@@ -199,6 +199,23 @@
 
     vm.removeParameter = function (parameter) {
       vm.selectedNode.Parameters.splice(vm.selectedNode.Parameters.indexOf(parameter), 1);
+    };
+
+    /**
+     * @return {string}
+     */
+    vm.SelectValue = function (field) {
+      if(!field) {
+        return 'select';
+      }
+
+      if (field.ColumnClearName) {
+        return field.ColumnClearName;
+      } else if (field.ClearName) {
+        return field.ClearName;
+      } else {
+        return 'select';
+      }
     };
 
   }

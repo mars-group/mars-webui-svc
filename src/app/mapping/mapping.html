@@ -54,7 +54,7 @@
             <td class="col-md-4">
               <div class="input-group" ng-hide="field.MappingType === 'ValueParameterMapping'">
                 <button class="btn btn-info" ng-click="mapping.selectedField=field">
-                  {{ field.ColumnClearName ? field.ColumnClearName : 'select'}}
+                  {{mapping.SelectValue(field)}}
                 </button>
                 <button class="btn btn-link" ng-click="mapping.resetField(field)"
                         ng-show="field.ColumnClearName">X
@@ -101,7 +101,7 @@
             <td class="col-md-6">
               <div class="input-group">
                 <button class="btn btn-info" ng-click="mapping.selectedField=mapping.selectedNode">
-                  {{ mapping.selectedNode.ColumnClearName ? mapping.selectedNode.ColumnClearName : 'select' }}
+                  {{mapping.SelectValue(mapping.selectedNode)}}
                 </button>
                 <button class="btn btn-link" ng-click="mapping.resetField(mapping.selectedNode)"
                         ng-show="mapping.selectedNode.ColumnClearName">X
