@@ -11,7 +11,7 @@
 
       <!-- Error messages -->
       <uib-alert ng-repeat="alert in importData.alerts.getAll()" type="{{alert.type}}"
-                 close="importData.alert.remove($index)">{{alert.msg}}
+                 close="importData.alerts.remove($index)">{{alert.msg}}
       </uib-alert>
 
       <!-- Upload box -->
@@ -102,9 +102,9 @@
                 <label for="privacy">Privacy</label>
                 <select id="privacy" class="form-control" ng-model="importData.data[$index].privacy"
                         name="privacy_{{$index}}" required>
-                  <option value="PRIVATE">only for personal use</option>
-                  <option value="PROJECT_PRIVATE">can only be used by project members</option>
-                  <option value="PUBLIC">can be used by everyone</option>
+                  <option value="PRIVATE">Only for personal use</option>
+                  <option value="PROJECT_PRIVATE">Can only be used by project members</option>
+                  <option value="PUBLIC" ng-selected="true">Can be used by everyone</option>
                 </select>
               </div>
 

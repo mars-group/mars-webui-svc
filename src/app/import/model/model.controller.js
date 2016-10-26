@@ -9,7 +9,7 @@
   function ImportModelController($timeout, $document, FileUploader, Metadata, Alert, Project) {
     var vm = this;
 
-    vm.alert = new Alert();
+    vm.alerts = new Alert();
     vm.uploader = new FileUploader();
     vm.file = null;
     vm.data = [];
@@ -80,11 +80,11 @@
     vm.uploader.onWhenAddingFileFailed = function (item, filter) {
       /** if filter 'allowedFilesFilter' was not passed*/
       if (filter.name == 'allowedFilesFilter') {
-        vm.alert.add('Only ZIP files are allowed');
+        vm.alerts.add('Only ZIP files are allowed');
       }
       /** if filter 'uniqueFilenameFilter' was not passed*/
       if (filter.name == 'uniqueFilenameFilter') {
-        vm.alert.add(item.name + ' is already in the upload queue');
+        vm.alerts.add(item.name + ' is already in the upload queue');
       }
     };
 

@@ -10,7 +10,7 @@
     <div class="col-md-3">
 
       <!-- Error messages -->
-      <uib-alert ng-repeat="alert in importModel.alert.get()" type="{{alert.type}}" close="importModel.alert.remove($index)">
+      <uib-alert ng-repeat="alert in importModel.alerts.getAll()" type="{{alert.type}}" close="importModel.alerts.remove($index)">
         {{alert.msg}}
       </uib-alert>
 
@@ -53,9 +53,9 @@
                 <select id="privacy" class="form-control" ng-model="importModel.data[$index].privacy"
                         name="privacy_{{$index}}" required>
                   <option value="">Please select</option>
-                  <option value="PRIVATE">only for personal use</option>
-                  <option value="PROJECT_PRIVATE">can only be used by project members</option>
-                  <option value="PUBLIC">can be used by everyone</option>
+                  <option value="PRIVATE">Only for personal use</option>
+                  <option value="PROJECT_PRIVATE">Can only be used by project members</option>
+                  <option value="PUBLIC" ng-selected="true">Can be used by everyone</option>
                 </select>
               </div>
 
