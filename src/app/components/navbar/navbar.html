@@ -25,7 +25,7 @@
           <div class="form-group">
             <div data-popover-class="navbar-popover" data-popover-title="Version info"
                  uib-popover-template="navigation.popoverTemplateUrl" data-popover-placement="bottom"
-                 data-popover-trigger="mouseenter">
+                 data-popover-trigger="mouseenter" data-popover-enable="navigation.version.buildNumber !== 'local'">
               <span class="bold">Version: </span>{{ navigation.version.buildNumber }}
             </div>
           </div>
