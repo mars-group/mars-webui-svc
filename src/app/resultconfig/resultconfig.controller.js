@@ -35,7 +35,7 @@
         createDefaultConfig(modelId);
 
         // Search for existing configurations.
-        $http.get("/result-config/api/ResultConfigs/"+modelId).then(function(configResponse) {
+        $http.get("/result-config/api/ResultConfigs?modelDataId="+modelId).then(function(configResponse) {
           vm.ResultConfigs = configResponse.data;
           changeSelection(vm.ResultConfigs[0].ConfigName);
         }, function() {
@@ -133,7 +133,7 @@
 
           // Update backend config.
           var cfg = vm.ResultConfigs[i];
-          $http.put("/result-config/api/ResultConfigs/"+cfg.Model+"/"+cfg.ConfigName, cfg)
+          $http.put("/result-config/api/ResultConfigs/"+cfg.ConfigId, cfg)
             .success(function () {
               $log.info("RCS update OK.");
             })
@@ -155,7 +155,7 @@
 
           // Delete config also from database.
           var cfg = vm.ResultConfigs[i];
-          $http.delete("/result-config/api/ResultConfigs/"+cfg.Model+"/"+cfg.ConfigName)
+          $http.delete("/result-config/api/ResultConfigs/"+cfg.ConfigId)
             .success(function () {
               $log.info("RCS delete OK.");
             })
