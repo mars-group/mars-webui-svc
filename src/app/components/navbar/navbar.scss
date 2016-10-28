@@ -6,6 +6,10 @@
 
   .form-group {
     color: white;
+
+    select {
+      max-width: 200px;
+    }
   }
 
   .popover {
