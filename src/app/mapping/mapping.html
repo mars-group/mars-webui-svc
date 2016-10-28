@@ -10,7 +10,7 @@
                  expanded-nodes="mapping.treeExpandedNodes" options="mapping.treeOptions"
                  on-selection="mapping.onNodeSelection(node)"
                  selected-node="mapping.selectedNode">
-      {{ node.LayerName }} {{ node.Name }}
+      {{ node.LayerName ? node.LayerName : node.Name }}
     </treecontrol>
   </div>
 
@@ -36,22 +36,23 @@
       <h3>{{ mapping.selectedNode.Name }}</h3>
 
       <!-- render basic layer agent fields -->
-      <div ng-hide="mapping.selectedNode.Parameters || mapping.selectedNode.hasOwnProperty('LayerName')">
+      <div ng-show="mapping.selectedNode.LayerType === 'BasicLayers'">
         <table class="table table-striped">
           <thead>
           <tr>
             <th>Fields</th>
             <th>Select Dataset</th>
             <th>manually</th>
+            <th>Validation</th>
           </tr>
           </thead>
           <tbody>
           <tr class="form-group"
               data-ng-repeat="field in mapping.selectedNode.ConstructorParameterMapping track by $index">
-            <td class="col-md-6">
+            <td>
               <span>{{ field.Name }}:</span>
             </td>
-            <td class="col-md-4">
+            <td>
               <div class="input-group" ng-hide="field.MappingType === 'ValueParameterMapping'">
                 <button class="btn btn-info" ng-click="mapping.selectedField=field">
                   {{mapping.SelectValue(field)}}
@@ -64,14 +65,21 @@
                 <label><input type="text" class="form-control" ng-model="field.Value"/></label>
               </div>
             </td>
-            <td class="col-md-2">
+            <td>
               <div class="input-group">
                 <div class="checkbox">
                   <label><input type="checkbox" ng-model="field.MappingType" ng-click="mapping.resetField(field)"
                                 data-ng-true-value="'ValueParameterMapping'"
-                                data-ng-false-value="'ColumnParameterMapping'">
-                  </label>
+                                data-ng-false-value="'ColumnParameterMapping'"></label>
                 </div>
+              </div>
+            </td>
+            <td>
+              <div class="input-group">
+                <span class="glyphicon glyphicon-ok" aria-hidden="true" ng-show="field.ValidationSuccessful"></span>
+                <span class="glyphicon glyphicon-remove" aria-hidden="true" ng-hide="field.ValidationSuccessful"
+                      uib-popover="{{field.ValidationResults}}" data-popover-placement="bottom"
+                      data-popover-trigger="mouseenter"></span>
               </div>
             </td>
           </tr>
@@ -79,33 +87,44 @@
         </table>
         <div class="text-right">
           <button class="btn btn-primary" type="submit" ng-click="mapping.saveMapping()"
-                  data-ng-disabled="mappingForm.$invalid">Validate & Save
+                  data-ng-disabled="mappingForm.$invalid">Save & Validate
           </button>
         </div>
       </div>
 
       <!-- render layer fields -->
-      <div ng-show="mapping.selectedNode.hasOwnProperty('LayerName')">
+      <div ng-hide="mapping.selectedNode.LayerType === 'BasicLayers' || mapping.selectedNode.Parameters">
         <table class="table table-striped">
           <thead>
           <tr>
             <th>Fields</th>
             <th>Select Dataset</th>
+            <th>Validation</th>
           </tr>
           </thead>
           <tbody>
           <tr class="form-group">
-            <td class="col-md-6">
+            <td>
               <span>{{ mapping.selectedNode.LayerName }}:</span>
             </td>
-            <td class="col-md-6">
+            <td>
               <div class="input-group">
                 <button class="btn btn-info" ng-click="mapping.selectedField=mapping.selectedNode">
                   {{mapping.SelectValue(mapping.selectedNode)}}
                 </button>
                 <button class="btn btn-link" ng-click="mapping.resetField(mapping.selectedNode)"
-                        ng-show="mapping.selectedNode.ColumnClearName">X
+                        ng-show="mapping.selectedNode.ClearName">X
                 </button>
+              </div>
+            </td>
+            <td>
+              <div class="input-group">
+                <span class="glyphicon glyphicon-ok" aria-hidden="true"
+                      ng-show="mapping.selectedNode.ValidationSuccessful"></span>
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"
+                      ng-hide="mapping.selectedNode.ValidationSuccessful"
+                      uib-popover="{{mapping.selectedNode.ValidationResults}}" data-popover-placement="bottom"
+                      data-popover-trigger="mouseenter"></span>
               </div>
             </td>
           </tr>
@@ -113,7 +132,7 @@
         </table>
         <div class="text-right">
           <button class="btn btn-primary" type="submit" ng-click="mapping.saveMapping()"
-                  data-ng-disabled="mappingForm.$invalid">Validate & Save
+                  data-ng-disabled="mappingForm.$invalid">Save & Validate
           </button>
         </div>
       </div>
@@ -167,7 +186,7 @@
         </div>
         <div class="text-right">
           <button class="btn btn-primary" type="submit" ng-click="mapping.saveParameter()"
-                  data-ng-disabled="mappingForm.$invalid">Validate & Save
+                  data-ng-disabled="mappingForm.$invalid">Save & Validate
           </button>
         </div>
       </div>
@@ -189,7 +208,8 @@
         <uib-accordion-heading>
           {{ dataset.title }}
           <button class="btn btn-success btn-xs" ng-click="mapping.createMapping(dataset, $index)"
-                  ng-hide="dataset.additionalTypeSpecificData.databaseName">add</button>
+                  ng-hide="dataset.additionalTypeSpecificData.databaseName">add
+          </button>
         </uib-accordion-heading>
         <div>Type: {{ dataset.type }}</div>
         <div>Description: {{ dataset.description }}</div>

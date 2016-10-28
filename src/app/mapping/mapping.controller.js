@@ -135,8 +135,10 @@
     vm.resetField = function (field) {
       field.TableName = null;
       field.ColumnName = null;
+      field.ClearName = null;
       field.ColumnClearName = null;
       field.Value = null;
+      field.MetaDataId = null;
     };
 
     vm.createMapping = function (dataset, index) {
@@ -166,7 +168,6 @@
     };
 
     vm.saveMapping = function () {
-      console.log('saveMapping()');
       mapping.putMapping(vm.treeData, function (err) {
         if (err) {
           vm.alerts.add('A call to: "' + err.config.url + '" caused the following error: "' + err.data.Description + '"', 'danger');
@@ -178,7 +179,6 @@
     };
 
     vm.saveParameter = function () {
-      console.log('saveParameter()');
       mapping.putParameter(vm.treeData, function (err) {
         if (err) {
           vm.alerts.add('A call to: "' + err.config.url + '" caused the following error: "' + err.data.Description + '"', 'danger');
@@ -205,7 +205,7 @@
      * @return {string}
      */
     vm.SelectValue = function (field) {
-      if(!field) {
+      if (!field) {
         return 'select';
       }
 

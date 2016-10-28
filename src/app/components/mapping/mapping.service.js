@@ -93,8 +93,14 @@
 
           // convert InitializationDescription to array
           angular.forEach(layerTypeKeys, function (layerType) {
-            // add layerType to fields
-            angular.forEach(layerMapping[layerType], function (layer) {
+            angular.forEach(layerMapping[layerType], function (layer, index) {
+              // move agent mapping one level up
+              if (angular.equals(layerType, 'BasicLayers')) {
+                layerMapping.BasicLayers[index] = layer.Agents[0];
+                layerMapping.BasicLayers[index].LayerName = layer.LayerName;
+              }
+
+              // add layerType to fields
               layer.LayerType = layerType;
               angular.forEach(layer.Agents, function (agent) {
                 agent.LayerType = layerType;
@@ -150,10 +156,32 @@
         };
 
         var convertToRemoteStructure = function (data) {
-          var tmp = angular.copy(originalData);
+          var result = angular.copy(originalData);
 
-          var layerData = tmp.InitializationDescription;
-          var parameterData = tmp.ParameterizationDescription;
+          var layerData = result.InitializationDescription;
+          layerData.BasicLayers = [];
+          angular.forEach(data[0].Agents, function (layer) {
+            var tmp3 = {
+              Agents: [layer],
+              LayerName: layer.LayerName
+            };
+
+            delete tmp3.Agents[0].LayerName;
+
+            layerData.BasicLayers.push(tmp3);
+          });
+          // layerData.BasicLayers = data[0].Agents;
+          layerData.GISLayers = data[1].Agents[0].Agents;
+          layerData.GeoPotentialFieldLayers = data[1].Agents[1].Agents;
+          layerData.GridPotentialFieldLayers = data[1].Agents[2].Agents;
+          layerData.ObstacleLayers = data[1].Agents[3].Agents;
+          layerData.TimeSeriesLayers = data[1].Agents[4].Agents;
+
+          var parameterData = result.ParameterizationDescription;
+          parameterData.Agents = data[2].Agents[0].Agents;
+          parameterData.Global.Parameters = data[2].Agents[1].Parameters;
+          parameterData.Layers = data[2].Agents[2].Agents;
+
 
           // remove layerType from fields
           angular.forEach(layerData, function (layerType) {
@@ -165,19 +193,7 @@
             });
           });
 
-          layerData.BasicLayers = data[0].Agents;
-
-          layerData.GISLayers = data[1].Agents[0].Agents;
-          layerData.GeoPotentialFieldLayers = data[1].Agents[1].Agents;
-          layerData.GridPotentialFieldLayers = data[1].Agents[2].Agents;
-          layerData.ObstacleLayers = data[1].Agents[3].Agents;
-          layerData.TimeSeriesLayers = data[1].Agents[4].Agents;
-
-          parameterData.Agents = data[2].Agents[0].Agents;
-          parameterData.Global.Parameters = data[2].Agents[1].Parameters;
-          parameterData.Layers = data[2].Agents[2].Agents;
-
-          return tmp;
+          return result;
         };
 
         var removeAngularHashKeyRecursive = function (obj) {
