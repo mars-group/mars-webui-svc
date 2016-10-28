@@ -17,7 +17,7 @@
     };
 
     /** @ngInject */
-    function NavbarController(Scenario) {
+    function NavbarController($http, Scenario) {
       var vm = this;
 
       vm.menuItems = [
@@ -99,6 +99,12 @@
       vm.setCurrentScenario = function () {
         Scenario.setCurrentScenario(vm.currentScenario);
       };
+
+      $http.get('version.txt')
+        .then(function (e) {
+          console.log(e);
+          vm.version = e.data;
+        });
 
     }
   }

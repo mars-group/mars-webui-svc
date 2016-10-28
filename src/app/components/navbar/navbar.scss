@@ -12,7 +12,11 @@
     margin-left: 1em;
   }
 
-  .project > label, .scenario > label {
-    margin-right: 5px;
+  .navbar-form > .form-group {
+    margin-right: 10px;
+  }
+
+  .bold {
+    font-weight: bold;
   }
 }
