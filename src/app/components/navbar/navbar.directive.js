@@ -20,6 +20,8 @@
     function NavbarController($http, Scenario) {
       var vm = this;
 
+      vm.popoverTemplateUrl = 'app/components/navbar/version-popover.html';
+
       vm.menuItems = [
         {
           title: 'Data Management',
@@ -100,9 +102,8 @@
         Scenario.setCurrentScenario(vm.currentScenario);
       };
 
-      $http.get('version.txt')
+      $http.get('version.json')
         .then(function (e) {
-          console.log(e);
           vm.version = e.data;
         });
 

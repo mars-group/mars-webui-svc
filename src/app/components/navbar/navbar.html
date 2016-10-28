@@ -23,7 +23,11 @@
 
         <form class="navbar-form navbar-right">
           <div class="form-group">
-            <span class="bold">Version:</span> {{ navigation.version }}
+            <div data-popover-class="navbar-popover" data-popover-title="Version info"
+                 uib-popover-template="navigation.popoverTemplateUrl" data-popover-placement="bottom"
+                 data-popover-trigger="mouseenter">
+              <span class="bold">Version: </span>{{ navigation.version.buildNumber }}
+            </div>
           </div>
           <div class="form-group">
             <label for="project" class="acme-navbar-text">Project: </label>
