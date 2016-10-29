@@ -10,7 +10,7 @@
                  expanded-nodes="mapping.treeExpandedNodes" options="mapping.treeOptions"
                  on-selection="mapping.onNodeSelection(node)"
                  selected-node="mapping.selectedNode">
-      {{ node.LayerName ? node.LayerName : node.Name }}
+      {{ node.Name ? node.Name : node.LayerName }}
     </treecontrol>
   </div>
 
@@ -158,13 +158,20 @@
             </td>
             <td>
               <div class="input-group" ng-class="{ 'has-error': mappingForm.Value{{$index}}.$invalid }">
-                <label><input type="text" name="Value{{$index}}" class="form-control" ng-model="field.Value"
-                              ng-required="field.Required" />
-                </label>
+                <!--<label><input type="text" name="Value{{$index}}" class="form-control" ng-model="field.Value"-->
+                <!--ng-required="field.Required" ng-show="field.AllowedValues.type === 'string'" /></label>-->
+
+                <!-- TODO: make input fields dynamic -->
+
+                <!--<input type="text" name="number" ng-model="asg" only-digits>-->
+
+                <div data-field="field.Value" data-contact-card>bb</div>
+
               </div>
             </td>
             <td>
               <div class="input-group">
+                {{ field.AllowedValues.format }}
                 <span class="glyphicon glyphicon-ok" aria-hidden="true" ng-show="field.ValidationSuccessful"></span>
                 <span class="glyphicon glyphicon-remove" aria-hidden="true" ng-hide="field.ValidationSuccessful"
                       uib-popover="{{field.ValidationResult}}" data-popover-placement="bottom"
@@ -225,6 +232,12 @@
       </uib-accordion-group>
     </uib-accordion>
   </div>
+
+  <!-- debugging -->
+  Field:
+  <pre data-pretty-json="mapping.selectedField"></pre>
+  Node:
+  <pre data-pretty-json="mapping.selectedNode"></pre>
 
 
 </div>
