@@ -15,16 +15,24 @@ RUN apt-get update && apt-get install -y bzip2 git
 RUN npm install -g bower gulp
 
 
-
 #
 # install npm and bower dependencies
 #
 RUN mkdir /app
+RUN mkdir /prod
 
 # Add the files seperately, so docker can cache them
 ADD package.json /app
+ADD .npmrc /app
 ADD bower.json /app
 
+ADD package.json /prod
+ADD .npmrc /prod
+
+
+#
+# install dev dependencies
+#
 WORKDIR /app
 
 RUN npm install --only=dev
@@ -32,35 +40,25 @@ RUN bower install --allow-root
 
 
 #
-# Add stuff to the container
+# build production
 #
+# Add code to the container
 ADD . /app
-ADD entrypoint.sh /
-RUN chmod +x /entrypoint.sh
 
-
-#
 # build dist (production) directory
-#
 RUN gulp
 
 
 #
 # Install production dependencies
 #
-RUN mkdir /prod
-
-# Add the file seperately, so docker can cache it
-ADD package.json /prod
-
 WORKDIR /prod
 
 RUN npm install --only=production
 
 # move prod files to /prod
-RUN mv server /prod/ && \
-  mv dist /prod/ && \
-  mv .npmrc /prod/
+RUN mv /app/server /prod/ && \
+  mv /app/dist /prod/
 
 
 #
@@ -74,6 +72,8 @@ RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /app
 # run it
 #
 #convert DOS lineendings to UNIX
+ADD entrypoint.sh /
+RUN chmod +x /entrypoint.sh
 RUN sed -i $'s/\r$//' /entrypoint.sh
 
 EXPOSE 3000 3001
