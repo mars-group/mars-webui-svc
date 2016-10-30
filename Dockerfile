@@ -25,7 +25,7 @@ ADD bower.json /app
 
 WORKDIR /app
 
-RUN npm install --only=dev --ignore-scripts
+RUN npm install --only=dev
 RUN bower install --allow-root
 
 
