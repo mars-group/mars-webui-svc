@@ -21,22 +21,22 @@
       {{alert.msg}}
     </uib-alert>
 
-    <div ng-hide="mapping.currentScenario">
+    <div data-ng-hide="mapping.currentScenario">
       <label for="scenario" class="acme-navbar-text">Please select a Scenario: </label>
-      <select class="form-control" id="scenario" ng-model="mapping.currentScenario"
+      <select class="form-control" id="scenario" data-ng-model="mapping.currentScenario"
               data-ng-options="o.Name for o in mapping.scenarios track by o.ScenarioId"
               data-ng-change="mapping.setCurrentScenario(o)">
       </select>
       <div>
-        <div>Or create one <a ui-sref="scenario">here</a>.</div>
+        <div>Or create one <a data-ui-sref="scenario">here</a>.</div>
       </div>
     </div>
 
-    <form name="mappingForm" class="simple-form" novalidate ng-show="mapping.selectedNode">
+    <form name="mappingForm" class="simple-form" novalidate data-ng-show="mapping.selectedNode">
       <h3>{{ mapping.selectedNode.Name }}</h3>
 
       <!-- render basic layer agent fields -->
-      <div ng-show="mapping.selectedNode.LayerType === 'BasicLayers'">
+      <div data-ng-show="mapping.selectedNode.LayerType === 'BasicLayers'">
         <table class="table table-striped">
           <thead>
           <tr>
@@ -53,22 +53,23 @@
               <span>{{ field.Name }}:</span>
             </td>
             <td>
-              <div class="input-group" ng-hide="field.MappingType === 'ValueParameterMapping'">
-                <button class="btn btn-info" ng-click="mapping.selectedField=field">
+              <div class="input-group" data-ng-hide="field.MappingType === 'ValueParameterMapping'">
+                <button class="btn btn-info" data-ng-click="mapping.selectedField=field">
                   {{mapping.SelectValue(field)}}
                 </button>
-                <button class="btn btn-link" ng-click="mapping.resetField(field)"
-                        ng-show="field.ColumnClearName">X
+                <button class="btn btn-link" data-ng-click="mapping.resetField(field)"
+                        data-ng-show="field.ColumnClearName">X
                 </button>
               </div>
-              <div class="input-group" ng-show="field.MappingType === 'ValueParameterMapping'">
-                <label><input type="text" class="form-control" ng-model="field.Value"/></label>
+              <div class="input-group" data-ng-show="field.MappingType === 'ValueParameterMapping'">
+                <label><input type="text" class="form-control" data-ng-model="field.Value"/></label>
               </div>
             </td>
             <td>
               <div class="input-group">
                 <div class="checkbox">
-                  <label><input type="checkbox" ng-model="field.MappingType" ng-click="mapping.resetField(field)"
+                  <label><input type="checkbox" data-ng-model="field.MappingType"
+                                data-ng-click="mapping.resetField(field)"
                                 data-ng-true-value="'ValueParameterMapping'"
                                 data-ng-false-value="'ColumnParameterMapping'"></label>
                 </div>
@@ -76,9 +77,10 @@
             </td>
             <td>
               <div class="input-group">
-                <span class="glyphicon glyphicon-ok" aria-hidden="true" ng-show="field.ValidationSuccessful"></span>
-                <span class="glyphicon glyphicon-remove" aria-hidden="true" ng-hide="field.ValidationSuccessful"
-                      uib-popover="{{field.ValidationResults}}" data-popover-placement="bottom"
+                <span class="glyphicon glyphicon-ok" aria-hidden="true"
+                      data-ng-show="field.ValidationSuccessful"></span>
+                <span class="glyphicon glyphicon-remove" aria-hidden="true" data-ng-hide="field.ValidationSuccessful"
+                      data-uib-popover="{{field.ValidationResults}}" data-popover-placement="bottom"
                       data-popover-trigger="mouseenter"></span>
               </div>
             </td>
@@ -86,14 +88,14 @@
           </tbody>
         </table>
         <div class="text-right">
-          <button class="btn btn-primary" type="submit" ng-click="mapping.saveMapping()"
+          <button class="btn btn-primary" type="submit" data-ng-click="mapping.saveMapping()"
                   data-ng-disabled="mappingForm.$invalid">Save & Validate
           </button>
         </div>
       </div>
 
       <!-- render layer fields -->
-      <div ng-hide="mapping.selectedNode.LayerType === 'BasicLayers' || mapping.selectedNode.Parameters">
+      <div data-ng-hide="mapping.selectedNode.LayerType === 'BasicLayers' || mapping.selectedNode.Parameters">
         <table class="table table-striped">
           <thead>
           <tr>
@@ -109,21 +111,21 @@
             </td>
             <td>
               <div class="input-group">
-                <button class="btn btn-info" ng-click="mapping.selectedField=mapping.selectedNode">
+                <button class="btn btn-info" data-ng-click="mapping.selectedField=mapping.selectedNode">
                   {{mapping.SelectValue(mapping.selectedNode)}}
                 </button>
-                <button class="btn btn-link" ng-click="mapping.resetField(mapping.selectedNode)"
-                        ng-show="mapping.selectedNode.ClearName">X
+                <button class="btn btn-link" data-ng-click="mapping.resetField(mapping.selectedNode)"
+                        data-ng-show="mapping.selectedNode.ClearName">X
                 </button>
               </div>
             </td>
             <td>
               <div class="input-group">
                 <span class="glyphicon glyphicon-ok" aria-hidden="true"
-                      ng-show="mapping.selectedNode.ValidationSuccessful"></span>
+                      data-ng-show="mapping.selectedNode.ValidationSuccessful"></span>
                 <span class="glyphicon glyphicon-remove" aria-hidden="true"
-                      ng-hide="mapping.selectedNode.ValidationSuccessful"
-                      uib-popover="{{mapping.selectedNode.ValidationResults}}" data-popover-placement="bottom"
+                      data-ng-hide="mapping.selectedNode.ValidationSuccessful"
+                      data-uib-popover="{{mapping.selectedNode.ValidationResults}}" data-popover-placement="bottom"
                       data-popover-trigger="mouseenter"></span>
               </div>
             </td>
@@ -131,14 +133,14 @@
           </tbody>
         </table>
         <div class="text-right">
-          <button class="btn btn-primary" type="submit" ng-click="mapping.saveMapping()"
+          <button class="btn btn-primary" type="submit" data-ng-click="mapping.saveMapping()"
                   data-ng-disabled="mappingForm.$invalid">Save & Validate
           </button>
         </div>
       </div>
 
       <!-- render parameters -->
-      <div ng-show="mapping.selectedNode.Parameters">
+      <div data-ng-show="mapping.selectedNode.Parameters">
         <table class="table table-striped">
           <thead>
           <tr>
@@ -152,35 +154,38 @@
           <tr class="form-group" data-ng-repeat="field in mapping.selectedNode.Parameters track by $index">
             <td>
               <div class="input-group">
-                <label><input type="text" class="form-control" ng-model="field.Name" data-ng-disabled="field.Required"/>
+                <label><input type="text" class="form-control" data-ng-model="field.Name"
+                              data-ng-disabled="field.Required"/>
                 </label>
               </div>
             </td>
             <td>
-              <div class="input-group" ng-class="{ 'has-error': mappingForm.Value{{$index}}.$invalid }">
-                <!--<label><input type="text" name="Value{{$index}}" class="form-control" ng-model="field.Value"-->
-                <!--ng-required="field.Required" ng-show="field.AllowedValues.type === 'string'" /></label>-->
+              <div class="input-group" data-ng-class="{ 'has-error': mappingForm.Value{{$index}}.$invalid }">
+                <label><input type="text" name="Value{{$index}}" class="form-control" data-ng-model="field.Value"
+                              data-ng-required="field.Required" />
+                </label>
 
                 <!-- TODO: make input fields dynamic -->
 
                 <!--<input type="text" name="number" ng-model="asg" only-digits>-->
 
-                <div data-field="field.Value" data-contact-card>bb</div>
+                <!--<div data-field="field.Value" data-contact-card>bb</div>-->
 
               </div>
             </td>
             <td>
               <div class="input-group">
                 {{ field.AllowedValues.format }}
-                <span class="glyphicon glyphicon-ok" aria-hidden="true" ng-show="field.ValidationSuccessful"></span>
-                <span class="glyphicon glyphicon-remove" aria-hidden="true" ng-hide="field.ValidationSuccessful"
-                      uib-popover="{{field.ValidationResult}}" data-popover-placement="bottom"
+                <span class="glyphicon glyphicon-ok" aria-hidden="true"
+                      data-ng-show="field.ValidationSuccessful"></span>
+                <span class="glyphicon glyphicon-remove" aria-hidden="true" data-ng-hide="field.ValidationSuccessful"
+                      data-uib-popover="{{field.ValidationResult}}" data-popover-placement="bottom"
                       data-popover-trigger="mouseenter"></span>
               </div>
             </td>
             <td>
               <div class="input-group">
-                <button class="btn btn-link" ng-click="mapping.removeParameter(field)"
+                <button class="btn btn-link" data-ng-click="mapping.removeParameter(field)"
                         data-ng-disabled="field.Required">X
                 </button>
               </div>
@@ -188,11 +193,11 @@
           </tr>
           </tbody>
         </table>
-        <div class="text-right add-parameter-btn" ng-show="mapping.selectedNode.Parameters">
-          <button class="btn btn-primary" ng-click="mapping.addParameter()">Add</button>
+        <div class="text-right add-parameter-btn" data-ng-show="mapping.selectedNode.Parameters">
+          <button class="btn btn-primary" data-ng-click="mapping.addParameter()">Add</button>
         </div>
         <div class="text-right">
-          <button class="btn btn-primary" type="submit" ng-click="mapping.saveParameter()"
+          <button class="btn btn-primary" type="submit" data-ng-click="mapping.saveParameter()"
                   data-ng-disabled="mappingForm.$invalid">Save & Validate
           </button>
         </div>
@@ -201,12 +206,12 @@
     </form>
   </div>
 
-  <div class="col-md-4" ng-show="mapping.selectedNode && !mapping.selectedNode.Parameters">
+  <div class="col-md-4" data-ng-show="mapping.selectedNode && !mapping.selectedNode.Parameters">
     <h3>Select Data</h3>
 
     <div class="form-group">
       <label for="filter" class="filter">Filter:</label>
-      <input class="form-control" id="filter" type="text" ng-model="mapping.dataFilter.title">
+      <input class="form-control" id="filter" type="text" data-ng-model="mapping.dataFilter.title">
     </div>
 
     <uib-accordion close-others="true">
@@ -214,18 +219,18 @@
       track by $index">
         <uib-accordion-heading>
           {{ dataset.title }}
-          <button class="btn btn-success btn-xs" ng-click="mapping.createMapping(dataset, $index)"
-                  ng-hide="dataset.additionalTypeSpecificData.databaseName">add
+          <button class="btn btn-success btn-xs" data-ng-click="mapping.createMapping(dataset, $index)"
+                  data-ng-hide="dataset.additionalTypeSpecificData.databaseName">add
           </button>
         </uib-accordion-heading>
         <div>Type: {{ dataset.type }}</div>
         <div>Description: {{ dataset.description }}</div>
-        <div ng-show="dataset.additionalTypeSpecificData.databaseName">
+        <div data-ng-show="dataset.additionalTypeSpecificData.databaseName">
           <div>ColumnNames:</div>
           <ul>
-            <li ng-repeat="field in dataset.additionalTypeSpecificData.columnNames track by $index ">
+            <li data-ng-repeat="field in dataset.additionalTypeSpecificData.columnNames track by $index ">
               {{ field.clearColumnName }}
-              <button class="btn btn-success btn-xs" ng-click="mapping.createMapping(dataset, $index)">add</button>
+              <button class="btn btn-success btn-xs" data-ng-click="mapping.createMapping(dataset, $index)">add</button>
             </li>
           </ul>
         </div>
@@ -233,11 +238,9 @@
     </uib-accordion>
   </div>
 
-  <!-- debugging -->
   Field:
   <pre data-pretty-json="mapping.selectedField"></pre>
   Node:
   <pre data-pretty-json="mapping.selectedNode"></pre>
-
 
 </div>
