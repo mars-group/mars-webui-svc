@@ -21,13 +21,13 @@ RUN npm install -g bower gulp
 #
 RUN mkdir /app
 
-# We add the files seperately, so docker can cache them
+# Add the files seperately, so docker can cache them
 ADD package.json /app
 ADD bower.json /app
 
 WORKDIR /app
 
-RUN npm install --only=dev --ignore-scripts
+RUN npm install --only=dev
 RUN bower install --allow-root
 
 
@@ -50,7 +50,7 @@ RUN gulp
 #
 RUN mkdir /prod
 
-# We add the file seperately, so docker can cache it
+# Add the file seperately, so docker can cache it
 ADD package.json /prod
 
 WORKDIR /prod
