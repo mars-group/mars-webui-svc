@@ -58,8 +58,7 @@ WORKDIR /prod
 RUN npm install --only=production
 
 # move prod files to /prod
-RUN mkdir /prod && \
-  mv server /prod/ && \
+RUN mv server /prod/ && \
   mv dist /prod/ && \
   mv .npmrc /prod/
 
