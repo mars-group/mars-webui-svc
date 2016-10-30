@@ -70,8 +70,6 @@
     loadMapping();
 
     var configureTreeView = function () {
-      // DEBUGGING
-      vm.selectedNode = vm.treeData[0].Agents[0];
       expandTopLevelNodes();
     };
 
