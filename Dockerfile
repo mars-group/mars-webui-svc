@@ -16,27 +16,29 @@ RUN npm install -g bower gulp
 
 
 #
-# install npm and bower dependencies
+# install dev dependencies with caching enabled
 #
 RUN mkdir /app
-RUN mkdir /prod
+WORKDIR /app
 
-# Add the files seperately, so docker can cache them
 ADD package.json /app
 ADD .npmrc /app
 ADD bower.json /app
 
+RUN npm install --only=dev
+RUN bower install --allow-root
+
+
+#
+# install production dependencies with caching enabled
+#
+RUN mkdir /prod
+WORKDIR /prod
+
 ADD package.json /prod
 ADD .npmrc /prod
 
-
-#
-# install dev dependencies
-#
-WORKDIR /app
-
-RUN npm install --only=dev
-RUN bower install --allow-root
+RUN npm install --only=production
 
 
 #
@@ -44,17 +46,10 @@ RUN bower install --allow-root
 #
 # Add code to the container
 ADD . /app
+WORKDIR /app
 
 # build dist (production) directory
 RUN gulp
-
-
-#
-# Install production dependencies
-#
-WORKDIR /prod
-
-RUN npm install --only=production
 
 # move prod files to /prod
 RUN mv /app/server /prod/ && \
