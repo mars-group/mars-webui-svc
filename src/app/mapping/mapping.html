@@ -85,6 +85,34 @@
               </div>
             </td>
           </tr>
+          <tr>
+            <td>
+              <span>InstanceCount:</span>
+            </td>
+            <td>
+              <div class="input-group" data-ng-hide="manualInstanceCount">
+                <button class="btn btn-success">
+                  {{mapping.SelectValue(mapping.selectedNode)}}
+                </button>
+                <button class="btn btn-link" data-ng-click="mapping.resetField(mapping.selectedNode)"
+                        data-ng-show="mapping.selectedNode.InstanceCount">X
+                </button>
+              </div>
+              <div class="input-group" data-ng-show="manualInstanceCount">
+                <label><input type="text" class="form-control" data-ng-model="mapping.selectedNode.InstanceCount"/>
+                </label>
+              </div>
+            </td>
+            <td>
+              <div class="input-group">
+                <div class="checkbox">
+                  <label><input type="checkbox" data-ng-model="manualInstanceCount"></label>
+                </div>
+              </div>
+            </td>
+            <td>
+            </td>
+          </tr>
           </tbody>
         </table>
         <div class="text-right">
@@ -162,7 +190,7 @@
             <td>
               <div class="input-group" data-ng-class="{ 'has-error': mappingForm.Value{{$index}}.$invalid }">
                 <label><input type="text" name="Value{{$index}}" class="form-control" data-ng-model="field.Value"
-                              data-ng-required="field.Required" />
+                              data-ng-required="field.Required"/>
                 </label>
 
                 <!-- TODO: make input fields dynamic -->
@@ -225,12 +253,16 @@
         </uib-accordion-heading>
         <div>Type: {{ dataset.type }}</div>
         <div>Description: {{ dataset.description }}</div>
+        <div>InstanceCount: {{ dataset.records }}
+          <button class="btn btn-success btn-xs" data-ng-click="mapping.createInstanceCountMapping(dataset)">add
+          </button>
+        </div>
         <div data-ng-show="dataset.additionalTypeSpecificData.databaseName">
           <div>ColumnNames:</div>
           <ul>
             <li data-ng-repeat="field in dataset.additionalTypeSpecificData.columnNames track by $index ">
               {{ field.clearColumnName }}
-              <button class="btn btn-success btn-xs" data-ng-click="mapping.createMapping(dataset, $index)">add</button>
+              <button class="btn btn-info btn-xs" data-ng-click="mapping.createMapping(dataset, $index)">add</button>
             </li>
           </ul>
         </div>

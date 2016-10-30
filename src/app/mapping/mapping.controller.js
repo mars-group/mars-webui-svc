@@ -70,6 +70,8 @@
     loadMapping();
 
     var configureTreeView = function () {
+      // DEBUGGING
+      vm.selectedNode = vm.treeData[0].Agents[0];
       expandTopLevelNodes();
     };
 
@@ -133,6 +135,10 @@
     };
 
     vm.resetField = function (field) {
+      if (field.hasOwnProperty('InstanceCount')) {
+        field.InstanceCount = null;
+        return;
+      }
       field.TableName = null;
       field.ColumnName = null;
       field.ClearName = null;
@@ -165,6 +171,10 @@
       }
 
       selectNextField();
+    };
+
+    vm.createInstanceCountMapping = function (dataset) {
+      vm.selectedNode.InstanceCount = dataset.records;
     };
 
     vm.saveMapping = function () {
@@ -213,6 +223,8 @@
         return field.ColumnClearName;
       } else if (field.ClearName) {
         return field.ClearName;
+      } else if (field.InstanceCount) {
+        return field.InstanceCount;
       } else {
         return 'select';
       }
