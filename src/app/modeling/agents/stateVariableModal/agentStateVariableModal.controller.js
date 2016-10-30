@@ -20,7 +20,6 @@
 
       vm.cancel = function () {
         console.log(vm.stateVariable);
-        // console.log('hello');
         $uibModalInstance.dismiss('cancel');
       }
 
