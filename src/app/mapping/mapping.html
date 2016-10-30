@@ -189,8 +189,11 @@
             </td>
             <td>
               <div class="input-group" data-ng-class="{ 'has-error': mappingForm.Value{{$index}}.$invalid }">
-                <label><input type="text" name="Value{{$index}}" class="form-control" data-ng-model="field.Value"
-                              data-ng-required="field.Required"/>
+                <label>
+                  <input type="text" name="Value{{$index}}" class="form-control" data-ng-model="field.Value"
+                              data-ng-required="field.Required && field.Name !== 'DeltaT'" data-ng-hide="field.Name === 'DeltaT'"/>
+                  <!--<input type="number" name="Value{{$index}}" class="form-control" data-ng-model="field.Value"-->
+                         <!--data-ng-required="field.Required && field.Name === 'DeltaT'" data-ng-show="field.Name === 'DeltaT'"/>-->
                 </label>
 
                 <!-- TODO: make input fields dynamic -->
@@ -199,6 +202,12 @@
 
                 <!--<div data-field="field.Value" data-contact-card>bb</div>-->
 
+              </div>
+              <div class="input-group" data-ng-class="{ 'has-error': mappingForm.ValueDeltaT{{$index}}.$invalid }">
+                <label>
+                  <input type="number" name="ValueDeltaT{{$index}}" class="form-control" data-ng-model="field.Value"
+                         data-ng-required="field.Required && field.Name === 'DeltaT'" data-ng-show="field.Name === 'DeltaT'"/>
+                </label>
               </div>
             </td>
             <td>
