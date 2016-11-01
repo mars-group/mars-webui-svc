@@ -3,8 +3,6 @@
 if [ "$DEVELOPER_EDITION" = "true" ]; then
   echo "starting development ..."
 
-  cd /app
-
   npm install
   bower install --allow-root
 
@@ -13,6 +11,8 @@ if [ "$DEVELOPER_EDITION" = "true" ]; then
 
 else
   echo "starting production ..."
+
+  cd /prod
 
   # start server
   node server/app.js
