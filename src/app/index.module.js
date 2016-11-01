@@ -19,7 +19,8 @@
       'ui-leaflet',
       'ngTable',
       'treeControl',
-      'ngPrettyJson'
+      'ngPrettyJson',
+      'ui.bootstrap.datetimepicker'
     ]);
 
 })();

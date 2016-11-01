@@ -188,31 +188,12 @@
               </div>
             </td>
             <td>
-              <div class="input-group" data-ng-class="{ 'has-error': mappingForm.Value{{$index}}.$invalid }">
-                <label>
-                  <input type="text" name="Value{{$index}}" class="form-control" data-ng-model="field.Value"
-                              data-ng-required="field.Required && field.Name !== 'DeltaT'" data-ng-hide="field.Name === 'DeltaT'"/>
-                  <!--<input type="number" name="Value{{$index}}" class="form-control" data-ng-model="field.Value"-->
-                         <!--data-ng-required="field.Required && field.Name === 'DeltaT'" data-ng-show="field.Name === 'DeltaT'"/>-->
-                </label>
-
-                <!-- TODO: make input fields dynamic -->
-
-                <!--<input type="text" name="number" ng-model="asg" only-digits>-->
-
-                <!--<div data-field="field.Value" data-contact-card>bb</div>-->
-
-              </div>
-              <div class="input-group" data-ng-class="{ 'has-error': mappingForm.ValueDeltaT{{$index}}.$invalid }">
-                <label>
-                  <input type="number" name="ValueDeltaT{{$index}}" class="form-control" data-ng-model="field.Value"
-                         data-ng-required="field.Required && field.Name === 'DeltaT'" data-ng-show="field.Name === 'DeltaT'"/>
-                </label>
+              <div class="input-group">
+                <div ng-include data-src="'app/mapping/parameters.html'"></div>
               </div>
             </td>
             <td>
               <div class="input-group">
-                {{ field.AllowedValues.format }}
                 <span class="glyphicon glyphicon-ok" aria-hidden="true"
                       data-ng-show="field.ValidationSuccessful"></span>
                 <span class="glyphicon glyphicon-remove" aria-hidden="true" data-ng-hide="field.ValidationSuccessful"

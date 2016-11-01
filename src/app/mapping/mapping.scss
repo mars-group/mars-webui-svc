@@ -18,4 +18,16 @@
     margin-bottom: 0.5em;
   }
 
+  input.ng-invalid, select.ng-invalid, div.ng-invalid {
+    border: 1px solid red;
+  }
+
+  .navbar-collapse.in {
+    overflow-y: hidden;
+  }
+
+  .date-margin-left {
+    margin-left: .5em;
+  }
+
 }
