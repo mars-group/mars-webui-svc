@@ -8,11 +8,11 @@
 <!-- Date-Time -->
 <div data-ng-if="field.AllowedValues.type === 'string' && field.AllowedValues.format == 'date-time'">
   <div>Date-Time:</div>
-  <button type="button" class="btn btn-default" ng-click="datepickerCollapsed[$index] = !datepickerCollapsed[$index]">
+  <button type="button" ng-class="mappingForm.datepicker_{{$index}}.$invalid ? 'ng-invalid' : ''" class="btn btn-default" ng-click="datepickerCollapsed[$index] = !datepickerCollapsed[$index]">
     <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></button>
   <span class="date-margin-left">{{ field.Value |date:'yyyy-MM-dd HH:mm:ss Z' }}</span>
   <div uib-collapse="!datepickerCollapsed[$index]">
-    <datetimepicker data-ng-model="field.Value" ng-required="field.Required"></datetimepicker>
+    <datetimepicker data-ng-model="field.Value" ng-required="field.Required" name="datepicker_{{$index}}"></datetimepicker>
   </div>
 
 </div>
