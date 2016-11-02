@@ -8,7 +8,7 @@
     "angular-tree-control": "import-view category view",
     "angular-toggle-switch": "Added to get a toggle switch in the result config view.",
     "ng-prettyjson": "make json pretty in the import-view",
-    "angular-ui-bootstrap-datetimepicker": "Data mapping parameters"
+    "angular-bootstrap-datetimepicker": "Data mapping parameters"
   },
   "dependencies": {
     "angular-animate": "~1.5.3",
