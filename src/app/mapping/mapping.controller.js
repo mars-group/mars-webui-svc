@@ -7,8 +7,12 @@
 
 
   /** @ngInject */
-  function MappingController($log, Mapping, Metadata, Alert, Scenario) {
+  function MappingController($log, Mapping, Metadata, Alert, Scenario, Config) {
     var vm = this;
+
+    Config.isDevelopment(function (res) {
+      vm.development = res;
+    });
 
     var mapping = new Mapping();
     vm.alerts = new Alert();
@@ -77,6 +81,24 @@
       angular.forEach(vm.treeData, function (value /*, key*/) {
         vm.treeExpandedNodes.push(value);
       });
+
+      //
+      // DEBUGGING ONLY
+      //
+      if (vm.development) {
+        // select Agents
+        // vm.selectedNode = vm.treeData[0].Agents[0];
+        // selectFirstField(vm.selectedNode);
+        // setDataFilter(vm.selectedNode);
+
+        // select layer
+        // vm.treeExpandedNodes.push(vm.treeData[1].Agents[1]);
+        // vm.selectedNode = vm.treeData[1].Agents[1].Agents[0];
+        // setDataFilter(vm.selectedNode);
+
+        // select global parameters
+        // vm.selectedNode = vm.treeData[2].Agents[1];
+      }
     };
 
     var loadMappingDatasets = function () {
