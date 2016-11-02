@@ -49,6 +49,11 @@
     vm.uploader.filters.push({
       name: 'allowedFilesFilter',
       fn: function (item) {
+        if (vm.uploader.progress === 100 && vm.uploader.isUploading === false) {
+          vm.uploader.clearQueue();
+          vm.removeAllUploads();
+        }
+
         vm.data.push(new vm.Data());
 
         var split = item.name.split('.');
