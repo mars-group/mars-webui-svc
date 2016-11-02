@@ -65,10 +65,10 @@
           ]
         },
         {
-          title: 'WebGL',
+          title: 'Visualization',
           children: [
             {
-              title: 'Test',
+              title: 'WebGL',
               url: 'webgl'
             }
           ]
