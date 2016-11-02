@@ -24,10 +24,19 @@
          * defaults to info, if type is not set
          */
         vm.add = function (message, type) {
-          alerts.push({
+          var alert = {
             msg: message,
             type: type
-          });
+          };
+
+          // prevent duplicate entries
+          for (var i = 0; i < alerts.length; i++) {
+            if (angular.equals(alert, alerts[i])) {
+              return;
+            }
+          }
+
+          alerts.push(alert);
         };
 
         vm.remove = function (index) {

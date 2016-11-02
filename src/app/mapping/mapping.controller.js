@@ -82,9 +82,7 @@
         vm.treeExpandedNodes.push(value);
       });
 
-      //
       // DEBUGGING ONLY
-      //
       if (vm.development) {
         // select Agents
         // vm.selectedNode = vm.treeData[0].Agents[0];
