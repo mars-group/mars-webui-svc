@@ -29,8 +29,7 @@ RUN mv /app/server /prod \
   && mv /app/dist /prod
 
 # Cleanup
-RUN apt-get clean
-RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /app
+RUN rm -rf /app
 
 # Add entrypoint
 ADD entrypoint.sh /

@@ -46,6 +46,10 @@ RUN chmod +x /entrypoint.sh
 # Convert DOS lineendings to UNIX
 RUN sed -i $'s/\r$//' /entrypoint.sh
 
+# Cleanup
+RUN apt-get clean
+RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
 # Expose ports
 EXPOSE 3000 3001
 
