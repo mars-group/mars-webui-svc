@@ -1,0 +1,41 @@
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th>Fields</th>
+    <th>Select Dataset</th>
+    <th>Validation</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr class="form-group">
+    <td>
+      <span>{{ mapping.selectedNode.LayerName }}:</span>
+    </td>
+    <td>
+      <div class="input-group">
+        <button class="btn btn-info" data-ng-click="mapping.selectedField=mapping.selectedNode">
+          {{mapping.SelectValue(mapping.selectedNode)}}
+        </button>
+        <button class="btn btn-link" data-ng-click="mapping.resetField(mapping.selectedNode)"
+                data-ng-show="mapping.selectedNode.ClearName">X
+        </button>
+      </div>
+    </td>
+    <td>
+      <div class="input-group">
+                <span class="glyphicon glyphicon-ok" aria-hidden="true"
+                      data-ng-show="mapping.selectedNode.ValidationSuccessful"></span>
+        <span class="glyphicon glyphicon-remove" aria-hidden="true"
+              data-ng-hide="mapping.selectedNode.ValidationSuccessful"
+              data-uib-popover="{{mapping.selectedNode.ValidationResults}}" data-popover-placement="bottom"
+              data-popover-trigger="mouseenter"></span>
+      </div>
+    </td>
+  </tr>
+  </tbody>
+</table>
+<div class="text-right">
+  <button class="btn btn-primary" type="submit" data-ng-click="mapping.saveMapping()"
+          data-ng-disabled="mappingForm.$invalid">Save & Validate
+  </button>
+</div>

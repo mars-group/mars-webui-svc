@@ -1,0 +1,83 @@
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th>Fields</th>
+    <th>Select Dataset</th>
+    <th>manually</th>
+    <th>Validation</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr class="form-group"
+      data-ng-repeat="field in mapping.selectedNode.ConstructorParameterMapping track by $index">
+    <td>
+      <span>{{ field.Name }}:</span>
+    </td>
+    <td>
+      <div class="input-group" data-ng-hide="field.MappingType === 'ValueParameterMapping'">
+        <button class="btn btn-info" data-ng-click="mapping.selectedField=field">
+          {{mapping.SelectValue(field)}}
+        </button>
+        <button class="btn btn-link" data-ng-click="mapping.resetField(field)"
+                data-ng-show="field.ColumnClearName">X
+        </button>
+      </div>
+      <div class="input-group" data-ng-show="field.MappingType === 'ValueParameterMapping'">
+        <label><input type="text" class="form-control" data-ng-model="field.Value"/></label>
+      </div>
+    </td>
+    <td>
+      <div class="input-group">
+        <div class="checkbox">
+          <label><input type="checkbox" data-ng-model="field.MappingType"
+                        data-ng-click="mapping.resetField(field)"
+                        data-ng-true-value="'ValueParameterMapping'"
+                        data-ng-false-value="'ColumnParameterMapping'"></label>
+        </div>
+      </div>
+    </td>
+    <td>
+      <div class="input-group">
+                <span class="glyphicon glyphicon-ok" aria-hidden="true"
+                      data-ng-show="field.ValidationSuccessful"></span>
+        <span class="glyphicon glyphicon-remove" aria-hidden="true" data-ng-hide="field.ValidationSuccessful"
+              data-uib-popover="{{field.ValidationResults}}" data-popover-placement="bottom"
+              data-popover-trigger="mouseenter"></span>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <span>InstanceCount:</span>
+    </td>
+    <td>
+      <div class="input-group" data-ng-hide="manualInstanceCount">
+        <button class="btn btn-success">
+          {{mapping.SelectValue(mapping.selectedNode)}}
+        </button>
+        <button class="btn btn-link" data-ng-click="mapping.resetField(mapping.selectedNode)"
+                data-ng-show="mapping.selectedNode.InstanceCount">X
+        </button>
+      </div>
+      <div class="input-group" data-ng-show="manualInstanceCount">
+        <label><input type="text" class="form-control" data-ng-model="mapping.selectedNode.InstanceCount"/>
+        </label>
+      </div>
+    </td>
+    <td>
+      <div class="input-group">
+        <div class="checkbox">
+          <label><input type="checkbox" data-ng-model="manualInstanceCount"></label>
+        </div>
+      </div>
+    </td>
+    <td>
+    </td>
+  </tr>
+  </tbody>
+</table>
+<div class="text-right">
+  <button class="btn btn-primary" type="submit" data-ng-click="mapping.saveMapping()"
+          data-ng-disabled="mappingForm.$invalid">Save & Validate
+  </button>
+</div>

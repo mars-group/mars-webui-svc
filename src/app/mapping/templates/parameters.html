@@ -1,0 +1,50 @@
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th class="text-center">Key</th>
+    <th class="text-center">Value</th>
+    <th class="text-center">Validation</th>
+    <th class="text-center">Delete</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr class="form-group" data-ng-repeat="field in mapping.selectedNode.Parameters track by $index">
+    <td>
+      <div class="input-group">
+        <label><input type="text" class="form-control" data-ng-model="field.Name"
+                      data-ng-disabled="field.Required"/>
+        </label>
+      </div>
+    </td>
+    <td>
+      <div class="input-group">
+        <div ng-include data-src="'app/mapping/templates/parameter-fields.html'"></div>
+      </div>
+    </td>
+    <td>
+      <div class="input-group">
+                <span class="glyphicon glyphicon-ok" aria-hidden="true"
+                      data-ng-show="field.ValidationSuccessful"></span>
+        <span class="glyphicon glyphicon-remove" aria-hidden="true" data-ng-hide="field.ValidationSuccessful"
+              data-uib-popover="{{field.ValidationResult}}" data-popover-placement="bottom"
+              data-popover-trigger="mouseenter"></span>
+      </div>
+    </td>
+    <td>
+      <div class="input-group">
+        <button class="btn btn-link" data-ng-click="mapping.removeParameter(field)"
+                data-ng-disabled="field.Required">X
+        </button>
+      </div>
+    </td>
+  </tr>
+  </tbody>
+</table>
+<div class="text-right add-parameter-btn" data-ng-show="mapping.selectedNode.Parameters">
+  <button class="btn btn-primary" data-ng-click="mapping.addParameter()">Add</button>
+</div>
+<div class="text-right">
+  <button class="btn btn-primary" type="submit" data-ng-click="mapping.saveParameter()"
+          data-ng-disabled="mappingForm.$invalid">Save & Validate
+  </button>
+</div>
