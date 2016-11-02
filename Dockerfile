@@ -16,17 +16,19 @@ RUN npm install -g bower gulp
 
 
 #
-# Add the code
+# Create Directory
 #
 RUN mkdir /app
 WORKDIR /app
+
+ADD password.txt /app
 
 
 #
 # pull compressed node_modules and bower_components from artifactory
 #
-RUN curl -u $BAMBOO_USER_PW -O "https://artifactory.mars.haw-hamburg.de/artifactory/compose-script-collection/node_modules.tar.gz"
-RUN curl -u $BAMBOO_USER_PW -O "https://artifactory.mars.haw-hamburg.de/artifactory/compose-script-collection/bower_components.tar.gz"
+RUN curl -u $(cat /app/password.txt) -O "https://artifactory.mars.haw-hamburg.de/artifactory/compose-script-collection/node_modules.tar.gz"
+RUN curl -u $(cat /app/password.txt) -O "https://artifactory.mars.haw-hamburg.de/artifactory/compose-script-collection/bower_components.tar.gz"
 
 RUN tar xzf node_modules.tar.gz -C /app \
   && tar xzf bower_components.tar.gz -C /app \
@@ -55,8 +57,8 @@ RUN bower prune --allow-root --silent && bower install --allow-root --silent
 RUN tar -czf node_modules.tar.gz /app/node_modules \
   && tar -czf bower_components.tar.gz /app/bower_components
 
-RUN curl -u $BAMBOO_USER_PW -T node_modules.tar.gz -H "X-Checksum-Sha1:$(shasum node_modules.tar.gz | awk '{print $1}')" "https://artifactory.mars.haw-hamburg.de/artifactory/compose-script-collection/node_modules.tar.gz"
-RUN curl -u $BAMBOO_USER_PW -T bower_components.tar.gz -H "X-Checksum-Sha1:$(shasum bower_components.tar.gz | awk '{print $1}')" "https://artifactory.mars.haw-hamburg.de/artifactory/compose-script-collection/bower_components.tar.gz"
+RUN curl -u $(cat /app/password.txt) -T node_modules.tar.gz -H "X-Checksum-Sha1:$(shasum node_modules.tar.gz | awk '{print $1}')" "https://artifactory.mars.haw-hamburg.de/artifactory/compose-script-collection/node_modules.tar.gz"
+RUN curl -u $(cat /app/password.txt) -T bower_components.tar.gz -H "X-Checksum-Sha1:$(shasum bower_components.tar.gz | awk '{print $1}')" "https://artifactory.mars.haw-hamburg.de/artifactory/compose-script-collection/bower_components.tar.gz"
 
 
 #
