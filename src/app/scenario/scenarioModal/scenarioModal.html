@@ -10,7 +10,7 @@
         <label class="control-label">Name</label>
         <input type="text" class="form-control" name="name" ng-model="scenarioModal.scenario.name"
                required placeholder="Name"/>
-        <div ng-show="(scenarioModal.form.$submitted || scenarioModal.form.name.$touched)
+        <div data-ng-if="(scenarioModal.form.$submitted || scenarioModal.form.name.$touched)
           && scenarioModal.form.name.$invalid">Please insert a name.
         </div>
       </div>
@@ -26,7 +26,7 @@
         <select id="scenarioModel" class="form-control" ng-model="scenarioModal.scenario.model" name="model" required>
           <option ng-repeat="model in scenarioModal.models" value="{{model.dataId}}">{{model.title}}</option>
         </select>
-        <div ng-show="(scenarioModal.form.$submitted || scenarioModal.form.model.$touched)
+        <div data-ng-if="(scenarioModal.form.$submitted || scenarioModal.form.model.$touched)
         && scenarioModal.form.model.$invalid">
           Please select a Model. If there are no models, you have to upload one first.
         </div>

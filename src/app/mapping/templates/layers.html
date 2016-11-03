@@ -17,14 +17,14 @@
           {{mapping.SelectValue(mapping.selectedNode)}}
         </button>
         <button class="btn btn-link" data-ng-click="mapping.resetField(mapping.selectedNode)"
-                data-ng-show="mapping.selectedNode.ClearName">X
+                data-ng-if="mapping.selectedNode.ClearName">X
         </button>
       </div>
     </td>
     <td>
       <div class="input-group">
                 <span class="glyphicon glyphicon-ok" aria-hidden="true"
-                      data-ng-show="mapping.selectedNode.ValidationSuccessful"></span>
+                      data-ng-if="mapping.selectedNode.ValidationSuccessful"></span>
         <span class="glyphicon glyphicon-remove" aria-hidden="true"
               data-ng-hide="mapping.selectedNode.ValidationSuccessful"
               data-uib-popover="{{mapping.selectedNode.ValidationResults}}" data-popover-placement="bottom"

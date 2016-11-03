@@ -6,7 +6,7 @@
 
 
   <!-- Error window. Shows up, if the 'error' boolean is set. -->
-  <div id="ErrorDialog" ng-show="resultconfig.error">
+  <div id="ErrorDialog"data-ng-if="resultconfig.error">
     <h2>Result Output Configuration</h2>
     <h3>Error: Cannot load the configuration dialog.</h3>
     <p>

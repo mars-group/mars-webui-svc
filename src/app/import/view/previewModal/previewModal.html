@@ -14,7 +14,7 @@
 
       <!-- map view -->
       <uib-tab heading="Map" select="preview.fixMap()"
-               ng-show="preview.dataset.type==='tablebased' ||preview.dataset.type==='timeseries'">
+              data-ng-if="preview.dataset.type==='tablebased' ||preview.dataset.type==='timeseries'">
         <leaflet lf-center="preview.center" markers="preview.markers" event-broadcast="preview.events" height="480px"
                  width="100%"></leaflet>
       </uib-tab>

@@ -19,7 +19,7 @@
                  ng-change="importView.updateSearchFilter();">
           <button class="btn btn-default" type="button"
                   ng-click="importView.searchFilter=''; importView.updateSearchFilter();"
-                  ng-show="importView.searchFilter">
+                 data-ng-if="importView.searchFilter">
             <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
           </button>
         </div>
@@ -36,7 +36,7 @@
         </treecontrol>
 
         <button type="button" class="btn btn-default" ng-click="importView.resetCategoryFilter()"
-                ng-show="importView.hasCategoryFilter">
+               data-ng-if="importView.hasCategoryFilter">
           <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
           reset filter
         </button>

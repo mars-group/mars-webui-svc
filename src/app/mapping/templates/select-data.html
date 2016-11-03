@@ -20,7 +20,7 @@
       <button class="btn btn-success btn-xs" data-ng-click="mapping.createInstanceCountMapping(dataset)">add
       </button>
     </div>
-    <div data-ng-show="dataset.additionalTypeSpecificData.databaseName">
+    <div data-ng-if="dataset.additionalTypeSpecificData.databaseName">
       <div>ColumnNames:</div>
       <ul>
         <li data-ng-repeat="field in dataset.additionalTypeSpecificData.columnNames track by $index ">

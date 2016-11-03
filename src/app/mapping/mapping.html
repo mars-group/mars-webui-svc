@@ -36,33 +36,34 @@
       <h3>{{ mapping.selectedNode.Name }}</h3>
 
       <!-- render basic layer agent fields -->
-      <div data-ng-show="mapping.selectedNode.LayerType === 'BasicLayers'">
+      <div data-ng-if="mapping.selectedNode.LayerType === 'BasicLayers'">
         <div ng-include data-src="'app/mapping/templates/agents.html'"></div>
       </div>
 
       <!-- render layer fields -->
-      <div data-ng-hide="mapping.selectedNode.LayerType === 'BasicLayers' || mapping.selectedNode.Parameters">
+      <div data-ng-if="mapping.selectedNode.LayerType && mapping.selectedNode.LayerType !== 'BasicLayers'
+      && !mapping.selectedNode.Parameters">
         <div ng-include data-src="'app/mapping/templates/layers.html'"></div>
       </div>
 
       <!-- render parameters -->
-      <div data-ng-show="mapping.selectedNode.Parameters">
+      <div data-ng-if="mapping.selectedNode.Parameters">
         <div ng-include data-src="'app/mapping/templates/parameters.html'"></div>
       </div>
 
     </form>
   </div>
 
-  <div class="col-md-4" data-ng-show="mapping.selectedNode && !mapping.selectedNode.Parameters">
+  <div class="col-md-4" data-ng-if="mapping.selectedNode && !mapping.selectedNode.Parameters">
     <div ng-include data-src="'app/mapping/templates/select-data.html'"></div>
   </div>
 
   <!-- Debugging only -->
   <div ng-if="mapping.development">
-  Field:
-  <pre data-pretty-json="mapping.selectedField"></pre>
-  Node:
-  <pre data-pretty-json="mapping.selectedNode"></pre>
+    Field:
+    <pre data-pretty-json="mapping.selectedField"></pre>
+    Node:
+    <pre data-pretty-json="mapping.selectedNode"></pre>
   </div>
 
 </div>
