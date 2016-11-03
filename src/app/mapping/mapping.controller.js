@@ -34,6 +34,8 @@
 
     Scenario.registerOnChangeListener(function () {
       vm.currentScenario = Scenario.getCurrentScenario();
+      vm.selectedNode = null;
+      vm.selectedField = null;
       loadMapping();
     });
 
