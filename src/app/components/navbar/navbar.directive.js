@@ -57,22 +57,22 @@
             {
               title: 'Result Configuration',
               url: 'resultconfig'
-            },
-            {
-              title: 'Run',
-              url: ''
             }
-          ]
-        },
-        {
-          title: 'Visualization',
-          children: [
-            {
-              title: 'WebGL',
-              url: 'webgl'
-            }
+            // {
+            //   title: 'Run',
+            //   url: ''
+            // }
           ]
         }
+        // {
+        //   title: 'Visualization',
+        //   children: [
+        //     {
+        //       title: 'WebGL',
+        //       url: 'webgl'
+        //     }
+        //   ]
+        // }
       ];
 
       vm.projects = [
