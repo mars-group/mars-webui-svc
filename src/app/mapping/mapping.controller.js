@@ -10,10 +10,6 @@
   function MappingController($log, Mapping, Metadata, Alert, Scenario, Config) {
     var vm = this;
 
-    Config.isDevelopment(function (res) {
-      vm.development = res;
-    });
-
     var mapping = new Mapping();
     vm.alerts = new Alert();
     vm.metadata = null;
@@ -21,6 +17,11 @@
     vm.selectedNode = null;
     vm.selectedField = null;
     vm.dataFilter = {};
+    vm.currentScenario = Scenario.getCurrentScenario();
+
+    Config.isDevelopment(function (res) {
+      vm.development = res;
+    });
 
     var selectNodeInfoMessage = 'Select a Layer on the left. In the appearing area, push the "select" button and match a field ' +
       'with the desired dataset on the right. Alternatively set a manual value, by selecting the checkbox next to ' +
@@ -57,21 +58,24 @@
     initMappingData();
 
     var loadMapping = function () {
-      vm.currentScenario = Scenario.getCurrentScenario();
       if (!vm.currentScenario) {
         vm.alerts.add(selectScenarioInfoMessage);
         return;
       }
 
-      mapping.getMapping().then(function (res) {
-        if (res.status > 299) {
-          $log.error('error:', res);
-          return;
-        }
+      mapping.getMapping()
+        .then(function (res) {
+          if (res.status > 299) {
+            $log.error('error:', res);
+            return;
+          }
 
-        vm.treeData = res;
-        configureTreeView();
-      });
+          vm.treeData = res;
+          configureTreeView();
+        })
+        .catch(function (err) {
+          $log.error(err);
+        });
     };
     loadMapping();
 
