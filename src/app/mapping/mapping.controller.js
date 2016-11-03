@@ -202,7 +202,7 @@
     };
 
     vm.saveMapping = function () {
-      mapping.putMapping(vm.treeData, function (err) {
+      mapping.putMapping(angular.copy(vm.treeData), function (err) {
         if (err) {
           vm.alerts.add('A call to: "' + err.config.url + '" caused the following error: "' + err.data.Description + '"', 'danger');
         } else {
