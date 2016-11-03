@@ -32,16 +32,15 @@
         };
 
         vm.putMapping = function (mapping, callback) {
-          mapping = convertToRemoteStructure(mapping);
+          mapping = convertMappingToRemote(mapping);
           mapping = mapping.InitializationDescription;
           removeAngularHashKeyRecursive(mapping);
-          $log.info('saving InitializationDescription:', mapping);
 
           var scenarioId = Scenario.getCurrentScenario().ScenarioId;
 
           $http.put('/scenario-management/scenarios/' + scenarioId + '/mapping', mapping)
             .then(function successCallback() {
-              $log.info('InitializationDescription saved');
+              $log.info('Mapping saved');
               callback();
             })
             .catch(function errorCallback(res) {
@@ -51,16 +50,15 @@
         };
 
         vm.putParameter = function (mapping, callback) {
-          mapping = convertToRemoteStructure(mapping);
+          mapping = convertParametersToRemote(mapping);
           mapping = mapping.ParameterizationDescription;
           removeAngularHashKeyRecursive(mapping);
-          $log.info('saving ParameterizationDescription:', mapping);
 
           var scenarioId = Scenario.getCurrentScenario().ScenarioId;
 
           $http.put('/scenario-management/scenarios/' + scenarioId + '/parameter', mapping)
             .then(function successCallback() {
-              $log.info('ParameterizationDescription saved');
+              $log.info('Parameters saved');
               callback();
             })
             .catch(function errorCallback(res) {
@@ -70,15 +68,15 @@
         };
 
         var convertToLocalStructure = function (data) {
-          var initializationDescription = convertInitializationToArray(data.InitializationDescription);
+          var initializationDescription = convertMappingToArray(data.InitializationDescription);
           var basicLayers = extractBasicLayers(initializationDescription);
           var otherLayers = removeBasicLayer(initializationDescription);
-          var parameters = convertParameterizationToArray(data.ParameterizationDescription);
+          var parameters = convertParametersToArray(data.ParameterizationDescription);
 
           return [basicLayers, otherLayers, parameters];
         };
 
-        var convertInitializationToArray = function (layerMapping) {
+        var convertMappingToArray = function (layerMapping) {
           var tmp = {
             Name: 'Layer',
             Agents: []
@@ -117,18 +115,7 @@
           return tmp;
         };
 
-        var extractBasicLayers = function (layers) {
-          layers.Agents[0].Name = 'Agent';
-          return layers.Agents[0];
-        };
-
-        var removeBasicLayer = function (layers) {
-          layers.Agents.splice(0, 1);
-
-          return layers;
-        };
-
-        var convertParameterizationToArray = function (parameterMapping) {
+        var convertParametersToArray = function (parameterMapping) {
           var tmp = {
             Name: 'Parameter',
             Agents: []
@@ -155,7 +142,7 @@
           return tmp;
         };
 
-        var convertToRemoteStructure = function (data) {
+        var convertMappingToRemote = function (data) {
           var result = angular.copy(originalData);
 
           var layerData = result.InitializationDescription;
@@ -177,12 +164,6 @@
           layerData.ObstacleLayers = data[1].Agents[3].Agents;
           layerData.TimeSeriesLayers = data[1].Agents[4].Agents;
 
-          var parameterData = result.ParameterizationDescription;
-          parameterData.Agents = data[2].Agents[0].Agents;
-          parameterData.Global.Parameters = data[2].Agents[1].Parameters;
-          parameterData.Layers = data[2].Agents[2].Agents;
-
-
           // remove layerType from fields
           angular.forEach(layerData, function (layerType) {
             angular.forEach(layerType, function (layer) {
@@ -192,6 +173,17 @@
               });
             });
           });
+
+          return result;
+        };
+
+        var convertParametersToRemote = function (data) {
+          var result = angular.copy(originalData);
+
+          var parameterData = result.ParameterizationDescription;
+          parameterData.Agents = data[2].Agents[0].Agents;
+          parameterData.Global.Parameters = data[2].Agents[1].Parameters;
+          parameterData.Layers = data[2].Agents[2].Agents;
 
           return result;
         };
@@ -206,6 +198,17 @@
               }
             }
           }
+        };
+
+        var extractBasicLayers = function (layers) {
+          layers.Agents[0].Name = 'Agent';
+          return layers.Agents[0];
+        };
+
+        var removeBasicLayer = function (layers) {
+          layers.Agents.splice(0, 1);
+
+          return layers;
         };
 
       };
