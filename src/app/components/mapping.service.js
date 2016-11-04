@@ -8,6 +8,8 @@
         var vm = this;
 
         var originalData = [];
+        var tmpMapping = null;
+        var tmpParameters = null;
 
         vm.getMapping = function () {
           var scenarioId;
@@ -22,18 +24,21 @@
             .then(function successCallback(res) {
               originalData = angular.copy(res.data);
 
-              $log.info('loaded data:', originalData.InitializationDescription);
+              $log.info('loaded data:', originalData);
 
-              return convertToLocalStructure(res.data);
+              var localData = convertToLocalStructure(res.data);
+
+              return restoreLocalChanges(localData);
             })
             .catch(function errorCallback(res) {
               return res;
             });
         };
 
-        vm.putMapping = function (mapping, callback) {
-          mapping = convertMappingToRemote(mapping);
-          mapping = mapping.InitializationDescription;
+        vm.putMapping = function (data, callback) {
+          tmpParameters = angular.copy(data[2]);
+          data = convertMappingToRemote(data);
+          var mapping = data.InitializationDescription;
           removeAngularHashKeyRecursive(mapping);
 
           var scenarioId = Scenario.getCurrentScenario().ScenarioId;
@@ -49,14 +54,15 @@
             });
         };
 
-        vm.putParameter = function (mapping, callback) {
-          mapping = convertParametersToRemote(mapping);
-          mapping = mapping.ParameterizationDescription;
-          removeAngularHashKeyRecursive(mapping);
+        vm.putParameter = function (data, callback) {
+          tmpMapping = [data[0], data[1]];
+          data = convertParametersToRemote(data);
+          var parameters = data.ParameterizationDescription;
+          removeAngularHashKeyRecursive(parameters);
 
           var scenarioId = Scenario.getCurrentScenario().ScenarioId;
 
-          $http.put('/scenario-management/scenarios/' + scenarioId + '/parameter', mapping)
+          $http.put('/scenario-management/scenarios/' + scenarioId + '/parameter', parameters)
             .then(function successCallback() {
               $log.info('Parameters saved');
               callback();
@@ -65,6 +71,21 @@
               $log.error(res);
               callback(res);
             });
+        };
+
+        var restoreLocalChanges = function (localData) {
+          if (tmpMapping) {
+            localData[0] = angular.copy(tmpMapping[0]);
+            localData[1] = angular.copy(tmpMapping[1]);
+          }
+          tmpMapping = null;
+
+          if (tmpParameters) {
+            localData[2] = angular.copy(tmpParameters);
+          }
+          tmpParameters = null;
+
+          return localData;
         };
 
         var convertToLocalStructure = function (data) {
