@@ -5,7 +5,7 @@
 </label>
 
 <!-- Date-Time -->
-<div data-ng-if="field.AllowedValues.type === 'string' && field.AllowedValues.format == 'date-time'">
+<div data-ng-if="field.AllowedValues.type === 'string' && field.AllowedValues.format === 'date-time'">
   <div>Date-Time:</div>
   <button type="button" ng-class="mappingForm.datepicker_{{$index}}.$invalid ? 'ng-invalid' : ''"
           class="btn btn-default" ng-click="datepickerCollapsed[$index] = !datepickerCollapsed[$index]">
@@ -39,9 +39,9 @@
 </label>
 
 <!-- String (default case) -->
-<label data-ng-if="field.AllowedValues.type === 'string' && field.AllowedValues.format !== 'data-time'
+<label data-ng-if="field.AllowedValues.type === 'string' && field.AllowedValues.format !== 'date-time'
       && !field.AllowedValues.hasOwnProperty('enum') || !field.hasOwnProperty('AllowedValues')
-      || field.hasOwnProperty('AllowedValues') && !field.AllowedValues.hasOwnProperty('type')">
+      || !field.AllowedValues.hasOwnProperty('type')">
   <input type="text" class="form-control" data-ng-model="field.Value" data-ng-required="field.Required"
          data-field="field"/>
 </label>
