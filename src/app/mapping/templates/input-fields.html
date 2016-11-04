@@ -39,7 +39,7 @@
 </label>
 
 <!-- String (default case) -->
-<label data-ng-if="field.AllowedValues.type === 'string' && !field.AllowedValues.format === 'data-time'
+<label data-ng-if="field.AllowedValues.type === 'string' && field.AllowedValues.format !== 'data-time'
       && !field.AllowedValues.hasOwnProperty('enum') || !field.hasOwnProperty('AllowedValues')
       || field.hasOwnProperty('AllowedValues') && !field.AllowedValues.hasOwnProperty('type')">
   <input type="text" class="form-control" data-ng-model="field.Value" data-ng-required="field.Required"
