@@ -52,10 +52,10 @@
                 <label for="dataType">Data Type</label>
                 <select id="dataType" class="form-control" ng-model="importData.data[$index].dataType"
                         ng-change="importData.clearGeoPicker($index)" name="dataType_{{$index}}" required>
-                  <option value="{{importData.GEO_POTENTIAL_FIELD}}">geo-potential-field data</option>
-                  <option value="{{importData.GRID_POTENTIAL_FIELD}}">grid-potential-field data</option>
-                  <option value="{{importData.OBSTACLE_LAYER}}">obstacle-layer data</option>
-                  <option value="{{importData.TABLE_BASED}}">table data</option>
+                  <option value="{{importData.GEO_POTENTIAL_FIELD}}">Geo-potential-field data</option>
+                  <option value="{{importData.GRID_POTENTIAL_FIELD}}">Grid-potential-field data</option>
+                  <option value="{{importData.OBSTACLE_LAYER}}">Obstacle-layer data</option>
+                  <option value="{{importData.TABLE_BASED}}">Table data</option>
                   <option value="{{importData.TIME_SERIES}}">Time-series data</option>
                   <option value="{{importData.GIS}}">GIS data</option>
                 </select>
