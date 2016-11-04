@@ -140,11 +140,10 @@
       );
     };
 
-    vm.uploader.onErrorItem = function (item, response, status) {
+    vm.uploader.onErrorItem = function (item, response/*, status*/) {
       $log.error('item:', item);
       $log.error('response:', response);
-      $log.error('status:', status);
-      vm.alerts.add('There was an error while processing ' + item + '. The error was: ' + response, 'danger');
+      vm.alerts.add('Error while processing "' + item.file.name + '": ' + response.message, 'danger');
     };
 
     /** Error routine if file cant be added to upload queue */
