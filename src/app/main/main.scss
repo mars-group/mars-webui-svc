@@ -1,0 +1,30 @@
+#main-container {
+
+  h2 {
+    margin-bottom: .75em;
+  }
+
+  .pill {
+    margin: 2px;
+    border-radius: 10rem;
+
+    padding-right: .6em;
+    padding-left: .6em;
+
+    color: white;
+    background-color: #818a91;
+  }
+
+  .glyphicon-ok {
+    color: green;
+  }
+
+  .glyphicon-remove {
+    color: red;
+  }
+
+  .cursor-icon {
+    cursor: pointer;
+  }
+
+}

@@ -66,6 +66,22 @@
           return currentScenario;
         },
 
+        isMappingComplete: function (callback) {
+          if (!currentScenario) {
+            $log.error('no Scenario selected');
+          }
+          $http.get('/scenario-management/scenarios/' + currentScenario.ScenarioId + '/complete')
+            .then(function successCallback(res) {
+              if (res.status >= 200 && res.status < 300) {
+                callback(true);
+              }
+            })
+            .catch(function errorCallback(err) {
+              $log.info(err);
+              callback(false);
+            });
+        },
+
         registerOnChangeListener: function (callback) {
           onChangeListener.push(callback);
         }

@@ -1,12 +1,96 @@
-<div class="container">
+<div id="main-container" class="container">
 
   <div>
     <acme-navbar></acme-navbar>
   </div>
 
   <div class="jumbotron text-center">
-    <h1>'Allo, 'Allo!</h1>
-    <p class="lead">Welcome to the mars Websuite!</p>
+    <h1>Welcome!</h1>
+    <p class="lead">This is the <a href="http://mars-group.org/" target="_blank">MARS</a> Websuite!</p>
+    <p>This software lets you take all the necessary steps, to run a simulation inside the MARS LIFE simulation
+      system.</p>
+  </div>
+
+  <div class="col-md-6">
+    <h2>Requirements to use this software:</h2>
+    <ul class="list-group">
+      <li class="list-group-item">A compatible MARS Model written with the MARS Framework in ".NET Core".</li>
+      <li class="list-group-item">Data for the simulation in one of the following formates:
+        <ul class="list-inline">
+          <li class="pill">Geo-potential-field</li>
+          <li class="pill">Grid-potential-field</li>
+          <li class="pill">Obstacle-layer</li>
+          <li class="pill">Table-based</li>
+          <li class="pill">Time-series</li>
+          <li class="pill">GIS</li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+  <div class="col-md-6">
+    <h2>Steps to start simulating:</h2>
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>#</th>
+        <th>Step</th>
+        <th>Completed</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr class="form-group">
+        <th scope="row">1</th>
+        <td><a ui-sref="importData">Import a dataset</a></td>
+        <td>
+          <span class="glyphicon glyphicon-ok" ng-if="main.isDataImported"></span>
+          <span class="glyphicon glyphicon-remove" ng-if="!main.isDataImported"></span>
+        </td>
+      </tr>
+      <tr class="form-group">
+        <th scope="row">2</th>
+        <td><a ui-sref="importModel">Import a model</a></td>
+        <td>
+          <span class="glyphicon glyphicon-ok" ng-if="main.isModelImported"></span>
+          <span class="glyphicon glyphicon-remove" ng-if="!main.isModelImported"></span>
+        </td>
+      </tr>
+      <tr class="form-group">
+        <th scope="row">3</th>
+        <td><a ui-sref="scenario">Create a Scenario</a></td>
+        <td>
+          <span class="glyphicon glyphicon-ok" ng-if="main.isScenarioCreated"></span>
+          <span class="glyphicon glyphicon-remove" ng-if="!main.isScenarioCreated"></span>
+        </td>
+      </tr>
+      <tr class="form-group">
+        <th scope="row">4</th>
+        <td>
+          <a class="cursor-icon" ng-click="isExpanded = !isExpanded">Select a Scenario</a>
+          <div uib-collapse="!isExpanded">
+            <label><select class="form-control" data-ng-model="main.currentScenario"
+                           data-ng-options="o.Name for o in main.scenarios track by o.ScenarioId"
+                           data-ng-change="main.setCurrentScenario(o)">
+            </select></label>
+          </div>
+
+        </td>
+        <td>
+          <span class="glyphicon glyphicon-ok" ng-if="main.isScenarioSelected"></span>
+          <span class="glyphicon glyphicon-remove" ng-if="!main.isScenarioSelected"></span>
+        </td>
+      </tr>
+      <tr class="form-group">
+        <th scope="row">5</th>
+        <td><a ui-sref="mapping">Create a mapping</a></td>
+        <td>
+          <span class="glyphicon glyphicon-ok" ng-if="main.isMappingComplete"></span>
+          <span class="glyphicon glyphicon-remove" ng-if="!main.isMappingComplete"></span>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
   </div>
 
 </div>
