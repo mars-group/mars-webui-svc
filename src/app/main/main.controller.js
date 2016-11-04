@@ -67,6 +67,7 @@
 
     Scenario.registerOnChangeListener(function () {
       vm.currentScenario = Scenario.getCurrentScenario();
+      hasScenarioSelected();
       hasMappingComplete();
     });
 
