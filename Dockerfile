@@ -1,4 +1,4 @@
-FROM artifactory.mars.haw-hamburg.de:5002/frontend_base
+FROM artifactory.mars.haw-hamburg.de:5002/websuitefrontend_base_master
 
 # Add Npm and bower files (for caching reasons)
 ADD package.json /app
