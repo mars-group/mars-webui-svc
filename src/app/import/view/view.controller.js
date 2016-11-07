@@ -6,7 +6,7 @@
     .controller('ImportViewController', ImportViewController);
 
   /** @ngInject */
-  function ImportViewController($log, $uibModal, NgTableParams, Metadata, Alert) {
+  function ImportViewController($log, $uibModal, $scope, $window, NgTableParams, Metadata, Alert) {
     var vm = this;
 
     vm.alerts = new Alert();
@@ -67,15 +67,26 @@
     });
 
     var initDataTable = function () {
+      var tablePageSize = $window.sessionStorage.getItem('tablePageSize');
+
+      if (angular.equals(tablePageSize, 'null')) {
+        tablePageSize = 10;
+      }
+
       var tableOptions = {
-        count: 10,          // count per page (default: 10)
         sorting: {
           title: 'asc'
         },
         filterOptions: {filterFilterName: "categoryFilter"},
         dataset: tableData
       };
-      vm.tableParams = new NgTableParams({}, tableOptions);
+      vm.tableParams = new NgTableParams({count: tablePageSize}, tableOptions);
+
+      $scope.$watch(angular.bind(this, function () {
+        return vm.tableParams.count();
+      }), function (newVal) {
+        $window.sessionStorage.setItem('tablePageSize', newVal);
+      });
     };
 
     vm.updateSearchFilter = function () {
