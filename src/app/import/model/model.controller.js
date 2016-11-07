@@ -6,7 +6,7 @@
     .controller('ImportModelController', ImportModelController);
 
   /** @ngInject */
-  function ImportModelController($timeout, $document, FileUploader, Metadata, Alert, Project) {
+  function ImportModelController($log, $timeout, $document, FileUploader, Metadata, Alert, Project) {
     var vm = this;
 
     vm.alerts = new Alert();

@@ -6,7 +6,7 @@
     .controller('ScenarioController', ScenarioController);
 
   /** @ngInject */
-  function ScenarioController($uibModal, NgTableParams, Scenario, Alert) {
+  function ScenarioController($log, $uibModal, NgTableParams, Scenario, Alert) {
     var vm = this;
     vm.alerts = new Alert();
 

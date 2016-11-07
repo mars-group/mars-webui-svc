@@ -4,8 +4,6 @@
   angular
     .module('marsApp')
     .factory('Mapping', function Mapping($http, $log, Scenario) {
-        var vm = this;
-
         var originalData = [];
         var tmpMapping = null;
         var tmpParameters = null;
