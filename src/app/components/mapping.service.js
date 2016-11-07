@@ -4,74 +4,12 @@
   angular
     .module('marsApp')
     .factory('Mapping', function Mapping($http, $log, Scenario) {
-      return function Mapping() {
         var vm = this;
 
         var originalData = [];
         var tmpMapping = null;
         var tmpParameters = null;
 
-        vm.getMapping = function () {
-          var scenarioId;
-          if (Scenario.getCurrentScenario()) {
-            scenarioId = Scenario.getCurrentScenario().ScenarioId;
-          }
-          if (!scenarioId) {
-            return;
-          }
-
-          return $http.get('/scenario-management/scenarios/' + scenarioId)
-            .then(function successCallback(res) {
-              originalData = angular.copy(res.data);
-
-              $log.info('loaded data:', originalData);
-
-              var localData = convertToLocalStructure(res.data);
-
-              return restoreLocalChanges(localData);
-            })
-            .catch(function errorCallback(res) {
-              return res;
-            });
-        };
-
-        vm.putMapping = function (data, callback) {
-          tmpParameters = angular.copy(data[2]);
-          data = convertMappingToRemote(data);
-          var mapping = data.InitializationDescription;
-          removeAngularHashKeyRecursive(mapping);
-
-          var scenarioId = Scenario.getCurrentScenario().ScenarioId;
-
-          $http.put('/scenario-management/scenarios/' + scenarioId + '/mapping', mapping)
-            .then(function successCallback() {
-              $log.info('Mapping saved');
-              callback();
-            })
-            .catch(function errorCallback(res) {
-              $log.error(res);
-              callback(res);
-            });
-        };
-
-        vm.putParameter = function (data, callback) {
-          tmpMapping = [data[0], data[1]];
-          data = convertParametersToRemote(data);
-          var parameters = data.ParameterizationDescription;
-          removeAngularHashKeyRecursive(parameters);
-
-          var scenarioId = Scenario.getCurrentScenario().ScenarioId;
-
-          $http.put('/scenario-management/scenarios/' + scenarioId + '/parameter', parameters)
-            .then(function successCallback() {
-              $log.info('Parameters saved');
-              callback();
-            })
-            .catch(function errorCallback(res) {
-              $log.error(res);
-              callback(res);
-            });
-        };
 
         var restoreLocalChanges = function (localData) {
           if (tmpMapping) {
@@ -232,6 +170,69 @@
           return layers;
         };
 
+      return {
+        getMapping: function () {
+          var scenarioId;
+          if (Scenario.getCurrentScenario()) {
+            scenarioId = Scenario.getCurrentScenario().ScenarioId;
+          }
+          if (!scenarioId) {
+            return;
+          }
+
+          return $http.get('/scenario-management/scenarios/' + scenarioId)
+            .then(function successCallback(res) {
+              originalData = angular.copy(res.data);
+
+              $log.info('loaded data:', originalData);
+
+              var localData = convertToLocalStructure(res.data);
+
+              return restoreLocalChanges(localData);
+            })
+            .catch(function errorCallback(res) {
+              return res;
+            });
+        },
+
+        putMapping: function (data, callback) {
+          tmpParameters = angular.copy(data[2]);
+          data = convertMappingToRemote(data);
+          var mapping = data.InitializationDescription;
+          removeAngularHashKeyRecursive(mapping);
+
+          var scenarioId = Scenario.getCurrentScenario().ScenarioId;
+
+          $http.put('/scenario-management/scenarios/' + scenarioId + '/mapping', mapping)
+            .then(function successCallback() {
+              $log.info('Mapping saved');
+              callback();
+            })
+            .catch(function errorCallback(res) {
+              $log.error(res);
+              callback(res);
+            });
+        },
+
+        putParameter: function (data, callback) {
+          tmpMapping = [data[0], data[1]];
+          data = convertParametersToRemote(data);
+          var parameters = data.ParameterizationDescription;
+          removeAngularHashKeyRecursive(parameters);
+
+          var scenarioId = Scenario.getCurrentScenario().ScenarioId;
+
+          $http.put('/scenario-management/scenarios/' + scenarioId + '/parameter', parameters)
+            .then(function successCallback() {
+              $log.info('Parameters saved');
+              callback();
+            })
+            .catch(function errorCallback(res) {
+              $log.error(res);
+              callback(res);
+            });
+        }
       };
+
     });
 })();

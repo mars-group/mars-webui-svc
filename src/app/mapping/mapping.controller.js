@@ -10,7 +10,6 @@
   function MappingController($log, Mapping, Metadata, Alert, Scenario, Config) {
     var vm = this;
 
-    var mapping = new Mapping();
     vm.alerts = new Alert();
     vm.metadata = null;
     vm.treeExpandedNodes = [];
@@ -72,7 +71,7 @@
         return;
       }
 
-      mapping.getMapping()
+      Mapping.getMapping()
         .then(function (res) {
           if (res.status > 299) {
             $log.error('error:', res);
@@ -220,7 +219,7 @@
     };
 
     vm.saveMapping = function () {
-      mapping.putMapping(angular.copy(vm.treeData), function (err) {
+      Mapping.putMapping(angular.copy(vm.treeData), function (err) {
         if (err) {
           vm.alerts.add('A call to: "' + err.config.url + '" caused the following error: "' + err.data.Description + '"', 'danger');
         } else {
@@ -231,7 +230,7 @@
     };
 
     vm.saveParameter = function () {
-      mapping.putParameter(vm.treeData, function (err) {
+      Mapping.putParameter(vm.treeData, function (err) {
         if (err) {
           vm.alerts.add('A call to: "' + err.config.url + '" caused the following error: "' + err.data.Description + '"', 'danger');
         } else {
