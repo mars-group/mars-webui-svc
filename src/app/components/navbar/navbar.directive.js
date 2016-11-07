@@ -85,8 +85,10 @@
       ];
 
       var getScenarios = function () {
-        Scenario.getScenarios(function (scenarios) {
-          vm.scenarios = scenarios;
+        Scenario.getScenarios(function (res) {
+          if(!res.hasOwnProperty('error')) {
+            vm.scenarios = res;
+          }
         });
       };
       getScenarios();

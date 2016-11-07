@@ -18,7 +18,9 @@
       states: 'FINISHED'
     };
     Metadata.getFiltered(params, function (res) {
-      vm.models = res;
+      if (!res.hasOwnProperty('error')) {
+        vm.models = res;
+      }
     });
 
     vm.cancel = function () {

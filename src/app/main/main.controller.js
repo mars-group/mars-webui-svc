@@ -38,7 +38,7 @@
         state: 'FINISHED'
       };
       Metadata.getFiltered(filter, function (res) {
-        if (res.length > 0) {
+        if (!res.hasOwnProperty('error')) {
           vm.isModelImported = true;
         }
       });
@@ -47,7 +47,9 @@
 
     var hasScenario = function () {
       Scenario.getScenarios(function (res) {
-        vm.isScenarioCreated = res.length > 0;
+        if (!res.hasOwnProperty('error')) {
+          vm.isScenarioCreated = res.length > 0;
+        }
       });
     };
     hasScenario();
@@ -57,8 +59,10 @@
     };
     hasScenarioSelected();
 
-    Scenario.getScenarios(function (scenarios) {
-      vm.scenarios = scenarios;
+    Scenario.getScenarios(function (res) {
+      if (!res.hasOwnProperty('error')) {
+        vm.scenarios = res;
+      }
     });
 
     vm.setCurrentScenario = function () {

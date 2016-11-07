@@ -79,11 +79,7 @@
       /** validation */
       for (var i = 0; i < vm.uploader.queue.length; i++) {
         var filename = vm.uploader.queue[i]._file.name;
-        /** title must be set */
-        if (vm.title === '') {
-          vm.alerts.add('Please provide a title for data file \'' + filename + '\'');
-          return false;
-        }
+
         /** geo coords must be set and valid if data type is TimeSeries*/
         if (vm.data[i].dataType === vm.TIME_SERIES) {
           var patternDecimal = /-?[0-9]+\.[0-9]+/;
@@ -140,10 +136,14 @@
       );
     };
 
-    vm.uploader.onErrorItem = function (item, response/*, status*/) {
+    vm.uploader.onErrorItem = function (item, response) {
       $log.error('item:', item);
       $log.error('response:', response);
-      vm.alerts.add('Error while processing "' + item.file.name + '": ' + response.message, 'danger');
+      if(angular.equals(item.url, '/zuul/file/files') && angular.equals(response.message, 'Forwarding error')) {
+        vm.alerts.add('There is no instance of "File service"! Importing data is not available right now!', 'danger');
+      } else {
+        vm.alerts.add('Error while processing "' + item.file.name + '": ' + response.message, 'danger');
+      }
     };
 
     /** Error routine if file cant be added to upload queue */

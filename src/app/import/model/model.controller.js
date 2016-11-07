@@ -76,6 +76,16 @@
       );
     };
 
+    vm.uploader.onErrorItem = function (item, response) {
+      $log.error('item:', item);
+      $log.error('response:', response);
+      if(angular.equals(item.url, '/zuul/file/files') && angular.equals(response.message, 'Forwarding error')) {
+        vm.alerts.add('There is no instance of "File service"! Importing data is not available right now!', 'danger');
+      } else {
+        vm.alerts.add('Error while processing "' + item.file.name + '": ' + response.message, 'danger');
+      }
+    };
+
     /** Error routine if file cant be added to upload queue */
     vm.uploader.onWhenAddingFileFailed = function (item, filter) {
       /** if filter 'allowedFilesFilter' was not passed*/

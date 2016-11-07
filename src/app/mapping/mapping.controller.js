@@ -29,8 +29,17 @@
     var selectScenarioInfoMessage = 'Please select a Scenario in the top right corner or create one';
 
 
-    Scenario.getScenarios(function (scenarios) {
-      vm.scenarios = scenarios;
+    Scenario.getScenarios(function (res) {
+      if (res.hasOwnProperty('error')) {
+        var err = res.error;
+        if (err.status === 500 && err.data.message === 'Forwarding error') {
+          vm.alerts.add('There is no instance of "Scenario service", so there is nothing to display!', 'danger');
+        } else {
+          $log.error(err, 'danger');
+        }
+      } else {
+        vm.scenarios = res;
+      }
     });
 
     Scenario.registerOnChangeListener(function () {
@@ -111,7 +120,16 @@
       };
 
       Metadata.getFiltered(params, function (res) {
-        vm.metadata = res;
+        if (res.hasOwnProperty('error')) {
+          var err = res.error;
+          if (err.status === 500 && err.data.message === 'Forwarding error') {
+            vm.alerts.add('There is no instance of "Metadata service", so there is nothing to display!', 'danger');
+          } else {
+            vm.alerts.add(err, 'danger');
+          }
+        } else {
+          vm.metadata = res;
+        }
       });
     };
     loadMappingDatasets();

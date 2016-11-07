@@ -13,9 +13,18 @@
     vm.scenarios = [];
 
     var loadScenarios = function () {
-      Scenario.getScenarios(function (scenarios) {
-        vm.scenarios = scenarios;
-        vm.tableParams = new NgTableParams({}, {dataset: vm.scenarios});
+      Scenario.getScenarios(function (res) {
+        if(res.hasOwnProperty('error')) {
+          var err = res.error;
+          if (err.status === 500 && err.data.message === 'Forwarding error') {
+            vm.alerts.add('There is no instance of "Scenario service", so there is nothing to display!', 'danger');
+          } else {
+            $log.error(err, 'danger');
+          }
+        } else {
+          vm.scenarios = res;
+          vm.tableParams = new NgTableParams({}, {dataset: vm.scenarios});
+        }
       });
     };
 

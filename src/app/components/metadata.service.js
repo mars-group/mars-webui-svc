@@ -3,7 +3,7 @@
 
   angular
     .module('marsApp')
-    .factory('Metadata', function Scenario($http) {
+    .factory('Metadata', function Scenario($http, $log) {
 
       var getMetadataFromPathvariable = function (pathVariable, callback) {
         var url = '/metadata/metadata/';
@@ -12,9 +12,14 @@
           url += pathVariable;
         }
 
-        $http.get(url).then(function (res) {
-          callback(res);
-        });
+        $http.get(url)
+          .then(function (res) {
+            callback(res.data);
+          })
+          .catch(function errorCallback(err) {
+            $log.error(err);
+            callback({error: err});
+          });
       };
 
       var getMetadataFromParams = function (params, callback) {
@@ -24,37 +29,41 @@
           params: params
         };
         $http.get(url, request).then(function (res) {
-          callback(res);
+          callback(res.data);
+        }).catch(function errorCallback(err) {
+          $log.error(err);
+          callback({error: err});
         });
       };
 
       return {
         getAll: function (callback) {
           getMetadataFromPathvariable(null, function (res) {
-            callback(res.data);
+            callback(res);
           });
         },
 
         getFiltered: function (params, callback) {
           getMetadataFromParams(params, function (res) {
-            callback(res.data);
+            callback(res);
           });
         },
 
         getOne: function (dataId, callback) {
           getMetadataFromPathvariable(dataId, function (res) {
-            callback(res.data);
+            callback(res);
           });
         },
 
         hasStatusWritten: function (dataId, callback) {
           getMetadataFromPathvariable(dataId, function (res) {
-            if (angular.isUndefined(res.state)) {
+            if (res.hasOwnProperty('error')) {
+              callback(false);
+            } else if (angular.isUndefined(res.state)) {
               if (res.state == 'finished' || res.state == 'preprocessingFinished') {
                 callback(true);
               }
             }
-            callback(false);
           });
         },
 

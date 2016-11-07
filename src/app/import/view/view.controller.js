@@ -6,8 +6,10 @@
     .controller('ImportViewController', ImportViewController);
 
   /** @ngInject */
-  function ImportViewController($log, $uibModal, NgTableParams, Metadata) {
+  function ImportViewController($log, $uibModal, NgTableParams, Metadata, Alert) {
     var vm = this;
+
+    vm.alerts = new Alert();
 
     var tableData = []; // data that is displayed in the table
 
@@ -51,8 +53,17 @@
     vm.categoryTreeExpandedNodes = [vm.categoryTreeData[0], vm.categoryTreeData[1], vm.categoryTreeData[2]];
 
     Metadata.getAll(function (res) {
-      tableData = res;
-      initDataTable();
+      if (res.hasOwnProperty('error')) {
+        var err = res.error;
+        if (err.status === 500 && err.data.message === 'Forwarding error') {
+          vm.alerts.add('There is no instance of "Metadata service", so there is nothing to display!', 'danger');
+        } else {
+          vm.alerts.add(err, 'danger');
+        }
+      } else {
+        tableData = res;
+        initDataTable();
+      }
     });
 
     var initDataTable = function () {
