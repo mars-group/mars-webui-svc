@@ -4,7 +4,7 @@
   angular
     .module('marsApp')
     .factory('Scenario', function Scenario($http, $log, $window, Project) {
-      var currentScenario = {};
+      var currentScenario = null;
       var onChangeListener = [];
 
       var project = Project.getCurrentProject().id;
