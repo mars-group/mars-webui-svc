@@ -14,7 +14,6 @@
 
         for (var key in filter) {
           if (key === '$') {
-            // var columns = ['title', 'description', 'type', 'privacy', 'state'];
             var columns = ['title'];
             var hideElement = true;
 

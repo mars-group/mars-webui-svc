@@ -19,7 +19,10 @@
       {column: 'type', name: 'Model', id: 'MODEL'},
       {column: 'type', name: 'Shapefile', id: 'SHAPEFILE'},
       {column: 'type', name: 'Timeseries', id: 'TIME_SERIES'},
-      {column: 'type', name: 'Tablebased', id: 'TABLE_BASED'}
+      {column: 'type', name: 'Tablebased', id: 'TABLE_BASED'},
+      {column: 'type', name: 'Geo-Potential field', id: 'GEO_POTENTIAL_FIELD'},
+      {column: 'type', name: 'Grid-Potential field', id: 'GRID_POTENTIAL_FIELD'},
+      {column: 'type', name: 'Obstacle layer', id: 'OBSTACLE_LAYER'}
     ];
 
     var privacy = [
