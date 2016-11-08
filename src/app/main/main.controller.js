@@ -38,7 +38,7 @@
         state: 'FINISHED'
       };
       Metadata.getFiltered(filter, function (res) {
-        if (!res.hasOwnProperty('error')) {
+        if (!res.hasOwnProperty('error') && res.length > 0) {
           vm.isModelImported = true;
         }
       });
@@ -47,8 +47,8 @@
 
     var hasScenario = function () {
       Scenario.getScenarios(function (res) {
-        if (!res.hasOwnProperty('error')) {
-          vm.isScenarioCreated = res.length > 0;
+        if (!res.hasOwnProperty('error') && res.length > 0) {
+          vm.isScenarioCreated = true;
         }
       });
     };
