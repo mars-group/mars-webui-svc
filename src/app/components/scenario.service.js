@@ -60,8 +60,7 @@
         },
 
         getCurrentScenario: function () {
-          if (currentScenario && angular.isUndefined(currentScenario.name) &&
-            angular.isDefined($window.sessionStorage.getItem('currentScenario'))) {
+          if (!currentScenario) {
             currentScenario = angular.fromJson($window.sessionStorage.getItem('currentScenario'));
           }
           return currentScenario;
