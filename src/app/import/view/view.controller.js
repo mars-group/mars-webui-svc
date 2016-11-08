@@ -82,7 +82,7 @@
       };
       vm.tableParams = new NgTableParams({count: tablePageSize}, tableOptions);
 
-      $scope.$watch(angular.bind(this, function () {
+      $scope.$watch(angular.bind(vm, function () {
         return vm.tableParams.count();
       }), function (newVal) {
         $window.sessionStorage.setItem('tablePageSize', newVal);

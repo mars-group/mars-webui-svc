@@ -1,0 +1,6 @@
+<div>
+  <div ng-repeat="service in navigation.serviceStates">
+    <span>{{ service.name.toLowerCase() }}: </span>
+    <span ng-class="service.status === 'UP' ? 'service-state-ok' : 'service-state-error'">{{ service.status.toLowerCase() }}</span>
+  </div>
+</div>

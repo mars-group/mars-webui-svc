@@ -17,10 +17,12 @@
     };
 
     /** @ngInject */
-    function NavbarController($http, Scenario) {
+    function NavbarController($http, Scenario, ServiceState) {
       var vm = this;
 
-      vm.popoverTemplateUrl = 'app/components/navbar/version-popover.html';
+      vm.serviceErrorPopoverTemplateUrl = 'app/components/navbar/serviceStatePopover.html';
+      vm.versionPopoverTemplateUrl = 'app/components/navbar/versionPopover.html';
+      vm.serviceErrors = false;
 
       vm.menuItems = [
         {
@@ -84,9 +86,44 @@
         }
       ];
 
+      var getServiceStates = function () {
+        ServiceState.getAll(function (res) {
+          if (!res.hasOwnProperty('error')) {
+            vm.serviceStates = res;
+            calcServiceStateClass();
+          }
+        });
+
+        vm.serviceErrors = true;
+      };
+      getServiceStates();
+
+      var calcServiceStateClass = function () {
+        vm.serviceStateClass = null;
+
+        vm.serviceStates.forEach(function (service) {
+          // break forEach if value has been set
+          if (vm.serviceStateClass) {
+            return;
+          }
+
+          if (service.status === 'DOWN') {
+            if (service.name === 'MONGODB' || service.name === 'METADATA-SERVICE') {
+              vm.serviceStateClass = 'service-state-error';
+            } else {
+              vm.serviceStateClass = 'service-state-warning';
+            }
+          }
+        });
+
+        if (!vm.serviceStateClass) {
+          vm.serviceStateClass = 'service-state-ok';
+        }
+      };
+
       var getScenarios = function () {
         Scenario.getScenarios(function (res) {
-          if(!res.hasOwnProperty('error')) {
+          if (!res.hasOwnProperty('error')) {
             vm.scenarios = res;
           }
         });
