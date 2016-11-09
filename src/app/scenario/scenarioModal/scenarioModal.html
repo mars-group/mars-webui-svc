@@ -1,4 +1,4 @@
-<div class="scenarioModal">
+<div id="scenario-modal-container">
   <div class="modal-header">
     <h3 class="modal-title">Create Scenario</h3>
   </div>
@@ -10,9 +10,6 @@
         <label class="control-label">Name</label>
         <input type="text" class="form-control" name="name" ng-model="scenarioModal.scenario.name"
                required placeholder="Name"/>
-        <div data-ng-if="(scenarioModal.form.$submitted || scenarioModal.form.name.$touched)
-          && scenarioModal.form.name.$invalid">Please insert a name.
-        </div>
       </div>
 
       <div class="form-group">
@@ -26,10 +23,6 @@
         <select id="scenarioModel" class="form-control" ng-model="scenarioModal.scenario.model" name="model" required>
           <option ng-repeat="model in scenarioModal.models" value="{{model.dataId}}">{{model.title}}</option>
         </select>
-        <div data-ng-if="(scenarioModal.form.$submitted || scenarioModal.form.model.$touched)
-        && scenarioModal.form.model.$invalid">
-          Please select a Model. If there are no models, you have to upload one first.
-        </div>
       </div>
     </form>
 
