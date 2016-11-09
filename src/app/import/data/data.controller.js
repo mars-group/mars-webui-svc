@@ -6,17 +6,13 @@
     .controller('ImportDataController', ImportDataController);
 
   /** @ngInject */
-  function ImportDataController($timeout, $uibModal, $document, $log, FileUploader, Metadata, Timeseries, Alert, Project) {
+  function ImportDataController($log, $uibModal, $document, FileUploader, Metadata, Timeseries, Alert, Project) {
     var vm = this;
 
-    /** Will store initialized geoPicker*/
     vm.geoPicker = {};
-    /** Stores the geoPicker caller btn element*/
     vm.geoPickerCaller = undefined;
-    /** Only one marker must be set*/
     vm.markerSet = false;
 
-    /** upload type constants */
     vm.GEO_POTENTIAL_FIELD = 'GEO_POTENTIAL_FIELD';
     vm.GIS = 'GIS';
     vm.GRID_POTENTIAL_FIELD = 'GRID_POTENTIAL_FIELD';
@@ -76,11 +72,9 @@
     });
 
     vm.uploadFiles = function () {
-      /** validation */
       for (var i = 0; i < vm.uploader.queue.length; i++) {
         var filename = vm.uploader.queue[i]._file.name;
 
-        /** geo coords must be set and valid if data type is TimeSeries*/
         if (vm.data[i].dataType === vm.TIME_SERIES) {
           var patternDecimal = /-?[0-9]+\.[0-9]+/;
           if (!patternDecimal.test(vm.data[i].lat) || !patternDecimal.test(vm.data[i].lng)) {
@@ -98,28 +92,19 @@
       vm.uploader.uploadAll();
     };
 
-    /** further processing after upload */
     vm.uploader.onSuccessItem = function (fileItem, response) {
-      /** setting status to processing */
       fileItem.isProcessing = true;
-      var importId = response;
-      checkMetadataWriteStatus(Metadata, importId, 500, 20, 0,
-        /** callback when metadata is written*/
-        function () {
-          /** if uploaded data was time-series */
+      checkMetadataWriteStatus(response, 'INIT', function () {
           if (fileItem.formData[0].type == vm.TIME_SERIES) {
-            Metadata.getDateColumn(importId, function (possibleDateTimeColumn) {
+            Metadata.getDateColumn(response, function (possibleDateTimeColumn) {
               if (possibleDateTimeColumn) {
-                Timeseries.processDataOverNode(importId, possibleDateTimeColumn,
+                Timeseries.processDataOverNode(response, possibleDateTimeColumn,
                   function () {
-                    /** display upload success */
                     fileItem.isProcessing = false;
-                    fileItem.isSuccess = true;
                   },
                   function (err) {
                     fileItem.isProcessing = false;
-                    fileItem.isSuccess = false;
-                    fileItem.isError = false;
+                    fileItem.isError = true;
                     vm.alerts.add(err);
                   }
                 );
@@ -128,9 +113,7 @@
               }
             });
           } else {
-            /** display upload success */
             fileItem.isProcessing = false;
-            fileItem.isSuccess = true;
           }
         }
       );
@@ -139,52 +122,38 @@
     vm.uploader.onErrorItem = function (item, response) {
       $log.error('item:', item);
       $log.error('response:', response);
-      if(angular.equals(item.url, '/zuul/file/files') && angular.equals(response.message, 'Forwarding error')) {
+      if (angular.equals(item.url, '/zuul/file/files') && angular.equals(response.message, 'Forwarding error')) {
         vm.alerts.add('There is no instance of "File service"! Importing data is not available right now!', 'danger');
       } else {
         vm.alerts.add('Error while processing "' + item.file.name + '": ' + response.message, 'danger');
       }
     };
 
-    /** Error routine if file cant be added to upload queue */
     vm.uploader.onWhenAddingFileFailed = function (item, filter) {
-      /** if filter 'allowedFilesFilter' was not passed*/
       if (filter.name == 'allowedFilesFilter') {
         vm.alerts.add('Only AsciiGrid, GeoTiff, CSV and ZIP files are allowed');
       }
-      /** if filter 'uniqueFilenameFilter' was not passed*/
       if (filter.name == 'uniqueFilenameFilter') {
         vm.alerts.add(item.name + ' is already in the upload queue');
       }
     };
 
-    /**
-     * recursively check if Metadata is written
-     * @param Metadata  Metadata Angular Service
-     * @param importId  importId to check metadata status for
-     * @param interval  ms to wait until the next check will be performed
-     * @param maxTries  maximum checks to perform
-     * @param tries     the value of this parameter should be 0, because it is used as counter
-     *                  inside of the recursion
-     * @param callback  callback that will be performed when metadata has been written
-     */
-    function checkMetadataWriteStatus(Metadata, importId, interval, maxTries, tries, callback) {
-      Metadata.hasStatusWritten(importId, function (hasStatusWritten) {
-        if (!hasStatusWritten && tries <= maxTries) {
-          $timeout(function () {
-            checkMetadataWriteStatus(Metadata, importId, interval, maxTries, tries + 1, callback);
-          }, interval);
-        }
+    var checkMetadataWriteStatus = function (importId, status, callback) {
+      var params = {
+        state: status
+      };
 
-        /**
-         * execute success callback
-         */
-        if (hasStatusWritten) {
-          callback();
-        }
+      Metadata.hasStatusWritten(importId, params, function (res) {
 
+        if (res.hasOwnProperty('error')) {
+          vm.alerts.add(res, 'danger');
+          return callback();
+        } else if (res === 'FINISHED' || res === 'ERROR') {
+          return callback();
+        }
+        checkMetadataWriteStatus(importId, res, callback);
       });
-    }
+    };
 
     vm.clickUpload = function () {
       $document[0].getElementById('uploadBtn').click();

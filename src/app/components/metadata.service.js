@@ -4,10 +4,10 @@
   angular
     .module('marsApp')
     .factory('Metadata', function Scenario($http, $log) {
+      var baseUrl = '/metadata/metadata/';
 
-      var getMetadataFromPathvariable = function (pathVariable, callback) {
-        var url = '/metadata/metadata/';
-
+      var getFromPathVariable = function (pathVariable, callback) {
+        var url = baseUrl;
         if (pathVariable) {
           url += pathVariable;
         }
@@ -22,48 +22,65 @@
           });
       };
 
-      var getMetadataFromParams = function (params, callback) {
-        var url = '/metadata/metadata';
+      var getFromParams = function (params, callback) {
+        var request = {
+          params: params
+        };
+
+        $http.get(baseUrl, request)
+          .then(function (res) {
+            callback(res.data);
+          })
+          .catch(function errorCallback(err) {
+            $log.error(err);
+            callback({error: err});
+          });
+      };
+
+      var getState = function (pathVariable, params, callback) {
+        var url = baseUrl;
+        if (pathVariable) {
+          url += pathVariable;
+        }
+
+        url += '/state';
 
         var request = {
           params: params
         };
-        $http.get(url, request).then(function (res) {
-          callback(res.data);
-        }).catch(function errorCallback(err) {
-          $log.error(err);
-          callback({error: err});
-        });
+
+        $http.get(url, request)
+          .then(function (res) {
+            callback(res.data);
+          })
+          .catch(function errorCallback(err) {
+            $log.error(err);
+            callback({error: err});
+          });
       };
 
       return {
         getAll: function (callback) {
-          getMetadataFromPathvariable(null, function (res) {
+          getFromPathVariable(null, function (res) {
             callback(res);
           });
         },
 
         getFiltered: function (params, callback) {
-          getMetadataFromParams(params, function (res) {
+          getFromParams(params, function (res) {
             callback(res);
           });
         },
 
         getOne: function (dataId, callback) {
-          getMetadataFromPathvariable(dataId, function (res) {
+          getFromPathVariable(dataId, function (res) {
             callback(res);
           });
         },
 
-        hasStatusWritten: function (dataId, callback) {
-          getMetadataFromPathvariable(dataId, function (res) {
-            if (res.hasOwnProperty('error')) {
-              callback(false);
-            } else if (angular.isUndefined(res.state)) {
-              if (res.state == 'finished' || res.state == 'preprocessingFinished') {
-                callback(true);
-              }
-            }
+        hasStatusWritten: function (dataId, params, callback) {
+          getState(dataId, params, function (res) {
+            callback(res);
           });
         },
 

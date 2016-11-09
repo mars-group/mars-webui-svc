@@ -6,7 +6,7 @@
     .controller('ImportModelController', ImportModelController);
 
   /** @ngInject */
-  function ImportModelController($log, $timeout, $document, FileUploader, Metadata, Alert, Project) {
+  function ImportModelController($log, $document, FileUploader, Metadata, Alert, Project) {
     var vm = this;
 
     vm.alerts = new Alert();
@@ -14,7 +14,6 @@
     vm.file = null;
     vm.data = [];
     vm.showOneUploadAtATime = true;
-
 
     vm.Data = function () {
       return {
@@ -51,7 +50,6 @@
     });
 
     vm.uploadFiles = function () {
-      /** validation */
       for (var i = 0; i < vm.uploader.queue.length; i++) {
         vm.uploader.queue[i].formData.push(vm.data[i]);
 
@@ -62,16 +60,10 @@
       vm.uploader.uploadAll();
     };
 
-    /** further processing after upload */
     vm.uploader.onSuccessItem = function (fileItem, response) {
-      /** setting status to processing */
       fileItem.isProcessing = true;
-      checkMetadataWriteStatus(Metadata, response, 500, 20, 0,
-        /** callback when metadata is written*/
-        function () {
-          /** display upload success */
+      checkMetadataWriteStatus(response, 'INIT', function () {
           fileItem.isProcessing = false;
-          fileItem.isSuccess = true;
         }
       );
     };
@@ -79,52 +71,38 @@
     vm.uploader.onErrorItem = function (item, response) {
       $log.error('item:', item);
       $log.error('response:', response);
-      if(angular.equals(item.url, '/zuul/file/files') && angular.equals(response.message, 'Forwarding error')) {
+      if (angular.equals(item.url, '/zuul/file/files') && angular.equals(response.message, 'Forwarding error')) {
         vm.alerts.add('There is no instance of "File service"! Importing data is not available right now!', 'danger');
       } else {
         vm.alerts.add('Error while processing "' + item.file.name + '": ' + response.message, 'danger');
       }
     };
 
-    /** Error routine if file cant be added to upload queue */
     vm.uploader.onWhenAddingFileFailed = function (item, filter) {
-      /** if filter 'allowedFilesFilter' was not passed*/
       if (filter.name == 'allowedFilesFilter') {
         vm.alerts.add('Only ZIP files are allowed');
       }
-      /** if filter 'uniqueFilenameFilter' was not passed*/
       if (filter.name == 'uniqueFilenameFilter') {
         vm.alerts.add(item.name + ' is already in the upload queue');
       }
     };
 
-    /**
-     * recursively check if Metadata is written
-     * @param Metadata  Metadata Angular Service
-     * @param importId  importId to check metadata status for
-     * @param interval  ms to wait until the next check will be performed
-     * @param maxTries  maximum checks to perform
-     * @param tries     the value of this parameter should be 0, because it is used as counter
-     *                  inside of the recursion
-     * @param callback  callback that will be performed when metadata has been written
-     */
-    function checkMetadataWriteStatus(Metadata, importId, interval, maxTries, tries, callback) {
-      Metadata.hasStatusWritten(importId, function (hasStatusWritten) {
-        if (!hasStatusWritten && tries <= maxTries) {
-          $timeout(function () {
-            checkMetadataWriteStatus(Metadata, importId, interval, maxTries, tries + 1, callback);
-          }, interval);
-        }
+    var checkMetadataWriteStatus = function (importId, status, callback) {
+      var params = {
+        state: status
+      };
 
-        /**
-         * execute success callback
-         */
-        if (hasStatusWritten) {
-          callback();
-        }
+      Metadata.hasStatusWritten(importId, params, function (res) {
 
+        if (res.hasOwnProperty('error')) {
+          vm.alerts.add(res, 'danger');
+          return callback();
+        } else if (res === 'FINISHED' || res === 'ERROR') {
+          return callback();
+        }
+        checkMetadataWriteStatus(importId, res, callback);
       });
-    }
+    };
 
     vm.clickUpload = function () {
       $document[0].getElementById('uploadBtn').click();

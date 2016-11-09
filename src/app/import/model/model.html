@@ -52,10 +52,11 @@
                 <label for="privacy">Privacy</label>
                 <select id="privacy" class="form-control" ng-model="importModel.data[$index].privacy"
                         name="privacy_{{$index}}" required>
+                  {{importModel.data[$index].privacy = 'PUBLIC'}}
                   <option value="">Please select</option>
                   <option value="PRIVATE">Only for personal use</option>
                   <option value="PROJECT_PRIVATE">Can only be used by project members</option>
-                  <option value="PUBLIC" ng-selected="true">Can be used by everyone</option>
+                  <option value="PUBLIC">Can be used by everyone</option>
                 </select>
               </div>
 
@@ -85,18 +86,20 @@
                     {{upload.progress}}% Complete
                   </div>
                 </div>
-
-                <div class="alert alert-success" ng-show="upload.isSuccess">
-                  <i class="glyphicon glyphicon-ok"></i>ok
+                <div class="alert alert-warning" ng-if="upload.isUploading">
+                  <i class="glyphicon glyphicon-refresh"></i> uploading
                 </div>
-                <div class="alert alert-warning" ng-show="upload.isUploading">
-                  <i class="glyphicon glyphicon-refresh"></i>uploading
+                <div class="alert alert-info" ng-if="upload.isProcessing && !upload.isError && !upload.isCancel">
+                  <i class="glyphicon glyphicon-refresh"></i> processing
                 </div>
-                <div class="alert alert-warning" ng-show="upload.isCancel">
-                  <i class="glyphicon glyphicon-ban-circle"></i>canceled
+                <div class="alert alert-success" ng-if="!upload.isProcessing && upload.isSuccess">
+                  <i class="glyphicon glyphicon-ok"></i> success
                 </div>
-                <div class="alert alert-danger" ng-show="upload.isError">
-                  <i class="glyphicon glyphicon-remove"></i>failed
+                <div class="alert alert-warning" ng-if="upload.isCancel">
+                  <i class="glyphicon glyphicon-ban-circle"></i> canceled
+                </div>
+                <div class="alert alert-danger" ng-if="upload.isError">
+                  <i class="glyphicon glyphicon-remove"></i> failed
                 </div>
               </div>
               <button type="button" class="btn btn-warning btn-xs" ng-click="upload.cancel()"
