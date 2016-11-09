@@ -52,7 +52,7 @@
                 <label for="privacy">Privacy</label>
                 <select id="privacy" class="form-control" ng-model="importModel.data[$index].privacy"
                         name="privacy_{{$index}}" required>
-                  {{importModel.data[$index].privacy = 'PUBLIC'}}
+                  {{importModel.data[$index].privacy = 'PRIVATE'}}
                   <option value="">Please select</option>
                   <option value="PRIVATE">Only for personal use</option>
                   <option value="PROJECT_PRIVATE">Can only be used by project members</option>
