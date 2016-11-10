@@ -31,7 +31,7 @@
         <div class="well">
           <label>
             <input type="checkbox" ng-model="importModel.showOneUploadAtATime">
-            Open only one Upload at a time
+            Collapse other upload items
           </label>
         </div>
       </div>
@@ -53,7 +53,6 @@
                 <select id="privacy" class="form-control" ng-model="importModel.data[$index].privacy"
                         name="privacy_{{$index}}" required>
                   {{importModel.data[$index].privacy = 'PRIVATE'}}
-                  <option value="">Please select</option>
                   <option value="PRIVATE">Only for personal use</option>
                   <option value="PROJECT_PRIVATE">Can only be used by project members</option>
                   <option value="PUBLIC">Can be used by everyone</option>

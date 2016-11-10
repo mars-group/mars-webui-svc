@@ -144,7 +144,6 @@
       };
 
       Metadata.hasStatusWritten(importId, params, function (res) {
-
         if (res.hasOwnProperty('error')) {
           vm.alerts.add(res, 'danger');
           return callback();
@@ -175,7 +174,6 @@
     };
 
     vm.openGeoPicker = function (id) {
-
       var modalInstance = $uibModal.open({
         templateUrl: 'app/import/data/geoPicker/geoPicker.html',
         controller: 'GeoPickerController',
