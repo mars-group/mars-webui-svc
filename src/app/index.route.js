@@ -16,19 +16,19 @@
       })
       .state('importData', {
         url: '/data-import',
-        templateUrl: 'app/import/data/data.html',
+        templateUrl: 'app/data-management/import/data.html',
         controller: 'ImportDataController',
         controllerAs: 'importData'
       })
       .state('importModel', {
         url: '/model-import',
-        templateUrl: 'app/import/model/model.html',
+        templateUrl: 'app/data-management/import/model.html',
         controller: 'ImportModelController',
         controllerAs: 'importModel'
       })
       .state('importView', {
         url: '/view-import',
-        templateUrl: 'app/import/view/view.html',
+        templateUrl: 'app/data-management/view/view.html',
         controller: 'ImportViewController',
         controllerAs: 'importView'
       })

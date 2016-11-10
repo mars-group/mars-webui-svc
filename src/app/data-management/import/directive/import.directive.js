@@ -3,25 +3,35 @@
 
   angular
     .module('marsApp')
-    .controller('ImportDataController', ImportDataController);
+    .directive('import', importCtrl);
 
   /** @ngInject */
-  function ImportDataController($log, $uibModal, $document, FileUploader, Metadata, Timeseries, Alert, Project) {
+  function importCtrl() {
+    return {
+      restrict: 'A',
+      templateUrl: 'app/data-management/import/directive/import.html',
+      scope: {
+        pageTitle: '=',
+        dataTypes: '='
+      },
+      controller: importController,
+      controllerAs: 'import'
+    };
+  }
+
+  /** @ngInject */
+  function importController($scope, $log, $uibModal, $document, FileUploader, Metadata, Timeseries, Alert, Project) {
     var vm = this;
 
-    vm.geoPicker = {};
-    vm.geoPickerCaller = undefined;
-    vm.markerSet = false;
+    vm.isModelUpload = $scope.dataTypes[0].name === 'MODEL';
 
-    vm.GEO_POTENTIAL_FIELD = 'GEO_POTENTIAL_FIELD';
-    vm.GIS = 'GIS';
-    vm.GRID_POTENTIAL_FIELD = 'GRID_POTENTIAL_FIELD';
-    vm.OBSTACLE_LAYER = 'OBSTACLE_LAYER';
-    vm.TABLE_BASED = 'TABLE_BASED';
     vm.TIME_SERIES = 'TIME_SERIES';
 
     var fileEndings = ['asc', 'csv', 'tif', 'zip'];
 
+    vm.geoPicker = {};
+    vm.geoPickerCaller = undefined;
+    vm.markerSet = false;
     vm.uploader = new FileUploader();
     vm.file = null;
     vm.alerts = new Alert();
@@ -34,6 +44,7 @@
         lat: '',
         lng: '',
         privacy: '',
+        // dataType: vm.isModelUpload ? 'MODEL' : '',
         dataType: '',
         projectId: Project.getCurrentProject().id,
         userId: 1, // todo: add real id
@@ -73,20 +84,30 @@
 
     vm.uploadFiles = function () {
       for (var i = 0; i < vm.uploader.queue.length; i++) {
-        var filename = vm.uploader.queue[i]._file.name;
+        if (vm.isModelUpload) {
+          vm.data[i].dataType = $scope.dataTypes[0].name;
+        }
 
+        var filename = vm.uploader.queue[i]._file.name;
         if (vm.data[i].dataType === vm.TIME_SERIES) {
           var patternDecimal = /-?[0-9]+\.[0-9]+/;
           if (!patternDecimal.test(vm.data[i].lat) || !patternDecimal.test(vm.data[i].lng)) {
             vm.alerts.add('Please provide valid LAT and LON (decimals) for data file \'' + filename + '\'');
             return false;
           }
+        } else {
+          delete vm.data[i].lat;
+          delete vm.data[i].lng;
         }
 
         vm.uploader.queue[i].formData.push(vm.data[i]);
 
         // The leading "/zuul" bypasses the Spring DispatcherServlet for big files
         vm.uploader.queue[i].url = '/zuul/file/files';
+
+        if (vm.isModelUpload) {
+          vm.uploader.queue[i].url += '/models';
+        }
       }
 
       vm.uploader.uploadAll();
@@ -175,7 +196,7 @@
 
     vm.openGeoPicker = function (id) {
       var modalInstance = $uibModal.open({
-        templateUrl: 'app/import/data/geoPicker/geoPicker.html',
+        templateUrl: 'app/data-management/import/directive/geoPicker/geoPicker.html',
         controller: 'GeoPickerController',
         controllerAs: 'geoPicker',
         resolve: {
@@ -194,6 +215,7 @@
       }, function () {
       });
     };
+
 
   }
 })();

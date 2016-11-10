@@ -1,36 +1,36 @@
-<div id="import-data-container" class="container">
+<div id="import-container" class="container">
 
   <div>
     <acme-navbar></acme-navbar>
   </div>
 
-  <h1>File import</h1>
+  <h1>{{ pageTitle }}</h1>
 
   <div class="row">
     <div class="col-md-3">
 
       <!-- Error messages -->
-      <uib-alert ng-repeat="alert in importData.alerts.getAll()" type="{{alert.type}}"
-                 close="importData.alerts.remove($index)">{{alert.msg}}
+      <uib-alert ng-repeat="alert in import.alerts.getAll()" type="{{alert.type}}"
+                 close="import.alerts.remove($index)">{{alert.msg}}
       </uib-alert>
 
       <!-- Upload box -->
-      <div nv-file-drop data-uploader="importData.uploader" ng-click="importData.clickUpload();"
-           ng-show="importData.uploader.isHTML5">
-        <div nv-file-over data-uploader="importData.uploader" class="well my-drop-zone text-center upload-box">
+      <div nv-file-drop data-uploader="import.uploader" ng-click="import.clickUpload();"
+           ng-show="import.uploader.isHTML5">
+        <div nv-file-over data-uploader="import.uploader" class="well my-drop-zone text-center upload-box">
           <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span><br/>
           <div><strong>Choose files</strong></div>
           <div>or drag them here.</div>
         </div>
       </div>
-      <input type="file" id="uploadBtn" ng-hide="importData.uploader.isHTML5" multiple nv-file-select
-             data-uploader="importData.uploader">
+      <input type="file" id="uploadBtn" ng-hide="import.uploader.isHTML5" multiple nv-file-select
+             data-uploader="import.uploader">
 
       <!-- Upload accordion settings-->
-      <div class="checkbox" ng-show="importData.uploader.queue.length">
+      <div class="checkbox" ng-show="import.uploader.queue.length">
         <div class="well">
           <label>
-            <input type="checkbox" ng-model="importData.showOneUploadAtATime">
+            <input type="checkbox" ng-model="import.showOneUploadAtATime">
             Collapse other upload items
           </label>
         </div>
@@ -40,47 +40,43 @@
     <div class="col-md-9">
 
       <h3>Upload queue</h3>
-      <p>Queue length: {{ importData.uploader.queue.length }}</p>
+      <p>Queue length: {{ import.uploader.queue.length }}</p>
 
       <form name="form" class="css-form">
-        <uib-accordion close-others="importData.showOneUploadAtATime">
+        <uib-accordion close-others="import.showOneUploadAtATime">
           <uib-accordion-group heading="{{upload.file.name}}" ng-init="isOpen = $index === 0" is-open="isOpen"
-                               ng-repeat="upload in importData.uploader.queue">
+                               ng-repeat="upload in import.uploader.queue">
 
             <div class="col-md-6">
-              <div class="form-group" ng-class="{ 'has-error': form.dataType_{{$index}}.$invalid }">
+              <div class="form-group" ng-if="!import.isModelUpload">
                 <label for="dataType">Data Type</label>
-                <select id="dataType" class="form-control" ng-model="importData.data[$index].dataType"
-                        ng-change="importData.clearGeoPicker($index)" name="dataType_{{$index}}" required>
-                  <option value="{{importData.GEO_POTENTIAL_FIELD}}">Geo-potential-field data</option>
-                  <option value="{{importData.GRID_POTENTIAL_FIELD}}">Grid-potential-field data</option>
-                  <option value="{{importData.OBSTACLE_LAYER}}">Obstacle-layer data</option>
-                  <option value="{{importData.TABLE_BASED}}">Table-based data</option>
-                  <option value="{{importData.TIME_SERIES}}">Time-series data</option>
-                  <option value="{{importData.GIS}}">GIS data</option>
+                <select id="dataType" class="form-control" ng-model="import.data[$index].dataType"
+                        ng-change="import.clearGeoPicker($index)" name="dataType_{{$index}}" required>
+                  <option ng-repeat="dataType in dataTypes" value="{{dataType.name}}">
+                    {{dataType.clearName}}
+                  </option>
                 </select>
               </div>
 
               <div class="form-group"
-                   ng-class="{ 'has-error': form.lat_{{$index}}.$invalid || form.lng_{{$index}}.$invalid }">
-                <div class="geo-picker" ng-model="importData.geoPicker"
-                     ng-show="importData.data[$index].dataType && importData.data[$index].dataType === importData.TIME_SERIES">
+                   ng-if="import.data[$index].dataType && import.data[$index].dataType === import.TIME_SERIES">
+                <div class="geo-picker" ng-model="import.geoPicker">
                   <label>
                     Geo-Coords
                     <span class="input-group">
                       <input type="text" placeholder="LAT" min="-90" max="90"
-                             class="form-control" ng-model="importData.data[$index].lat" name="lat_{{$index}}"
-                             ng-required="importData.data[$index].dataType
-                             && importData.data[$index].dataType === importData.TIME_SERIES">
+                             class="form-control" ng-model="import.data[$index].lat" name="lat_{{$index}}"
+                             ng-required="import.data[$index].dataType
+                             && import.data[$index].dataType === import.TIME_SERIES">
                       <span class="input-group-btn" style="width:0;"></span>
                       <input type="text" placeholder="LON" min="-180" max="180"
-                             class="form-control" ng-model="importData.data[$index].lng" name="lng_{{$index}}"
-                             ng-required="importData.data[$index].dataType
-                             && importData.data[$index].dataType === importData.TIME_SERIES">
+                             class="form-control" ng-model="import.data[$index].lng" name="lng_{{$index}}"
+                             ng-required="import.data[$index].dataType
+                             && import.data[$index].dataType === import.TIME_SERIES">
                       <span class="input-group-btn" style="width:0;"></span>
                       <span class="input-group-btn">
                         <button type="button" class="btn btn-primary"
-                                ng-click="importData.openGeoPicker($index)">pick</button>
+                                ng-click="import.openGeoPicker($index)">pick</button>
                       </span>
                     </span>
                   </label>
@@ -98,37 +94,37 @@
                 </div>
               </div>
 
-              <div class="form-group" ng-class="{ 'has-error': form.privacy_{{$index}}.$invalid }">
+              <div class="form-group">
                 <label for="privacy">Privacy</label>
-                <select id="privacy" class="form-control" ng-model="importData.data[$index].privacy"
+                <select id="privacy" class="form-control" ng-model="import.data[$index].privacy"
                         name="privacy_{{$index}}" required>
-                  {{importData.data[$index].privacy= 'PRIVATE'}}
+                  {{import.data[$index].privacy= 'PRIVATE'}}
                   <option value="PRIVATE">Only for personal use</option>
                   <option value="PROJECT_PRIVATE">Can only be used by project members</option>
                   <option value="PUBLIC">Can be used by everyone</option>
                 </select>
               </div>
 
-              <div class="form-group" ng-class="{ 'has-error': form.title_{{$index}}.$invalid }">
+              <div class="form-group">
                 <label for="title">Title</label>
-                <input type="text" id="title" class="form-control" ng-model="importData.data[$index].title"
+                <input type="text" id="title" class="form-control" ng-model="import.data[$index].title"
                        placeholder="Title of this data" data-ng-trim="true" name="title_{{$index}}" required>
               </div>
 
               <div class="form-group">
                 <label>Description</label>
-                <textarea class="form-control" rows="4" ng-model="importData.data[$index].description"
+                <textarea class="form-control" rows="4" ng-model="import.data[$index].description"
                           placeholder="Description of this data"></textarea>
               </div>
             </div>
 
             <div class="col-md-6">
-              <div class="form-group" ng-show="importData.uploader.isHTML5">
+              <div class="form-group" ng-show="import.uploader.isHTML5">
                 <label class="control-label">File size:</label>
                 {{ upload.file.size/1024/1024|number:2 }} MB
               </div>
 
-              <div ng-show="importData.uploader.isHTML5">
+              <div ng-show="import.uploader.isHTML5">
                 <div ng-hide="upload.isSuccess || upload.isCancel || upload.isError" class="progress"
                      style="margin-bottom: 0;">
                   <div class="progress-bar" role="progressbar" ng-style="{ 'width': upload.progress + '%' }">
@@ -156,25 +152,25 @@
                 <span class="glyphicon glyphicon-ban-circle"></span> Cancel
               </button>
               <button type="button" class="btn btn-danger btn-xs"
-                      ng-click="upload.remove(); importData.removeUpload($index);">
+                      ng-click="upload.remove(); import.removeUpload($index);">
                 <span class="glyphicon glyphicon-trash"></span> Remove
               </button>
             </div>
           </uib-accordion-group>
         </uib-accordion>
 
-        <div ng-show="importData.uploader.queue.length">
-          <button type="submit" class="btn btn-success btn-s" ng-click="importData.uploadFiles()"
+        <div ng-show="import.uploader.queue.length">
+          <button type="submit" class="btn btn-success btn-s" ng-click="import.uploadFiles()"
                   ng-disabled="form.$invalid">
             <span class="glyphicon glyphicon-upload"></span> Upload
           </button>
-          <button type="button" class="btn btn-warning btn-s" ng-click="importData.uploader.cancelAll()"
-                  ng-disabled="!importData.uploader.isUploading">
+          <button type="button" class="btn btn-warning btn-s" ng-click="import.uploader.cancelAll()"
+                  ng-disabled="!import.uploader.isUploading">
             <span class="glyphicon glyphicon-ban-circle"></span> Cancel
           </button>
           <button type="button" class="btn btn-danger btn-s"
-                  ng-click="importData.uploader.clearQueue(); importData.removeAllUploads();"
-                  ng-disabled="!importData.uploader.queue.length">
+                  ng-click="import.uploader.clearQueue(); import.removeAllUploads();"
+                  ng-disabled="!import.uploader.queue.length">
             <span class="glyphicon glyphicon-trash"></span> Remove all
           </button>
         </div>
