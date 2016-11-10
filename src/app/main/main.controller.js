@@ -34,7 +34,7 @@
 
     var hasModels = function () {
       var filter = {
-        type: 'MODEL',
+        types: ['MODEL'],
         state: 'FINISHED'
       };
       Metadata.getFiltered(filter, function (res) {
