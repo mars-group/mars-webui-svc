@@ -115,7 +115,7 @@
 
     vm.uploader.onSuccessItem = function (fileItem, response) {
       fileItem.isProcessing = true;
-      checkMetadataWriteStatus(response, 'INIT', function () {
+      Metadata.startLongpolling(response, 'INIT', function () {
           if (fileItem.formData[0].type == vm.TIME_SERIES) {
             Metadata.getDateColumn(response, function (possibleDateTimeColumn) {
               if (possibleDateTimeColumn) {
@@ -157,22 +157,6 @@
       if (filter.name == 'uniqueFilenameFilter') {
         vm.alerts.add(item.name + ' is already in the upload queue');
       }
-    };
-
-    var checkMetadataWriteStatus = function (importId, status, callback) {
-      var params = {
-        state: status
-      };
-
-      Metadata.hasStatusWritten(importId, params, function (res) {
-        if (res.hasOwnProperty('error')) {
-          vm.alerts.add(res, 'danger');
-          return callback();
-        } else if (res === 'FINISHED' || res === 'ERROR') {
-          return callback();
-        }
-        checkMetadataWriteStatus(importId, res, callback);
-      });
     };
 
     vm.clickUpload = function () {
