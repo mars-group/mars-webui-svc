@@ -1,0 +1,12 @@
+<div id="import-container">
+  <div class="footer navbar-fixed-bottom import-status col-md-offset-8 col-md-4">
+    <button type="button" class="btn btn-default" ng-click="isCollapsed = !isCollapsed">
+      Import
+      <span class="glyphicon glyphicon-triangle-right" aria-hidden="true" ng-if="!isCollapsed"></span>
+      <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true" ng-if="isCollapsed"></span>
+    </button>
+    <div uib-collapse="!isCollapsed">
+      <div class="well well-lg">Some content</div>
+    </div>
+  </div>
+</div>
