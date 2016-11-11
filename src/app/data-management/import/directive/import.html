@@ -10,8 +10,8 @@
     <div class="col-md-3">
 
       <!-- Error messages -->
-      <uib-alert ng-repeat="alert in import.alerts.getAll()" type="{{alert.type}}"
-                 close="import.alerts.remove($index)">{{alert.msg}}
+      <uib-alert ng-repeat="(key, value) in import.alerts.getAll()" type="{{value}}"
+                 close="import.alerts.remove(key)">{{key}}
       </uib-alert>
 
       <!-- Upload box -->

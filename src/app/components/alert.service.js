@@ -7,15 +7,7 @@
       return function Alert() {
         var vm = this;
 
-        var alerts = [];
-
-        vm.getAll = function () {
-          return alerts;
-        };
-
-        vm.getOne = function (index) {
-          return alerts[index];
-        };
+        var alerts = {};
 
         /**
          *
@@ -24,31 +16,19 @@
          * defaults to info, if type is not set
          */
         vm.add = function (message, type) {
-          var alert = {
-            msg: message,
-            type: type
-          };
-
-          // prevent duplicate entries
-          for (var i = 0; i < alerts.length; i++) {
-            if (angular.equals(alert, alerts[i])) {
-              return;
-            }
+          if (type) {
+            alerts[message] = type;
+          } else {
+            alerts[message] = 'info';
           }
-
-          alerts.push(alert);
         };
 
-        vm.remove = function (index) {
-          alerts.splice(index, 1);
+        vm.getAll = function () {
+          return alerts;
         };
 
-        vm.removeByName = function (name) {
-          angular.forEach(alerts, function (e) {
-            if (angular.equals(e.msg, name)) {
-              vm.remove(alerts.indexOf(e));
-            }
-          });
+        vm.remove = function (key) {
+          delete alerts[key];
         };
 
       };

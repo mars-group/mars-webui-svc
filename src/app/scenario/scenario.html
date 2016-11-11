@@ -11,9 +11,8 @@
   </div>
   <div class="col-md-8">
     <!-- Error messages -->
-    <uib-alert ng-repeat="alert in scenario.alerts.getAll() track by $index" type="{{alert.type}}"
-               close="mapping.alerts.remove($index)">
-      {{alert.msg}}
+    <uib-alert ng-repeat="(key, value) in scenario.alerts.getAll()" type="{{value}}"
+               close="scenario.alerts.remove(key)">{{key}}
     </uib-alert>
   </div>
 
