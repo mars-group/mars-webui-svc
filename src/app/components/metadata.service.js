@@ -125,10 +125,6 @@
 
         startLongpolling: startLongpolling,
 
-        getWrittenStatus: function () {
-          return writtenStatus;
-        },
-
         registerOnChangeListener: function (callback) {
           onChangeListener.push(callback);
         }

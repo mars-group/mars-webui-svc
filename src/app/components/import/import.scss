@@ -1,6 +1,11 @@
 #global-import-container {
 
   .import-status {
-    background-color: lightblue;
+    background-color: white;
+
+    .collapse-box {
+      border: 1px solid lightgrey;
+      padding: 1em;
+    }
   }
 }

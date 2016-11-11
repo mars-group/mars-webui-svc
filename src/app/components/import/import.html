@@ -1,16 +1,16 @@
-<div id="global-import-container">
+<div id="global-import-container" ng-if="importView.uploadStates |isNotEmpty">
   <div class="footer navbar-fixed-bottom import-status col-md-offset-8 col-md-4">
-    <button type="button" class="btn btn-default" ng-click="isCollapsed = !isCollapsed">
-      Import
-      <span class="glyphicon glyphicon-triangle-right" aria-hidden="true" ng-if="!isCollapsed"></span>
-      <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true" ng-if="isCollapsed"></span>
-    </button>
-    <div uib-collapse="isCollapsed">
-      <div class="well well-lg">
-        <div ng-repeat="(key, value) in importView.uploadStates">
-        DataId: {{ key }} status: {{ value }}
-        </div>
-      </div>
+    <div class="text-right">
+      <button type="button" class="btn btn-default" ng-click="isCollapsed = !isCollapsed">
+        Import
+        <span class="glyphicon glyphicon-triangle-right" aria-hidden="true" ng-if="!isCollapsed"></span>
+        <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true" ng-if="isCollapsed"></span>
+      </button>
+    </div>
+    <div uib-collapse="isCollapsed" class="collapse-box">
+      <uib-alert ng-repeat="(key, value) in importView.uploadStates" type="{{value.type}}"
+                 close="importView.remove(key)">{{ key }}: {{ value.status }}
+      </uib-alert>
     </div>
   </div>
 </div>

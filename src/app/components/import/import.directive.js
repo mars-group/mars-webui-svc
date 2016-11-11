@@ -1,8 +1,14 @@
 (function () {
   'use strict';
 
-  angular.module('marsApp')
-    .directive('importView', importView);
+  angular
+    .module('marsApp')
+    .directive('importView', importView)
+    .filter('isNotEmpty', function () {
+      return function (object) {
+        return !angular.equals({}, object);
+      };
+    });
 
   /** @ngInject */
   function importView() {
@@ -20,8 +26,33 @@
 
       vm.uploadStates = {};
 
+      vm.add = function (dataId, status) {
+        var type = '';
+        switch (status) {
+          case 'PROCESSING':
+            type = 'info';
+            break;
+          case 'ERROR':
+            type = 'danger';
+            break;
+          case 'FINISHED':
+            type = 'success';
+            break;
+        }
+
+        vm.uploadStates[dataId] = {
+          message: dataId,
+          status: status,
+          type: type
+        };
+      };
+
+      vm.remove = function (key) {
+        delete vm.uploadStates[key];
+      };
+
       Metadata.registerOnChangeListener(function (res) {
-        vm.uploadStates[res.dataId] = res.status;
+        vm.add(res.dataId, res.status);
       });
     }
 
