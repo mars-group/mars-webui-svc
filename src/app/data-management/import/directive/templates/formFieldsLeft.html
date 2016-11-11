@@ -1,7 +1,7 @@
 <div class="form-group" ng-if="!import.isModelUpload">
   <label for="dataType">Data Type</label>
-  <select id="dataType" class="form-control" ng-model="import.data[$index].dataType"
-          ng-change="import.clearGeoPicker($index)" name="dataType_{{$index}}" required>
+  <select id="dataType" class="form-control" data-ng-model="import.data[$index].dataType"
+          data-ng-change="import.clearGeoPicker($index)" name="dataType_{{$index}}" required>
     <option ng-repeat="dataType in dataTypes" value="{{dataType.name}}">
       {{dataType.clearName}}
     </option>
@@ -10,7 +10,7 @@
 
 <div class="form-group"
      ng-if="import.data[$index].dataType && import.data[$index].dataType === import.TIME_SERIES">
-  <div class="geo-picker" ng-model="import.geoPicker">
+  <div class="geo-picker" data-ng-model="import.geoPicker">
     <label>
       Geo-Coords
       <span class="input-group">
@@ -28,14 +28,14 @@
       </span>
     </label>
   </div>
-  <div ng-show="form.$submitted || form.lat_$index.$touched || form.lng_$index.$touched">
-    <div ng-show="form.lat_$index.$error.required || form.lng_$index.$error.required">
+  <div ng-if="form.$submitted || form.lat_$index.$touched || form.lng_$index.$touched">
+    <div ng-if="form.lat_$index.$error.required || form.lng_$index.$error.required">
       Please select a Geo Coordinate
     </div>
-    <div ng-show="form.lat_$index.$error.min || form.lat_$index.$error.max">
+    <div ng-if="form.lat_$index.$error.min || form.lat_$index.$error.max">
       Latitude is not valid! Valid range: -90 to 90.
     </div>
-    <div ng-show="form.lng_$index.$error.min || form.lng_$index.$error.max">
+    <div ng-if="form.lng_$index.$error.min || form.lng_$index.$error.max">
       Longitude is not valid. Valid range: -180 to 180.
     </div>
   </div>
@@ -43,7 +43,7 @@
 
 <div class="form-group">
   <label for="privacy">Privacy</label>
-  <select id="privacy" class="form-control" ng-model="import.data[$index].privacy" name="privacy_{{$index}}" required>
+  <select id="privacy" class="form-control" data-ng-model="import.data[$index].privacy" name="privacy_{{$index}}" required>
     {{import.data[$index].privacy= 'PRIVATE'}}
     <option value="PRIVATE">Only for personal use</option>
     <option value="PROJECT_PRIVATE">Can only be used by project members</option>
@@ -59,6 +59,6 @@
 
 <div class="form-group">
   <label>Description</label>
-  <textarea class="form-control" rows="4" ng-model="import.data[$index].description"
+  <textarea class="form-control" rows="4" data-ng-model="import.data[$index].description"
             placeholder="Description of this data"></textarea>
 </div>

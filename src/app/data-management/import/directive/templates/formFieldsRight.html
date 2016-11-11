@@ -1,9 +1,9 @@
-<div class="form-group" ng-show="import.uploader.isHTML5">
+<div class="form-group" ng-if="import.uploader.isHTML5">
   <label class="control-label">File size:</label>
   {{ upload.file.size/1024/1024|number:2 }} MB
 </div>
 
-<div ng-show="import.uploader.isHTML5">
+<div ng-if="import.uploader.isHTML5">
   <div ng-hide="upload.isSuccess || upload.isCancel || upload.isError" class="progress" style="margin-bottom: 0;">
     <div class="progress-bar" role="progressbar" ng-style="{ 'width': upload.progress + '%' }">
       {{upload.progress}}% Complete

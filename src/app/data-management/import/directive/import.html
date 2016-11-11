@@ -15,7 +15,7 @@
 
       <!-- Upload box -->
       <div nv-file-drop data-uploader="import.uploader" ng-click="import.clickUpload();"
-           ng-show="import.uploader.isHTML5">
+           ng-if="import.uploader.isHTML5">
         <div nv-file-over data-uploader="import.uploader" class="well my-drop-zone text-center upload-box">
           <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span><br/>
           <div><strong>Choose files</strong></div>
@@ -26,7 +26,7 @@
              data-uploader="import.uploader">
 
       <!-- Upload accordion settings-->
-      <div class="checkbox" ng-show="import.uploader.queue.length">
+      <div class="checkbox" ng-if="import.uploader.queue.length">
         <div class="well">
           <label>
             <input type="checkbox" ng-model="import.showOneUploadAtATime">
@@ -44,16 +44,20 @@
         <uib-accordion close-others="import.showOneUploadAtATime">
           <uib-accordion-group heading="{{upload.file.name}}" ng-init="isOpen = $index === 0" is-open="isOpen"
                                ng-repeat="upload in import.uploader.queue">
+
             <div class="col-md-6">
+              <!-- Include left side of the form-->
               <div ng-include data-src="'app/data-management/import/directive/templates/formFieldsLeft.html'"></div>
             </div>
+
             <div class="col-md-6">
+              <!-- Include right side of the form-->
               <div ng-include data-src="'app/data-management/import/directive/templates/formFieldsRight.html'"></div>
             </div>
           </uib-accordion-group>
         </uib-accordion>
 
-        <div ng-show="import.uploader.queue.length">
+        <div ng-if="import.uploader.queue.length">
           <button type="submit" class="btn btn-success btn-s" ng-click="import.uploadFiles()"
                   ng-disabled="form.$invalid">
             <span class="glyphicon glyphicon-upload"></span> Upload
