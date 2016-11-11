@@ -1,0 +1,36 @@
+<div class="form-group" ng-show="import.uploader.isHTML5">
+  <label class="control-label">File size:</label>
+  {{ upload.file.size/1024/1024|number:2 }} MB
+</div>
+
+<div ng-show="import.uploader.isHTML5">
+  <div ng-hide="upload.isSuccess || upload.isCancel || upload.isError" class="progress" style="margin-bottom: 0;">
+    <div class="progress-bar" role="progressbar" ng-style="{ 'width': upload.progress + '%' }">
+      {{upload.progress}}% Complete
+    </div>
+  </div>
+  <div class="alert alert-warning" ng-if="upload.isUploading">
+    <i class="glyphicon glyphicon-refresh"></i> uploading
+  </div>
+  <div class="alert alert-info" ng-if="upload.isProcessing && !upload.isError && !upload.isCancel">
+    <i class="glyphicon glyphicon-refresh"></i> processing
+  </div>
+  <div class="alert alert-success" ng-if="!upload.isProcessing && upload.isSuccess">
+    <i class="glyphicon glyphicon-ok"></i> success
+  </div>
+  <div class="alert alert-warning" ng-if="upload.isCancel">
+    <i class="glyphicon glyphicon-ban-circle"></i> canceled
+  </div>
+  <div class="alert alert-danger" ng-if="upload.isError">
+    <i class="glyphicon glyphicon-remove"></i> failed
+  </div>
+</div>
+
+<button type="button" class="btn btn-warning btn-xs" ng-click="upload.cancel()"
+        data-ng-disabled="!upload.isUploading">
+  <span class="glyphicon glyphicon-ban-circle"></span> Cancel
+</button>
+<button type="button" class="btn btn-danger btn-xs"
+        ng-click="upload.remove(); import.removeUpload($index);">
+  <span class="glyphicon glyphicon-trash"></span> Remove
+</button>

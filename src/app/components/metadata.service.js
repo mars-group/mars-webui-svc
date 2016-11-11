@@ -4,7 +4,6 @@
   angular
     .module('marsApp')
     .factory('Metadata', function Scenario($http, $log) {
-      var writtenStatus = [];
       var baseUrl = '/metadata/metadata/';
       var onChangeListener = [];
 
