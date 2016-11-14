@@ -44,7 +44,6 @@
         lat: '',
         lng: '',
         privacy: '',
-        // dataType: vm.isModelUpload ? 'MODEL' : '',
         dataType: '',
         projectId: Project.getCurrentProject().id,
         userId: 1, // todo: add real id
@@ -170,8 +169,9 @@
       }
     };
 
-    vm.removeUpload = function (index) {
+    vm.removeUpload = function (index, event) {
       vm.data.splice(index, 1);
+      event.preventDefault(); // prevents redirect to /
     };
 
     vm.removeAllUploads = function () {

@@ -26,53 +26,62 @@
              data-uploader="import.uploader">
 
       <!-- Upload accordion settings-->
-      <div class="checkbox" ng-if="import.uploader.queue.length">
+      <div class="checkbox" ng-if="import.uploader.queue.length > 1">
         <div class="well">
           <label>
             <input type="checkbox" ng-model="import.showOneUploadAtATime">
-            Collapse other upload itemsFile size
+            Show one queue item at a time
           </label>
         </div>
       </div>
     </div>
 
     <div class="col-md-9">
-      <h3>Upload queue</h3>
-      <p>Queue length: {{ import.uploader.queue.length }}</p>
+      <h3>Upload queue ({{ import.uploader.queue.length }} items)</h3>
 
-      <form name="form" class="css-form">
-        <uib-accordion close-others="import.showOneUploadAtATime">
-          <uib-accordion-group heading="{{upload.file.name}}" ng-init="isOpen = $index === 0" is-open="isOpen"
-                               ng-repeat="upload in import.uploader.queue">
+      <div ng-repeat="upload in import.uploader.queue" ng-if="import.uploader.isUploading || upload.isUploading
+      || upload.isProcessing || upload.isSuccess || upload.isCancel || upload.isError">
+        <hr/>
+        <h4>{{ upload._file.name }}</h4>
 
-            <div class="col-md-6">
-              <!-- Include left side of the form-->
-              <div ng-include data-src="'app/data-management/import/directive/templates/formFieldsLeft.html'"></div>
+        <p>
+          <span class="bold">Status: </span>
+          <span ng-if="!upload.isUploading && !upload.isSuccess && !upload.isError && !upload.isCancel">waiting</span>
+          <span ng-if="upload.isUploading">uploading</span>
+          <span ng-if="upload.isProcessing && !upload.isSuccess">processing</span>
+          <span ng-if="upload.isSuccess">success</span>
+          <span ng-if="upload.isCancel">canceled</span>
+          <span ng-if="upload.isError">failed</span>
+        </p>
+
+        <div ng-if="import.uploader.isHTML5">
+          <div class="row">
+            <div class="col-md-2">
+              <button type="button" class="btn btn-primary btn-sm" ng-click="upload.cancel()"
+                      ng-if="upload.isUploading || !upload.isUploading && !upload.isSuccess && !upload.isError
+                      && !upload.isCancel">
+                <span class="glyphicon glyphicon-ban-circle"></span> Cancel
+              </button>
             </div>
-
-            <div class="col-md-6">
-              <!-- Include right side of the form-->
-              <div ng-include data-src="'app/data-management/import/directive/templates/formFieldsRight.html'"></div>
+            <div class="col-md-10">
+              <div ng-if="!upload.isSuccess && !upload.isCancel && !upload.isError" class="progress">
+                <div class="progress-bar" role="progressbar" ng-style="{ 'width': upload.progress + '%' }">
+                  {{upload.progress}}% Complete
+                </div>
+              </div>
             </div>
-          </uib-accordion-group>
-        </uib-accordion>
-
-        <div ng-if="import.uploader.queue.length">
-          <button type="submit" class="btn btn-success btn-s" ng-click="import.uploadFiles()"
-                  ng-disabled="form.$invalid">
-            <span class="glyphicon glyphicon-upload"></span> Upload
-          </button>
-          <button type="button" class="btn btn-warning btn-s" ng-click="import.uploader.cancelAll()"
-                  ng-disabled="!import.uploader.isUploading">
-            <span class="glyphicon glyphicon-ban-circle"></span> Cancel
-          </button>
-          <button type="button" class="btn btn-danger btn-s"
-                  ng-click="import.uploader.clearQueue(); import.removeAllUploads();"
-                  ng-disabled="!import.uploader.queue.length">
-            <span class="glyphicon glyphicon-trash"></span> Remove all
-          </button>
+          </div>
         </div>
-      </form>
+      </div>
+
+      <hr ng-if="import.uploader.isUploading"/>
+      <button type="button" class="btn btn-warning btn-s" ng-click="import.uploader.cancelAll()"
+              ng-if="import.uploader.isUploading"><span class="glyphicon glyphicon-ban-circle"></span> Cancel all
+      </button>
+
+      <!-- Include the input form-->
+      <div ng-include data-src="'app/data-management/import/directive/templates/inputForm.html'"></div>
+
     </div>
 
   </div>
