@@ -49,7 +49,7 @@
     });
 
     vm.setCurrentScenario = function () {
-      vm.alerts.removeByName(selectScenarioInfoMessage);
+      vm.alerts.remove(selectScenarioInfoMessage);
       Scenario.setCurrentScenario(vm.currentScenario);
       vm.alerts.add(selectNodeInfoMessage);
     };
@@ -134,7 +134,7 @@
     loadMappingDatasets();
 
     vm.onNodeSelection = function (node) {
-      vm.alerts.removeByName(selectNodeInfoMessage);
+      vm.alerts.remove(selectNodeInfoMessage);
 
       selectFirstField(node);
       setDataFilter(node);
