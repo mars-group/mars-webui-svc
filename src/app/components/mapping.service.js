@@ -4,169 +4,169 @@
   angular
     .module('marsApp')
     .factory('Mapping', function Mapping($http, $log, Scenario) {
-        var originalData = [];
-        var tmpMapping = null;
-        var tmpParameters = null;
+      var originalData = [];
+      var tmpMapping = null;
+      var tmpParameters = null;
 
 
-        var restoreLocalChanges = function (localData) {
-          if (tmpMapping) {
-            localData[0] = angular.copy(tmpMapping[0]);
-            localData[1] = angular.copy(tmpMapping[1]);
-          }
-          tmpMapping = null;
+      var restoreLocalChanges = function (localData) {
+        if (tmpMapping) {
+          localData[0] = angular.copy(tmpMapping[0]);
+          localData[1] = angular.copy(tmpMapping[1]);
+        }
+        tmpMapping = null;
 
-          if (tmpParameters) {
-            localData[2] = angular.copy(tmpParameters);
-          }
-          tmpParameters = null;
+        if (tmpParameters) {
+          localData[2] = angular.copy(tmpParameters);
+        }
+        tmpParameters = null;
 
-          return localData;
+        return localData;
+      };
+
+      var convertToLocalStructure = function (data) {
+        var initializationDescription = convertMappingToArray(data.InitializationDescription);
+        var basicLayers = extractBasicLayers(initializationDescription);
+        var otherLayers = removeBasicLayer(initializationDescription);
+        var parameters = convertParametersToArray(data.ParameterizationDescription);
+
+        return [basicLayers, otherLayers, parameters];
+      };
+
+      var convertMappingToArray = function (layerMapping) {
+        var tmp = {
+          Name: 'Layer',
+          Agents: []
         };
 
-        var convertToLocalStructure = function (data) {
-          var initializationDescription = convertMappingToArray(data.InitializationDescription);
-          var basicLayers = extractBasicLayers(initializationDescription);
-          var otherLayers = removeBasicLayer(initializationDescription);
-          var parameters = convertParametersToArray(data.ParameterizationDescription);
+        // exclude LogicalChangeTime
+        delete layerMapping.LogicalChangeTime;
 
-          return [basicLayers, otherLayers, parameters];
-        };
+        // makes sure the object of layerTypes is processed in order
+        var layerTypeKeys = Object.keys(layerMapping);
+        layerTypeKeys.sort();
 
-        var convertMappingToArray = function (layerMapping) {
-          var tmp = {
-            Name: 'Layer',
-            Agents: []
-          };
-
-          // exclude LogicalChangeTime
-          delete layerMapping.LogicalChangeTime;
-
-          // makes sure the object of layerTypes is processed in order
-          var layerTypeKeys = Object.keys(layerMapping);
-          layerTypeKeys.sort();
-
-          // convert InitializationDescription to array
-          angular.forEach(layerTypeKeys, function (layerType) {
-            angular.forEach(layerMapping[layerType], function (layer, index) {
-              // move agent mapping one level up
-              if (angular.equals(layerType, 'BasicLayers')) {
-                layerMapping.BasicLayers[index] = layer.Agents[0];
-                layerMapping.BasicLayers[index].LayerName = layer.LayerName;
-              }
-
-              // add layerType to fields
-              layer.LayerType = layerType;
-              angular.forEach(layer.Agents, function (agent) {
-                agent.LayerType = layerType;
-              });
-            });
-
-            var tmpLayerType = {
-              Name: layerType,
-              Agents: layerMapping[layerType]
-            };
-            tmp.Agents.push(tmpLayerType);
-          });
-
-          return tmp;
-        };
-
-        var convertParametersToArray = function (parameterMapping) {
-          var tmp = {
-            Name: 'Parameter',
-            Agents: []
-          };
-
-          // makes sure the object of layerTypes is processed in order
-          var parameterTypeKeys = Object.keys(parameterMapping);
-          parameterTypeKeys.sort();
-
-          angular.forEach(parameterTypeKeys, function layerTypes(parameterType) {
-            if (!angular.equals(parameterType, 'LogicalChangeTime')) {
-              // keep global parameters how they are
-              var result = parameterMapping[parameterType];
-              if (!angular.equals(parameterType, 'Global')) {
-                result = {
-                  Name: parameterType,
-                  Agents: parameterMapping[parameterType]
-                };
-              }
-              tmp.Agents.push(result);
+        // convert InitializationDescription to array
+        angular.forEach(layerTypeKeys, function (layerType) {
+          angular.forEach(layerMapping[layerType], function (layer, index) {
+            // move agent mapping one level up
+            if (angular.equals(layerType, 'BasicLayers')) {
+              layerMapping.BasicLayers[index] = layer.Agents[0];
+              layerMapping.BasicLayers[index].LayerName = layer.LayerName;
             }
-          });
 
-          return tmp;
-        };
-
-        var convertMappingToRemote = function (data) {
-          var result = angular.copy(originalData);
-
-          var layerData = result.InitializationDescription;
-          layerData.BasicLayers = [];
-          angular.forEach(data[0].Agents, function (layer) {
-            var tmp3 = {
-              Agents: [layer],
-              LayerName: layer.LayerName
-            };
-
-            delete tmp3.Agents[0].LayerName;
-
-            layerData.BasicLayers.push(tmp3);
-          });
-          // layerData.BasicLayers = data[0].Agents;
-          layerData.GISLayers = data[1].Agents[0].Agents;
-          layerData.GeoPotentialFieldLayers = data[1].Agents[1].Agents;
-          layerData.GridPotentialFieldLayers = data[1].Agents[2].Agents;
-          layerData.ObstacleLayers = data[1].Agents[3].Agents;
-          layerData.TimeSeriesLayers = data[1].Agents[4].Agents;
-
-          // remove layerType from fields
-          angular.forEach(layerData, function (layerType) {
-            angular.forEach(layerType, function (layer) {
-              delete layer.LayerType;
-              angular.forEach(layer.Agents, function (agent) {
-                delete agent.LayerType;
-              });
+            // add layerType to fields
+            layer.LayerType = layerType;
+            angular.forEach(layer.Agents, function (agent) {
+              agent.LayerType = layerType;
             });
           });
 
-          return result;
+          var tmpLayerType = {
+            Name: layerType,
+            Agents: layerMapping[layerType]
+          };
+          tmp.Agents.push(tmpLayerType);
+        });
+
+        return tmp;
+      };
+
+      var convertParametersToArray = function (parameterMapping) {
+        var tmp = {
+          Name: 'Parameter',
+          Agents: []
         };
 
-        var convertParametersToRemote = function (data) {
-          var result = angular.copy(originalData);
+        // makes sure the object of layerTypes is processed in order
+        var parameterTypeKeys = Object.keys(parameterMapping);
+        parameterTypeKeys.sort();
 
-          var parameterData = result.ParameterizationDescription;
-          parameterData.Agents = data[2].Agents[0].Agents;
-          parameterData.Global.Parameters = data[2].Agents[1].Parameters;
-          parameterData.Layers = data[2].Agents[2].Agents;
+        angular.forEach(parameterTypeKeys, function layerTypes(parameterType) {
+          if (!angular.equals(parameterType, 'LogicalChangeTime')) {
+            // keep global parameters how they are
+            var result = parameterMapping[parameterType];
+            if (!angular.equals(parameterType, 'Global')) {
+              result = {
+                Name: parameterType,
+                Agents: parameterMapping[parameterType]
+              };
+            }
+            tmp.Agents.push(result);
+          }
+        });
 
-          return result;
-        };
+        return tmp;
+      };
 
-        var removeAngularHashKeyRecursive = function (obj) {
-          for (var property in obj) {
-            if (obj.hasOwnProperty(property)) {
-              if (typeof obj[property] == "object")
-                removeAngularHashKeyRecursive(obj[property]);
-              else if (angular.equals(property, '$$hashKey')) {
-                delete obj[property];
-              }
+      var convertMappingToRemote = function (data) {
+        var result = angular.copy(originalData);
+
+        var layerData = result.InitializationDescription;
+        layerData.BasicLayers = [];
+        angular.forEach(data[0].Agents, function (layer) {
+          var tmp3 = {
+            Agents: [layer],
+            LayerName: layer.LayerName
+          };
+
+          delete tmp3.Agents[0].LayerName;
+
+          layerData.BasicLayers.push(tmp3);
+        });
+        // layerData.BasicLayers = data[0].Agents;
+        layerData.GISLayers = data[1].Agents[0].Agents;
+        layerData.GeoPotentialFieldLayers = data[1].Agents[1].Agents;
+        layerData.GridPotentialFieldLayers = data[1].Agents[2].Agents;
+        layerData.ObstacleLayers = data[1].Agents[3].Agents;
+        layerData.TimeSeriesLayers = data[1].Agents[4].Agents;
+
+        // remove layerType from fields
+        angular.forEach(layerData, function (layerType) {
+          angular.forEach(layerType, function (layer) {
+            delete layer.LayerType;
+            angular.forEach(layer.Agents, function (agent) {
+              delete agent.LayerType;
+            });
+          });
+        });
+
+        return result;
+      };
+
+      var convertParametersToRemote = function (data) {
+        var result = angular.copy(originalData);
+
+        var parameterData = result.ParameterizationDescription;
+        parameterData.Agents = data[2].Agents[0].Agents;
+        parameterData.Global.Parameters = data[2].Agents[1].Parameters;
+        parameterData.Layers = data[2].Agents[2].Agents;
+
+        return result;
+      };
+
+      var removeAngularHashKeyRecursive = function (obj) {
+        for (var property in obj) {
+          if (obj.hasOwnProperty(property)) {
+            if (typeof obj[property] == "object")
+              removeAngularHashKeyRecursive(obj[property]);
+            else if (angular.equals(property, '$$hashKey')) {
+              delete obj[property];
             }
           }
-        };
+        }
+      };
 
-        var extractBasicLayers = function (layers) {
-          layers.Agents[0].Name = 'Agent';
-          return layers.Agents[0];
-        };
+      var extractBasicLayers = function (layers) {
+        layers.Agents[0].Name = 'Agent';
+        return layers.Agents[0];
+      };
 
-        var removeBasicLayer = function (layers) {
-          layers.Agents.splice(0, 1);
+      var removeBasicLayer = function (layers) {
+        layers.Agents.splice(0, 1);
 
-          return layers;
-        };
+        return layers;
+      };
 
       return {
         getMapping: function () {

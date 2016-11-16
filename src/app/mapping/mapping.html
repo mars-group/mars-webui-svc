@@ -20,7 +20,7 @@
       {{key}}
     </uib-alert>
 
-    <div data-ng-hide="mapping.currentScenario">
+    <div data-ng-if="!mapping.currentScenario">
       <label for="scenario" class="acme-navbar-text">Please select a Scenario: </label>
       <select class="form-control" id="scenario" data-ng-model="mapping.currentScenario"
               data-ng-options="o.Name for o in mapping.scenarios track by o.ScenarioId"
