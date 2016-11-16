@@ -5,7 +5,16 @@
 
   <div class="modal-body">
 
-    <form name="scenarioModal.form" class="simple-form" novalidate>
+    <!-- Error messages -->
+    <uib-alert ng-repeat="(key, value) in scenarioModal.alerts.getAll()" type="{{value}}"
+               close="scenarioModal.alerts.remove(key)">{{key}}
+    </uib-alert>
+
+    <div ng-if="!scenarioModal.hasModel">
+      Import a Model <a ui-sref="importModel" ng-click="scenarioModal.cancel()">here</a>.
+    </div>
+
+    <form name="scenarioModal.form" class="simple-form" novalidate ng-if="scenarioModal.hasModel">
       <div class="form-group">
         <label class="control-label">Name</label>
         <input type="text" class="form-control" name="name" ng-model="scenarioModal.scenario.name"

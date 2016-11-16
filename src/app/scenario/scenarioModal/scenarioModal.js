@@ -6,10 +6,11 @@
     .controller('ScenarioModalController', ScenarioModalController);
 
   /** @ngInject */
-  function ScenarioModalController($uibModalInstance, Scenario, Metadata, Project) {
+  function ScenarioModalController($uibModalInstance, Scenario, Metadata, Project, Alert) {
     var vm = this;
 
     vm.scenario = {};
+    vm.alerts = new Alert();
 
     var project = Project.getCurrentProject().id;
 
@@ -51,6 +52,21 @@
         callback();
       });
     };
+
+    var hasModels = function () {
+      var filter = {
+        types: ['MODEL'],
+        state: 'FINISHED'
+      };
+      Metadata.getFiltered(filter, function (res) {
+        if (!res.hasOwnProperty('error') && res.length > 0) {
+          vm.hasModel = true;
+        } else {
+          vm.alerts.add('There are no models, please import one first!', 'warning')
+        }
+      });
+    };
+    hasModels();
 
   }
 
