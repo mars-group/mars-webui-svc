@@ -1,8 +1,10 @@
 <h3>Select Data</h3>
 
-<div class="form-group">
-  <label for="filter" class="filter">Filter:</label>
-  <input class="form-control" id="filter" type="text" data-ng-model="mapping.dataFilter.title">
+<div class="form-group has-feedback has-clear">
+  <label for="filter" class="filter">Filter: </label>
+  <input type="search" id="filter" class="form-control" data-ng-model="mapping.dataFilter.title"/>
+  <a class="glyphicon glyphicon-remove-circle form-control-feedback form-control-clear clear-filter"
+     ng-click="mapping.dataFilter.title = ''" ng-if="mapping.dataFilter.title"></a>
 </div>
 
 <uib-accordion close-others="true">

@@ -19,7 +19,7 @@
                  ng-change="importView.updateSearchFilter();">
           <button class="btn btn-default" type="button"
                   ng-click="importView.searchFilter=''; importView.updateSearchFilter();"
-                 data-ng-if="importView.searchFilter">
+                  data-ng-if="importView.searchFilter">
             <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
           </button>
         </div>
@@ -36,7 +36,7 @@
         </treecontrol>
 
         <button type="button" class="btn btn-default" ng-click="importView.resetCategoryFilter()"
-               data-ng-if="importView.hasCategoryFilter">
+                data-ng-if="importView.hasCategoryFilter">
           <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
           reset filter
         </button>
@@ -46,9 +46,8 @@
     <!-- Content -->
     <div class="col-md-9">
       <!-- Error messages -->
-      <uib-alert ng-repeat="alert in importView.alerts.getAll() track by $index" type="{{alert.type}}"
-                 close="importView.alerts.remove($index)">
-        {{alert.msg}}
+      <uib-alert ng-repeat="(key, value) in importView.alerts.getAll()" type="{{value}}"
+                 close="importView.alerts.remove(key)">{{key}}
       </uib-alert>
 
       <div class="headerButtons">

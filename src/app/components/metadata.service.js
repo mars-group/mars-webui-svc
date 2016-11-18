@@ -5,6 +5,13 @@
     .module('marsApp')
     .factory('Metadata', function Scenario($http, $log) {
       var baseUrl = '/metadata/metadata/';
+      var onChangeListener = [];
+
+      var triggerOnChangeListener = function (res) {
+        for (var i = 0; i < onChangeListener.length; i++) {
+          onChangeListener[i](res);
+        }
+      };
 
       var getFromPathVariable = function (pathVariable, callback) {
         var url = baseUrl;
@@ -59,6 +66,31 @@
           });
       };
 
+      var hasStatusWritten = function (dataId, params, callback) {
+        getState(dataId, params, function (res) {
+          callback(res);
+        });
+      };
+
+      var startLongpolling = function (dataId, status, callback) {
+        var params = {
+          state: status
+        };
+
+        hasStatusWritten(dataId, params, function (res) {
+          if (res) {
+            triggerOnChangeListener({dataId: dataId, status: res});
+          }
+
+          if (res.hasOwnProperty('error')) {
+            return callback({error: res});
+          } else if (res === 'FINISHED' || res === 'ERROR') {
+            return callback();
+          }
+          startLongpolling(dataId, res, callback);
+        });
+      };
+
       return {
         getAll: function (callback) {
           getFromPathVariable(null, function (res) {
@@ -78,11 +110,7 @@
           });
         },
 
-        hasStatusWritten: function (dataId, params, callback) {
-          getState(dataId, params, function (res) {
-            callback(res);
-          });
-        },
+        hasStatusWritten: hasStatusWritten,
 
         getDateColumn: function (dataId, callback) {
           $http.get('/metadata/metadata/' + dataId).success(function (res) {
@@ -92,6 +120,12 @@
             }
             callback(false);
           });
+        },
+
+        startLongpolling: startLongpolling,
+
+        registerOnChangeListener: function (callback) {
+          onChangeListener.push(callback);
         }
       };
     });

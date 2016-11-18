@@ -39,7 +39,7 @@
 
 
               <!-- Left result configuration pane. The availability is governed by the switch above. -->
-              <fieldset class="RCS-Options" ng-disabled="!resultconfig.SelectedConfig.Agents[$index].OutputEnabled">
+              <fieldset class="RCS-Options" data-ng-disabled="!resultconfig.SelectedConfig.Agents[$index].OutputEnabled">
                 Frequency: &nbsp; &nbsp; every <input type="number" min="1" step="1" value="1"
                                                       onkeypress="return (event.charCode === 8 || event.charCode === 0) ? null : event.charCode >= 48 && event.charCode <= 57"
                                                       ng-model="resultconfig.SelectedConfig.Agents[$index].Frequency"
@@ -47,11 +47,11 @@
 
 
                 <!-- Spatial output and visualization options are only available to spatial agent types. -->
-                <fieldset class="RCS-Options" ng-disabled="!agent.IsSpatial">
+                <fieldset class="RCS-Options" data-ng-disabled="!agent.IsSpatial">
                   <div class="checkbox">
                     <label class="reslbl"><input type="checkbox" ng-model="resultconfig.SelectedConfig.Agents[$index].SpatialOutput" />Output spatial information</label>
                   </div>
-                  <fieldset class="RCS-Options" ng-disabled="!resultconfig.SelectedConfig.Agents[$index].SpatialOutput">
+                  <fieldset class="RCS-Options" data-ng-disabled="!resultconfig.SelectedConfig.Agents[$index].SpatialOutput">
                     <div class="form-group">
                       <label class="radio-inline"><input type="radio" name="{{agent.AgentType}}" ng-model="resultconfig.SelectedConfig.Agents[$index].SpatialType" value="stationary" />stationary</label>
                       <label class="radio-inline"><input type="radio" name="{{agent.AgentType}}" ng-model="resultconfig.SelectedConfig.Agents[$index].SpatialType" value="mobile" />mobile</label>
@@ -59,9 +59,9 @@
                     <div class="checkbox">
                       <label class="reslbl"><input type="checkbox" ng-model="resultconfig.SelectedConfig.Agents[$index].EnableVisualization">Enable 3D visualization</label>
                     </div>
-                    <fieldset class="RCS-Options" ng-disabled="!resultconfig.SelectedConfig.Agents[$index].EnableVisualization">
+                    <fieldset class="RCS-Options" data-ng-disabled="!resultconfig.SelectedConfig.Agents[$index].EnableVisualization">
                       <label for="comment">Additional visualization parameters: <span class="glyphicon glyphicon-info-sign" title="info"></span></label>
-                      <textarea class="form-control" rows="4" id="comment" ng-model="resultconfig.SelectedConfig.Agents[$index].VisualizationParams"></textarea>
+                      <textarea class="form-control" rows="4" id="comment" data-ng-model="resultconfig.SelectedConfig.Agents[$index].VisualizationParams"></textarea>
                     </fieldset>
                   </fieldset>
                 </fieldset>
@@ -71,7 +71,7 @@
 
 
             <!-- Right column with property table and notice. Also switched on/off by the master output switch. -->
-            <fieldset class="col-sm-6 RCS-Options" ng-disabled="!resultconfig.SelectedConfig.Agents[$index].OutputEnabled">
+            <fieldset class="col-sm-6 RCS-Options" data-ng-disabled="!resultconfig.SelectedConfig.Agents[$index].OutputEnabled">
               <p class="reslbl">Custom agent properties:</p>
               <table class="table">
                 <thead>
@@ -103,8 +103,8 @@
 
       <select ng-options="i.ConfigName as (i.ConfigName) for i in resultconfig.ResultConfigs" ng-click="resultconfig.SelectionChanged()" ng-model="resultconfig.SelectedConfigStr" id="ConfigSelection" class="input-sm"></select>
       <button type="button" class="btn btn-primary btn-sm" ng-click="resultconfig.CreateNew()"><span class="glyphicon glyphicon-duplicate"></span>&nbsp; Create New</button>
-      <button type="button" class="btn btn-primary btn-sm" ng-click="resultconfig.SaveConfig()" ng-disabled="resultconfig.SelectedConfig.ConfigName=='--default--'"><span class="glyphicon glyphicon-floppy-disk"></span>&nbsp; Save</button>
-      <button type="button" class="btn btn-danger btn-sm"  ng-click="resultconfig.DeleteConfig()" ng-disabled="resultconfig.SelectedConfig.ConfigName=='--default--'"><span class="glyphicon glyphicon-remove"></span>&nbsp; Delete</button>
+      <button type="button" class="btn btn-primary btn-sm" ng-click="resultconfig.SaveConfig()" data-ng-disabled="resultconfig.SelectedConfig.ConfigName=='--default--'"><span class="glyphicon glyphicon-floppy-disk"></span>&nbsp; Save</button>
+      <button type="button" class="btn btn-danger btn-sm"  ng-click="resultconfig.DeleteConfig()" data-ng-disabled="resultconfig.SelectedConfig.ConfigName=='--default--'"><span class="glyphicon glyphicon-remove"></span>&nbsp; Delete</button>
     </div>
 
 

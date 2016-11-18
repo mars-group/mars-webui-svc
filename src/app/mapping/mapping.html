@@ -16,12 +16,11 @@
 
   <div class="col-md-5">
     <!-- Error messages -->
-    <uib-alert ng-repeat="alert in mapping.alerts.getAll() track by $index" type="{{alert.type}}"
-               close="mapping.alerts.remove($index)">
-      {{alert.msg}}
+    <uib-alert ng-repeat="(key, value) in mapping.alerts.getAll()" type="{{value}}" close="mapping.alerts.remove(key)">
+      {{key}}
     </uib-alert>
 
-    <div data-ng-hide="mapping.currentScenario">
+    <div data-ng-if="!mapping.currentScenario">
       <label for="scenario" class="acme-navbar-text">Please select a Scenario: </label>
       <select class="form-control" id="scenario" data-ng-model="mapping.currentScenario"
               data-ng-options="o.Name for o in mapping.scenarios track by o.ScenarioId"

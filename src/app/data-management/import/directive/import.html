@@ -1,0 +1,89 @@
+<div id="import-container" class="container">
+
+  <div>
+    <acme-navbar></acme-navbar>
+  </div>
+
+  <h1>{{ pageTitle }}</h1>
+
+  <div class="row">
+    <div class="col-md-3">
+      <!-- Error messages -->
+      <uib-alert ng-repeat="(key, value) in import.alerts.getAll()" type="{{value}}"
+                 close="import.alerts.remove(key)">{{key}}
+      </uib-alert>
+
+      <!-- Upload box -->
+      <div nv-file-drop data-uploader="import.uploader" ng-click="import.clickUpload();"
+           ng-if="import.uploader.isHTML5">
+        <div nv-file-over data-uploader="import.uploader" class="well my-drop-zone text-center upload-box">
+          <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span><br/>
+          <div><strong>Choose files</strong></div>
+          <div>or drag them here.</div>
+        </div>
+      </div>
+      <input type="file" id="uploadBtn" ng-hide="import.uploader.isHTML5" multiple nv-file-select
+             data-uploader="import.uploader">
+
+      <!-- Upload accordion settings-->
+      <div class="checkbox" ng-if="import.uploader.queue.length > 1">
+        <div class="well">
+          <label>
+            <input type="checkbox" ng-model="import.showOneUploadAtATime">
+            Show one queue item at a time
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-9">
+      <h3>Upload queue ({{ import.uploader.queue.length }} items)</h3>
+
+      <div ng-repeat="upload in import.uploader.queue" ng-if="import.uploader.isUploading || upload.isUploading
+      || upload.isProcessing || upload.isSuccess || upload.isCancel || upload.isError">
+        <hr/>
+        <h4>{{ upload._file.name }}</h4>
+
+        <p>
+          <span class="bold">Status: </span>
+          <span ng-if="!upload.isUploading && !upload.isSuccess && !upload.isError && !upload.isCancel">waiting</span>
+          <span ng-if="upload.isUploading">uploading</span>
+          <span ng-if="upload.isProcessing && !upload.isSuccess">processing</span>
+          <span ng-if="upload.isSuccess">success</span>
+          <span ng-if="upload.isCancel">canceled</span>
+          <span ng-if="upload.isError">failed</span>
+        </p>
+
+        <div ng-if="import.uploader.isHTML5">
+          <div class="row">
+            <div class="col-md-2">
+              <button type="button" class="btn btn-primary btn-sm" ng-click="upload.cancel()"
+                      ng-if="upload.isUploading || !upload.isUploading && !upload.isSuccess && !upload.isError
+                      && !upload.isCancel">
+                <span class="glyphicon glyphicon-ban-circle"></span> Cancel
+              </button>
+            </div>
+            <div class="col-md-10">
+              <div ng-if="!upload.isSuccess && !upload.isCancel && !upload.isError" class="progress">
+                <div class="progress-bar" role="progressbar" ng-style="{ 'width': upload.progress + '%' }">
+                  {{upload.progress}}% Complete
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr ng-if="import.uploader.isUploading"/>
+      <button type="button" class="btn btn-warning btn-s" ng-click="import.uploader.cancelAll()"
+              ng-if="import.uploader.isUploading"><span class="glyphicon glyphicon-ban-circle"></span> Cancel all
+      </button>
+
+      <!-- Include the input form-->
+      <div ng-include data-src="'app/data-management/import/directive/templates/inputForm.html'"></div>
+
+    </div>
+
+  </div>
+
+</div>

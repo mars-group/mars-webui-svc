@@ -18,12 +18,19 @@
     margin-bottom: 0.5em;
   }
 
-  input.ng-invalid, select.ng-invalid, button.ng-invalid  {
-    border: 1px solid red;
+  input.ng-invalid, select.ng-invalid, button.ng-invalid {
+    border-color: #a94442;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   }
 
   .navbar-collapse.in {
     overflow-y: hidden;
+  }
+
+  .clear-filter {
+    pointer-events: auto;
+    text-decoration: none;
+    cursor: pointer;
   }
 
 }

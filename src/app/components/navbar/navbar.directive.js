@@ -23,6 +23,7 @@
       vm.serviceErrorPopoverTemplateUrl = 'app/components/navbar/serviceStatePopover.html';
       vm.versionPopoverTemplateUrl = 'app/components/navbar/versionPopover.html';
       vm.serviceErrors = false;
+      vm.currentScenario = Scenario.getCurrentScenario();
 
       vm.menuItems = [
         {
@@ -129,8 +130,6 @@
         });
       };
       getScenarios();
-
-      vm.currentScenario = Scenario.getCurrentScenario();
 
       Scenario.registerOnChangeListener(function () {
         getScenarios();

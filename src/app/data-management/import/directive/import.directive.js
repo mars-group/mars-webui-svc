@@ -3,25 +3,35 @@
 
   angular
     .module('marsApp')
-    .controller('ImportDataController', ImportDataController);
+    .directive('import', importCtrl);
 
   /** @ngInject */
-  function ImportDataController($log, $uibModal, $document, FileUploader, Metadata, Timeseries, Alert, Project) {
+  function importCtrl() {
+    return {
+      restrict: 'A',
+      templateUrl: 'app/data-management/import/directive/import.html',
+      scope: {
+        pageTitle: '=',
+        dataTypes: '='
+      },
+      controller: importController,
+      controllerAs: 'import'
+    };
+  }
+
+  /** @ngInject */
+  function importController($scope, $log, $uibModal, $document, FileUploader, Metadata, Timeseries, Alert, Project) {
     var vm = this;
 
-    vm.geoPicker = {};
-    vm.geoPickerCaller = undefined;
-    vm.markerSet = false;
+    vm.isModelUpload = $scope.dataTypes[0].name === 'MODEL';
 
-    vm.GEO_POTENTIAL_FIELD = 'GEO_POTENTIAL_FIELD';
-    vm.GIS = 'GIS';
-    vm.GRID_POTENTIAL_FIELD = 'GRID_POTENTIAL_FIELD';
-    vm.OBSTACLE_LAYER = 'OBSTACLE_LAYER';
-    vm.TABLE_BASED = 'TABLE_BASED';
     vm.TIME_SERIES = 'TIME_SERIES';
 
     var fileEndings = ['asc', 'csv', 'tif', 'zip'];
 
+    vm.geoPicker = {};
+    vm.geoPickerCaller = undefined;
+    vm.markerSet = false;
     vm.uploader = new FileUploader();
     vm.file = null;
     vm.alerts = new Alert();
@@ -73,20 +83,30 @@
 
     vm.uploadFiles = function () {
       for (var i = 0; i < vm.uploader.queue.length; i++) {
-        var filename = vm.uploader.queue[i]._file.name;
+        if (vm.isModelUpload) {
+          vm.data[i].dataType = $scope.dataTypes[0].name;
+        }
 
+        var filename = vm.uploader.queue[i]._file.name;
         if (vm.data[i].dataType === vm.TIME_SERIES) {
           var patternDecimal = /-?[0-9]+\.[0-9]+/;
           if (!patternDecimal.test(vm.data[i].lat) || !patternDecimal.test(vm.data[i].lng)) {
             vm.alerts.add('Please provide valid LAT and LON (decimals) for data file \'' + filename + '\'');
             return false;
           }
+        } else {
+          delete vm.data[i].lat;
+          delete vm.data[i].lng;
         }
 
         vm.uploader.queue[i].formData.push(vm.data[i]);
 
         // The leading "/zuul" bypasses the Spring DispatcherServlet for big files
         vm.uploader.queue[i].url = '/zuul/file/files';
+
+        if (vm.isModelUpload) {
+          vm.uploader.queue[i].url += '/models';
+        }
       }
 
       vm.uploader.uploadAll();
@@ -94,7 +114,7 @@
 
     vm.uploader.onSuccessItem = function (fileItem, response) {
       fileItem.isProcessing = true;
-      checkMetadataWriteStatus(response, 'INIT', function () {
+      Metadata.startLongpolling(response, 'INIT', function () {
           if (fileItem.formData[0].type == vm.TIME_SERIES) {
             Metadata.getDateColumn(response, function (possibleDateTimeColumn) {
               if (possibleDateTimeColumn) {
@@ -138,22 +158,6 @@
       }
     };
 
-    var checkMetadataWriteStatus = function (importId, status, callback) {
-      var params = {
-        state: status
-      };
-
-      Metadata.hasStatusWritten(importId, params, function (res) {
-        if (res.hasOwnProperty('error')) {
-          vm.alerts.add(res, 'danger');
-          return callback();
-        } else if (res === 'FINISHED' || res === 'ERROR') {
-          return callback();
-        }
-        checkMetadataWriteStatus(importId, res, callback);
-      });
-    };
-
     vm.clickUpload = function () {
       $document[0].getElementById('uploadBtn').click();
     };
@@ -165,8 +169,9 @@
       }
     };
 
-    vm.removeUpload = function (index) {
+    vm.removeUpload = function (index, event) {
       vm.data.splice(index, 1);
+      event.preventDefault(); // prevents redirect to /
     };
 
     vm.removeAllUploads = function () {
@@ -175,7 +180,7 @@
 
     vm.openGeoPicker = function (id) {
       var modalInstance = $uibModal.open({
-        templateUrl: 'app/import/data/geoPicker/geoPicker.html',
+        templateUrl: 'app/data-management/import/directive/geoPicker/geoPicker.html',
         controller: 'GeoPickerController',
         controllerAs: 'geoPicker',
         resolve: {
@@ -194,6 +199,7 @@
       }, function () {
       });
     };
+
 
   }
 })();

@@ -1,5 +1,10 @@
-#import-model-container {
+#import-container {
   $default-color: #5AADBB !default;
+
+  input.ng-invalid, select.ng-invalid {
+    border-color: #a94442;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  }
 
   .my-drop-zone {
     margin-top: 1em;
@@ -28,6 +33,20 @@
     span.glyphicon {
       color: $default-color;
     }
+  }
+
+  // remove strange green on focus
+  .accordion-toggle:hover,
+  .accordion-toggle:focus {
+    color: #000000;
+  }
+
+  h3.ng-binding {
+    margin-bottom: 1em;
+  }
+
+  .bold {
+    font-weight: bold;
   }
 
 }

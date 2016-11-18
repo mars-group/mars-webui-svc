@@ -27,6 +27,15 @@
       'the field.';
     var selectScenarioInfoMessage = 'Please select a Scenario in the top right corner or create one';
 
+    Scenario.isCurrentScenarioExisting(function (res) {
+      if(res.hasOwnProperty('error')){
+        $log.error(res.error);
+      }
+
+      if(!res) {
+        Scenario.clearScenarioSelection();
+      }
+    });
 
     Scenario.getScenarios(function (res) {
       if (res.hasOwnProperty('error')) {
@@ -49,7 +58,7 @@
     });
 
     vm.setCurrentScenario = function () {
-      vm.alerts.removeByName(selectScenarioInfoMessage);
+      vm.alerts.remove(selectScenarioInfoMessage);
       Scenario.setCurrentScenario(vm.currentScenario);
       vm.alerts.add(selectNodeInfoMessage);
     };
@@ -134,7 +143,7 @@
     loadMappingDatasets();
 
     vm.onNodeSelection = function (node) {
-      vm.alerts.removeByName(selectNodeInfoMessage);
+      vm.alerts.remove(selectNodeInfoMessage);
 
       selectFirstField(node);
       setDataFilter(node);
