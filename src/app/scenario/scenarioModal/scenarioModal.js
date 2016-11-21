@@ -46,8 +46,8 @@
       };
 
       Scenario.postScenario(data, function (res) {
-        if (res.status !== 200) {
-          callback(res.data);
+        if(res.hasOwnProperty('error')) {
+          callback(res.error);
         }
         callback();
       });

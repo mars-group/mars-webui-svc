@@ -42,7 +42,7 @@
             }, function errorCallback(err) {
               if (err) {
                 $log.error(err);
-                callback(err);
+                callback({error: err});
               }
             });
         },
