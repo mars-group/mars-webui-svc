@@ -27,7 +27,7 @@
       pathSrcJs.forEach(function (path) {
         preprocessors[path] = ['coverage'];
       });
-      reporters.push('coverage')
+      reporters.push('coverage');
     }
 
     var localConfig = {

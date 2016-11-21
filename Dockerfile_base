@@ -5,11 +5,12 @@ ENV NPM_CONFIG_LOGLEVEL silent
 
 # bzip2:  is needed by PhantomJS
 # git:    is needed by bower dependency
-RUN apt-get update && apt-get install -y bzip2 git
+RUN apt-get update && apt-get install -y bzip2 git libfreetype6 libfontconfig
 
 # bower:   is the frontend tool for dependencies
 # gulp:    builds the frontend, dev, production etc.
-RUN npm install -g bower gulp
+# phantomJS: is a test suite.
+RUN npm install -g bower gulp phantomjs
 
 # Creat development and production directory
 RUN mkdir /app
