@@ -28,11 +28,11 @@
     var selectScenarioInfoMessage = 'Please select a Scenario in the top right corner or create one';
 
     Scenario.isCurrentScenarioExisting(function (res) {
-      if(res.hasOwnProperty('error')){
+      if (res.hasOwnProperty('error')) {
         $log.error(res.error);
       }
 
-      if(!res) {
+      if (!res) {
         Scenario.clearScenarioSelection();
       }
     });
