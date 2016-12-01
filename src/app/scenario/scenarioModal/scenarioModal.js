@@ -6,11 +6,17 @@
     .controller('ScenarioModalController', ScenarioModalController);
 
   /** @ngInject */
-  function ScenarioModalController($uibModalInstance, Scenario, Metadata, Project, Alert) {
+  function ScenarioModalController($uibModalInstance, Scenario, Metadata, Project, Alert, scenario) {
     var vm = this;
 
-    vm.scenario = {};
     vm.alerts = new Alert();
+
+    if (scenario) {
+      vm.scenario = scenario;
+    } else {
+      vm.scenario = {};
+    }
+    console.log('scenario:', scenario);
 
     var project = Project.getCurrentProject().id;
 
@@ -40,14 +46,17 @@
       var data = {
         Owner: 'me',
         Project: project,
-        Name: vm.scenario.name,
-        Description: vm.scenario.description,
-        ModelIdentifier: vm.scenario.model
+        Name: vm.scenario.Name,
+        Description: vm.scenario.Description
       };
 
+      if (!vm.scenario.ScenarioId) {
+        data.ModelIdentifier = vm.scenario.Model;
+      }
+
       Scenario.postScenario(data, function (res) {
-        if(res.hasOwnProperty('error')) {
-          callback(res.error);
+        if (res.hasOwnProperty('error')) {
+          return callback(res.error);
         }
         callback();
       });
@@ -62,7 +71,7 @@
         if (!res.hasOwnProperty('error') && res.length > 0) {
           vm.hasModel = true;
         } else {
-          vm.alerts.add('There are no models, please import one first!', 'warning')
+          vm.alerts.add('There are no models, please import one first!', 'warning');
         }
       });
     };

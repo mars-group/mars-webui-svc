@@ -34,18 +34,23 @@
 
     <div class="col-md-12">
       <table ng-table="scenario.tableParams" class="table" data-show-filter="false">
-        <tr ng-repeat="scenario in $data">
+        <tr ng-repeat="row in $data">
           <td title="'Name'" data-filter="{ Name: 'text'}" data-sortable="'Name'">
-            {{scenario.Name}}
+            {{row.Name}}
           </td>
           <td title="'Description'" data-filter="{ Description: 'text'}" data-sortable="'Description'">
-            {{scenario.Description}}
+            {{row.Description}}
           </td>
           <td title="'Model'" data-filter="{ Model: 'text'}" data-sortable="'Model'">
-            {{scenario.Model}}
+            {{row.Model}}
           </td>
           <td title="'Owner'" data-filter="{ Owner: 'text'}" data-sortable="'Owner'">
-            {{scenario.Owner}}
+            {{row.Owner}}
+          </td>
+          <td title="'Clone'">
+            <button class="btn btn-default" ng-click="scenario.openScenarioModal(row)">
+              <span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span>
+            </button>
           </td>
         </tr>
       </table>

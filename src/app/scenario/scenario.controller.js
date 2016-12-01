@@ -34,14 +34,14 @@
       angular.extend(vm.tableParams.filter(), {$: vm.searchFilter});
     };
 
-    vm.openScenarioModal = function () {
+    vm.openScenarioModal = function (scenario) {
       var modalInstance = $uibModal.open({
         templateUrl: 'app/scenario/scenarioModal/scenarioModal.html',
         controller: 'ScenarioModalController',
         controllerAs: 'scenarioModal',
         resolve: {
           scenario: function () {
-            return {};
+            return scenario;
           }
         }
       });
@@ -55,6 +55,10 @@
       }, function () {
         // console.log('Modal dismissed at: ' + new Date());
       });
+    };
+
+    vm.clone = function (scenario) {
+
     };
 
   }
