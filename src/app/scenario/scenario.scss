@@ -1,0 +1,21 @@
+#scenario-container {
+
+  .searchFilter {
+    margin-top: 1em;
+
+    input.form-control {
+      margin-bottom: 1em;
+      float: left;
+      width: -moz-calc(100% - 83px);
+      width: -webkit-calc(100% - 83px);
+      width: calc(100% - 83px);
+    }
+  }
+
+  .filter-label {
+    float: left;
+    margin-right: 5px;
+    margin-top: 6px;
+  }
+
+}

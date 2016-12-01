@@ -30,6 +30,10 @@
 
     loadScenarios();
 
+    vm.updateSearchFilter = function () {
+      angular.extend(vm.tableParams.filter(), {$: vm.searchFilter});
+    };
+
     vm.openScenarioModal = function () {
       var modalInstance = $uibModal.open({
         templateUrl: 'app/scenario/scenarioModal/scenarioModal.html',

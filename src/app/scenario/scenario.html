@@ -4,34 +4,53 @@
     <acme-navbar></acme-navbar>
   </div>
 
-  <div class="col-md-4">
-    <h2>Scenarios</h2>
+  <h2>Scenarios
+    <button class="btn btn-default" ng-click="scenario.openScenarioModal()">
+      <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+  </h2>
 
-    <button class="btn btn-default" ng-click="scenario.openScenarioModal()">Create new Scenario</button>
-  </div>
-  <div class="col-md-8">
-    <!-- Error messages -->
-    <uib-alert ng-repeat="(key, value) in scenario.alerts.getAll()" type="{{value}}"
-               close="scenario.alerts.remove(key)">{{key}}
-    </uib-alert>
-  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <!-- Search filter -->
+      <div class="form-group has-feedback searchFilter">
+        <label class="filter-label">Filter: </label>
+        <input type="text" class="form-control hasclear" placeholder="Filter scenarios..."
+               ng-model="scenario.searchFilter"
+               ng-change="scenario.updateSearchFilter();">
+        <button class="btn btn-default" type="button"
+                ng-click="scenario.searchFilter=''; scenario.updateSearchFilter();"
+                data-ng-if="scenario.searchFilter">
+          <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
 
-  <table ng-table="scenario.tableParams" class="table" data-show-filter="true">
-    <tr ng-repeat="scenario in $data">
-      <td title="'Name'" data-filter="{ Name: 'text'}" data-sortable="'Name'">
-        {{scenario.Name}}
-      </td>
-      <td title="'Description'" data-filter="{ Description: 'text'}" data-sortable="'Description'">
-        {{scenario.Description}}
-      </td>
-      <td title="'Model'" data-filter="{ Model: 'text'}" data-sortable="'Model'">
-        {{scenario.Model}}
-      </td>
-      <td title="'Owner'" data-filter="{ Owner: 'text'}" data-sortable="'Owner'">
-        {{scenario.Owner}}
-      </td>
-    </tr>
-  </table>
+    <div class="col-md-8">
+      <!-- Error messages -->
+      <uib-alert ng-repeat="(key, value) in scenario.alerts.getAll()" type="{{value}}"
+                 close="scenario.alerts.remove(key)">{{key}}
+      </uib-alert>
+    </div>
+
+    <div class="col-md-12">
+      <table ng-table="scenario.tableParams" class="table" data-show-filter="false">
+        <tr ng-repeat="scenario in $data">
+          <td title="'Name'" data-filter="{ Name: 'text'}" data-sortable="'Name'">
+            {{scenario.Name}}
+          </td>
+          <td title="'Description'" data-filter="{ Description: 'text'}" data-sortable="'Description'">
+            {{scenario.Description}}
+          </td>
+          <td title="'Model'" data-filter="{ Model: 'text'}" data-sortable="'Model'">
+            {{scenario.Model}}
+          </td>
+          <td title="'Owner'" data-filter="{ Owner: 'text'}" data-sortable="'Owner'">
+            {{scenario.Owner}}
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
 
 </div>
 
