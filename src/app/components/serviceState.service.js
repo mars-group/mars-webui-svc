@@ -38,7 +38,7 @@
         getAll: function (callback) {
           getStates(function (res) {
             if (res.hasOwnProperty('error')) {
-              callback(res);
+              return callback(res);
             }
 
             var apps = res.applications.application;
