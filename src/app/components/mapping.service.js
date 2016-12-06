@@ -48,13 +48,7 @@
 
         // convert InitializationDescription to array
         angular.forEach(layerTypeKeys, function (layerType) {
-          angular.forEach(layerMapping[layerType], function (layer, index) {
-            // move agent mapping one level up
-            if (angular.equals(layerType, 'BasicLayers')) {
-              layerMapping.BasicLayers[index] = layer.Agents[0];
-              layerMapping.BasicLayers[index].LayerName = layer.LayerName;
-            }
-
+          angular.forEach(layerMapping[layerType], function (layer) {
             // add layerType to fields
             layer.LayerType = layerType;
             angular.forEach(layer.Agents, function (agent) {
@@ -101,20 +95,9 @@
 
       var convertMappingToRemote = function (data) {
         var result = angular.copy(originalData);
-
         var layerData = result.InitializationDescription;
-        layerData.BasicLayers = [];
-        angular.forEach(data[0].Agents, function (layer) {
-          var tmp3 = {
-            Agents: [layer],
-            LayerName: layer.LayerName
-          };
 
-          delete tmp3.Agents[0].LayerName;
-
-          layerData.BasicLayers.push(tmp3);
-        });
-        // layerData.BasicLayers = data[0].Agents;
+        layerData.BasicLayers = data[0].Agents;
         layerData.GISLayers = data[1].Agents[0].Agents;
         layerData.GeoPotentialFieldLayers = data[1].Agents[1].Agents;
         layerData.GridPotentialFieldLayers = data[1].Agents[2].Agents;
