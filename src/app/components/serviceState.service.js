@@ -4,24 +4,24 @@
   angular.module('marsApp')
     .factory('ServiceState', function ServiceError($http, $log) {
 
-      var services = [
-        // 'EUREKA',
-        'FILE-SERVICE',
-        // 'FRONTEND',
-        'GEOSERVER',
-        'GISIMPORT',
-        'INFLUXDB',
-        'MARIADB',
-        'METADATA-SERVICE',
-        'MONGODB',
-        'RABBITMQ',
-        'REFLECTION-SERVICE',
-        'RESULT-CONFIG-SERVICE',
-        'SCENARIO-MANAGEMENT-SERVICE',
-        'TABLEBASED-IMPORT-SERVICE',
-        'TIMESERIES-IMPORT-SERVICE'
-        // 'ZUUL'
-      ];
+      var services = {
+        // 'EUREKA': '',
+        'FILE-SERVICE': '',
+        // 'FRONTEND': '',
+        'GEOSERVER': '',
+        'GISIMPORT': '',
+        'INFLUXDB': '',
+        'MARIADB': '',
+        'METADATA-SERVICE': '',
+        'MONGODB': '',
+        'RABBITMQ': '',
+        'REFLECTION-SERVICE': '',
+        'RESULT-CONFIG-SERVICE': '',
+        'SCENARIO-MANAGEMENT-SERVICE': '',
+        'TABLEBASED-IMPORT-SERVICE': '',
+        'TIMESERIES-IMPORT-SERVICE': ''
+        // 'ZUUL, status: ''
+      };
 
       var getStates = function (callback) {
         $http.get('/eureka/eureka/apps')
@@ -41,25 +41,22 @@
               return callback(res);
             }
 
-            var apps = res.applications.application;
-            var serviceStates = [];
+            angular.forEach(services, function (status, name) {
+              services[name] = 'DOWN';
 
-            services.forEach(function (service) {
-              var tmpApp = {
-                name: service,
-                status: 'DOWN'
-              };
-
+              var apps = res.applications.application;
               apps.forEach(function (app) {
-                if (app.name === service) {
-                  tmpApp.status = app.instance[0].status;
+                if (app.name === name) {
+                  services[name] = app.instance[0].status;
                 }
               });
 
-              serviceStates.push(tmpApp);
             });
-            callback(serviceStates);
+            callback(services);
           });
+        },
+        get: function (name) {
+          return services[name];
         }
 
       };

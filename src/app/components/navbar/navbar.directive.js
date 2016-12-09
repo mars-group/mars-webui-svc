@@ -102,14 +102,14 @@
       var calcServiceStateClass = function () {
         vm.serviceStateClass = null;
 
-        vm.serviceStates.forEach(function (service) {
+        angular.forEach(vm.serviceStates, function (status, service) {
           // break forEach if value has been set
           if (vm.serviceStateClass) {
             return;
           }
 
-          if (service.status === 'DOWN') {
-            if (service.name === 'MONGODB' || service.name === 'METADATA-SERVICE') {
+          if (status === 'DOWN') {
+            if (service === 'MONGODB' || service === 'METADATA-SERVICE') {
               vm.serviceStateClass = 'service-state-error';
             } else {
               vm.serviceStateClass = 'service-state-warning';
