@@ -34,31 +34,40 @@
           });
       };
 
-      return {
-        getAll: function (callback) {
-          getStates(function (res) {
-            if (res.hasOwnProperty('error')) {
-              return callback(res);
-            }
+      var getAll = function (callback) {
+        getStates(function (res) {
+          if (res.hasOwnProperty('error')) {
+            return callback(res);
+          }
 
-            angular.forEach(services, function (status, name) {
-              services[name] = 'DOWN';
+          angular.forEach(services, function (status, name) {
+            services[name] = 'DOWN';
 
-              var apps = res.applications.application;
-              apps.forEach(function (app) {
-                if (app.name === name) {
-                  services[name] = app.instance[0].status;
-                }
-              });
-
+            var apps = res.applications.application;
+            apps.forEach(function (app) {
+              if (app.name === name) {
+                services[name] = app.instance[0].status;
+              }
             });
-            callback(services);
-          });
-        },
-        get: function (name) {
-          return services[name];
-        }
 
+          });
+          callback(services);
+        });
+      };
+
+      var getOne = function (name, callback) {
+        getAll(function (res) {
+          if (res.hasOwnProperty('error')) {
+            return callback(res);
+          }
+
+          callback(res[name.toUpperCase()]);
+        });
+      };
+
+      return {
+        getAll: getAll,
+        get: getOne
       };
     });
 
