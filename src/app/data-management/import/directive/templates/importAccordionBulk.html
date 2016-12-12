@@ -1,0 +1,91 @@
+<!-- Import form -->
+<uib-accordion-group is-open="true" is-disabled="true"
+                     ng-if="import.isBulkUpload && import.uploader.queue.length > 0 && !import.uploader.isUploading
+                     && import.uploader.progress !== 100">
+
+  <uib-accordion-heading>Bulk Upload</uib-accordion-heading>
+
+  <div class="col-md-6">
+    <div class="form-group">
+      <label for="title">Title</label>
+      <input type="text" id="title" class="form-control" ng-model="import.data.bulk.title"
+             placeholder="Title of this data" data-ng-trim="true" name="title}}" required>
+    </div>
+
+    <div class="form-group" ng-if="!import.isModelUpload">
+      <label for="dataType">Data Type</label>
+      <select id="dataType" class="form-control" data-ng-model="import.data.bulk.dataType"
+              data-ng-change="import.clearGeoPicker()" name="dataType" required>
+        <option ng-repeat="dataType in dataTypes" value="{{dataType.name}}">{{dataType.clearName}}</option>
+      </select>
+    </div>
+
+    <div class="form-group"
+         ng-if="import.data.bulk.dataType && import.data.bulk.dataType === import.TIME_SERIES">
+      <div class="geo-picker" data-ng-model="import.geoPicker">
+        <label>
+          Geo-Coords
+          <span class="input-group">
+  <input type="text" placeholder="LAT" min="-90" max="90"
+         class="form-control" ng-model="import.data.bulk.lat" name="lat"
+         ng-required="import.data.bulk.dataType && import.data.bulk.dataType === import.TIME_SERIES">
+  <span class="input-group-btn" style="width:0;"></span>
+  <input type="text" placeholder="LON" min="-180" max="180"
+         class="form-control" ng-model="import.data.bulk.lng" name="lng"
+         ng-required="import.data.bulk.dataType && import.data.bulk.dataType === import.TIME_SERIES">
+  <span class="input-group-btn" style="width:0;"></span>
+  <span class="input-group-btn">
+  <button type="button" class="btn btn-primary" ng-click="import.openGeoPicker()">pick</button>
+  </span>
+  </span>
+        </label>
+      </div>
+      <div ng-if="form.$submitted || form.lat.$touched || form.lng.$touched">
+        <div ng-if="form.lat.$error.required || form.lng.$error.required">
+          Please select a Geo Coordinate
+        </div>
+        <div ng-if="form.lat.$error.min || form.lat.$error.max">
+          Latitude is not valid! Valid range: -90 to 90.
+        </div>
+        <div ng-if="form.lng.$error.min || form.lng.$error.max">
+          Longitude is not valid. Valid range: -180 to 180.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="form-group">
+      <label for="privacy">Privacy</label>
+      <select id="privacy" class="form-control" data-ng-model="import.data.bulk.privacy" name="privacy" required>
+        {{import.data.bulk.privacy= 'PRIVATE'}}
+        <option value="PRIVATE">Only for personal use</option>
+        <option value="PROJECT_PRIVATE">Can only be used by project members</option>
+        <option value="PUBLIC">Can be used by everyone</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Description</label>
+      <textarea class="form-control" rows="4" data-ng-model="import.data.bulk.description"
+                placeholder="Description of this data"></textarea>
+    </div>
+  </div>
+</uib-accordion-group>
+
+
+<!-- Import info -->
+<uib-accordion-group is-open="false" is-disabled="true"
+                     ng-repeat="upload in import.uploader.queue"
+                     ng-if="import.isBulkUpload && !import.uploader.isUploading && !upload.isProcessing
+                         && !upload.isSuccess && !upload.isCancel && !upload.isError">
+
+  <uib-accordion-heading>
+    {{ upload.file.name }} ({{ upload.file.size/1024/1024|number:2 }} MB)
+
+    <button type="button" class="btn btn-danger btn-xs"
+            ng-click="upload.remove(); import.removeUpload($index, $event);">
+      <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Remove
+    </button>
+  </uib-accordion-heading>
+</uib-accordion-group>

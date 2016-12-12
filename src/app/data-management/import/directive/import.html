@@ -26,11 +26,17 @@
              data-uploader="import.uploader">
 
       <!-- Upload accordion settings-->
-      <div class="checkbox" ng-if="import.uploader.queue.length > 1">
-        <div class="well">
+      <div class="checkbox">
+        <div class="well" ng-if="import.uploader.queue.length > 1 && !import.isBulkUpload">
           <label>
             <input type="checkbox" ng-model="import.showOneUploadAtATime">
             Show one queue item at a time
+          </label>
+        </div>
+        <div class="well">
+          <label>
+            <input type="checkbox" ng-model="import.isBulkUpload">
+            Bulk upload
           </label>
         </div>
       </div>

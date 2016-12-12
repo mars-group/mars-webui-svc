@@ -145,9 +145,8 @@
         settings.resolve.dataset = res;
         var modalInstance = $uibModal.open(settings);
 
-        modalInstance.result.then(function (/*result*/) {
+        modalInstance.result.then(function () {
         }, function () {
-          // console.log('Modal dismissed at: ' + new Date());
         });
       });
 

@@ -20,15 +20,11 @@
   }
 
   /** @ngInject */
-  function importController($scope, $log, $uibModal, $document, FileUploader, Metadata, Timeseries, Alert, Project) {
+  var importController = function ($scope, $log, $uibModal, $document, FileUploader, Metadata, Timeseries, Alert, Project) {
     var vm = this;
 
     vm.isModelUpload = $scope.dataTypes[0].name === 'MODEL';
-
     vm.TIME_SERIES = 'TIME_SERIES';
-
-    var fileEndings = ['asc', 'csv', 'tif', 'zip'];
-
     vm.geoPicker = {};
     vm.geoPickerCaller = undefined;
     vm.markerSet = false;
@@ -37,18 +33,14 @@
     vm.alerts = new Alert();
     vm.data = [];
     vm.showOneUploadAtATime = true;
+    vm.isBulkUpload = false;
 
+    var fileEndings = ['asc', 'csv', 'tif', 'zip'];
 
     vm.Data = function () {
       return {
-        lat: '',
-        lng: '',
-        privacy: '',
-        dataType: '',
         projectId: Project.getCurrentProject().id,
-        userId: 1, // todo: add real id
-        title: '',
-        description: ''
+        userId: 1 // todo: add real id
       };
     };
 
@@ -83,20 +75,36 @@
 
     vm.uploadFiles = function () {
       for (var i = 0; i < vm.uploader.queue.length; i++) {
+        if (vm.isBulkUpload) {
+          var split = vm.uploader.queue[i]._file.name.split('.');
+          var baseFilename = split[split.length - 2];
+
+          vm.data[i].title = vm.data.bulk.title + '_' + baseFilename;
+          vm.data[i].dataType = vm.data.bulk.dataType;
+          vm.data[i].privacy = vm.data.bulk.privacy;
+          vm.data[i].description = vm.data.bulk.description;
+          vm.data[i].lat = vm.data.bulk.lat;
+          vm.data[i].lng = vm.data.bulk.lng;
+        }
+
         if (vm.isModelUpload) {
           vm.data[i].dataType = $scope.dataTypes[0].name;
         }
 
         var filename = vm.uploader.queue[i]._file.name;
-        if (vm.data[i].dataType === vm.TIME_SERIES) {
+        if (vm.data.dataType === vm.TIME_SERIES) {
           var patternDecimal = /-?[0-9]+\.[0-9]+/;
           if (!patternDecimal.test(vm.data[i].lat) || !patternDecimal.test(vm.data[i].lng)) {
             vm.alerts.add('Please provide valid LAT and LON (decimals) for data file \'' + filename + '\'');
             return false;
           }
         } else {
-          delete vm.data[i].lat;
-          delete vm.data[i].lng;
+          if (vm.data[i].lat) {
+            delete vm.data[i].lat;
+          }
+          if (vm.data[i].lng) {
+            delete vm.data[i].lng;
+          }
         }
 
         vm.uploader.queue[i].formData.push(vm.data[i]);
@@ -107,6 +115,10 @@
         if (vm.isModelUpload) {
           vm.uploader.queue[i].url += '/models';
         }
+      }
+
+      if (vm.isBulkUpload) {
+        delete vm.data.bulk;
       }
 
       vm.uploader.uploadAll();
@@ -163,9 +175,12 @@
     };
 
     vm.clearGeoPicker = function (index) {
-      if (vm.data[index].dataType !== vm.TIME_SERIES) {
+      if (typeof index !== 'undefined' && vm.data[index].dataType !== vm.TIME_SERIES) {
         vm.data[index].lat = '';
         vm.data[index].lng = '';
+      } else if (vm.isBulkUpload && vm.data.dataType !== vm.TIME_SERIES) {
+        vm.data.bulk.lat = '';
+        vm.data.bulk.lng = '';
       }
     };
 
@@ -185,21 +200,33 @@
         controllerAs: 'geoPicker',
         resolve: {
           marker: function () {
-            return {
-              lat: vm.data[id].lat,
-              lng: vm.data[id].lng
-            };
+            if (typeof id !== 'undefined') {
+              return {
+                lat: vm.data[id].lat,
+                lng: vm.data[id].lng
+              };
+            } else if (vm.isBulkUpload) {
+              return {
+                lat: vm.data.bulk.lat,
+                lng: vm.data.bulk.lng
+              };
+            }
           }
         }
       });
 
       modalInstance.result.then(function (marker) {
-        vm.data[id].lat = marker.lat;
-        vm.data[id].lng = marker.lng;
+        if (typeof id !== 'undefined') {
+          vm.data[id].lat = marker.lat;
+          vm.data[id].lng = marker.lng;
+        } else if (vm.isBulkUpload) {
+          vm.data.bulk.lat = marker.lat;
+          vm.data.bulk.lng = marker.lng;
+        }
       }, function () {
       });
     };
 
 
-  }
+  };
 })();
