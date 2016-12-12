@@ -28,7 +28,7 @@
     var selectScenarioInfoMessage = 'Please select a Scenario in the top right corner or create one';
 
     ServiceState.get('mongodb', function (res) {
-      if(res === 'DOWN') {
+      if (res === 'DOWN') {
         vm.alerts.add('There is no instance of "MongoDB", so there is nothing to display!', 'danger');
       }
     });
@@ -114,7 +114,8 @@
       // DEBUGGING ONLY
       if (vm.development) {
         // select Agents
-        // vm.selectedNode = vm.treeData[0].Agents[0];
+        // vm.treeExpandedNodes.push(vm.treeData[0].Agents[0]);
+        // vm.selectedNode = vm.treeData[0].Agents[0].Agents[0];
         // selectFirstField(vm.selectedNode);
         // setDataFilter(vm.selectedNode);
 
@@ -187,7 +188,19 @@
     };
 
     var selectNextField = function () {
-      // TODO: implement
+      var fields = vm.selectedNode.ConstructorParameterMapping;
+
+      // return, if the selected layer is no basic layer
+      if (typeof fields === 'undefined') {
+        return;
+      }
+
+      for (var i = 0; i < fields.length - 1; i++) {
+        if (fields[i].Name === vm.selectedField.Name) {
+          vm.selectedField = fields[i + 1];
+          break;
+        }
+      }
     };
 
     vm.resetField = function (field) {
