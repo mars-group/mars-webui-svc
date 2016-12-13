@@ -5,18 +5,13 @@
   "// Comment your dependencies here:": {
     "bower-art-resolver": "Bower artifactory connection",
     "connect": "production page serving",
-    "os": "Eureka connection",
-    "serve-static": "Production page serving",
-    "superagent": "Eureka connection"
+    "serve-static": "Production page serving"
   },
   "dependencies": {
     "lodash": "~3.10.1",
     "bower-art-resolver": "~2.0.6",
     "connect": "~3.4.1",
-    "eureka-js-client": "~4.1.0",
-    "os": "~0.1.1",
-    "serve-static": "~1.11.1",
-    "superagent": "~2.0.0"
+    "serve-static": "~1.11.1"
   },
   "scripts": {
     "test": "gulp test"

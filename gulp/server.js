@@ -4,7 +4,6 @@
   var path = require('path');
   var gulp = require('gulp');
   var conf = require('./conf');
-  var eureka = require('../server/components/eureka');
 
   var browserSync = require('browser-sync');
   var browserSyncSpa = require('browser-sync-spa');
@@ -38,10 +37,10 @@
     browserSync.instance = browserSync.init({
       startPath: '/',
       server: server,
-      browser: browser
+      browser: browser,
+      port: 8080,
+      ui: {port: 8081}
     });
-
-    eureka.register();
   }
 
   browserSync.use(browserSyncSpa({
