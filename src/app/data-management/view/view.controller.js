@@ -6,7 +6,7 @@
     .controller('ImportViewController', ImportViewController);
 
   /** @ngInject */
-  function ImportViewController($log, $uibModal, $scope, $window, NgTableParams, Metadata, Alert, ServiceState) {
+  function ImportViewController($log, $uibModal, $scope, $window, NgTableParams, Metadata, Alert) {
     var vm = this;
 
     vm.alerts = new Alert();
@@ -51,12 +51,6 @@
     };
 
     vm.categoryTreeExpandedNodes = [vm.categoryTreeData[0], vm.categoryTreeData[1], vm.categoryTreeData[2]];
-
-    ServiceState.get('mongodb', function (res) {
-      if(res === 'DOWN') {
-        vm.alerts.add('There is no instance of "MongoDB", so there is nothing to display!', 'danger');
-      }
-    });
 
     Metadata.getAll(function (res) {
       if (res.hasOwnProperty('error')) {

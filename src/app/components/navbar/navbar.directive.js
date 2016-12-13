@@ -17,10 +17,9 @@
     };
 
     /** @ngInject */
-    function NavbarController($http, Scenario, ServiceState) {
+    function NavbarController($http, Scenario) {
       var vm = this;
 
-      vm.serviceErrorPopoverTemplateUrl = 'app/components/navbar/serviceStatePopover.html';
       vm.versionPopoverTemplateUrl = 'app/components/navbar/versionPopover.html';
       vm.serviceErrors = false;
       vm.currentScenario = Scenario.getCurrentScenario();
@@ -86,41 +85,6 @@
           name: 'Dummy b'
         }
       ];
-
-      var getServiceStates = function () {
-        ServiceState.getAll(function (res) {
-          if (!res.hasOwnProperty('error')) {
-            vm.serviceStates = res;
-            calcServiceStateClass();
-          }
-        });
-
-        vm.serviceErrors = true;
-      };
-      getServiceStates();
-
-      var calcServiceStateClass = function () {
-        vm.serviceStateClass = null;
-
-        angular.forEach(vm.serviceStates, function (status, service) {
-          // break forEach if value has been set
-          if (vm.serviceStateClass) {
-            return;
-          }
-
-          if (status === 'DOWN') {
-            if (service === 'MONGODB' || service === 'METADATA-SERVICE') {
-              vm.serviceStateClass = 'service-state-error';
-            } else {
-              vm.serviceStateClass = 'service-state-warning';
-            }
-          }
-        });
-
-        if (!vm.serviceStateClass) {
-          vm.serviceStateClass = 'service-state-ok';
-        }
-      };
 
       var getScenarios = function () {
         Scenario.getScenarios(function (res) {

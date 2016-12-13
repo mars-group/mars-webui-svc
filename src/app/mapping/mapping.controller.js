@@ -7,7 +7,7 @@
 
 
   /** @ngInject */
-  function MappingController($log, Mapping, Metadata, Alert, Scenario, Config, ServiceState) {
+  function MappingController($log, Mapping, Metadata, Alert, Scenario, Config) {
     var vm = this;
 
     vm.alerts = new Alert();
@@ -26,12 +26,6 @@
       'with the desired dataset on the right. Alternatively set a manual value, by selecting the checkbox next to ' +
       'the field.';
     var selectScenarioInfoMessage = 'Please select a Scenario in the top right corner or create one';
-
-    ServiceState.get('mongodb', function (res) {
-      if (res === 'DOWN') {
-        vm.alerts.add('There is no instance of "MongoDB", so there is nothing to display!', 'danger');
-      }
-    });
 
     Scenario.isCurrentScenarioExisting(function (res) {
       if (res.hasOwnProperty('error')) {

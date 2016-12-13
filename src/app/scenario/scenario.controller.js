@@ -6,17 +6,11 @@
     .controller('ScenarioController', ScenarioController);
 
   /** @ngInject */
-  function ScenarioController($log, $uibModal, NgTableParams, Scenario, Alert, ServiceState) {
+  function ScenarioController($log, $uibModal, NgTableParams, Scenario, Alert) {
     var vm = this;
     vm.alerts = new Alert();
-
     vm.scenarios = [];
 
-    ServiceState.get('mongodb', function (res) {
-      if(res === 'DOWN') {
-        vm.alerts.add('There is no instance of "MongoDB", so there is nothing to display!', 'danger');
-      }
-    });
 
     var loadScenarios = function () {
       Scenario.getScenarios(function (res) {
