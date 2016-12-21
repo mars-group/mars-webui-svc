@@ -109,8 +109,7 @@
 
         vm.uploader.queue[i].formData.push(vm.data[i]);
 
-        // The leading "/zuul" bypasses the Spring DispatcherServlet for big files
-        vm.uploader.queue[i].url = '/zuul/file/files';
+        vm.uploader.queue[i].url = '/file/files';
 
         if (vm.isModelUpload) {
           vm.uploader.queue[i].url += '/models';
@@ -154,7 +153,7 @@
     vm.uploader.onErrorItem = function (item, response) {
       $log.error('item:', item);
       $log.error('response:', response);
-      if (angular.equals(item.url, '/zuul/file/files') && angular.equals(response.message, 'Forwarding error')) {
+      if (angular.equals(item.url, '/file/files') && angular.equals(response.message, 'Forwarding error')) {
         vm.alerts.add('There is no instance of "File service"! Importing data is not available right now!', 'danger');
       } else {
         vm.alerts.add('Error while processing "' + item.file.name + '": ' + response.message, 'danger');
