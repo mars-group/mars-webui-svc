@@ -221,7 +221,7 @@
 
       if ((hasMappingType && isColumnParameterMapping || !hasMappingType) && dataset.additionalTypeSpecificData) {
         vm.selectedField.TableName = dataset.additionalTypeSpecificData.tableName;
-        vm.selectedField.ColumnName = dataset.additionalTypeSpecificData.columnNames[index].dbCloumnName;
+        vm.selectedField.ColumnName = dataset.additionalTypeSpecificData.columnNames[index].dbColumnName;
         vm.selectedField.ColumnClearName = dataset.additionalTypeSpecificData.columnNames[index].clearColumnName;
         vm.selectedField.MetaDataId = dataset.dataId;
 
