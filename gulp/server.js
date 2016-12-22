@@ -38,8 +38,9 @@
       startPath: '/',
       server: server,
       browser: browser,
-      port: 8080,
-      ui: {port: 8081}
+      port: 8080,  // app default port 3000. needs to match the k8s nodePort to make browserSync work
+      ui: {port: 8081}, // browserSync UI default 3001
+      open: false
     });
   }
 

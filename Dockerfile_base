@@ -52,7 +52,7 @@ RUN apt-get clean
 RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Expose ports
-EXPOSE 8080 8081 30080
+EXPOSE 8080 8081
 
 # Run it
 ENTRYPOINT ["sh", "/entrypoint.sh"]
