@@ -19,7 +19,7 @@
     <div>Type: {{ dataset.type }}</div>
     <div>Description: {{ dataset.description }}</div>
     <div ng-if="dataset.type === 'TABLE_BASED'">InstanceCount: {{ dataset.records }}
-      <button class="btn btn-success btn-xs" data-ng-click="mapping.createInstanceCountMapping(dataset)">add
+      <button class="btn btn-warning btn-xs" data-ng-click="mapping.createInstanceCountMapping(dataset)">add
       </button>
     </div>
     <div data-ng-if="dataset.additionalTypeSpecificData.databaseName">
@@ -27,7 +27,7 @@
       <ul>
         <li data-ng-repeat="field in dataset.additionalTypeSpecificData.columnNames track by $index ">
           {{ field.clearColumnName }}
-          <button class="btn btn-info btn-xs" data-ng-click="mapping.createMapping(dataset, $index)">add</button>
+          <button class="btn btn-success btn-xs" data-ng-click="mapping.createMapping(dataset, $index)">add</button>
         </li>
       </ul>
     </div>
