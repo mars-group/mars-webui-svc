@@ -39,7 +39,6 @@
       if (vm.currentScenario && !vm.selectedNode) {
         vm.alerts.add(selectNodeInfoMessage);
       }
-
     });
 
     Scenario.getScenarios(function (res) {

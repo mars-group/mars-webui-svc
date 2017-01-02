@@ -59,7 +59,6 @@
           vm.alerts.add(err, 'danger');
         }
       } else {
-        console.log('got table data', res);
         initDataTable(res);
       }
     });

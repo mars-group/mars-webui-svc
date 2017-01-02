@@ -9,7 +9,7 @@
     <div class="form-group">
       <label for="title">Title</label>
       <input type="text" id="title" class="form-control" ng-model="import.data.bulk.title"
-             placeholder="Title of this data" data-ng-trim="true" name="title}}" required>
+             placeholder="Title of the upload" data-ng-trim="true" name="title}}" required>
     </div>
 
     <div class="form-group" ng-if="!import.isModelUpload">
@@ -18,6 +18,12 @@
               data-ng-change="import.clearGeoPicker()" name="dataType" required>
         <option ng-repeat="dataType in dataTypes" value="{{dataType.name}}">{{dataType.clearName}}</option>
       </select>
+    </div>
+
+    <div class="form-group">
+      <label for="tags">Tags</label>
+      <tags-input id="tags" class="tags" ng-model="import.data.bulk.tags" data-role="tagsinput"
+                  placeholder="Tags for the upload" data-ng-trim="true" name="tags"></tags-input>
     </div>
 
     <div class="form-group"

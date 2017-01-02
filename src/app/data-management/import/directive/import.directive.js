@@ -73,6 +73,14 @@
       }
     });
 
+    var convertTagsToArray = function (tags) {
+      var res = [];
+      angular.forEach(tags, function (e) {
+        res.push(e.text);
+      });
+      return res;
+    };
+
     vm.uploadFiles = function () {
       for (var i = 0; i < vm.uploader.queue.length; i++) {
         if (vm.isBulkUpload) {
@@ -82,9 +90,12 @@
           vm.data[i].title = vm.data.bulk.title + '_' + baseFilename;
           vm.data[i].dataType = vm.data.bulk.dataType;
           vm.data[i].privacy = vm.data.bulk.privacy;
-          vm.data[i].description = vm.data.bulk.description;
+          vm.data[i].description = vm.data.bulk.description ? vm.data.bulk.description : '';
           vm.data[i].lat = vm.data.bulk.lat;
           vm.data[i].lng = vm.data.bulk.lng;
+          vm.data[i].tags = convertTagsToArray(vm.data.bulk.tags);
+        } else {
+          vm.data[i].tags = convertTagsToArray(vm.data[i].tags);
         }
 
         if (vm.isModelUpload) {

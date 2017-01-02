@@ -11,7 +11,7 @@
   <div class="form-group">
     <label for="title">Title</label>
     <input type="text" id="title" class="form-control" ng-model="import.data[$index].title"
-           placeholder="Title of this data" data-ng-trim="true" name="title_{{$index}}" required>
+           placeholder="Title of this upload" data-ng-trim="true" name="title_{{$index}}" required>
   </div>
 
   <div class="form-group" ng-if="!import.isModelUpload">
@@ -20,6 +20,12 @@
             data-ng-change="import.clearGeoPicker($index)" name="dataType_{{$index}}" required>
       <option ng-repeat="dataType in dataTypes" value="{{dataType.name}}">{{dataType.clearName}}</option>
     </select>
+  </div>
+
+  <div class="form-group">
+    <label for="tags">Tags</label>
+    <tags-input id="tags" class="tags" ng-model="import.data[$index].tags" data-role="tagsinput"
+                placeholder="Tags for the upload" data-ng-trim="true" name="tags_{{$index}}"></tags-input>
   </div>
 
   <div class="form-group"
