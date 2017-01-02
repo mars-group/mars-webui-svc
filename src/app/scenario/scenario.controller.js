@@ -6,14 +6,13 @@
     .controller('ScenarioController', ScenarioController);
 
   /** @ngInject */
-  function ScenarioController($log, $uibModal, NgTableParams, Scenario, Alert) {
+  function ScenarioController($log, $uibModal, NgTableParams, Alert, Scenario, Metadata) {
     var vm = this;
     vm.alerts = new Alert();
-    vm.scenarios = [];
 
     var loadScenarios = function () {
       Scenario.getScenarios(function (res) {
-        if(res.hasOwnProperty('error')) {
+        if (res.hasOwnProperty('error')) {
           var err = res.error;
           if (err.status === 500 && err.data.message === 'Forwarding error') {
             vm.alerts.add('There is no instance of "Scenario service", so there is nothing to display!', 'danger');
@@ -21,8 +20,13 @@
             $log.error(err, 'danger');
           }
         } else {
-          vm.scenarios = res;
-          vm.tableParams = new NgTableParams({}, {dataset: vm.scenarios});
+          res.forEach(function (e) {
+            // get model name
+            Metadata.getOne(e.ModelMetaData, function (res) {
+              e.ModelName = res.title;
+            });
+          });
+          vm.tableParams = new NgTableParams({}, {dataset: res});
         }
       });
     };
