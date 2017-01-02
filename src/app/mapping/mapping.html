@@ -14,7 +14,7 @@
     </treecontrol>
   </div>
 
-  <div class="col-md-5">
+  <div ng-class="mapping.selectedNode && !mapping.selectedNode.Parameters ? 'col-md-6' : 'col-md-9'">
     <!-- Error messages -->
     <uib-alert ng-repeat="(key, value) in mapping.alerts.getAll()" type="{{value}}" close="mapping.alerts.remove(key)">
       {{key}}
@@ -53,7 +53,7 @@
     </form>
   </div>
 
-  <div class="col-md-4" data-ng-if="mapping.selectedNode && !mapping.selectedNode.Parameters">
+  <div class="col-md-3" data-ng-if="mapping.selectedNode && !mapping.selectedNode.Parameters">
     <div ng-include data-src="'app/mapping/templates/select-data.html'"></div>
   </div>
 

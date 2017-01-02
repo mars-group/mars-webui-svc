@@ -1,7 +1,7 @@
 <!-- Boolean -->
 <div class="checkbox" data-ng-if="field.AllowedValues.type === 'boolean'">
-  <label><input type="checkbox" data-ng-model="field.Value" data-ng-required="field.Required"
-                data-field="field"/></label>
+  <label class="full-width"><input type="checkbox" data-ng-model="field.Value" data-ng-required="field.Required"
+                                   data-field="field"/></label>
 </div>
 
 <!-- Date-Time -->
@@ -22,7 +22,8 @@
 </div>
 
 <!-- Enum -->
-<label data-ng-if="field.AllowedValues.type === 'string' && field.AllowedValues.hasOwnProperty('enum')">
+<label class="full-width"
+       data-ng-if="field.AllowedValues.type === 'string' && field.AllowedValues.hasOwnProperty('enum')">
   <select class="form-control" data-ng-model="field.Value" data-ng-required="field.Required"
           data-ng-min="field.AllowedValues.minimum" data-ng-max="field.AllowedValues.maximum">
     <option ng-repeat="key in field.AllowedValues.enum" value="{{key}}">{{ key }}</option>
@@ -30,19 +31,19 @@
 </label>
 
 <!-- Integer -->
-<label data-ng-if="field.AllowedValues.type === 'integer'">
+<label class="full-width" data-ng-if="field.AllowedValues.type === 'integer'">
   <input type="number" class="form-control" data-ng-model="field.Value" data-ng-required="field.Required"
          data-ng-min="field.AllowedValues.minimum" data-ng-max="field.AllowedValues.maximum"/>
 </label>
 
 <!-- Number -->
-<label data-ng-if="field.AllowedValues.type === 'number'">
+<label class="full-width" data-ng-if="field.AllowedValues.type === 'number'">
   <input type="number" class="form-control" data-ng-model="field.Value" data-ng-required="field.Required"
          data-ng-min="field.AllowedValues.minimum" data-ng-max="field.AllowedValues.maximum" step="0.01"/>
 </label>
 
 <!-- String (default case) -->
-<label data-ng-if="field.AllowedValues.type === 'string' && field.AllowedValues.format !== 'date-time'
+<label class="full-width" data-ng-if="field.AllowedValues.type === 'string' && field.AllowedValues.format !== 'date-time'
       && !field.AllowedValues.hasOwnProperty('enum') || !field.hasOwnProperty('AllowedValues')
       || !field.AllowedValues.hasOwnProperty('type')">
   <input type="text" class="form-control" data-ng-model="field.Value" data-ng-required="field.Required"
