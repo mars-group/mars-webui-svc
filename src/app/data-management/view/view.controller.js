@@ -11,8 +11,6 @@
 
     vm.alerts = new Alert();
 
-    var tableData = []; // data that is displayed in the table
-
     // Filter categories
     // TODO: get from code
     var dataTypes = [
@@ -61,15 +59,15 @@
           vm.alerts.add(err, 'danger');
         }
       } else {
-        tableData = res;
-        initDataTable();
+        console.log('got table data', res);
+        initDataTable(res);
       }
     });
 
-    var initDataTable = function () {
+    var initDataTable = function (tableData) {
       var tablePageSize = $window.sessionStorage.getItem('tablePageSize');
 
-      if (angular.equals(tablePageSize, 'null')) {
+      if (!tablePageSize) {
         tablePageSize = 10;
       }
 
@@ -82,6 +80,7 @@
       };
       vm.tableParams = new NgTableParams({count: tablePageSize}, tableOptions);
 
+      // store elements per page in the session storage
       $scope.$watch(angular.bind(vm, function () {
         return vm.tableParams.count();
       }), function (newVal) {

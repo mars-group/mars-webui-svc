@@ -11,7 +11,6 @@
     vm.alerts = new Alert();
     vm.scenarios = [];
 
-
     var loadScenarios = function () {
       Scenario.getScenarios(function (res) {
         if(res.hasOwnProperty('error')) {
@@ -27,7 +26,6 @@
         }
       });
     };
-
     loadScenarios();
 
     vm.updateSearchFilter = function () {
