@@ -9,7 +9,7 @@
     </div>
     <div uib-collapse="isCollapsed" class="collapse-box">
       <uib-alert ng-repeat="(key, value) in importView.uploadStates" type="{{value.type}}"
-                 close="importView.remove(key)">{{ key }}: {{ value.status }}
+                 close="importView.remove(key)">{{ value.name }}: {{ value.status }}
       </uib-alert>
     </div>
   </div>

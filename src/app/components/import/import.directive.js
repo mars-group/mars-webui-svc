@@ -41,10 +41,16 @@
         }
 
         vm.uploadStates[dataId] = {
-          message: dataId,
+          name: dataId,
           status: status,
           type: type
         };
+
+        // replace name with the dataId name. Fallback to dataId
+        Metadata.getOne(dataId, function (res) {
+          vm.uploadStates[dataId].name = res.title;
+        });
+
       };
 
       vm.remove = function (key) {
