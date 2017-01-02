@@ -1,8 +1,8 @@
 <!-- Boolean -->
-<label data-ng-if="field.AllowedValues.type === 'boolean'">
-  <input type="checkbox" class="form-control" data-ng-model="field.Value" data-ng-required="field.Required"
-         data-field="field"/>
-</label>
+<div class="checkbox" data-ng-if="field.AllowedValues.type === 'boolean'">
+  <label><input type="checkbox" data-ng-model="field.Value" data-ng-required="field.Required"
+                data-field="field"/></label>
+</div>
 
 <!-- Date-Time -->
 <div data-ng-if="field.AllowedValues.type === 'string' && field.AllowedValues.format === 'date-time'">
