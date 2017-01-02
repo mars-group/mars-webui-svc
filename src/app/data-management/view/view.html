@@ -76,13 +76,17 @@
               ng-click="importView.openPreviewModal(row.dataId)">
             {{row.type}}
           </td>
-          <td data-title="'Privacy'" data-sortable="'privacy'" data-toggle="modal"
+          <!--<td data-title="'Privacy'" data-sortable="'privacy'" data-toggle="modal"-->
+          <!--ng-click="importView.openPreviewModal(row.dataId)">-->
+          <!--{{row.privacy}}-->
+          <!--</td>-->
+          <!--<td data-title="'Project ID'" data-sortable="'projectId'" data-toggle="modal"-->
+          <!--ng-click="importView.openPreviewModal(row.dataId)">-->
+          <!--{{row.projectId}}-->
+          <!--</td>-->
+          <td data-title="'Tags'" data-sortable="'tags'" data-toggle="modal"
               ng-click="importView.openPreviewModal(row.dataId)">
-            {{row.privacy}}
-          </td>
-          <td data-title="'Project ID'" data-sortable="'projectId'" data-toggle="modal"
-              ng-click="importView.openPreviewModal(row.dataId)">
-            {{row.projectId}}
+            {{row.tags}}
           </td>
           <td data-title="'Import status'" data-sortable="'state'" data-toggle="modal"
               ng-click="importView.openPreviewModal(row.dataId)">
