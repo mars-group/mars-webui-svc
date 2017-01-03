@@ -33,6 +33,7 @@
             type = 'info';
             break;
           case 'ERROR':
+          case 'FAILED':
             type = 'danger';
             break;
           case 'FINISHED':
