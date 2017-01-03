@@ -51,6 +51,19 @@
           });
       };
 
+      var postScenario = function createScenario(scenario, callback) {
+        $http.post('/scenario-management/scenarios', scenario)
+          .then(function successCallback(res) {
+            triggerOnChangeListener();
+            callback(res.data);
+          }, function errorCallback(err) {
+            if (err) {
+              $log.error(err);
+              callback({error: err});
+            }
+          });
+      };
+
       var setCurrentScenario = function (scenario) {
         currentScenario = scenario;
         $window.sessionStorage.setItem('currentScenario', angular.toJson(scenario));
@@ -111,6 +124,7 @@
       return {
         getScenarios: getScenarios,
         getScenario: getScenario,
+        postScenario: postScenario,
         setCurrentScenario: setCurrentScenario,
         clearScenarioSelection: clearScenarioSelection,
         getCurrentScenario: getCurrentScenario,
