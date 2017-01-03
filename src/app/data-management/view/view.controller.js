@@ -127,7 +127,7 @@
     vm.openPreviewModal = function (dataId) {
 
       var settings = {
-        templateUrl: 'app/import/view/previewModal/previewModal.html',
+        templateUrl: 'app/data-management/view/previewModal/previewModal.html',
         controller: 'PreviewModalController',
         controllerAs: 'preview',
         resolve: {}

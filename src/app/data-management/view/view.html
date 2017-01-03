@@ -86,7 +86,9 @@
           <!--</td>-->
           <td data-title="'Tags'" data-sortable="'tags'" data-toggle="modal"
               ng-click="importView.openPreviewModal(row.dataId)">
-            {{row.tags}}
+            <span ng-repeat="tag in row.tags">
+              {{tag}}<span ng-if="$index < row.tags.length -1">, </span>
+            </span>
           </td>
           <td data-title="'Import status'" data-sortable="'state'" data-toggle="modal"
               ng-click="importView.openPreviewModal(row.dataId)">
