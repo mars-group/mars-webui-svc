@@ -36,7 +36,7 @@
         Scenario.clearScenarioSelection();
       }
 
-      if (vm.currentScenario && !vm.selectedNode) {
+      if (vm.currentScenario && !angular.equals(vm.currentScenario, {}) && !vm.selectedNode) {
         vm.alerts.add(selectNodeInfoMessage);
       }
     });
@@ -79,7 +79,7 @@
     initMappingData();
 
     var loadMapping = function () {
-      if (!vm.currentScenario) {
+      if (!vm.currentScenario || angular.equals(vm.currentScenario, {})) {
         vm.alerts.add(selectScenarioInfoMessage);
         return;
       }
@@ -93,8 +93,7 @@
 
           vm.treeData = res;
           configureTreeView();
-        })
-        .catch(function (err) {
+        }, function (err) {
           $log.error(err);
         });
     };

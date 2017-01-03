@@ -3,7 +3,7 @@
 
   angular
     .module('marsApp')
-    .factory('Mapping', function Mapping($http, $log, Scenario) {
+    .factory('Mapping', function Mapping($http, $log, Scenario, $q) {
       var originalData = [];
       var tmpMapping = null;
       var tmpParameters = null;
@@ -158,7 +158,7 @@
             scenarioId = Scenario.getCurrentScenario().ScenarioId;
           }
           if (!scenarioId) {
-            return;
+            return $q.reject('No scenario selected!');
           }
 
           return $http.get('/scenario-management/scenarios/' + scenarioId)

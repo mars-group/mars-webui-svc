@@ -9,6 +9,10 @@
 
       var project = Project.getCurrentProject().id;
 
+      var isCurrentScenarioSet = function () {
+        return currentScenario && !angular.equals(currentScenario, {});
+      };
+
       var triggerOnChangeListener = function () {
         for (var i = 0; i < onChangeListener.length; i++) {
           onChangeListener[i]();
@@ -77,14 +81,14 @@
       };
 
       var getCurrentScenario = function () {
-        if (!currentScenario) {
+        if (!isCurrentScenarioSet()) {
           currentScenario = angular.fromJson($window.sessionStorage.getItem('currentScenario'));
         }
         return currentScenario;
       };
 
       var isCurrentScenarioExisting = function (callback) {
-        if (!currentScenario) {
+        if (!isCurrentScenarioSet()) {
           return callback(false);
         }
 
@@ -102,8 +106,9 @@
       };
 
       var isMappingComplete = function (callback) {
-        if (!currentScenario) {
+        if (!isCurrentScenarioSet()) {
           $log.error('no Scenario selected');
+          return;
         }
         $http.get('/scenario-management/scenarios/' + currentScenario.ScenarioId + '/complete')
           .then(function successCallback(res) {
