@@ -84,7 +84,7 @@
 
           if (res.hasOwnProperty('error')) {
             return callback({error: res});
-          } else if (res === 'FINISHED' || res === 'ERROR') {
+          } else if (res === 'FINISHED' || res === 'FAILED') {
             return callback();
           }
           startLongpolling(dataId, res, callback);
