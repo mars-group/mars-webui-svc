@@ -236,6 +236,7 @@
         vm.selectedField.ClearName = dataset.title;
       }
 
+      vm.createInstanceCountMapping(dataset);
       selectNextField();
     };
 
