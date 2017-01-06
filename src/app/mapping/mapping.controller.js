@@ -250,7 +250,7 @@
           vm.alerts.add('A call to: "' + err.config.url + '" caused the following error: "' + err.data.Description + '"', 'danger');
         } else {
           vm.alerts.add('Mapping saved', 'info');
-          loadMapping();
+          // loadMapping();
         }
       });
     };

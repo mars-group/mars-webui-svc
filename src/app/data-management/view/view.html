@@ -95,10 +95,17 @@
             {{row.state}}
           </td>
           <td data-title="'Delete'">
-            <button type="button" class="btn btn-default" ng-click="importView.deleteDataset(row)"
-                    uib-popover="This needs Ticket '#MARS-718' to be done!" data-popover-trigger="mouseenter">
+            <button type="button" class="btn btn-info" ng-click="deleteCollapsed[$index] = !deleteCollapsed[$index]">
               <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
             </button>
+            <div data-uib-collapse="!deleteCollapsed[$index]" class="margin-top">
+              <div>are you sure?</div>
+              <button class="btn btn-xs btn-success" ng-click="importView.deleteDataset(row)">
+                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button>
+              <button class="btn btn-xs btn-danger" ng-click="deleteCollapsed[$index] = false">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+              </button>
+            </div>
           </td>
           <!--<td data-title="'User ID'" sortable="'userId'" data-toggle="modal" ng-click="importView.openPreviewModal(row.dataId)">-->
           <!--{{row.userId}}-->
