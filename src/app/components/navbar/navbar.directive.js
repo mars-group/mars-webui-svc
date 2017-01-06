@@ -59,11 +59,11 @@
             {
               title: 'Result Configuration',
               url: 'resultconfig'
+            },
+            {
+              title: 'Run',
+              url: 'mission-ctl'
             }
-            // {
-            //   title: 'Run',
-            //   url: ''
-            // }
           ]
         }
         // {
