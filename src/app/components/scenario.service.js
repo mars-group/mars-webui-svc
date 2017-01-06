@@ -105,11 +105,27 @@
           });
       };
 
+      var getMappingComplete = function (callback) {
+        if (!isCurrentScenarioSet()) {
+          $log.error('no Scenario selected');
+          return callback({error: 'no Scenario selected'});
+        }
+
+        $http.get('/scenario-management/scenarios/' + currentScenario.ScenarioId + '/complete')
+          .then(function successCallback(res) {
+            callback(res.data);
+          })
+          .catch(function errorCallback(err) {
+            callback({error: err});
+          });
+      };
+
       var isMappingComplete = function (callback) {
         if (!isCurrentScenarioSet()) {
           $log.error('no Scenario selected');
-          return;
+          return callback(false);
         }
+
         $http.get('/scenario-management/scenarios/' + currentScenario.ScenarioId + '/complete')
           .then(function successCallback(res) {
             if (res.status >= 200 && res.status < 300) {
@@ -134,6 +150,7 @@
         clearScenarioSelection: clearScenarioSelection,
         getCurrentScenario: getCurrentScenario,
         isCurrentScenarioExisting: isCurrentScenarioExisting,
+        getMappingComplete: getMappingComplete,
         isMappingComplete: isMappingComplete,
         registerOnChangeListener: registerOnChangeListener
       };

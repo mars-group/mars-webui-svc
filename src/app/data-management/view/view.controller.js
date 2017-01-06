@@ -128,7 +128,6 @@
     };
 
     vm.openPreviewModal = function (dataId) {
-
       var settings = {
         templateUrl: 'app/data-management/view/previewModal/previewModal.html',
         controller: 'PreviewModalController',
@@ -144,7 +143,6 @@
         }, function () {
         });
       });
-
     };
 
     vm.deleteDataset = function (dataset) {

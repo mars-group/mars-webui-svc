@@ -7,7 +7,7 @@
 
 
   /** @ngInject */
-  function MappingController($log, Mapping, Metadata, Alert, Scenario, Config) {
+  function MappingController($log, $uibModal, Mapping, Metadata, Alert, Scenario, Config) {
     var vm = this;
 
     vm.alerts = new Alert();
@@ -17,6 +17,7 @@
     vm.selectedField = null;
     vm.dataFilter = {};
     vm.currentScenario = Scenario.getCurrentScenario();
+    vm.validationErrors = null;
 
     Config.isDevelopment(function (res) {
       vm.development = res;
@@ -246,23 +247,59 @@
 
     vm.saveMapping = function () {
       Mapping.putMapping(angular.copy(vm.treeData), function (err) {
+        var mappingResult = {};
         if (err) {
-          vm.alerts.add('A call to: "' + err.config.url + '" caused the following error: "' + err.data.Description + '"', 'danger');
+          mappingResult = {error: err.config.url + '" caused the following error: "' + err.data.Description + '"!'};
         } else {
-          vm.alerts.add('Mapping saved', 'info');
-          // loadMapping();
+          mappingResult = {};
         }
+        saveParameter(function (parameterResult) {
+          if (!mappingResult.hasOwnProperty('error') && !parameterResult.hasOwnProperty('error')) {
+            vm.alerts.add('Mapping and Parameters saved!', 'info');
+            return;
+          }
+
+          var res = '';
+          if (mappingResult.hasOwnProperty('error')) {
+            res += mappingResult.error + ' ';
+          }
+
+          if (parameterResult.hasOwnProperty('error')) {
+            res += parameterResult.error;
+          }
+
+          vm.alerts.add(res, 'danger');
+        });
       });
     };
 
-    vm.saveParameter = function () {
+    var saveParameter = function (callback) {
       Mapping.putParameter(vm.treeData, function (err) {
+        var res = {};
         if (err) {
-          vm.alerts.add('A call to: "' + err.config.url + '" caused the following error: "' + err.data.Description + '"', 'danger');
+          res = {error: err.config.url + '" caused the following error: "' + err.data.Description + '"!'};
         } else {
-          vm.alerts.add('Parameter saved', 'info');
-          loadMapping();
+          res = {};
         }
+        loadMapping();
+        getMappingComplete();
+
+        callback(res);
+      });
+    };
+
+    var getMappingComplete = function () {
+      Scenario.getMappingComplete(function (res) {
+        if (res.hasOwnProperty('error')) {
+          if (res.error.status === 412) {
+            vm.validationErrors = res.error.data;
+            return;
+          }
+          vm.alerts.add(res.error, 'danger');
+          return;
+        }
+
+        vm.alerts.add('Mapping complete!', 'success');
       });
     };
 
@@ -295,6 +332,22 @@
       } else {
         return 'select';
       }
+    };
+
+    vm.openErrorModal = function () {
+      var settings = {
+        templateUrl: 'app/mapping/validationErrorModal/validationErrorModal.html',
+        controller: 'MappingModalController',
+        controllerAs: 'mappingModal',
+        resolve: {mappingErrors: vm.validationErrors},
+        size: 'lg'
+      };
+
+      var modalInstance = $uibModal.open(settings);
+
+      modalInstance.result.then(function () {
+      }, function () {
+      });
     };
 
   }

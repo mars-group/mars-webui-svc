@@ -1,0 +1,24 @@
+<div class="mappingModal">
+  <div class="modal-header">
+    <h3 class="modal-title">Validation errors</h3>
+  </div>
+
+  <div class="modal-body">
+
+    <table ng-table="mappingModal.tableParams" class="table table-condensed">
+      <tr ng-repeat="row in $data">
+        <td data-title="'Namespace'" data-sortable="'Namespace'">
+          {{ row.Namespace }}
+        </td>
+        <td data-title="'Description'" data-sortable="'Description'">
+          {{ row.Description }}
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="mappingModal.cancel()">Close</button>
+  </div>
+
+</div>

@@ -61,9 +61,6 @@
       <!-- main data table -->
       <table ng-table="importView.tableParams" class="table table-condensed">
         <tr ng-repeat="row in $data">
-          <!--<td data-title="'export'" ng-click="importView.openPreviewModal(row.dataId)">-->
-          <!--<input type="checkbox" ng-model="importView.selected[row.guid]"/>-->
-          <!--</td>-->
           <td data-title="'Title'" data-sortable="'title'" data-toggle="modal"
               ng-click="importView.openPreviewModal(row.dataId)">
             {{row.title}}
