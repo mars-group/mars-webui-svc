@@ -42,7 +42,7 @@
         url: '/mission-ctl',
         templateUrl: 'app/mission-ctl/mission-ctl.html',
         controller: 'MissionCTLController',
-        controllerAs: 'mission-ctl'
+        controllerAs: 'missionctl'
       })
       .state('resultconfig', {
         url: '/resultconfig',

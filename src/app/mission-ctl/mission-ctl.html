@@ -5,9 +5,25 @@
   </div>
 
   <div>
-    <input class="btn btn-success btn-lg" type="button" value="Input">
+    <div style="valign: center; width: 50%">
+
+      <form>
+        <div class="form-group">
+          <label for="simulationPlanName">SimulationPlan Name</label>
+          <input class="form-control" ng-bind="vm.SimPlanName" id="simulationPlanName" placeholder="My Awesome SimPlan">
+        </div>
+        <button type="submit" class="btn btn-success btn-lg" ng-click="missionctl.StartSimulation()">StartSimulation</button>
+      </form>
+
+    </div>
+
+
+    <table class="table" ng-repeat="simPlan in vm.SimPlans">
+      <tr>
+        <td>simPlan</td>
+      </tr>
+    </table>
   </div>
 
-  {{MissionCTLController.test}}
 
 </div>
