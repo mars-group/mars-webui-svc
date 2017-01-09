@@ -247,44 +247,18 @@
 
     vm.saveMapping = function () {
       Mapping.putMapping(angular.copy(vm.treeData), function (err) {
-        var mappingResult = {};
         if (err) {
-          mappingResult = {error: err.config.url + '" caused the following error: "' + err.data.Description + '"!'};
-        } else {
-          mappingResult = {};
-        }
-        saveParameter(function (parameterResult) {
-          if (!mappingResult.hasOwnProperty('error') && !parameterResult.hasOwnProperty('error')) {
-            vm.alerts.add('Mapping and Parameters saved!', 'info');
-            return;
-          }
-
-          var res = '';
-          if (mappingResult.hasOwnProperty('error')) {
-            res += mappingResult.error + ' ';
-          }
-
-          if (parameterResult.hasOwnProperty('error')) {
-            res += parameterResult.error;
-          }
-
-          vm.alerts.add(res, 'danger');
-        });
-      });
-    };
-
-    var saveParameter = function (callback) {
-      Mapping.putParameter(vm.treeData, function (err) {
-        var res = {};
-        if (err) {
-          res = {error: err.config.url + '" caused the following error: "' + err.data.Description + '"!'};
-        } else {
-          res = {};
+          vm.alerts.add(err.config.url + '" caused the following error: "' + err.data.Description + '"!', 'danger');
         }
         loadMapping();
-        getMappingComplete();
+        Mapping.putParameter(vm.treeData, function (err) {
+          if (err) {
+            vm.alerts.add(err.config.url + '" caused the following error: "' + err.data.Description + '"!', 'danger');
+          }
 
-        callback(res);
+          loadMapping();
+          getMappingComplete();
+        });
       });
     };
 
