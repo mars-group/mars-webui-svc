@@ -10,9 +10,9 @@
       <form>
         <div class="form-group">
           <label for="simulationPlanName">SimulationPlan Name</label>
-          <input class="form-control" ng-model="missionctl.SimPlanName" id="simulationPlanName" placeholder="My Awesome SimPlan">
+          <input class="form-control" ng-model="simrunner.SimPlanName" id="simulationPlanName" placeholder="My Awesome SimPlan">
         </div>
-        <button type="submit" class="btn btn-success btn-lg" ng-disabled="missionctl.SimPlanName == ''" ng-click="missionctl.StartSimulation()">StartSimulation</button>
+        <button type="submit" class="btn btn-success btn-lg" ng-disabled="simrunner.SimPlanName == ''" ng-click="simrunner.StartSimulation()">StartSimulation</button>
       </form>
 
 
@@ -23,7 +23,7 @@
         <th>Image Name</th>
         <th>Image Created?</th>
       </thead>
-      <tbody  ng-repeat="simPlan in missionctl.SimPlans">
+      <tbody  ng-repeat="simPlan in simrunner.SimPlans">
         <tr>
           <td>{{simPlan.Name}}</td>
           <td>{{simPlan.DockerImageName}}</td>

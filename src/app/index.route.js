@@ -38,11 +38,11 @@
         controller: 'MappingController',
         controllerAs: 'mapping'
       })
-      .state('mission-ctl', {
-        url: '/mission-ctl',
-        templateUrl: 'app/mission-ctl/mission-ctl.html',
-        controller: 'MissionCTLController',
-        controllerAs: 'missionctl'
+      .state('sim-runner', {
+        url: '/sim-runner',
+        templateUrl: 'app/sim-runner/sim-runner.html',
+        controller: 'SimRunnerController',
+        controllerAs: 'simrunner'
       })
       .state('resultconfig', {
         url: '/resultconfig',

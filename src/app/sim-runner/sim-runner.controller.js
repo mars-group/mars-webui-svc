@@ -3,17 +3,17 @@
 
   angular
     .module('marsApp')
-    .controller('MissionCTLController', MissionCTLController);
+    .controller('SimRunnerController', SimRunnerController);
 
   /** @ngInject */
-  function MissionCTLController(MissionCTL, Scenario) {
+  function SimRunnerController(SimRunner, Scenario) {
     var vm = this;
 
     vm.SimPlans = [];
 
 
     (function() {
-      MissionCTL.getAllSimPlans(null, function(res){
+      SimRunner.getAllSimPlans(null, function(res){
         vm.SimPlans = res;
       });
     }());
@@ -23,14 +23,14 @@
     vm.SimPlanName = "";
 
     vm.CreateSimPlan = function(simPlanName, scenarioConfigId, resultConfigId, executionConfigId){
-      MissionCTL.createSimPlan(simPlanName, scenarioConfigId, resultConfigId, executionConfigId, function() {
+      SimRunner.createSimPlan(simPlanName, scenarioConfigId, resultConfigId, executionConfigId, function() {
 
       });
     };
 
     vm.StartSimulation = function(){
-      MissionCTL.createSimPlan(vm.SimPlanName, vm.ScenarioId, "42", "42", function(res) {
-        MissionCTL.startSimPlan(res.data.Id, function(res){});
+      SimRunner.createSimPlan(vm.SimPlanName, vm.ScenarioId, "42", "42", function(res) {
+        SimRunner.startSimPlan(res.data.Id, function(res){});
       });
     };
   }
