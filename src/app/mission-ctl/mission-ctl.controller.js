@@ -9,15 +9,18 @@
   function MissionCTLController(MissionCTL, Scenario) {
     var vm = this;
 
-    vm.SimPlans = ["test","test2"];
+    vm.SimPlans = [];
+
 
     (function() {
-      vm.SimPlans = MissionCTL.getAllSimPlans();
+      MissionCTL.getAllSimPlans(null, function(res){
+        vm.SimPlans = res;
+      });
     }());
 
 
     vm.ScenarioId = Scenario.getCurrentScenario().ScenarioId;
-    vm.SimPlanName = ""
+    vm.SimPlanName = "";
 
     vm.CreateSimPlan = function(simPlanName, scenarioConfigId, resultConfigId, executionConfigId){
       MissionCTL.createSimPlan(simPlanName, scenarioConfigId, resultConfigId, executionConfigId, function() {
@@ -26,8 +29,8 @@
     };
 
     vm.StartSimulation = function(){
-      MissionCTL.createSimPlan(vm.SimPlanName, vm.ScenarioId, 42, 42, function() {
-
+      MissionCTL.createSimPlan(vm.SimPlanName, vm.ScenarioId, "42", "42", function(res) {
+        MissionCTL.startSimPlan(res.data.Id, function(res){});
       });
     };
   }

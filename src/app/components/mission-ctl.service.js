@@ -37,8 +37,8 @@
         createSimPlan: function (simPlanName, scenarioConfigId, resultConfigId, executionConfigId, callback) {
           var body = {
             Name: simPlanName,
-            OwnerId: 1, // TODO: change in future!
-            GroupId: 42, // TODO: change in future!
+            OwnerId: "1", // TODO: change in future!
+            GroupId: "42", // TODO: change in future!
             ScenarioDescriptionId: scenarioConfigId,
             ResultConfigurationId: resultConfigId,
             ExecutionConfigurationId: executionConfigId
@@ -48,7 +48,7 @@
               callback(res.data);
             })
             .catch(function errorCall(err){
-              $log.error(err);
+              //$log.error(err);
               callback({error: err});
             });
         },
@@ -61,7 +61,7 @@
               callback(res.data);
             })
             .catch(function errorCall(err){
-              $log.error(err);
+              //$log.error(err);
               callback({error: err});
             });
         }
