@@ -62,7 +62,7 @@
             },
             {
               title: 'Run',
-              url: 'mission-ctl'
+              url: 'simrunner'
             }
           ]
         }

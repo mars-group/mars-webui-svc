@@ -38,9 +38,9 @@
         controller: 'MappingController',
         controllerAs: 'mapping'
       })
-      .state('sim-runner', {
-        url: '/sim-runner',
-        templateUrl: 'app/sim-runner/sim-runner.html',
+      .state('simrunner', {
+        url: '/simrunner',
+        templateUrl: 'app/simrunner/simrunner.html',
         controller: 'SimRunnerController',
         controllerAs: 'simrunner'
       })
