@@ -229,6 +229,7 @@
         vm.selectedField.ColumnClearName = dataset.additionalTypeSpecificData.columnNames[index].clearColumnName;
         vm.selectedField.MetaDataId = dataset.dataId;
 
+	// TODO: fix duplicate ColumnClearName and dataId assignment.
         if (vm.selectedField.hasOwnProperty('ColumnClearName')) {
           vm.selectedField.ColumnClearName = dataset.additionalTypeSpecificData.columnNames[index].clearColumnName;
         }
