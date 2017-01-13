@@ -3,7 +3,7 @@
 
   angular
     .module('marsApp')
-    .factory('SimRunner', function MissionCTL($http, $log) {
+    .factory('SimRunner', function SimRunner($http, $log) {
       var baseUrl = '/sim-runner/';
 
 
