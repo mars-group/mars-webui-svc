@@ -342,6 +342,7 @@
           return;
         }
 
+        vm.validationErrors = null;
         vm.alerts.add('Mapping complete!', 'success');
       });
     };
