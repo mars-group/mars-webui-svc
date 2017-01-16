@@ -7,7 +7,7 @@
 
 
   /** @ngInject */
-  function MappingController($log, Mapping, Metadata, Alert, Scenario, Config) {
+  function MappingController($log, $uibModal, Mapping, Metadata, Alert, Scenario, Config) {
     var vm = this;
 
     vm.alerts = new Alert();
@@ -17,6 +17,7 @@
     vm.selectedField = null;
     vm.dataFilter = {};
     vm.currentScenario = Scenario.getCurrentScenario();
+    vm.validationErrors = null;
 
     Config.isDevelopment(function (res) {
       vm.development = res;
@@ -70,6 +71,7 @@
     var initMappingData = function () {
       vm.treeOptions = {
         dirSelectable: false,
+        allowDeselect: false,
         nodeChildren: 'Agents',
         isLeaf: function (node) {
           return !node.hasOwnProperty('Agents');
@@ -91,7 +93,12 @@
             return;
           }
 
-          vm.treeData = res;
+          if (vm.selectedNode) {
+            applyMappingDiff(res);
+          } else {
+            vm.treeData = res;
+          }
+
           configureTreeView();
         }, function (err) {
           $log.error(err);
@@ -99,12 +106,74 @@
     };
     loadMapping();
 
+    // Jep, I know what you are thinking... However replacing the new data with the old causes #MARS-847
+    var applyMappingDiff = function (newData) {
+      angular.forEach(newData, function (layerTypeVal, layerTypeKey) {
+        angular.forEach(layerTypeVal.Agents, function (layerVal, layerKey) {
+
+          angular.forEach(layerVal.Agents, function (agentVal, agentKey) {
+            if (agentVal.hasOwnProperty('ConstructorParameterMapping')) {
+              // Agent mapping
+              angular.forEach(agentVal.ConstructorParameterMapping, function (constructorVal, constructorKey) {
+                angular.forEach(constructorVal, function (fieldVal, fieldKey) {
+                  vm.treeData[layerTypeKey]
+                    .Agents[layerKey]
+                    .Agents[agentKey]
+                    .ConstructorParameterMapping[constructorKey]
+                    [fieldKey] = fieldVal;
+                });
+              });
+            } else if (!agentVal.hasOwnProperty('Parameters')) {
+              // Layer mapping
+              angular.forEach(agentVal, function (layerFieldVal, layerFieldKey) {
+                vm.treeData[layerTypeKey]
+                  .Agents[layerKey]
+                  .Agents[agentKey]
+                  [layerFieldKey] = layerFieldVal;
+              });
+            }
+          });
+
+          if (layerVal.hasOwnProperty('Name') &&
+            layerVal.Name === 'Agents' || layerVal.Name === 'Global' || layerVal.Name === 'Layers') {
+
+            if (layerVal.hasOwnProperty('Parameters')) {
+              // Global parameters
+              angular.forEach(layerVal.Parameters, function (globalParameterVal, globalParameterKey) {
+                angular.forEach(globalParameterVal, function (globalParameterFieldVal, globalParameterFieldKey) {
+                  if (typeof globalParameterFieldVal !== 'object') {
+                    vm.treeData[layerTypeKey]
+                      .Agents[layerKey]
+                      .Parameters[globalParameterKey]
+                      [globalParameterFieldKey] = globalParameterFieldVal;
+                  }
+                });
+              });
+            } else {
+              // Agent and Layer parameters
+              angular.forEach(layerVal.Agents, function (parameterLayerTypeVal, parameterLayerTypeKey) {
+                angular.forEach(parameterLayerTypeVal.Parameters, function (parameterLayerVal, parameterLayerKey) {
+                  angular.forEach(parameterLayerVal, function (parameterVal, parameterKey) {
+                    vm.treeData[layerTypeKey]
+                      .Agents[layerKey]
+                      .Agents[parameterLayerTypeKey]
+                      .Parameters[parameterLayerKey]
+                      [parameterKey] = parameterVal;
+                  });
+                });
+              });
+            }
+          }
+        });
+      });
+    };
+
     var configureTreeView = function () {
       expandTopLevelNodes();
     };
 
     var expandTopLevelNodes = function () {
-      angular.forEach(vm.treeData, function (value /*, key*/) {
+      angular.forEach(vm.treeData, function (value) {
         vm.treeExpandedNodes.push(value);
       });
 
@@ -228,6 +297,7 @@
         vm.selectedField.ColumnClearName = dataset.additionalTypeSpecificData.columnNames[index].clearColumnName;
         vm.selectedField.MetaDataId = dataset.dataId;
 
+        // TODO: fix duplicate ColumnClearName and dataId assignment.
         if (vm.selectedField.hasOwnProperty('ColumnClearName')) {
           vm.selectedField.ColumnClearName = dataset.additionalTypeSpecificData.columnNames[index].clearColumnName;
         }
@@ -247,22 +317,33 @@
     vm.saveMapping = function () {
       Mapping.putMapping(angular.copy(vm.treeData), function (err) {
         if (err) {
-          vm.alerts.add('A call to: "' + err.config.url + '" caused the following error: "' + err.data.Description + '"', 'danger');
-        } else {
-          vm.alerts.add('Mapping saved', 'info');
-          loadMapping();
+          vm.alerts.add(err.config.url + '" caused the following error: "' + err.data.Description + '"!', 'danger');
         }
+        loadMapping();
+        Mapping.putParameter(vm.treeData, function (err) {
+          if (err) {
+            vm.alerts.add(err.config.url + '" caused the following error: "' + err.data.Description + '"!', 'danger');
+          }
+
+          loadMapping();
+          getMappingComplete();
+        });
       });
     };
 
-    vm.saveParameter = function () {
-      Mapping.putParameter(vm.treeData, function (err) {
-        if (err) {
-          vm.alerts.add('A call to: "' + err.config.url + '" caused the following error: "' + err.data.Description + '"', 'danger');
-        } else {
-          vm.alerts.add('Parameter saved', 'info');
-          loadMapping();
+    var getMappingComplete = function () {
+      Scenario.getMappingComplete(function (res) {
+        if (res.hasOwnProperty('error')) {
+          if (res.error.status === 412) {
+            vm.validationErrors = res.error.data;
+            return;
+          }
+          vm.alerts.add(res.error, 'danger');
+          return;
         }
+
+        vm.validationErrors = null;
+        vm.alerts.add('Mapping complete!', 'success');
       });
     };
 
@@ -295,6 +376,22 @@
       } else {
         return 'select';
       }
+    };
+
+    vm.openErrorModal = function () {
+      var settings = {
+        templateUrl: 'app/mapping/validationErrorModal/validationErrorModal.html',
+        controller: 'MappingModalController',
+        controllerAs: 'mappingModal',
+        resolve: {mappingErrors: vm.validationErrors},
+        size: 'lg'
+      };
+
+      var modalInstance = $uibModal.open(settings);
+
+      modalInstance.result.then(function () {
+      }, function () {
+      });
     };
 
   }

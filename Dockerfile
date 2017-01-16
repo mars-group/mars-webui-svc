@@ -32,11 +32,11 @@ RUN mv /app/server /prod \
 RUN rm -rf /app
 
 # Add entrypoint
-ADD entrypoint.sh /
-RUN chmod +x /entrypoint.sh
+ADD entrypoint.sh /entrypoint/
+RUN chmod +x /entrypoint/entrypoint.sh
 
 # Convert DOS lineendings to UNIX
-RUN sed -i $'s/\r$//' /entrypoint.sh
+RUN sed -i $'s/\r$//' /entrypoint/entrypoint.sh
 
 # Switch workdir for developers
 WORKDIR /app

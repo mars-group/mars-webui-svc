@@ -6,7 +6,7 @@
     .controller('ImportViewController', ImportViewController);
 
   /** @ngInject */
-  function ImportViewController($log, $uibModal, $scope, $window, NgTableParams, Metadata, Alert) {
+  function ImportViewController($uibModal, $scope, $window, NgTableParams, Alert, Metadata, File) {
     var vm = this;
 
     vm.alerts = new Alert();
@@ -50,18 +50,21 @@
 
     vm.categoryTreeExpandedNodes = [vm.categoryTreeData[0], vm.categoryTreeData[1], vm.categoryTreeData[2]];
 
-    Metadata.getAll(function (res) {
-      if (res.hasOwnProperty('error')) {
-        var err = res.error;
-        if (err.status === 500 && err.data.message === 'Forwarding error') {
-          vm.alerts.add('There is no instance of "Metadata service", so there is nothing to display!', 'danger');
+    var getAllMetadata = function () {
+      Metadata.getAll(function (res) {
+        if (res.hasOwnProperty('error')) {
+          var err = res.error;
+          if (err.status === 500 && err.data.message === 'Forwarding error') {
+            vm.alerts.add('There is no instance of "Metadata service", so there is nothing to display!', 'danger');
+          } else {
+            vm.alerts.add(err, 'danger');
+          }
         } else {
-          vm.alerts.add(err, 'danger');
+          initDataTable(res);
         }
-      } else {
-        initDataTable(res);
-      }
-    });
+      });
+    };
+    getAllMetadata();
 
     var initDataTable = function (tableData) {
       var tablePageSize = $window.sessionStorage.getItem('tablePageSize');
@@ -125,7 +128,6 @@
     };
 
     vm.openPreviewModal = function (dataId) {
-
       var settings = {
         templateUrl: 'app/data-management/view/previewModal/previewModal.html',
         controller: 'PreviewModalController',
@@ -141,12 +143,17 @@
         }, function () {
         });
       });
-
     };
 
-    vm.deleteDataset = function (/*dataset*/) {
-      // TODO: Implement
-      $log.info('This needs Ticket "MARS-718" to be done!');
+    vm.deleteDataset = function (dataset) {
+      File.deleteDataset(dataset.dataId, function (res) {
+        if (res.hasOwnProperty('error')) {
+          vm.alerts.add('Deleting "' + dataset.title + '" failed. Server response: ' + res.error.data.message, 'danger');
+        } else {
+          vm.alerts.add('"' + dataset.title + '" deleted!', 'success');
+          getAllMetadata();
+        }
+      });
     };
 
   }

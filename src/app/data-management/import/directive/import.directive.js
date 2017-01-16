@@ -20,7 +20,7 @@
   }
 
   /** @ngInject */
-  var importController = function ($scope, $log, $uibModal, $document, FileUploader, Metadata, Timeseries, Alert, Project) {
+  var importController = function ($scope, $log, $uibModal, $document, FileUploader, Metadata, Alert, Project) {
     var vm = this;
 
     vm.isModelUpload = $scope.dataTypes[0].name === 'MODEL';
@@ -139,24 +139,12 @@
       Metadata.startLongpolling(response, 'INIT', function () {
           if (fileItem.formData[0].type == vm.TIME_SERIES) {
             Metadata.getDateColumn(response, function (possibleDateTimeColumn) {
-              if (possibleDateTimeColumn) {
-                Timeseries.processDataOverNode(response, possibleDateTimeColumn,
-                  function () {
-                    fileItem.isProcessing = false;
-                  },
-                  function (err) {
-                    fileItem.isProcessing = false;
-                    fileItem.isError = true;
-                    vm.alerts.add(err);
-                  }
-                );
-              } else {
+              if (!possibleDateTimeColumn) {
                 vm.alerts.add('Timeseries File "' + fileItem._file.name + '" does not contain a valid DateTime Column');
               }
             });
-          } else {
-            fileItem.isProcessing = false;
           }
+        fileItem.isProcessing = true;
         }
       );
     };

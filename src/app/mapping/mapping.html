@@ -20,6 +20,11 @@
       {{key}}
     </uib-alert>
 
+    <button class="btn btn-warning" ng-click="mapping.openErrorModal()"
+            ng-if="mapping.validationErrors && !mapping.validationErrors.Successful">
+      {{mapping.validationErrors.Summary}} (click to show)
+    </button>
+
     <div data-ng-if="!mapping.currentScenario">
       <label for="scenario" class="acme-navbar-text">Please select a Scenario: </label>
       <select class="form-control" id="scenario" data-ng-model="mapping.currentScenario"
