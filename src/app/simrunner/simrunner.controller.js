@@ -23,13 +23,13 @@
     vm.SimPlanName = "";
 
     vm.CreateSimPlan = function(){
-      SimRunner.createSimPlan(vm.SimPlanName, vm.ScenarioId, "42", "42", function(res) {
+      SimRunner.createSimPlan(vm.SimPlanName, vm.ScenarioId, "42", "42", function(/*res*/) {
 
       });
     };
 
     vm.StartSimulationRun = function(simPlanId){
-      SimRunner.startSimPlan(simPlanId, function(res){});
+      SimRunner.startSimPlan(simPlanId, function(/*res*/){});
     };
   }
 })();
