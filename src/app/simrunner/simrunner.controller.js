@@ -13,9 +13,12 @@
 
 
     (function() {
-      SimRunner.getAllSimPlans({"scenarioid": Scenario.getCurrentScenario().ScenarioId}, function(res){
-        vm.SimPlans = res;
-      });
+      var currentScenario = Scenario.getCurrentScenario();
+      if(currentScenario !== null) {
+        SimRunner.getAllSimPlans({"scenarioid": currentScenario.ScenarioId}, function(res){
+          vm.SimPlans = res;
+        });
+      }
     }());
 
 
