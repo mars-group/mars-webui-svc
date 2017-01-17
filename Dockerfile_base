@@ -1,11 +1,9 @@
 FROM artifactory.mars.haw-hamburg.de:5000/node:argon-slim
 
-# make node shut up
-ENV NPM_CONFIG_LOGLEVEL silent
+# make node show only warnings
+ENV NPM_CONFIG_LOGLEVEL warn
 
-# bzip2:  is needed by PhantomJS
-# git:    is needed by bower dependency
-RUN apt-get update && apt-get install -y bzip2 git libfreetype6 libfontconfig
+RUN apt-get update && apt-get install -y bzip2 git libfreetype6 libfontconfig python build-essential
 
 # bower:   is the frontend tool for dependencies
 # gulp:    builds the frontend, dev, production etc.
@@ -27,7 +25,7 @@ ADD .npmrc /prod
 # Install development Dependencies
 WORKDIR /app
 RUN npm install --only=dev
-RUN bower install --allow-root --silent
+RUN bower install --allow-root --quiet
 
 # Install production Dependencies
 WORKDIR /prod

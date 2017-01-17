@@ -2,9 +2,8 @@
 
 if [ "$DEVELOPER_EDITION" = "true" ]; then
   echo "starting development ..."
-  
+
   echo "starting npm install ..."
-  echo "If this is the first time you are starting the app in development it will take a while. Don't panic!"
   npm install
 
   echo "starting npm install ..."
