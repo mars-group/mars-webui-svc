@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "lodash": "~3.10.1",
-    "bower-art-resolver": "~2.0.6",
+    "bower-art-resolver": "~2.0.8",
     "connect": "~3.4.1",
     "serve-static": "~1.11.1"
   },

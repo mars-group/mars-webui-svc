@@ -11,7 +11,7 @@ ADD .npmrc /prod
 # Install development Dependencies
 WORKDIR /app
 RUN npm install --only=dev
-RUN bower install --allow-root --silent
+RUN bower install --silent
 
 # Install production Dependencies
 WORKDIR /prod
