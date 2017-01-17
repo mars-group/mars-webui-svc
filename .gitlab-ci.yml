@@ -1,0 +1,33 @@
+stages:
+#- deploy-base
+- deploy
+
+variables:
+  DOCKER_HOST: "dock-one.mars.haw-hamburg.de:5555"
+  DOCKER_REGISTRY: "artifactory.mars.haw-hamburg.de:5002"
+#  SERVIE_NAME_BASE: "webui-svc_base"
+  SERVIE_NAME: "webui-svc"
+
+#nightly:
+#  stage: deploy-base
+#  script:
+#    - docker build -t $SERVIE_NAME_BASE:latest -f Dockerfile_base .
+#    - docker tag $SERVIE_NAME_BASE:latest $DOCKER_REGISTRY/$SERVIE_NAME_BASE:$CI_BUILD_ID
+#    - docker tag $SERVIE_NAME_BASE:latest $DOCKER_REGISTRY/$SERVIE_NAME_BASE:latest
+#    - docker tag $SERVIE_NAME_BASE:latest $DOCKER_REGISTRY/$SERVIE_NAME_BASE:$CI_BUILD_REF
+#    - docker login -u $ARTIFACTORY_USER -p $ARTIFACTORY_PW $DOCKER_REGISTRY
+#    - docker push $DOCKER_REGISTRY/$SERVIE_NAME_BASE:$CI_BUILD_ID
+#    - docker push $DOCKER_REGISTRY/$SERVIE_NAME_BASE:latest
+#    - docker push $DOCKER_REGISTRY/$SERVIE_NAME_BASE:$CI_BUILD_REF
+
+deploy:
+  stage: deploy
+  script:
+    - docker build -t $SERVIE_NAME:latest .
+    - docker tag $SERVIE_NAME:latest $DOCKER_REGISTRY/$SERVIE_NAME:$CI_BUILD_ID
+    - docker tag $SERVIE_NAME:latest $DOCKER_REGISTRY/$SERVIE_NAME:latest
+    - docker tag $SERVIE_NAME:latest $DOCKER_REGISTRY/$SERVIE_NAME:$CI_BUILD_REF
+    - docker login -u $ARTIFACTORY_USER -p $ARTIFACTORY_PW $DOCKER_REGISTRY
+    - docker push $DOCKER_REGISTRY/$SERVIE_NAME:$CI_BUILD_ID
+    - docker push $DOCKER_REGISTRY/$SERVIE_NAME:latest
+    - docker push $DOCKER_REGISTRY/$SERVIE_NAME:$CI_BUILD_REF
