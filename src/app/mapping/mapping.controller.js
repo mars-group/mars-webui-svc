@@ -141,7 +141,7 @@
               // Global parameters
               angular.forEach(layerVal.Parameters, function (globalParameterVal, globalParameterKey) {
                 angular.forEach(globalParameterVal, function (globalParameterFieldVal, globalParameterFieldKey) {
-                  if (typeof globalParameterFieldVal !== 'object') {
+                  if (!angular.isObject(globalParameterFieldVal)) {
                     vm.treeData[layerTypeKey]
                       .Agents[layerKey]
                       .Parameters[globalParameterKey]
