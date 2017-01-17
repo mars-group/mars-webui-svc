@@ -4,13 +4,13 @@ if [ "$DEVELOPER_EDITION" = "true" ]; then
   echo "starting development ..."
 
   echo "starting npm install ..."
-#  npm install
+  npm install
 
   echo "starting npm install ..."
-#  bower install
+  bower install
 
-#  gulp serve --color
-  tail -f /dev/null
+  gulp serve --color
+#  tail -f /dev/null
 
 else
   echo "starting production ..."
