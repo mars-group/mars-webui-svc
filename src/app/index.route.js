@@ -38,6 +38,12 @@
         controller: 'MappingController',
         controllerAs: 'mapping'
       })
+      .state('simrunner', {
+        url: '/simrunner',
+        templateUrl: 'app/simrunner/simrunner.html',
+        controller: 'SimRunnerController',
+        controllerAs: 'simrunner'
+      })
       .state('resultconfig', {
         url: '/resultconfig',
         templateUrl: 'app/resultconfig/resultconfig.html',
