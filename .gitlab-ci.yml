@@ -1,29 +1,34 @@
 stages:
-#- deploy-base
-- deploy
+- build
+- deploy_prod
+- deploy_dev
 
 variables:
   DOCKER_HOST: "dock-one.mars.haw-hamburg.de:5555"
   DOCKER_REGISTRY: "artifactory.mars.haw-hamburg.de:5002"
-#  SERVIE_NAME_BASE: "webui-svc_base"
   SERVIE_NAME: "webui-svc"
+  SERVIE_NAME_DEV: "webui-svc_dev"
 
-#nightly:
-#  stage: deploy-base
-#  script:
-#    - docker build -t $SERVIE_NAME_BASE:latest -f Dockerfile_base .
-#    - docker tag $SERVIE_NAME_BASE:latest $DOCKER_REGISTRY/$SERVIE_NAME_BASE:$CI_BUILD_ID
-#    - docker tag $SERVIE_NAME_BASE:latest $DOCKER_REGISTRY/$SERVIE_NAME_BASE:latest
-#    - docker tag $SERVIE_NAME_BASE:latest $DOCKER_REGISTRY/$SERVIE_NAME_BASE:$CI_BUILD_REF
-#    - docker login -u $ARTIFACTORY_USER -p $ARTIFACTORY_PW $DOCKER_REGISTRY
-#    - docker push $DOCKER_REGISTRY/$SERVIE_NAME_BASE:$CI_BUILD_ID
-#    - docker push $DOCKER_REGISTRY/$SERVIE_NAME_BASE:latest
-#    - docker push $DOCKER_REGISTRY/$SERVIE_NAME_BASE:$CI_BUILD_REF
-
-deploy:
-  stage: deploy
+build:
+  stage: build
+  image: artifactory.mars.haw-hamburg.de:5000/node:boron
   script:
-    - docker build -t $SERVIE_NAME:latest .
+    - npm -g install --quiet bower gulp
+    - npm install --quiet
+    - bower install
+    - gulp
+  artifacts:
+    paths:
+      - ./node_modules
+      - ./bower_components
+      - ./dist
+      - ./server
+
+
+deploy_prod:
+  stage: deploy_prod
+  script:
+    - docker build -t $SERVIE_NAME:latest -f Dockerfile_prod .
     - docker tag $SERVIE_NAME:latest $DOCKER_REGISTRY/$SERVIE_NAME:$CI_BUILD_ID
     - docker tag $SERVIE_NAME:latest $DOCKER_REGISTRY/$SERVIE_NAME:latest
     - docker tag $SERVIE_NAME:latest $DOCKER_REGISTRY/$SERVIE_NAME:$CI_BUILD_REF
@@ -31,3 +36,15 @@ deploy:
     - docker push $DOCKER_REGISTRY/$SERVIE_NAME:$CI_BUILD_ID
     - docker push $DOCKER_REGISTRY/$SERVIE_NAME:latest
     - docker push $DOCKER_REGISTRY/$SERVIE_NAME:$CI_BUILD_REF
+
+deploy_dev:
+  stage: deploy_dev
+  script:
+    - docker build -t $SERVIE_NAME_DEV:latest -f Dockerfile_dev .
+    - docker tag $SERVIE_NAME_DEV:latest $DOCKER_REGISTRY/$SERVIE_NAME_DEV:$CI_BUILD_ID
+    - docker tag $SERVIE_NAME_DEV:latest $DOCKER_REGISTRY/$SERVIE_NAME_DEV:latest
+    - docker tag $SERVIE_NAME_DEV:latest $DOCKER_REGISTRY/$SERVIE_NAME_DEV:$CI_BUILD_REF
+    - docker login -u $ARTIFACTORY_USER -p $ARTIFACTORY_PW $DOCKER_REGISTRY
+    - docker push $DOCKER_REGISTRY/$SERVIE_NAME_DEV:$CI_BUILD_ID
+    - docker push $DOCKER_REGISTRY/$SERVIE_NAME_DEV:latest
+    - docker push $DOCKER_REGISTRY/$SERVIE_NAME_DEV:$CI_BUILD_REF

@@ -1,0 +1,11 @@
+FROM artifactory.mars.haw-hamburg.de:5000/node:boron
+
+ENV NPM_CONFIG_LOGLEVEL warn
+RUN npm -g install bower gulp
+
+WORKDIR /app
+
+EXPOSE 8080
+
+RUN chmod +x ./entrypoint.sh
+ENTRYPOINT ["sh", "./entrypoint.sh"]
