@@ -17,10 +17,10 @@ build:
     - npm install --quiet
     - bower install
     - gulp
+    - npm prune --production
   artifacts:
     paths:
       - ./node_modules
-      - ./bower_components
       - ./dist
       - ./server
 
