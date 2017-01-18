@@ -38,7 +38,7 @@ deploy_prod:
     - docker push $DOCKER_REGISTRY/$SERVIE_NAME:latest
     - docker push $DOCKER_REGISTRY/$SERVIE_NAME:$CI_BUILD_REF
   dependencies:
-    - build_pr
+    - build_prod
 
 deploy_dev:
   stage: deploy
