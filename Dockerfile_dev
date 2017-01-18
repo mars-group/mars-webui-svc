@@ -7,5 +7,4 @@ WORKDIR /app
 
 EXPOSE 8080
 
-RUN chmod +x ./entrypoint.sh
 ENTRYPOINT ["sh", "./entrypoint.sh"]
