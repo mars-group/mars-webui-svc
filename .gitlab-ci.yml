@@ -20,9 +20,9 @@ build:
     - npm prune --production
   artifacts:
     paths:
-      - ./node_modules
-      - ./dist
-      - ./server
+      - node_modules/
+      - dist/
+      - server/
 
 
 deploy_prod:
