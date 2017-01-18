@@ -1,7 +1,6 @@
 stages:
 - build
-- deploy_prod
-- deploy_dev
+- deploy
 
 variables:
   DOCKER_HOST: "dock-one.mars.haw-hamburg.de:5555"
@@ -9,7 +8,7 @@ variables:
   SERVIE_NAME: "webui-svc"
   SERVIE_NAME_DEV: "webui-svc_dev"
 
-build:
+build_prod:
   stage: build
   image: artifactory.mars.haw-hamburg.de:5000/node:boron
   script:
@@ -23,18 +22,26 @@ build:
       - node_modules/
       - dist/
       - server/
-
+  cache:
+    paths:
+      - node_modules/
 
 deploy_prod:
-  stage: deploy_prod
+  stage: deploy
   script:
-  - echo "test"
-  - ls -l
+    - docker build -t $SERVIE_NAME:latest -f Dockerfile_prod .
+    - docker tag $SERVIE_NAME:latest $DOCKER_REGISTRY/$SERVIE_NAME:$CI_BUILD_ID
+    - docker tag $SERVIE_NAME:latest $DOCKER_REGISTRY/$SERVIE_NAME:latest
+    - docker tag $SERVIE_NAME:latest $DOCKER_REGISTRY/$SERVIE_NAME:$CI_BUILD_REF
+    - docker login -u $ARTIFACTORY_USER -p $ARTIFACTORY_PW $DOCKER_REGISTRY
+    - docker push $DOCKER_REGISTRY/$SERVIE_NAME:$CI_BUILD_ID
+    - docker push $DOCKER_REGISTRY/$SERVIE_NAME:latest
+    - docker push $DOCKER_REGISTRY/$SERVIE_NAME:$CI_BUILD_REF
   dependencies:
-    - build
+    - build_pr
 
 deploy_dev:
-  stage: deploy_dev
+  stage: deploy
   script:
     - docker build -t $SERVIE_NAME_DEV:latest -f Dockerfile_dev .
     - docker tag $SERVIE_NAME_DEV:latest $DOCKER_REGISTRY/$SERVIE_NAME_DEV:$CI_BUILD_ID
