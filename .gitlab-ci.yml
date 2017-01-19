@@ -3,7 +3,6 @@ stages:
 - deploy
 
 variables:
-  DOCKER_HOST: "dock-one.mars.haw-hamburg.de:5555"
   DOCKER_REGISTRY: "artifactory.mars.haw-hamburg.de:5002"
   SERVICE_NAME: "webui-svc"
   SERVICE_NAME_DEV: "webui-svc_dev"
