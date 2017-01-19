@@ -29,7 +29,6 @@ deploy_prod:
   stage: deploy
   script:
 
-    - export DOCKER_HOST=$DOCKER_HOST
     - ls -l  
     - pwd
     - cd node_modules
@@ -47,7 +46,6 @@ deploy_prod:
 deploy_dev:
   stage: deploy
   script:
-    - export DOCKER_HOST=$DOCKER_HOST
     - docker build -t $SERVICE_NAME_DEV:latest -f Dockerfile_dev .
     - docker tag $SERVICE_NAME_DEV:latest $DOCKER_REGISTRY/$SERVICE_NAME_DEV:$CI_BUILD_ID
     - docker tag $SERVICE_NAME_DEV:latest $DOCKER_REGISTRY/$SERVICE_NAME_DEV:latest
