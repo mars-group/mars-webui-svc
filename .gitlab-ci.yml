@@ -5,8 +5,8 @@ stages:
 variables:
   DOCKER_HOST: "dock-one.mars.haw-hamburg.de:5555"
   DOCKER_REGISTRY: "artifactory.mars.haw-hamburg.de:5002"
-  SERVIE_NAME: "webui-svc"
-  SERVIE_NAME_DEV: "webui-svc_dev"
+  SERVICE_NAME: "webui-svc"
+  SERVICE_NAME_DEV: "webui-svc_dev"
 
 build_prod:
   stage: build
@@ -18,6 +18,7 @@ build_prod:
     - gulp
     - npm prune --production
   artifacts:
+    expire_in: 1 day
     paths:
       - node_modules/
       - dist/
@@ -29,25 +30,27 @@ build_prod:
 deploy_prod:
   stage: deploy
   script:
-    - docker build -t $SERVIE_NAME:latest -f Dockerfile_prod .
-    - docker tag $SERVIE_NAME:latest $DOCKER_REGISTRY/$SERVIE_NAME:$CI_BUILD_ID
-    - docker tag $SERVIE_NAME:latest $DOCKER_REGISTRY/$SERVIE_NAME:latest
-    - docker tag $SERVIE_NAME:latest $DOCKER_REGISTRY/$SERVIE_NAME:$CI_BUILD_REF
+    - export DOCKER_HOST=$DOCKER_HOST
+    - docker build -t $SERVICE_NAME:latest -f Dockerfile_prod .
+    - docker tag $SERVICE_NAME:latest $DOCKER_REGISTRY/$SERVICE_NAME:$CI_BUILD_ID
+    - docker tag $SERVICE_NAME:latest $DOCKER_REGISTRY/$SERVICE_NAME:latest
+    - docker tag $SERVICE_NAME:latest $DOCKER_REGISTRY/$SERVICE_NAME:$CI_BUILD_REF
     - docker login -u $ARTIFACTORY_USER -p $ARTIFACTORY_PW $DOCKER_REGISTRY
-    - docker push $DOCKER_REGISTRY/$SERVIE_NAME:$CI_BUILD_ID
-    - docker push $DOCKER_REGISTRY/$SERVIE_NAME:latest
-    - docker push $DOCKER_REGISTRY/$SERVIE_NAME:$CI_BUILD_REF
+    - docker push $DOCKER_REGISTRY/$SERVICE_NAME:$CI_BUILD_ID
+    - docker push $DOCKER_REGISTRY/$SERVICE_NAME:latest
+    - docker push $DOCKER_REGISTRY/$SERVICE_NAME:$CI_BUILD_REF
   dependencies:
     - build_prod
 
 deploy_dev:
   stage: deploy
   script:
-    - docker build -t $SERVIE_NAME_DEV:latest -f Dockerfile_dev .
-    - docker tag $SERVIE_NAME_DEV:latest $DOCKER_REGISTRY/$SERVIE_NAME_DEV:$CI_BUILD_ID
-    - docker tag $SERVIE_NAME_DEV:latest $DOCKER_REGISTRY/$SERVIE_NAME_DEV:latest
-    - docker tag $SERVIE_NAME_DEV:latest $DOCKER_REGISTRY/$SERVIE_NAME_DEV:$CI_BUILD_REF
+    - export DOCKER_HOST=$DOCKER_HOST
+    - docker build -t $SERVICE_NAME_DEV:latest -f Dockerfile_dev .
+    - docker tag $SERVICE_NAME_DEV:latest $DOCKER_REGISTRY/$SERVICE_NAME_DEV:$CI_BUILD_ID
+    - docker tag $SERVICE_NAME_DEV:latest $DOCKER_REGISTRY/$SERVICE_NAME_DEV:latest
+    - docker tag $SERVICE_NAME_DEV:latest $DOCKER_REGISTRY/$SERVICE_NAME_DEV:$CI_BUILD_REF
     - docker login -u $ARTIFACTORY_USER -p $ARTIFACTORY_PW $DOCKER_REGISTRY
-    - docker push $DOCKER_REGISTRY/$SERVIE_NAME_DEV:$CI_BUILD_ID
-    - docker push $DOCKER_REGISTRY/$SERVIE_NAME_DEV:latest
-    - docker push $DOCKER_REGISTRY/$SERVIE_NAME_DEV:$CI_BUILD_REF
+    - docker push $DOCKER_REGISTRY/$SERVICE_NAME_DEV:$CI_BUILD_ID
+    - docker push $DOCKER_REGISTRY/$SERVICE_NAME_DEV:latest
+    - docker push $DOCKER_REGISTRY/$SERVICE_NAME_DEV:$CI_BUILD_REF
