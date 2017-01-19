@@ -4,8 +4,8 @@ WORKDIR /app
 
 COPY node_modules_prod/ node_modules
 COPY dist/ dist
-COPY server/app.js .
+COPY server/ server
 
 EXPOSE 8080
 
-ENTRYPOINT ["node", "app.js"]
+ENTRYPOINT ["node", "server/app.js"]
