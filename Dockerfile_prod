@@ -2,9 +2,12 @@ FROM artifactory.mars.haw-hamburg.de:5000/node:boron-alpine
 
 WORKDIR /app
 
-COPY node_modules_prod/ /app/node_modules
-COPY dist/ /app/dist
-COPY server/ /app/server
+COPY node_modules_prod/ .
+COPY dist/ .
+COPY server/ .
+
+RUN pwd
+RUN ls -l
 
 EXPOSE 8080
 
