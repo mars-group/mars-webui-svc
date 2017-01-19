@@ -15,12 +15,13 @@ build_prod:
   stage: build
   image: artifactory.mars.haw-hamburg.de:5000/node:boron
   script:
-    - tar -zxf node_cache.tar.gz node_modules/  #unpack cache
+    # unpack cache, if it exists
+    - test -e node_modules.tar.gz && tar -zxf node_modules.tar.gz || echo "No node_modules caches available."
     - npm -g install --quiet bower gulp
     - npm install --quiet
     - bower install --quiet
     - gulp  # build dist/
-    - tar -zcf node_cache.tar.gz node_modules/ # compress cache
+    - tar -zcf node_modules.tar.gz node_modules/ # compress cache
     - npm prune --quiet --production # cleanup non-production packages
   artifacts:
     expire_in: 1 day
@@ -30,7 +31,7 @@ build_prod:
       - server/
   cache:
     paths:
-      - node_cache.tar.gz
+      - node_modules.tar.gz
       - bower_components/
 
 deploy_prod:
