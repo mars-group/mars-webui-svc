@@ -39,14 +39,14 @@ deploy_prod:
     - docker push $DOCKER_REGISTRY/$SERVICE_NAME:$CI_BUILD_REF
 
 
-deploy_dev:
-  stage: deploy
-  script:
-    - docker build -t $SERVICE_NAME_DEV:latest -f Dockerfile_dev .
-    - docker tag $SERVICE_NAME_DEV:latest $DOCKER_REGISTRY/$SERVICE_NAME_DEV:$CI_BUILD_ID
-    - docker tag $SERVICE_NAME_DEV:latest $DOCKER_REGISTRY/$SERVICE_NAME_DEV:latest
-    - docker tag $SERVICE_NAME_DEV:latest $DOCKER_REGISTRY/$SERVICE_NAME_DEV:$CI_BUILD_REF
-    - docker login -u $ARTIFACTORY_USER -p $ARTIFACTORY_PW $DOCKER_REGISTRY
-    - docker push $DOCKER_REGISTRY/$SERVICE_NAME_DEV:$CI_BUILD_ID
-    - docker push $DOCKER_REGISTRY/$SERVICE_NAME_DEV:latest
-    - docker push $DOCKER_REGISTRY/$SERVICE_NAME_DEV:$CI_BUILD_REF
+#deploy_dev:
+#  stage: deploy
+#  script:
+#    - docker build -t $SERVICE_NAME_DEV:latest -f Dockerfile_dev .
+#    - docker tag $SERVICE_NAME_DEV:latest $DOCKER_REGISTRY/$SERVICE_NAME_DEV:$CI_BUILD_ID
+#    - docker tag $SERVICE_NAME_DEV:latest $DOCKER_REGISTRY/$SERVICE_NAME_DEV:latest
+#    - docker tag $SERVICE_NAME_DEV:latest $DOCKER_REGISTRY/$SERVICE_NAME_DEV:$CI_BUILD_REF
+#    - docker login -u $ARTIFACTORY_USER -p $ARTIFACTORY_PW $DOCKER_REGISTRY
+#    - docker push $DOCKER_REGISTRY/$SERVICE_NAME_DEV:$CI_BUILD_ID
+#    - docker push $DOCKER_REGISTRY/$SERVICE_NAME_DEV:latest
+#    - docker push $DOCKER_REGISTRY/$SERVICE_NAME_DEV:$CI_BUILD_REF
