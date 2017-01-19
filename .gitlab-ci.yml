@@ -12,34 +12,34 @@ build_prod:
   stage: build
   image: artifactory.mars.haw-hamburg.de:5000/node:boron
   script:
-    - npm -g install --quiet bower gulp
-    - npm install --quiet
-    - bower install --quiet
-    - gulp
-    - npm prune --quiet --production
+  - npm -g install --quiet bower gulp
+  - npm install --quiet
+  - bower install --quiet
+  - gulp
+  - npm prune --quiet --production
   artifacts:
     expire_in: 1 day
     paths:
-      - node_modules/
-      - dist/
-      - server/
+    - node_modules/
+    - dist/
+    - server/
   cache:
-    - paths:
-      - node_modules/
-      - bower_components/
+    paths:
+    - node_modules/
+    - bower_components/
 
 deploy_prod:
   stage: deploy
   script:
-    - mv node_modules/ node_modules_prod/
-    - docker build -t $SERVICE_NAME:latest -f Dockerfile .
-    - docker tag $SERVICE_NAME:latest $DOCKER_REGISTRY/$SERVICE_NAME:$CI_BUILD_ID
-    - docker tag $SERVICE_NAME:latest $DOCKER_REGISTRY/$SERVICE_NAME:latest
-    - docker tag $SERVICE_NAME:latest $DOCKER_REGISTRY/$SERVICE_NAME:$CI_BUILD_REF
-    - docker login -u $ARTIFACTORY_USER -p $ARTIFACTORY_PW $DOCKER_REGISTRY
-    - docker push $DOCKER_REGISTRY/$SERVICE_NAME:$CI_BUILD_ID
-    - docker push $DOCKER_REGISTRY/$SERVICE_NAME:latest
-    - docker push $DOCKER_REGISTRY/$SERVICE_NAME:$CI_BUILD_REF
+  - mv node_modules/ node_modules_prod/
+  - docker build -t $SERVICE_NAME:latest .
+  - docker tag $SERVICE_NAME:latest $DOCKER_REGISTRY/$SERVICE_NAME:$CI_BUILD_ID
+  - docker tag $SERVICE_NAME:latest $DOCKER_REGISTRY/$SERVICE_NAME:latest
+  - docker tag $SERVICE_NAME:latest $DOCKER_REGISTRY/$SERVICE_NAME:$CI_BUILD_REF
+  - docker login -u $ARTIFACTORY_USER -p $ARTIFACTORY_PW $DOCKER_REGISTRY
+  - docker push $DOCKER_REGISTRY/$SERVICE_NAME:$CI_BUILD_ID
+  - docker push $DOCKER_REGISTRY/$SERVICE_NAME:latest
+  - docker push $DOCKER_REGISTRY/$SERVICE_NAME:$CI_BUILD_REF
 
 #
 # Image does not change, so this build is really just necessary once
