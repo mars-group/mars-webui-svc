@@ -28,9 +28,8 @@ build_prod:
 deploy_prod:
   stage: deploy
   script:
+    - mv node_modules nm
     - ls -l
-    - pwd
-    - export DOCKER_HOST=$DOCKER_HOST
     - docker build -t $SERVICE_NAME:latest -f Dockerfile_prod .
     - docker tag $SERVICE_NAME:latest $DOCKER_REGISTRY/$SERVICE_NAME:$CI_BUILD_ID
     - docker tag $SERVICE_NAME:latest $DOCKER_REGISTRY/$SERVICE_NAME:latest
