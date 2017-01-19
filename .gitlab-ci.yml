@@ -17,6 +17,7 @@ build_prod:
     - bower install
     - gulp
     - npm prune --production
+    - ls -l
   artifacts:
     paths:
       - node_modules/
@@ -29,6 +30,7 @@ build_prod:
 deploy_prod:
   stage: deploy
   script:
+    - ls -l
     - docker build -t $SERVIE_NAME:latest -f Dockerfile_prod .
     - docker tag $SERVIE_NAME:latest $DOCKER_REGISTRY/$SERVIE_NAME:$CI_BUILD_ID
     - docker tag $SERVIE_NAME:latest $DOCKER_REGISTRY/$SERVIE_NAME:latest
