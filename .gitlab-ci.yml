@@ -31,9 +31,9 @@ deploy_prod:
 
     - ls -l  
     - pwd
-    - cd node_modules
-    
     - docker build -t $SERVICE_NAME:latest -f Dockerfile_prod .
+    
+    
     - docker tag $SERVICE_NAME:latest $DOCKER_REGISTRY/$SERVICE_NAME:$CI_BUILD_ID
     - docker tag $SERVICE_NAME:latest $DOCKER_REGISTRY/$SERVICE_NAME:latest
     - docker tag $SERVICE_NAME:latest $DOCKER_REGISTRY/$SERVICE_NAME:$CI_BUILD_REF
