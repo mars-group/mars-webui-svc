@@ -23,9 +23,7 @@ build_prod:
       - node_modules/
       - dist/
       - server/
-  cache:
-    paths:
-      - node_modules/
+
 
 deploy_prod:
   stage: deploy
@@ -39,8 +37,7 @@ deploy_prod:
     - docker push $DOCKER_REGISTRY/$SERVICE_NAME:$CI_BUILD_ID
     - docker push $DOCKER_REGISTRY/$SERVICE_NAME:latest
     - docker push $DOCKER_REGISTRY/$SERVICE_NAME:$CI_BUILD_REF
-  dependencies:
-    - build_prod
+
 
 deploy_dev:
   stage: deploy
