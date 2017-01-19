@@ -28,12 +28,9 @@ build_prod:
 deploy_prod:
   stage: deploy
   script:
-
-    - ls -l  
+    - ls -l
     - pwd
     - docker build -t $SERVICE_NAME:latest -f Dockerfile_prod .
-    
-    
     - docker tag $SERVICE_NAME:latest $DOCKER_REGISTRY/$SERVICE_NAME:$CI_BUILD_ID
     - docker tag $SERVICE_NAME:latest $DOCKER_REGISTRY/$SERVICE_NAME:latest
     - docker tag $SERVICE_NAME:latest $DOCKER_REGISTRY/$SERVICE_NAME:$CI_BUILD_REF

@@ -2,10 +2,12 @@ FROM artifactory.mars.haw-hamburg.de:5000/node:boron-alpine
 
 WORKDIR /app
 
-# TODO: just use node_modules needed for production
-COPY ./node_modules /app/node_modules
-COPY ./dist /app/dist
-COPY ./server /app/server
+RUN ls -l
+RUN pwd
+
+COPY node_modules /app/node_modules
+COPY dist /app/dist
+COPY server /app/server
 
 EXPOSE 8080
 
