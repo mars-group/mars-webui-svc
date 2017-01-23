@@ -2,7 +2,7 @@
 
 Maintainer: Lennart @abv081
 
-### Development Dockerfile build (unix)
+### Development Dockerfile build (UNIX)
 Open your favorite Terminal and run these commands in repo root folder:
 
 ```sh
