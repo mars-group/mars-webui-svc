@@ -7,7 +7,7 @@
       var currentScenario = null;
       var onChangeListener = [];
 
-      var project = Project.getCurrentProject().id;
+      var project = Project.getId();
 
       var isCurrentScenarioSet = function () {
         return currentScenario && !angular.equals(currentScenario, {});

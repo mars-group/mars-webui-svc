@@ -12,7 +12,7 @@
     vm.scenario = {};
     vm.alerts = new Alert();
 
-    var project = Project.getCurrentProject().id;
+    var project = Project.getId();
 
     var params = {
       type: 'MODEL',
