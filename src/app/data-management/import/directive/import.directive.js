@@ -20,7 +20,7 @@
   }
 
   /** @ngInject */
-  var importController = function ($scope, $log, $uibModal, $document, FileUploader, Metadata, Alert, Project) {
+  var importController = function ($scope, $log, $uibModal, $document, FileUploader, Metadata, Alert, Project, User) {
     var vm = this;
 
     vm.isModelUpload = $scope.dataTypes[0].name === 'MODEL';
@@ -39,8 +39,8 @@
 
     vm.Data = function () {
       return {
-        projectId: Project.getCurrentProject().id,
-        userId: 1 // todo: add real id
+        projectId: Project.getId(),
+        userId: User.getId()
       };
     };
 

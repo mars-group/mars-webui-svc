@@ -20,7 +20,7 @@
     vm.validationErrors = null;
 
     Config.isDevelopment(function (res) {
-      vm.development = res;
+      // vm.development = res;
     });
 
     var selectNodeInfoMessage = 'Select a Layer on the left. In the appearing area, push the "select" button and match a field ' +

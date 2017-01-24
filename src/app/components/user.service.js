@@ -3,16 +3,16 @@
 
   angular
     .module('marsApp')
-    .factory('Project', function Project() {
+    .factory('User', function Project() {
 
-      var project = {
-        id: '42'
+      var user = {
+        id: '1'
       };
 
       // TODO: implement it for real
       return {
         getId: function () {
-          return project;
+          return user.id;
         }
       };
 
