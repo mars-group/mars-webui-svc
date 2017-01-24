@@ -12,9 +12,9 @@
           <label for="simulationPlanName">SimulationPlan Name</label>
           <input class="form-control" ng-model="simrunner.SimPlanName" id="simulationPlanName" placeholder="My Awesome SimPlan">
           <label for="simulationPlanResultConfig">Result Configuration</label>
-          <input class="form-control" ng-model="simrunner.SimPlanName" disabled="true" id="simulationPlanResultConfig" placeholder="Choose your Result Configuration (disabled at the moment)">
+          <input class="form-control" disabled="true" id="simulationPlanResultConfig" placeholder="Choose your Result Configuration (disabled at the moment)">
           <label for="simulationPlanExecution">Result Configuration</label>
-          <input class="form-control" ng-model="simrunner.SimPlanName" disabled="true" id="simulationPlanExecution" placeholder="Choose your Execution Configuration (disabled at the moment)">
+          <input class="form-control" disabled="true" id="simulationPlanExecution" placeholder="Choose your Execution Configuration (disabled at the moment)">
         </div>
         <button type="submit" class="btn btn-success btn-lg" ng-disabled="simrunner.SimPlanName == ''" ng-click="simrunner.CreateSimPlan()">Create Simulation Plan</button>
       </form>

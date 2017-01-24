@@ -11,10 +11,12 @@
 
     vm.SimPlans = [];
 
+    vm.ScenarioId = "";
 
-    (function() {
+      (function() {
       var currentScenario = Scenario.getCurrentScenario();
       if(currentScenario !== null) {
+        vm.ScenarioId = Scenario.getCurrentScenario().ScenarioId;
         SimRunner.getAllSimPlans({"scenarioid": currentScenario.ScenarioId}, function(res){
           vm.SimPlans = res;
         });
@@ -22,7 +24,7 @@
     }());
 
 
-    vm.ScenarioId = Scenario.getCurrentScenario().ScenarioId;
+
     vm.SimPlanName = "";
 
     vm.CreateSimPlan = function(){
