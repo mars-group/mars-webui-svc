@@ -7,8 +7,11 @@
 
     <table ng-table="mappingModal.tableParams" class="table table-condensed">
       <tr ng-repeat="row in $data">
-        <td data-title="'Namespace'" data-sortable="'Namespace'">
-          {{ row.Namespace }}
+        <td data-title="'Type'" data-sortable="'Type'">
+          {{ row.Location.LocationType }}
+        </td>
+        <td data-title="'Parameter'" data-sortable="'Parameter'">
+          {{ row.Location.Parameter }}
         </td>
         <td data-title="'Description'" data-sortable="'Description'">
           {{ row.Description }}
