@@ -11,5 +11,5 @@ Open your favorite Terminal and run these commands in repo root folder:
 $ docker build -t web-ui-dev:01 -f Dockerfile_dev .
 ```
 ```sh
-$ docker run -it -p 8080:8080 -e "DEVELOPER_EDITION=true" -v $(pwd)/entrypoint.sh:/app/entrypoint.sh -v $(pwd):/app web-ui-dev:01
+$ docker run -it -p 8080:8080 -v $(pwd):/app web-ui-dev:01
 ```
