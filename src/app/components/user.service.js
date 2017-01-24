@@ -6,7 +6,7 @@
     .factory('User', function Project() {
 
       var user = {
-        id: '1'
+        id: 1
       };
 
       // TODO: implement it for real

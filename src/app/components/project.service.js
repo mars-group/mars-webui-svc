@@ -12,7 +12,7 @@
       // TODO: implement it for real
       return {
         getId: function () {
-          return project;
+          return project.id;
         }
       };
 
