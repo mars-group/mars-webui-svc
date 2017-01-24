@@ -31,6 +31,10 @@
           delete alerts[key];
         };
 
+        vm.removeAll = function () {
+          alerts = {};
+        };
+
       };
     });
 

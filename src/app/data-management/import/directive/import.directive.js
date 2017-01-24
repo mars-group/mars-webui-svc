@@ -47,6 +47,8 @@
     vm.uploader.filters.push({
       name: 'allowedFilesFilter',
       fn: function (item) {
+        vm.alerts.removeAll();
+
         if (vm.uploader.progress === 100 && vm.uploader.isUploading === false) {
           vm.uploader.clearQueue();
           vm.removeAllUploads();
