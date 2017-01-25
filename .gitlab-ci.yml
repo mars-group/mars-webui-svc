@@ -43,11 +43,11 @@ deploy_prod:
   script:
     - mv node_modules/ node_modules_prod/ # fix some strange bug, where the name causes an issue.
     - docker build -t $SERVICE_NAME:latest .
-    - docker tag $SERVICE_NAME:latest $DOCKER_REGISTRY/$SERVICE_NAME:$CI_BUILD_ID
+    - docker tag $SERVICE_NAME:latest $DOCKER_REGISTRY/$SERVICE_NAME:$CI_PIPELINE_ID
     - docker tag $SERVICE_NAME:latest $DOCKER_REGISTRY/$SERVICE_NAME:latest
     - docker tag $SERVICE_NAME:latest $DOCKER_REGISTRY/$SERVICE_NAME:$CI_BUILD_REF
     - docker login -u $ARTIFACTORY_USER -p $ARTIFACTORY_PW $DOCKER_REGISTRY
-    - docker push $DOCKER_REGISTRY/$SERVICE_NAME:$CI_BUILD_ID
+    - docker push $DOCKER_REGISTRY/$SERVICE_NAME:$CI_PIPELINE_ID
     - docker push $DOCKER_REGISTRY/$SERVICE_NAME:latest
     - docker push $DOCKER_REGISTRY/$SERVICE_NAME:$CI_BUILD_REF
 
@@ -58,10 +58,10 @@ deploy_prod:
 #  stage: deploy
 #  script:
 #    - docker build -t $SERVICE_NAME_DEV:latest -f Dockerfile_dev .
-#    - docker tag $SERVICE_NAME_DEV:latest $DOCKER_REGISTRY/$SERVICE_NAME_DEV:$CI_BUILD_ID
+#    - docker tag $SERVICE_NAME_DEV:latest $DOCKER_REGISTRY/$SERVICE_NAME_DEV:$CI_PIPELINE_ID
 #    - docker tag $SERVICE_NAME_DEV:latest $DOCKER_REGISTRY/$SERVICE_NAME_DEV:latest
 #    - docker tag $SERVICE_NAME_DEV:latest $DOCKER_REGISTRY/$SERVICE_NAME_DEV:$CI_BUILD_REF
 #    - docker login -u $ARTIFACTORY_USER -p $ARTIFACTORY_PW $DOCKER_REGISTRY
-#    - docker push $DOCKER_REGISTRY/$SERVICE_NAME_DEV:$CI_BUILD_ID
+#    - docker push $DOCKER_REGISTRY/$SERVICE_NAME_DEV:$CI_PIPELINE_ID
 #    - docker push $DOCKER_REGISTRY/$SERVICE_NAME_DEV:latest
 #    - docker push $DOCKER_REGISTRY/$SERVICE_NAME_DEV:$CI_BUILD_REF
