@@ -21,7 +21,6 @@ build_prod:
     - npm install --quiet
     - bower install --quiet
     - 'echo "{
-          "buildId": $CI_BUILD_ID,
           "pipelineId": $CI_PIPELINE_ID,
           "commitId": $CI_BUILD_REF
       }" > src/version.json'
