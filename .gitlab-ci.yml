@@ -20,11 +20,11 @@ build_prod:
     - npm -g install --quiet bower gulp
     - npm install --quiet
     - bower install --quiet
-    - echo "{
-          \"buildId\": \"${CI_BUILD_ID}\",
-          \"pipelineId\": \"${CI_PIPELINE_ID}\",
-          \"commitId\": \"${CI_BUILD_REF}\"
-      }" > src/version.json
+    - 'echo "{
+          "buildId": $CI_BUILD_ID,
+          "pipelineId": $CI_PIPELINE_ID,
+          "commitId": $CI_BUILD_REF
+      }" > src/version.json'
     - gulp  # build dist/
     - tar -zcf node_modules.tar.gz node_modules/ # compress cache
     - npm prune --quiet --production # cleanup non-production packages
