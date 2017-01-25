@@ -33,8 +33,16 @@
   }
 
   .popover {
-    color: black;
     max-width: 100%;
+    color: black;
+
+    .popover-content {
+      width: 105%;
+    }
+
+    .bold {
+      font-weight: bold;
+    }
   }
 
   .scenario {
