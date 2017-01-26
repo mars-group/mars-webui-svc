@@ -14,17 +14,29 @@
 
     vm.ScenarioId = "";
 
-      (function() {
+    (function() {
       var currentScenario = Scenario.getCurrentScenario();
       if(currentScenario !== null) {
         vm.ScenarioId = Scenario.getCurrentScenario().ScenarioId;
-        SimRunner.getAllSimPlans({"scenarioid": currentScenario.ScenarioId}, function(res){
+        SimRunner.getAllSimPlans({"scenarioid": vm.ScenarioId}, function(res){
           vm.SimPlans = res;
         });
+
       }
     }());
 
+    Scenario.registerOnChangeListener(function(){
+      vm.ScenarioId = Scenario.getCurrentScenario().ScenarioId;
+      SimRunner.getAllSimPlans({"scenarioid": vm.ScenarioId}, function(res){
+        vm.SimPlans = res;
+      });
+    });
 
+    vm.GetAllSimRunsForSimPlan = function(simPlan) {
+      SimRunner.getAllSimRuns({simPlanId: simPlan.id}, function(res){
+
+      });
+    };
 
     vm.SimPlanName = "";
 

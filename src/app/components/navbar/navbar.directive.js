@@ -46,10 +46,10 @@
           ]
         },
         {
-          title: 'Simulate',
+          title: 'Setup',
           children: [
             {
-              title: 'Scenario management',
+              title: 'Scenario Management',
               url: 'scenario'
             },
             {
@@ -59,6 +59,15 @@
             {
               title: 'Result Configuration',
               url: 'resultconfig'
+            }
+          ]
+        },
+        {
+          title: 'Simulation',
+          children: [
+            {
+              title: 'Execution Config',
+              url: ''
             },
             {
               title: 'Run',

@@ -17,11 +17,17 @@
     vm.error = false;           // \ Cannot be saved or deleted. --default--
 
     (function() {
-      if (Scenario.getCurrentScenario() != null) {
+      if (Scenario.getCurrentScenario() !== null) {
         loadModel(Scenario.getCurrentScenario()["ModelMetaData"]);
       }
       else vm.error = true;
     }());
+
+    Scenario.registerOnChangeListener(function(){
+      loadModel(Scenario.getCurrentScenario()["ModelMetaData"]);
+      vm.error = false;
+    });
+
 
 
     /** Initialization function. This function loads the model structure and creates the
