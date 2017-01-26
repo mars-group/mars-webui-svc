@@ -19,7 +19,9 @@
       if(currentScenario !== null) {
         vm.ScenarioId = Scenario.getCurrentScenario().ScenarioId;
         SimRunner.getAllSimPlans({"scenarioid": vm.ScenarioId}, function(res){
-          vm.SimPlans = res;
+          if(res !== "" && !res.error) {
+            vm.SimPlans = res;
+          }
         });
 
       }
@@ -28,13 +30,13 @@
     Scenario.registerOnChangeListener(function(){
       vm.ScenarioId = Scenario.getCurrentScenario().ScenarioId;
       SimRunner.getAllSimPlans({"scenarioid": vm.ScenarioId}, function(res){
-        vm.SimPlans = res;
+        if(!res.error) {vm.SimPlans = res;}
       });
     });
 
     vm.GetAllSimRunsForSimPlan = function(simPlan) {
       SimRunner.getAllSimRuns({simPlanId: simPlan.id}, function(res){
-
+        simPlan.simRuns = res;
       });
     };
 
@@ -47,17 +49,20 @@
     };
 
     vm.StartSimulationRun = function(simPlanId){
-      SimRunner.startSimPlan(simPlanId, function(res){
-        vm.SimRuns.push(simPlanId);
-        /*
-        angular.forEach(vm.SimRunsForSimPlans, function(elem){
-          var newSimRun = {};
-          newSimRun.status = "init";
-          if(elem.Id == simPlanId) {
-            vm.
+      SimRunner.startSimPlan(simPlanId, function(simId){
+        var newSimrun = {SimulationId: simId};
+        var simPlan;
+        angular.forEach(vm.SimPlans, function(elem){
+          if(elem.id == simPlanId) {
+            simPlan = elem;
+            if(!simPlan.simRuns){
+              simPlan.simRuns = [];
+            }
+
+            simPlan.simRuns.push(newSimrun);
+
           }
         });
-        */
       });
     };
   }

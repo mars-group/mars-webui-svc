@@ -27,7 +27,6 @@
         <th>Control</th>
         <th>Nr. of Execs</th>
         <th>Image Name</th>
-        <th>Simulation ID</th>
       </thead>
       <tbody  ng-repeat="simPlan in simrunner.SimPlans">
         <tr>
@@ -36,24 +35,38 @@
             <button type="button" class="btn btn-success" ng-click="simrunner.StartSimulationRun(simPlan.id)">
               <span class="glyphicon glyphicon-play" aria-hidden="true"></span> Run
             </button>
+
           </td>
           <td>{{simPlan.ExecutionCount}}</td>
           <td>{{simPlan.DockerImageName}}</td>
-          <td>{{simPlan.SimulationId}}</td>
+        </tr>
+        <tr ng-show="simPlan.ExecutionCount >= 1" >
+          <td>
+            <button class="btn btn-primary" type="button" ng-click="simrunner.GetAllSimRunsForSimPlan(simPlan); status.open = !status.open">
+              Show Simruns
+            </button>
+          </td>
+          <td colspan=3>
+            <div data-uib-collapse="!status.open">
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" ng-model="oneAtATime" checked>
+                  Open only one at a time
+                </label>
+              </div>
+              <uib-accordion close-others="oneAtATime">
+                <div uib-accordion-group class="panel-default" heading="{{simRun.PodName}}" ng-repeat="simRun in simPlan.simRuns">
+                  SimulationID: {{simRun.SimulationId}} <br>
+                  Status: {{simRun.Status}} <br>
+                  CurrentTick: {{simRun.CurrentTick}} <br>
+                </div>
+              </uib-accordion>
+
+            </div>
+          </td>
         </tr>
       </tbody>
     </table>
-
-      <table class="table">
-        <thead>
-        <th>Name</th>
-        </thead>
-        <tbody  ng-repeat="simRun in simrunner.SimRuns">
-        <tr>
-          <td>{{simRun}}</td>
-        </tr>
-        </tbody>
-      </table>
 
   </div>
 
