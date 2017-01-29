@@ -49,17 +49,14 @@
     };
 
     vm.StartSimulationRun = function(simPlanId){
-      SimRunner.startSimPlan(simPlanId, function(simId){
-        var newSimrun = {SimulationId: simId};
-        var simPlan;
+      SimRunner.startSimPlan(simPlanId, function(newSimrun){
         angular.forEach(vm.SimPlans, function(elem){
-          if(elem.id == simPlanId) {
-            simPlan = elem;
-            if(!simPlan.simRuns){
-              simPlan.simRuns = [];
+          if(elem.id == newSimrun.SimPlanId) {
+            if(!elem.simRuns){
+              elem.simRuns = [];
             }
 
-            simPlan.simRuns.push(newSimrun);
+            elem.simRuns.push(newSimrun);
 
           }
         });
