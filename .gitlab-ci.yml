@@ -29,6 +29,7 @@ build_dependencies:
     expire_in: 1 hour
     paths:
       - node_modules/
+      - node_modules.tar.gz
       - dist/
   cache:
     paths:
@@ -41,7 +42,6 @@ deploy_production:
   stage: deploy
   script:
     - export DOCKER_HOST=$DOCKER_HOST
-    - mv node_modules/ node_modules_prod/ # fix some strange bug, where the name causes an issue.
     - docker build -t $SERVICE_NAME:latest .
     - docker tag $SERVICE_NAME:latest $DOCKER_REGISTRY/$SERVICE_NAME:$CI_PIPELINE_ID
     - docker tag $SERVICE_NAME:latest $DOCKER_REGISTRY/$SERVICE_NAME:latest
@@ -56,8 +56,8 @@ deploy_development:
   script:
     - export DOCKER_HOST=$DOCKER_HOST
     # unpack cache, if it exists
-    - test -e node_modules.tar.gz && tar -zxf node_modules.tar.gz || echo "No node_modules caches available."
-    - rm -rf dist/ # remove production directory.
+#    - test -e node_modules.tar.gz && tar -zxf node_modules.tar.gz || echo "No node_modules caches available."
+#    - rm -rf dist/ # remove production directory.
     - docker build -t $SERVICE_NAME_DEV:latest -f Dockerfile_dev .
     - docker tag $SERVICE_NAME_DEV:latest $DOCKER_REGISTRY/$SERVICE_NAME_DEV:$CI_PIPELINE_ID
     - docker tag $SERVICE_NAME_DEV:latest $DOCKER_REGISTRY/$SERVICE_NAME_DEV:latest
