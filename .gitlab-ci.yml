@@ -11,7 +11,7 @@ variables:
 before_script:
   - export DOCKER_HOST=$DOCKER_HOST
 
-build_production:
+build_dependencies:
   stage: build
   image: artifactory.mars.haw-hamburg.de:5000/node:boron
   script:
@@ -29,7 +29,6 @@ build_production:
     paths:
       - node_modules/
       - dist/
-      - server/
   cache:
     paths:
       - /usr/local/lib/node_modules
@@ -37,11 +36,20 @@ build_production:
       - bower_components/
       - dist/
 
+clean_production:
+  stage: build
+  image: artifactory.mars.haw-hamburg.de:5000/node:boron
+  script:
+    - npm prune --quiet --production # cleanup development packages
+  artifacts:
+    expire_in: 1 hour
+    paths:
+      - node_modules/
+
 deploy_production:
   stage: deploy
   image: artifactory.mars.haw-hamburg.de:5000/node:boron
   script:
-    - npm prune --quiet --production # cleanup development packages
     - mv node_modules/ node_modules_prod/ # fix some strange bug, where the name causes an issue.
     - docker build -t $SERVICE_NAME:latest .
     - docker tag $SERVICE_NAME:latest $DOCKER_REGISTRY/$SERVICE_NAME:$CI_PIPELINE_ID
@@ -55,7 +63,7 @@ deploy_production:
 deploy_development:
   stage: deploy
   script:
-    - rm -rf dist/ server/ # remove production directories
+    - rm -rf dist/ # remove production directory
     - docker build -t $SERVICE_NAME_DEV:latest -f Dockerfile_dev .
     - docker tag $SERVICE_NAME_DEV:latest $DOCKER_REGISTRY/$SERVICE_NAME_DEV:$CI_PIPELINE_ID
     - docker tag $SERVICE_NAME_DEV:latest $DOCKER_REGISTRY/$SERVICE_NAME_DEV:latest
@@ -64,3 +72,5 @@ deploy_development:
     - docker push $DOCKER_REGISTRY/$SERVICE_NAME_DEV:$CI_PIPELINE_ID
     - docker push $DOCKER_REGISTRY/$SERVICE_NAME_DEV:latest
     - docker push $DOCKER_REGISTRY/$SERVICE_NAME_DEV:$CI_BUILD_REF
+  dependencies:
+    - build:build_dependencies
