@@ -62,7 +62,7 @@ deploy_development:
   stage: deploy
   script:
     - export DOCKER_HOST=$DOCKER_HOST
-    - rm -rf dist/ # remove production directory
+    - rm -rf dist/ # remove production directory.
     - docker build -t $SERVICE_NAME_DEV:latest -f Dockerfile_dev .
     - docker tag $SERVICE_NAME_DEV:latest $DOCKER_REGISTRY/$SERVICE_NAME_DEV:$CI_PIPELINE_ID
     - docker tag $SERVICE_NAME_DEV:latest $DOCKER_REGISTRY/$SERVICE_NAME_DEV:latest
