@@ -93,83 +93,16 @@
             return;
           }
 
+          vm.treeData = res;
+
           if (vm.selectedNode) {
-            applyMappingDiff(res);
-          } else {
-            vm.treeData = res;
+            recRestoreSelectedNode(vm.treeData);
           }
 
-          configureTreeView();
+          expandTopLevelNodes();
         }, function (err) {
           $log.error(err);
         });
-    };
-    loadMapping();
-
-    // Jep, I know what you are thinking... However replacing the new data with the old causes #MARS-847
-    var applyMappingDiff = function (newData) {
-      angular.forEach(newData, function (layerTypeVal, layerTypeKey) {
-        angular.forEach(layerTypeVal.Agents, function (layerVal, layerKey) {
-
-          angular.forEach(layerVal.Agents, function (agentVal, agentKey) {
-            if (agentVal.hasOwnProperty('ConstructorParameterMapping')) {
-              // Agent mapping
-              angular.forEach(agentVal.ConstructorParameterMapping, function (constructorVal, constructorKey) {
-                angular.forEach(constructorVal, function (fieldVal, fieldKey) {
-                  vm.treeData[layerTypeKey]
-                    .Agents[layerKey]
-                    .Agents[agentKey]
-                    .ConstructorParameterMapping[constructorKey]
-                    [fieldKey] = fieldVal;
-                });
-              });
-            } else if (!agentVal.hasOwnProperty('Parameters')) {
-              // Layer mapping
-              angular.forEach(agentVal, function (layerFieldVal, layerFieldKey) {
-                vm.treeData[layerTypeKey]
-                  .Agents[layerKey]
-                  .Agents[agentKey]
-                  [layerFieldKey] = layerFieldVal;
-              });
-            }
-          });
-
-          if (layerVal.hasOwnProperty('Name') &&
-            layerVal.Name === 'Agents' || layerVal.Name === 'Global' || layerVal.Name === 'Layers') {
-
-            if (layerVal.hasOwnProperty('Parameters')) {
-              // Global parameters
-              angular.forEach(layerVal.Parameters, function (globalParameterVal, globalParameterKey) {
-                angular.forEach(globalParameterVal, function (globalParameterFieldVal, globalParameterFieldKey) {
-                  if (!angular.isObject(globalParameterFieldVal)) {
-                    vm.treeData[layerTypeKey]
-                      .Agents[layerKey]
-                      .Parameters[globalParameterKey]
-                      [globalParameterFieldKey] = globalParameterFieldVal;
-                  }
-                });
-              });
-            } else {
-              // Agent and Layer parameters
-              angular.forEach(layerVal.Agents, function (parameterLayerTypeVal, parameterLayerTypeKey) {
-                angular.forEach(parameterLayerTypeVal.Parameters, function (parameterLayerVal, parameterLayerKey) {
-                  angular.forEach(parameterLayerVal, function (parameterVal, parameterKey) {
-                    vm.treeData[layerTypeKey]
-                      .Agents[layerKey]
-                      .Agents[parameterLayerTypeKey]
-                      .Parameters[parameterLayerKey]
-                      [parameterKey] = parameterVal;
-                  });
-                });
-              });
-            }
-          }
-        });
-      });
-    };
-
-    var configureTreeView = function () {
-      expandTopLevelNodes();
     };
 
     var expandTopLevelNodes = function () {
@@ -194,6 +127,20 @@
         // vm.selectedNode = vm.treeData[2].Agents[1];
       }
     };
+
+    var recRestoreSelectedNode = function (treeData) {
+      if (treeData.FullName === vm.selectedNode.FullName) {
+        vm.selectedNode = treeData;
+      }
+
+      angular.forEach(treeData, function (value) {
+        if (angular.isObject(value) || angular.isArray(value)) {
+          recRestoreSelectedNode(value);
+        }
+      });
+    };
+
+    loadMapping();
 
     var loadMappingDatasets = function () {
       var params = {

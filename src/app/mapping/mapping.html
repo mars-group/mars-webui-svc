@@ -16,13 +16,13 @@
 
   <div ng-class="mapping.selectedNode && !mapping.selectedNode.Parameters ? 'col-md-6' : 'col-md-9'">
     <!-- Error messages -->
-    <uib-alert ng-repeat="(key, value) in mapping.alerts.getAll()" type="{{value}}" close="mapping.alerts.remove(key)">
-      {{key}}
+    <uib-alert ng-repeat="(key, value) in mapping.alerts.getAll()" type="{{ value }}"
+               close="mapping.alerts.remove(key)">{{ key }}
     </uib-alert>
 
     <button class="btn btn-warning" ng-click="mapping.openErrorModal()"
             ng-if="mapping.validationErrors && !mapping.validationErrors.Successful">
-      {{mapping.validationErrors.Summary}} (click to show)
+      {{ mapping.validationErrors.Summary }} (click to show)
     </button>
 
     <div data-ng-if="!mapping.currentScenario">
@@ -63,11 +63,15 @@
   </div>
 
   <!-- Debugging only -->
-  <div ng-if="mapping.development">
-    Field:
-    <pre data-pretty-json="mapping.selectedField"></pre>
-    Node:
-    <pre data-pretty-json="mapping.selectedNode"></pre>
+  <div data-ng-if="mapping.development">
+    <div data-ng-if="mapping.selectedField">
+      selectedField:
+      <pre data-pretty-json="mapping.selectedField"></pre>
+    </div>
+    <div data-ng-if="mapping.selectedNode">
+      selectedNode:
+      <pre data-pretty-json="mapping.selectedNode"></pre>
+    </div>
   </div>
 
 </div>

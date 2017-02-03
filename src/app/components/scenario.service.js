@@ -7,7 +7,7 @@
       var currentScenario = null;
       var onChangeListener = [];
 
-      var project = Project.getId();
+      var projectId = Project.getId();
 
       var isCurrentScenarioSet = function () {
         return currentScenario && !angular.equals(currentScenario, {});
@@ -22,7 +22,7 @@
       var getScenarios = function loadScenarios(callback) {
         var config = {
           params: {
-            Project: project
+            Project: projectId
           }
         };
 
@@ -40,7 +40,7 @@
       var getScenario = function loadScenarios(id, callback) {
         var config = {
           params: {
-            Project: project
+            Project: projectId
           }
         };
 
