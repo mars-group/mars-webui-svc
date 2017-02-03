@@ -1,5 +1,6 @@
 stages:
   - build
+  - clean
   - deploy
 
 variables:
@@ -7,9 +8,6 @@ variables:
   DOCKER_REGISTRY: "artifactory.mars.haw-hamburg.de:5002"
   SERVICE_NAME: "webui-svc"
   SERVICE_NAME_DEV: "webui-svc_dev"
-
-before_script:
-  - export DOCKER_HOST=$DOCKER_HOST
 
 build_dependencies:
   stage: build
@@ -37,7 +35,7 @@ build_dependencies:
       - dist/
 
 clean_production:
-  stage: build
+  stage: clean
   image: artifactory.mars.haw-hamburg.de:5000/node:boron
   script:
     - npm prune --quiet --production # cleanup development packages
@@ -49,6 +47,7 @@ clean_production:
 deploy_production:
   stage: deploy
   script:
+    - export DOCKER_HOST=$DOCKER_HOST
     - mv node_modules/ node_modules_prod/ # fix some strange bug, where the name causes an issue.
     - docker build -t $SERVICE_NAME:latest .
     - docker tag $SERVICE_NAME:latest $DOCKER_REGISTRY/$SERVICE_NAME:$CI_PIPELINE_ID
@@ -62,6 +61,7 @@ deploy_production:
 deploy_development:
   stage: deploy
   script:
+    - export DOCKER_HOST=$DOCKER_HOST
     - rm -rf dist/ # remove production directory
     - docker build -t $SERVICE_NAME_DEV:latest -f Dockerfile_dev .
     - docker tag $SERVICE_NAME_DEV:latest $DOCKER_REGISTRY/$SERVICE_NAME_DEV:$CI_PIPELINE_ID
