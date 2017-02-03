@@ -1,10 +1,8 @@
 stages:
   - build
-  - clean
   - deploy
 
 variables:
-  GIT_STRATEGY: fetch
   DOCKER_HOST: "dock-one.mars.haw-hamburg.de:5555"
   DOCKER_REGISTRY: "artifactory.mars.haw-hamburg.de:5002"
   SERVICE_NAME: "webui-svc"
@@ -14,6 +12,8 @@ build_dependencies:
   stage: build
   image: artifactory.mars.haw-hamburg.de:5000/node:boron
   script:
+    # unpack cache, if it exists
+    - test -e node_modules.tar.gz && tar -zxf node_modules.tar.gz || echo "No node_modules caches available."
     - npm -g install --quiet bower gulp
     - npm prune --quiet # remove old packages
     - npm install --quiet
@@ -23,6 +23,8 @@ build_dependencies:
           \"commitId\": \"$CI_BUILD_REF\"
       }" > src/version.json'
     - gulp  # build dist/
+    - tar -zcf node_modules.tar.gz node_modules/ # compress cache
+    - npm prune --quiet --production # cleanup development packages
   artifacts:
     expire_in: 1 hour
     paths:
@@ -31,19 +33,9 @@ build_dependencies:
   cache:
     paths:
       - /usr/local/lib/node_modules
-      - node_modules/
+      - node_modules.tar.gz
       - bower_components/
       - dist/
-
-clean_production:
-  stage: clean
-  image: artifactory.mars.haw-hamburg.de:5000/node:boron
-  script:
-    - npm prune --quiet --production # cleanup development packages
-  artifacts:
-    expire_in: 1 hour
-    paths:
-      - node_modules/
 
 deploy_production:
   stage: deploy
@@ -63,6 +55,8 @@ deploy_development:
   stage: deploy
   script:
     - export DOCKER_HOST=$DOCKER_HOST
+    # unpack cache, if it exists
+    - test -e node_modules.tar.gz && tar -zxf node_modules.tar.gz || echo "No node_modules caches available."
     - rm -rf dist/ # remove production directory.
     - docker build -t $SERVICE_NAME_DEV:latest -f Dockerfile_dev .
     - docker tag $SERVICE_NAME_DEV:latest $DOCKER_REGISTRY/$SERVICE_NAME_DEV:$CI_PIPELINE_ID
@@ -72,5 +66,3 @@ deploy_development:
     - docker push $DOCKER_REGISTRY/$SERVICE_NAME_DEV:$CI_PIPELINE_ID
     - docker push $DOCKER_REGISTRY/$SERVICE_NAME_DEV:latest
     - docker push $DOCKER_REGISTRY/$SERVICE_NAME_DEV:$CI_BUILD_REF
-  dependencies:
-    - build_dependencies
