@@ -39,6 +39,7 @@ build_production:
 
 deploy_production:
   stage: deploy
+  image: artifactory.mars.haw-hamburg.de:5000/node:boron
   script:
     - npm prune --quiet --production # cleanup development packages
     - mv node_modules/ node_modules_prod/ # fix some strange bug, where the name causes an issue.
