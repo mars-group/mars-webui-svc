@@ -3,6 +3,7 @@ stages:
   - deploy
 
 variables:
+  NPM_CONFIG_LOGLEVEL: "warn"
   DOCKER_HOST: "dock-one.mars.haw-hamburg.de:5555"
   DOCKER_REGISTRY: "artifactory.mars.haw-hamburg.de:5002"
   SERVICE_NAME: "webui-svc"
@@ -13,17 +14,17 @@ build_dependencies:
   image: artifactory.mars.haw-hamburg.de:5000/monostream/nodejs-gulp-bower
   script:
     # unpack cache, if it exists
-    - test -e node_modules.tar.gz && tar -zxf node_modules.tar.gz || echo "No node_modules caches available."
-    - npm prune --quiet # remove old packages
-    - npm install --quiet
-    - bower install --quiet
+#    - test -e node_modules.tar.gz && tar -zxf node_modules.tar.gz || echo "No node_modules caches available."
+    - npm prune # remove old packages
+    - npm install
+    - bower install --warn
     - 'echo "{
           \"pipelineId\": \"$CI_PIPELINE_ID\",
           \"commitId\": \"$CI_BUILD_REF\"
       }" > src/version.json'
     - gulp  # build dist/
     - tar -zcf node_modules.tar.gz node_modules/ # compress cache
-    - npm prune --quiet --production # cleanup development packages
+    - npm prune --production # cleanup development packages
   artifacts:
     expire_in: 1 hour
     paths:
