@@ -7,6 +7,10 @@ variables:
   DOCKER_HOST: "dock-one.mars.haw-hamburg.de:5555"
   DOCKER_REGISTRY: "artifactory.mars.haw-hamburg.de:5002"
 
+cache:
+  paths:
+    - /usr/local/share/.cache/yarn
+
 # this is the build image that is use for creating production and in development. It rarely changes
 #build_deploy_base:
 #  stage: base
@@ -27,8 +31,8 @@ build_dependencies:
   stage: build
   image: artifactory.mars.haw-hamburg.de:5002/webui-svc-base
   script:
-    - yarn install --no-progress # npm in fast :-)
-    - yarn install --no-progress # workaround for phantomjs being stupid
+    - npm install --warn phantomjs-prebuilt # workaround for phantomjs being stupid
+    - yarn install --no-progress # npm in fast with cache :-)
     - bower install --warn
     - 'echo "{
           \"pipelineId\": \"$CI_PIPELINE_ID\",
@@ -43,7 +47,6 @@ build_dependencies:
       - dist/
   cache:
     paths:
-      - /root/.yarn-cache/
       - bower_components/
 
 deploy_production:
@@ -67,7 +70,6 @@ deploy_development:
   variables:
     SERVICE_NAME: "webui-svc_dev"
   script:
-    - rm -rf dist/ # remove production directory.
     - export DOCKER_HOST=$DOCKER_HOST
     - docker build -t $SERVICE_NAME:latest -f Dockerfile_dev .
     - docker tag $SERVICE_NAME:latest $DOCKER_REGISTRY/$SERVICE_NAME:$CI_PIPELINE_ID
@@ -77,3 +79,4 @@ deploy_development:
     - docker push $DOCKER_REGISTRY/$SERVICE_NAME:$CI_PIPELINE_ID
     - docker push $DOCKER_REGISTRY/$SERVICE_NAME:latest
     - docker push $DOCKER_REGISTRY/$SERVICE_NAME:$CI_BUILD_REF
+  dependencies: []

@@ -2,8 +2,8 @@
 
 echo "starting development..."
 
-echo "starting npm install..."
-npm install
+echo "starting yarn install..."
+yarn install --no-progress
 
 echo "starting bower install..."
 bower install

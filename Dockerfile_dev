@@ -2,6 +2,9 @@ FROM artifactory.mars.haw-hamburg.de:5002/webui-svc-base
 
 ENV NPM_CONFIG_LOGLEVEL warn
 
+# Add yarn cache
+ADD /usr/local/share/.cache/yarn /usr/local/share/.cache/yarn
+
 ADD . /app
 
 WORKDIR /app
