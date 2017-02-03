@@ -1,48 +1,57 @@
 stages:
+  - base
   - build
   - deploy
 
 variables:
-  NPM_CONFIG_LOGLEVEL: "warn"
   DOCKER_HOST: "dock-one.mars.haw-hamburg.de:5555"
   DOCKER_REGISTRY: "artifactory.mars.haw-hamburg.de:5002"
-  SERVICE_NAME: "webui-svc"
-  SERVICE_NAME_DEV: "webui-svc_dev"
+
+# this is the build image that is use for creating production and in development. It rarely changes
+build_deploy_base:
+  stage: base
+  variables:
+    SERVICE_NAME: "webui-svc-base"
+  script:
+    - export DOCKER_HOST=$DOCKER_HOST
+    - docker build -t $SERVICE_NAME:latest .
+    - docker tag $SERVICE_NAME:latest $DOCKER_REGISTRY/$SERVICE_NAME:$CI_PIPELINE_ID
+    - docker tag $SERVICE_NAME:latest $DOCKER_REGISTRY/$SERVICE_NAME:latest
+    - docker tag $SERVICE_NAME:latest $DOCKER_REGISTRY/$SERVICE_NAME:$CI_BUILD_REF
+    - docker login -u $ARTIFACTORY_USER -p $ARTIFACTORY_PW $DOCKER_REGISTRY
+    - docker push $DOCKER_REGISTRY/$SERVICE_NAME:$CI_PIPELINE_ID
+    - docker push $DOCKER_REGISTRY/$SERVICE_NAME:latest
+    - docker push $DOCKER_REGISTRY/$SERVICE_NAME:$CI_BUILD_REF
 
 build_dependencies:
   stage: build
-  image: artifactory.mars.haw-hamburg.de:5000/monostream/nodejs-gulp-bower
+  image: artifactory.mars.haw-hamburg.de:5002/webui-svc-base
   script:
-    # unpack cache, if it exists
-#    - test -e node_modules.tar.gz && tar -zxf node_modules.tar.gz || echo "No node_modules caches available."
-    - npm prune # remove old packages
-    - npm install
+    - yarn install --no-progress # npm in fast :-)
     - bower install --warn
     - 'echo "{
           \"pipelineId\": \"$CI_PIPELINE_ID\",
           \"commitId\": \"$CI_BUILD_REF\"
       }" > src/version.json'
     - gulp  # build dist/
-    - tar -zcf node_modules.tar.gz node_modules/ # compress cache
-    - npm prune --production # cleanup development packages
+    - yarn install --no-progress --production # cleanup development packages
   artifacts:
     expire_in: 1 hour
     paths:
       - node_modules/
-      - node_modules.tar.gz
       - dist/
   cache:
     paths:
-      - /usr/local/lib/node_modules
-      - node_modules.tar.gz
+      - /root/.yarn-cache/
       - bower_components/
-      - dist/
 
 deploy_production:
   stage: deploy
+  variables:
+    SERVICE_NAME: "webui-svc"
   script:
-    - export DOCKER_HOST=$DOCKER_HOST
     - mv node_modules/ node_modules_prod/ # fix some strange bug, where the name causes an issue.
+    - export DOCKER_HOST=$DOCKER_HOST
     - docker build -t $SERVICE_NAME:latest .
     - docker tag $SERVICE_NAME:latest $DOCKER_REGISTRY/$SERVICE_NAME:$CI_PIPELINE_ID
     - docker tag $SERVICE_NAME:latest $DOCKER_REGISTRY/$SERVICE_NAME:latest
@@ -54,16 +63,16 @@ deploy_production:
 
 deploy_development:
   stage: deploy
+  variables:
+    SERVICE_NAME: "webui-svc_dev"
   script:
+    - rm -rf dist/ # remove production directory.
     - export DOCKER_HOST=$DOCKER_HOST
-    # unpack cache, if it exists
-#    - test -e node_modules.tar.gz && tar -zxf node_modules.tar.gz || echo "No node_modules caches available."
-#    - rm -rf dist/ # remove production directory.
-    - docker build -t $SERVICE_NAME_DEV:latest -f Dockerfile_dev .
-    - docker tag $SERVICE_NAME_DEV:latest $DOCKER_REGISTRY/$SERVICE_NAME_DEV:$CI_PIPELINE_ID
-    - docker tag $SERVICE_NAME_DEV:latest $DOCKER_REGISTRY/$SERVICE_NAME_DEV:latest
-    - docker tag $SERVICE_NAME_DEV:latest $DOCKER_REGISTRY/$SERVICE_NAME_DEV:$CI_BUILD_REF
+    - docker build -t $SERVICE_NAME:latest -f Dockerfile_dev .
+    - docker tag $SERVICE_NAME:latest $DOCKER_REGISTRY/$SERVICE_NAME:$CI_PIPELINE_ID
+    - docker tag $SERVICE_NAME:latest $DOCKER_REGISTRY/$SERVICE_NAME:latest
+    - docker tag $SERVICE_NAME:latest $DOCKER_REGISTRY/$SERVICE_NAME:$CI_BUILD_REF
     - docker login -u $ARTIFACTORY_USER -p $ARTIFACTORY_PW $DOCKER_REGISTRY
-    - docker push $DOCKER_REGISTRY/$SERVICE_NAME_DEV:$CI_PIPELINE_ID
-    - docker push $DOCKER_REGISTRY/$SERVICE_NAME_DEV:latest
-    - docker push $DOCKER_REGISTRY/$SERVICE_NAME_DEV:$CI_BUILD_REF
+    - docker push $DOCKER_REGISTRY/$SERVICE_NAME:$CI_PIPELINE_ID
+    - docker push $DOCKER_REGISTRY/$SERVICE_NAME:latest
+    - docker push $DOCKER_REGISTRY/$SERVICE_NAME:$CI_BUILD_REF

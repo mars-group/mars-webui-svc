@@ -1,4 +1,4 @@
-FROM artifactory.mars.haw-hamburg.de:5000/monostream/nodejs-gulp-bower
+FROM artifactory.mars.haw-hamburg.de:5002/webui-svc-base
 
 ENV NPM_CONFIG_LOGLEVEL warn
 
