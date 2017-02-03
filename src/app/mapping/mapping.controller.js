@@ -221,12 +221,27 @@
         field.InstanceCount = null;
         return;
       }
-      field.TableName = null;
-      field.ColumnName = null;
-      field.ClearName = null;
-      field.ColumnClearName = null;
-      field.Value = null;
-      field.MetaDataId = null;
+      if (field.hasOwnProperty('TableName')) {
+        field.TableName = null;
+      }
+      if (field.hasOwnProperty('ColumnName')) {
+        field.ColumnName = null;
+      }
+      if (field.hasOwnProperty('ClearName')) {
+        field.ClearName = null;
+      }
+      if (field.hasOwnProperty('ColumnClearName')) {
+        field.ColumnClearName = null;
+      }
+      if (field.hasOwnProperty('Value')) {
+        field.Value = null;
+      }
+      if (field.hasOwnProperty('MetaDataId')) {
+        field.MetaDataId = null;
+      }
+      if (field.hasOwnProperty('ValidationResults')) {
+        field.ValidationResults = 'never done validation';
+      }
     };
 
     vm.createMapping = function (dataset, index) {
