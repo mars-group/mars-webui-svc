@@ -73,4 +73,4 @@ deploy_development:
     - docker push $DOCKER_REGISTRY/$SERVICE_NAME_DEV:latest
     - docker push $DOCKER_REGISTRY/$SERVICE_NAME_DEV:$CI_BUILD_REF
   dependencies:
-    - build:build_dependencies
+    - build_dependencies
