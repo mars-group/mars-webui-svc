@@ -1,0 +1,20 @@
+FROM artifactory.mars.haw-hamburg.de:5000/node:boron
+
+ENV NPM_CONFIG_LOGLEVEL warn
+
+# Install https support for apt and apt-utils
+RUN apt-get update && apt-get install -y apt-transport-https
+
+# Install yarn source. It is npm in fast
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
+    echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
+    apt-get update && apt-get install -y yarn
+
+# Install gulp, bower
+RUN npm install -g gulp bower
+
+# Cleanup
+RUN npm cache clean && \
+    apt-get -yqq autoremove && \
+    apt-get -yqq clean && \
+    rm -rf /var/lib/apt/lists/* /var/cache/* /tmp/* /var/tmp/*

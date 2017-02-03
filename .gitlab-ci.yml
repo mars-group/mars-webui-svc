@@ -14,7 +14,7 @@ build_deploy_base:
     SERVICE_NAME: "webui-svc-base"
   script:
     - export DOCKER_HOST=$DOCKER_HOST
-    - docker build -t $SERVICE_NAME:latest .
+    - docker build -t $SERVICE_NAME:latest -f Dockerfile_base .
     - docker tag $SERVICE_NAME:latest $DOCKER_REGISTRY/$SERVICE_NAME:$CI_PIPELINE_ID
     - docker tag $SERVICE_NAME:latest $DOCKER_REGISTRY/$SERVICE_NAME:latest
     - docker tag $SERVICE_NAME:latest $DOCKER_REGISTRY/$SERVICE_NAME:$CI_BUILD_REF
