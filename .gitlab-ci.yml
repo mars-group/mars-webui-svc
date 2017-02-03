@@ -11,7 +11,7 @@ variables:
 before_script:
   - export DOCKER_HOST=$DOCKER_HOST
 
-build_prod:
+build_production:
   stage: build
   image: artifactory.mars.haw-hamburg.de:5000/node:boron
   script:
@@ -38,22 +38,7 @@ build_prod:
       - node_modules.tar.gz
       - bower_components/
 
-#
-# Image does not change, so this build is really just necessary once
-#
-deploy_dev:
-  stage: deploy
-  script:
-    - docker build -t $SERVICE_NAME_DEV:latest -f Dockerfile_dev .
-    - docker tag $SERVICE_NAME_DEV:latest $DOCKER_REGISTRY/$SERVICE_NAME_DEV:$CI_PIPELINE_ID
-    - docker tag $SERVICE_NAME_DEV:latest $DOCKER_REGISTRY/$SERVICE_NAME_DEV:latest
-    - docker tag $SERVICE_NAME_DEV:latest $DOCKER_REGISTRY/$SERVICE_NAME_DEV:$CI_BUILD_REF
-    - docker login -u $ARTIFACTORY_USER -p $ARTIFACTORY_PW $DOCKER_REGISTRY
-    - docker push $DOCKER_REGISTRY/$SERVICE_NAME_DEV:$CI_PIPELINE_ID
-    - docker push $DOCKER_REGISTRY/$SERVICE_NAME_DEV:latest
-    - docker push $DOCKER_REGISTRY/$SERVICE_NAME_DEV:$CI_BUILD_REF
-
-deploy_prod:
+deploy_production:
   stage: deploy
   script:
     - mv node_modules/ node_modules_prod/ # fix some strange bug, where the name causes an issue.
@@ -65,3 +50,16 @@ deploy_prod:
     - docker push $DOCKER_REGISTRY/$SERVICE_NAME:$CI_PIPELINE_ID
     - docker push $DOCKER_REGISTRY/$SERVICE_NAME:latest
     - docker push $DOCKER_REGISTRY/$SERVICE_NAME:$CI_BUILD_REF
+
+deploy_development:
+  stage: deploy
+  script:
+    - docker build -t $SERVICE_NAME_DEV:latest -f Dockerfile_dev .
+    - docker tag $SERVICE_NAME_DEV:latest $DOCKER_REGISTRY/$SERVICE_NAME_DEV:$CI_PIPELINE_ID
+    - docker tag $SERVICE_NAME_DEV:latest $DOCKER_REGISTRY/$SERVICE_NAME_DEV:latest
+    - docker tag $SERVICE_NAME_DEV:latest $DOCKER_REGISTRY/$SERVICE_NAME_DEV:$CI_BUILD_REF
+    - docker login -u $ARTIFACTORY_USER -p $ARTIFACTORY_PW $DOCKER_REGISTRY
+    - docker push $DOCKER_REGISTRY/$SERVICE_NAME_DEV:$CI_PIPELINE_ID
+    - docker push $DOCKER_REGISTRY/$SERVICE_NAME_DEV:latest
+    - docker push $DOCKER_REGISTRY/$SERVICE_NAME_DEV:$CI_BUILD_REF
+  dependencies: [] # excludes the crap from the build stage
