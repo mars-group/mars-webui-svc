@@ -1,7 +1,6 @@
-FROM artifactory.mars.haw-hamburg.de:5000/node:boron
+FROM artifactory.mars.haw-hamburg.de:5000/monostream/nodejs-gulp-bower
 
 ENV NPM_CONFIG_LOGLEVEL warn
-RUN npm -g install bower gulp
 
 ADD . /app
 

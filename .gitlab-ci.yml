@@ -10,11 +10,10 @@ variables:
 
 build_dependencies:
   stage: build
-  image: artifactory.mars.haw-hamburg.de:5000/node:boron
+  image: artifactory.mars.haw-hamburg.de:5000/monostream/nodejs-gulp-bower
   script:
     # unpack cache, if it exists
     - test -e node_modules.tar.gz && tar -zxf node_modules.tar.gz || echo "No node_modules caches available."
-    - npm -g install --quiet bower gulp
     - npm prune --quiet # remove old packages
     - npm install --quiet
     - bower install --quiet
@@ -42,6 +41,7 @@ deploy_production:
   stage: deploy
   script:
     - export DOCKER_HOST=$DOCKER_HOST
+    - mv node_modules/ node_modules_prod/ # fix some strange bug, where the name causes an issue.
     - docker build -t $SERVICE_NAME:latest .
     - docker tag $SERVICE_NAME:latest $DOCKER_REGISTRY/$SERVICE_NAME:$CI_PIPELINE_ID
     - docker tag $SERVICE_NAME:latest $DOCKER_REGISTRY/$SERVICE_NAME:latest
