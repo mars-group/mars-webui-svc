@@ -216,34 +216,6 @@
       }
     };
 
-    vm.resetField = function (field) {
-      if (field.hasOwnProperty('InstanceCount')) {
-        field.InstanceCount = null;
-        return;
-      }
-      if (field.hasOwnProperty('TableName')) {
-        field.TableName = null;
-      }
-      if (field.hasOwnProperty('ColumnName')) {
-        field.ColumnName = null;
-      }
-      if (field.hasOwnProperty('ClearName')) {
-        field.ClearName = null;
-      }
-      if (field.hasOwnProperty('ColumnClearName')) {
-        field.ColumnClearName = null;
-      }
-      if (field.hasOwnProperty('Value')) {
-        field.Value = null;
-      }
-      if (field.hasOwnProperty('MetaDataId')) {
-        field.MetaDataId = null;
-      }
-      if (field.hasOwnProperty('ValidationResults')) {
-        field.ValidationResults = 'never done validation';
-      }
-    };
-
     vm.createMapping = function (dataset, index) {
       if (!vm.selectedField) {
         vm.alerts.add('You need to select a field first.', 'info');
@@ -327,6 +299,10 @@
     vm.SelectValue = function (field) {
       if (!field) {
         return 'select';
+      }
+
+      if (field.Value) {
+        return 'manual';
       }
 
       if (field.ColumnClearName) {
