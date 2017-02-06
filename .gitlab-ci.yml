@@ -70,6 +70,7 @@ deploy_development:
   variables:
     SERVICE_NAME: "webui-svc_dev"
   script:
+    - rm -rf dist/
     - export DOCKER_HOST=$DOCKER_HOST
     - docker build -t $SERVICE_NAME:latest -f Dockerfile_dev .
     - docker tag $SERVICE_NAME:latest $DOCKER_REGISTRY/$SERVICE_NAME:$CI_PIPELINE_ID
