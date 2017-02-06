@@ -81,8 +81,7 @@
   // Only applies for images from bower dependencies
   // Custom images are handled by the "other" task
   gulp.task('images', function () {
-    return gulp.src('/app/bower_components/**/*')
-      .pipe($.filter('**/*.{png, jpg, jpeg}'))
+    return gulp.src('bower_components/**/*.{gif,jpg,jpeg,png,svg}')
       .pipe($.flatten())
       .pipe(gulp.dest(path.join(conf.paths.dist, '/images/')));
   });
