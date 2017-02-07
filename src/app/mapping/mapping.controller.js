@@ -129,8 +129,17 @@
     };
 
     var recRestoreSelectedNode = function (treeData) {
-      if (treeData.FullName === vm.selectedNode.FullName) {
+      var hasFullname = treeData.hasOwnProperty('FullName') && vm.selectedNode.hasOwnProperty('FullName');
+      var hasParameters = treeData.hasOwnProperty('Parameters') && vm.selectedNode.hasOwnProperty('Parameters');
+      var hasEqualNames = treeData.Name === vm.selectedNode.Name;
+      var hasEqualFullNames = treeData.FullName === vm.selectedNode.FullName;
+
+      var isMapping = hasFullname && !hasParameters && hasEqualFullNames;
+      var isParameter = !hasFullname && hasParameters && hasEqualNames;
+
+      if (isMapping || isParameter) {
         vm.selectedNode = treeData;
+        return;
       }
 
       angular.forEach(treeData, function (value) {
