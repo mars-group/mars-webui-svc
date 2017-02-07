@@ -33,19 +33,22 @@
     </div>
 
     <div class="col-md-12">
-      <table ng-table="scenario.tableParams" class="table" data-show-filter="false">
-        <tr ng-repeat="scenario in $data">
+      <table ng-table="scenario.tableParams" class="table text-center" data-show-filter="false">
+        <tr ng-repeat="scenarioData in $data">
           <td title="'Name'" data-filter="{ Name: 'text'}" data-sortable="'Name'">
-            {{scenario.Name}}
+            {{scenarioData.Name}}
           </td>
           <td title="'Description'" data-filter="{ Description: 'text'}" data-sortable="'Description'">
-            {{scenario.Description}}
+            {{scenarioData.Description}}
           </td>
           <td title="'Model'" data-filter="{ Model: 'text'}" data-sortable="'Model'">
-            {{scenario.ModelName}}
+            {{scenarioData.ModelName}}
           </td>
           <td title="'Owner'" data-filter="{ Owner: 'text'}" data-sortable="'Owner'">
-            {{scenario.Owner}}
+            {{scenarioData.Owner}}
+          </td>
+          <td title="'Clone Scenario'" data-filter="{ Clone: 'text'}" data-sortable="'Clone'">
+            <button class="btn btn-default" ng-click="scenario.openScenarioModal(scenarioData)">clone</button>
           </td>
         </tr>
       </table>
@@ -53,4 +56,3 @@
   </div>
 
 </div>
-

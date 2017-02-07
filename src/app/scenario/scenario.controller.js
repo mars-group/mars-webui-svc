@@ -36,14 +36,16 @@
       angular.extend(vm.tableParams.filter(), {$: vm.searchFilter});
     };
 
-    vm.openScenarioModal = function () {
+    vm.openScenarioModal = function (scenario) {
       var modalInstance = $uibModal.open({
         templateUrl: 'app/scenario/scenarioModal/scenarioModal.html',
         controller: 'ScenarioModalController',
         controllerAs: 'scenarioModal',
         resolve: {
           scenario: function () {
-            return {};
+            if (scenario) {
+              return scenario;
+            }
           }
         }
       });

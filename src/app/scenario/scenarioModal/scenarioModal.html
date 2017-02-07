@@ -6,8 +6,8 @@
   <div class="modal-body">
 
     <!-- Error messages -->
-    <uib-alert ng-repeat="(key, value) in scenarioModal.alerts.getAll()" type="{{value}}"
-               close="scenarioModal.alerts.remove(key)">{{key}}
+    <uib-alert ng-repeat="(key, value) in scenarioModal.alerts.getAll()" type="{{ value }}"
+               close="scenarioModal.alerts.remove(key)">{{ key }}
     </uib-alert>
 
     <div ng-if="!scenarioModal.hasModel">
@@ -17,21 +17,25 @@
     <form name="scenarioModal.form" class="simple-form" novalidate ng-if="scenarioModal.hasModel">
       <div class="form-group">
         <label class="control-label">Name</label>
-        <input type="text" class="form-control" name="name" ng-model="scenarioModal.scenario.name"
+        <input type="text" class="form-control" name="name" ng-model="scenarioModal.scenario.Name"
                required placeholder="Name"/>
       </div>
 
       <div class="form-group">
         <label for="scenarioDescription" class="control-label">Description</label>
         <input type="text" id="scenarioDescription" class="form-control" name="Description"
-               ng-model="scenarioModal.scenario.description"/>
+               ng-model="scenarioModal.scenario.Description"/>
       </div>
 
       <div class="form-group">
         <label for="scenarioModel" class="control-label">Model</label>
-        <select id="scenarioModel" class="form-control" ng-model="scenarioModal.scenario.model" name="model" required>
-          <option ng-repeat="model in scenarioModal.models" value="{{model.dataId}}">{{model.title}}</option>
+
+        <select id="scenarioModel" class="form-control" ng-model="scenarioModal.scenario.Model" name="model"
+                ng-if="!scenarioModal.isCloneScenario" required>
+          <option ng-repeat="model in scenarioModal.models" value="{{ model.dataId }}">{{ model.title }}</option>
         </select>
+        <select id="scenarioModel" class="form-control" data-ng-options="o for o in scenarioModal.cloneModel"
+                data-ng-model="scenarioModal.cloneModel[0]" ng-if="scenarioModal.isCloneScenario" disabled></select>
       </div>
     </form>
 

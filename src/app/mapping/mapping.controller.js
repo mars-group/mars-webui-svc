@@ -85,11 +85,11 @@
         vm.alerts.add(selectScenarioInfoMessage);
         return;
       }
-
-      Mapping.getMapping()
+      Mapping.getMapping(vm.currentScenario.ScenarioId)
         .then(function (res) {
           if (res.status > 299) {
-            $log.error('error:', res);
+            $log.error(res);
+            vm.alerts(res, 'danger');
             return;
           }
 
@@ -102,6 +102,7 @@
           expandTopLevelNodes();
         }, function (err) {
           $log.error(err);
+          vm.alerts(err, 'danger');
         });
     };
 
@@ -258,12 +259,12 @@
     };
 
     vm.saveMapping = function () {
-      Mapping.putMapping(angular.copy(vm.treeData), function (err) {
+      Mapping.putMapping(vm.treeData, vm.currentScenario.ScenarioId, function (err) {
         if (err) {
           vm.alerts.add(err.config.url + '" caused the following error: "' + err.data.Description + '"!', 'danger');
         }
         loadMapping();
-        Mapping.putParameter(vm.treeData, function (err) {
+        Mapping.putParameter(vm.treeData, vm.currentScenario.ScenarioId, function (err) {
           if (err) {
             vm.alerts.add(err.config.url + '" caused the following error: "' + err.data.Description + '"!', 'danger');
           }

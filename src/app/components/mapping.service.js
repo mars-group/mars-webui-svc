@@ -152,11 +152,7 @@
       };
 
       return {
-        getMapping: function () {
-          var scenarioId;
-          if (Scenario.getCurrentScenario()) {
-            scenarioId = Scenario.getCurrentScenario().ScenarioId;
-          }
+        getMapping: function (scenarioId) {
           if (!scenarioId) {
             return $q.reject('No scenario selected!');
           }
@@ -176,13 +172,11 @@
             });
         },
 
-        putMapping: function (data, callback) {
+        putMapping: function (data, scenarioId, callback) {
           tmpParameters = angular.copy(data[2]);
           data = convertMappingToRemote(data);
           var mapping = data.InitializationDescription;
           removeAngularHashKeyRecursive(mapping);
-
-          var scenarioId = Scenario.getCurrentScenario().ScenarioId;
 
           $http.put('/scenario-management/scenarios/' + scenarioId + '/mapping', mapping)
             .then(function successCallback() {
@@ -195,13 +189,11 @@
             });
         },
 
-        putParameter: function (data, callback) {
-          tmpMapping = [data[0], data[1]];
+        putParameter: function (data, scenarioId, callback) {
+          tmpMapping = angular.copy([data[0], data[1]]);
           data = convertParametersToRemote(data);
           var parameters = data.ParameterizationDescription;
           removeAngularHashKeyRecursive(parameters);
-
-          var scenarioId = Scenario.getCurrentScenario().ScenarioId;
 
           $http.put('/scenario-management/scenarios/' + scenarioId + '/parameter', parameters)
             .then(function successCallback() {
