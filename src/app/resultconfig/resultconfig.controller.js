@@ -6,7 +6,7 @@
     .controller('ResultConfigController', ResultConfigController);
 
   /** @ngInject */
-  function ResultConfigController($http, $log, $uibModal, Scenario) {
+  function ResultConfigController($uibModal, ResultConfig, Scenario) {
     var vm = this;
 
     vm.AgentTypes = [];         // A list of agent types and their properties in this model.
@@ -36,13 +36,11 @@
     function loadModel(modelId) {
 
       // Get the model structure from the backend service.
-      $http.get("/result-config/api/ModelStructure/"+modelId).then(function(structResponse) {
-        vm.AgentTypes = structResponse.data;
+      ResultConfig.getModelStructure(modelId, function(struct) {
+        vm.AgentTypes = struct;
         createDefaultConfig(modelId);
-
-        // Search for existing configurations.
-        $http.get("/result-config/api/ResultConfigs?modelDataId="+modelId).then(function(configResponse) {
-          vm.ResultConfigs = configResponse.data;
+        ResultConfig.getConfigsForModel(modelId, function(configs) {
+          vm.ResultConfigs = configs;
           changeSelection(vm.ResultConfigs[0].ConfigName);
         }, function() {
           changeSelection("--default--");
@@ -136,16 +134,7 @@
       for (var i = 0; i < vm.ResultConfigs.length; i ++) {
         if (vm.ResultConfigs[i].ConfigName === vm.SelectedConfig.ConfigName) {
           vm.ResultConfigs[i].Agents = vm.SelectedConfig.Agents;
-
-          // Update backend config.
-          var cfg = vm.ResultConfigs[i];
-          $http.put("/result-config/api/ResultConfigs/"+cfg.ConfigId, cfg)
-            .success(function () {
-              $log.info("RCS update OK.");
-            })
-            .error(function () {
-              $log.error("RCS update failed!");
-            });
+          ResultConfig.updateConfig(vm.ResultConfigs[i]);
           break;
         }
       }
@@ -158,17 +147,7 @@
     vm.DeleteConfig = function() {
       for (var i = 0; i < vm.ResultConfigs.length; i ++) {
         if (vm.ResultConfigs[i].ConfigName === vm.SelectedConfig.ConfigName) {
-
-          // Delete config also from database.
-          var cfg = vm.ResultConfigs[i];
-          $http.delete("/result-config/api/ResultConfigs/"+cfg.ConfigId)
-            .success(function () {
-              $log.info("RCS delete OK.");
-            })
-            .error(function () {
-              $log.error("RCS delete failed!");
-            });
-
+          ResultConfig.deleteConfig(vm.ResultConfigs[i].ConfigId);
           vm.ResultConfigs.splice(i, 1);
           if (i > 0) changeSelection(vm.ResultConfigs[i-1].ConfigName);
           else {
