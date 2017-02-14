@@ -139,6 +139,10 @@
       var isMapping = hasFullname && !hasParameters && hasEqualFullNames;
       var isParameter = !hasFullname && hasParameters && hasEqualNames;
 
+      if (isParameter) {
+        vm.selectedField = treeData;
+      }
+
       if (isMapping || isParameter) {
         vm.selectedNode = treeData;
         return;
