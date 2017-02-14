@@ -27,6 +27,7 @@
       'with the desired dataset on the right. Alternatively set a manual value, by selecting the checkbox next to ' +
       'the field.';
     var selectScenarioInfoMessage = 'Please select a Scenario in the top right corner or create one';
+    var mappingCompleteMessage = 'Mapping complete!';
 
     Scenario.isCurrentScenarioExisting(function (res) {
       if (res.hasOwnProperty('error')) {
@@ -285,6 +286,7 @@
         if (res.hasOwnProperty('error')) {
           if (res.error.status === 412) {
             vm.validationErrors = res.error.data;
+            vm.alerts.remove(mappingCompleteMessage);
             return;
           }
           vm.alerts.add(res.error, 'danger');
@@ -292,7 +294,7 @@
         }
 
         vm.validationErrors = null;
-        vm.alerts.add('Mapping complete!', 'success');
+        vm.alerts.add(mappingCompleteMessage, 'success');
       });
     };
 
