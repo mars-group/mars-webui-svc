@@ -126,6 +126,7 @@
 
         // select global parameters
         // vm.selectedNode = vm.treeData[2].Agents[1];
+        // vm.alerts.remove(selectNodeInfoMessage);
       }
     };
 

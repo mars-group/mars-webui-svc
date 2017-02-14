@@ -104,14 +104,7 @@
           vm.data[i].dataType = $scope.dataTypes[0].name;
         }
 
-        var filename = vm.uploader.queue[i]._file.name;
-        if (vm.data.dataType === vm.TIME_SERIES) {
-          var patternDecimal = /-?[0-9]+\.[0-9]+/;
-          if (!patternDecimal.test(vm.data[i].lat) || !patternDecimal.test(vm.data[i].lng)) {
-            vm.alerts.add('Please provide valid LAT and LON (decimals) for data file \'' + filename + '\'');
-            return false;
-          }
-        } else {
+        if (vm.data[i].dataType !== vm.TIME_SERIES) {
           if (vm.data[i].lat) {
             delete vm.data[i].lat;
           }
@@ -146,7 +139,7 @@
               }
             });
           }
-        fileItem.isProcessing = true;
+          fileItem.isProcessing = true;
         }
       );
     };
