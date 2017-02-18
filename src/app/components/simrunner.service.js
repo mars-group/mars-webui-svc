@@ -64,6 +64,20 @@
               //$log.error(err);
               callback({error: err});
             });
+        },
+        abortSimRun: function (simRunId, callback){
+          var body = {
+            SimRunId: simRunId,
+            Verb: "ABORT"
+          };
+          return $http.put(baseUrl+'simrun', body)
+            .then(function(res){
+              callback(res.data);
+            })
+            .catch(function errorCall(err){
+              //$log.error(err);
+              callback({error: err});
+            });
         }
       };
 

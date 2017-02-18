@@ -59,6 +59,9 @@
                   SimulationID: {{simRun.SimulationId}} <br>
                   Status: {{simRun.Status}} <br>
                   CurrentTick: {{simRun.CurrentTick}} <br>
+                  <button type="button" class="btn btn-success" ng-click="simrunner.AbortSimulationRun(simRun.id)">
+                    <span class="glyphicon glyphicon-stop">Abort</span>
+                  </button>
                 </div>
               </uib-accordion>
 

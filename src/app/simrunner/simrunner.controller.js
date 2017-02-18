@@ -62,5 +62,11 @@
         });
       });
     };
+
+    vm.AbortSimulationRun = function(simRunId) {
+      SimRunner.abortSimRun(simRunId, function(res){
+
+      });
+    };
   }
 })();
