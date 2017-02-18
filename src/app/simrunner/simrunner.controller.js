@@ -63,9 +63,9 @@
       });
     };
 
-    vm.AbortSimulationRun = function(simRunId) {
-      SimRunner.abortSimRun(simRunId, function(res){
-
+    vm.AbortSimulationRun = function(simRun) {
+      SimRunner.abortSimRun(simRun.id, function(res){
+        simRun = res;
       });
     };
   }
