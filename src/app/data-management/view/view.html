@@ -87,6 +87,10 @@
               {{tag}}<span ng-if="$index < row.tags.length -1">, </span>
             </span>
           </td>
+          <td data-title="'Creation Date'" data-sortable="'created'" data-toggle="modal"
+              ng-click="importView.openPreviewModal(row.dataId)">
+            {{row.created |date : 'y-MM-d H:mm'}}
+          </td>
           <td data-title="'Import status'" data-sortable="'state'" data-toggle="modal"
               ng-click="importView.openPreviewModal(row.dataId)">
             {{row.state}}
