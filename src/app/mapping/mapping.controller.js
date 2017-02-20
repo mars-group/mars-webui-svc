@@ -160,7 +160,7 @@
 
     var loadMappingDatasets = function () {
       var params = {
-        states: 'FINISHED'
+        states: ['FINISHED']
       };
 
       Metadata.getFiltered(params, function (res) {

@@ -18,7 +18,7 @@
 
     var hasData = function () {
       var filter = {
-        state: 'FINISHED'
+        states: ['FINISHED']
       };
       Metadata.getFiltered(filter, function (res) {
         for (var i = 0; i < res.length; i++) {
@@ -35,7 +35,7 @@
     var hasModels = function () {
       var filter = {
         types: ['MODEL'],
-        state: 'FINISHED'
+        states: ['FINISHED']
       };
       Metadata.getFiltered(filter, function (res) {
         if (!res.hasOwnProperty('error') && res.length > 0) {

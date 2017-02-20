@@ -17,8 +17,8 @@
     var project = Project.getId();
 
     var params = {
-      type: 'MODEL',
-      states: 'FINISHED'
+      types: ['MODEL'],
+      states: ['FINISHED']
     };
     Metadata.getFiltered(params, function (res) {
       if (!res.hasOwnProperty('error')) {
@@ -103,7 +103,7 @@
     var hasModels = function () {
       var filter = {
         types: ['MODEL'],
-        state: 'FINISHED'
+        states: ['FINISHED']
       };
       Metadata.getFiltered(filter, function (res) {
         if (!res.hasOwnProperty('error') && res.length > 0) {
