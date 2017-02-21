@@ -56,13 +56,35 @@
               </div>
               <uib-accordion close-others="oneAtATime">
                 <div uib-accordion-group class="panel-default" heading="{{simRun.PodName}}" ng-repeat="simRun in simPlan.simRuns">
-                  SimulationID: {{simRun.SimulationId}} <br>
-                  Status: {{simRun.Status}} <br>
-                  CurrentTick: {{simRun.CurrentTick}} <br>
-                  Start Time: {{simRun.StartDateTime}} <br>
-                  <button type="button" class="btn btn-success" ng-click="simrunner.AbortSimulationRun(simRun)">
-                    <span class="glyphicon glyphicon-stop"></span> Abort
-                  </button>
+                    <button type="button" class="btn btn-danger" ng-click="simrunner.AbortSimulationRun(simRun)">
+                      <span class="glyphicon glyphicon-stop"></span> Abort
+                    </button>
+                  <table class="consoleOutput">
+                    <tr>
+                      <td>SimulationID:</td>
+                      <td>{{simRun.SimulationId}}</td>
+                    </tr>
+                    <tr>
+                      <td>Status:</td>
+                      <td>{{simRun.Status}} </td>
+                    </tr>
+                    <tr>
+                      <td>CurrentTick:</td>
+                      <td>{{simRun.CurrentTick}}</td>
+                    </tr>
+                    <tr>
+                      <td>Start Time:</td>
+                      <td>{{simRun.StartDateTime}} </td>
+                    </tr>
+                    <tr>
+                      <td>Last Updated:</td>
+                      <td>{{simRun.LastUpdated}} </td>
+                    </tr>
+                    <tr>
+                      <td>Console Output:</td>
+                      <td>{{simRun.ConsoleOutput}} </td>
+                    </tr>
+                  </table>
                 </div>
               </uib-accordion>
 
