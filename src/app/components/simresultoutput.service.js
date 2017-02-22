@@ -7,7 +7,7 @@
 
       return {
         getWebanalyticsLink: function (simId) {
-          return "/webanalytics/#/?simId=" + simId;
+          return "/webanalytics/#/?simid=" + simId;
         }
       };
     });
