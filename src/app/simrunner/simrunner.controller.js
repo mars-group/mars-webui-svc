@@ -6,12 +6,12 @@
     .controller('SimRunnerController', SimRunnerController);
 
   /** @ngInject */
-  function SimRunnerController(SimRunner, Scenario) {
+  function SimRunnerController(SimRunner, Scenario, SimResultOutput) {
     var vm = this;
 
     vm.SimPlans = [];
     vm.SimRuns = [];
-
+    vm.simResultOutput = SimResultOutput;
     vm.ScenarioId = "";
 
     (function() {

@@ -89,6 +89,10 @@
                       <td>{{simRun.EstimatedFinish | date:'dd MMM yyyy - hh:mm'}} </td>
                     </tr>
                     <tr>
+                      <td>Result Output:</td>
+                      <td><a href='{{simrunner.simResultOutput.getWebanalyticsLink(simRun.SimulationId)}}' target="_blank"> Open in a new window </a></td>
+                    </tr>
+                    <tr>
                       <td>Console Output:</td>
                       <td><span>{{simRun.ConsoleOutput}}</span></td>
                     </tr>
