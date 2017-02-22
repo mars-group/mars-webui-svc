@@ -56,7 +56,7 @@
               </div>
               <uib-accordion close-others="oneAtATime">
                 <div uib-accordion-group class="panel-default" heading="{{simRun.PodName}}" ng-repeat="simRun in simPlan.simRuns">
-                    <button type="button" class="btn btn-danger" ng-click="simrunner.AbortSimulationRun(simRun)">
+                    <button type="button" class="btn btn-danger" ng-hide="simRun.Status == 'Failed' || simRun.Status == 'Aborted'" ng-click="simrunner.AbortSimulationRun(simRun)">
                       <span class="glyphicon glyphicon-stop"></span> Abort
                     </button>
                   <table class="consoleOutput">
