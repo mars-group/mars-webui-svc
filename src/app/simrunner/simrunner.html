@@ -56,13 +56,47 @@
               </div>
               <uib-accordion close-others="oneAtATime">
                 <div uib-accordion-group class="panel-default" heading="{{simRun.PodName}}" ng-repeat="simRun in simPlan.simRuns">
-                  SimulationID: {{simRun.SimulationId}} <br>
-                  Status: {{simRun.Status}} <br>
-                  CurrentTick: {{simRun.CurrentTick}} <br>
-                  Start Time: {{simRun.StartDateTime}} <br>
-                  <button type="button" class="btn btn-success" ng-click="simrunner.AbortSimulationRun(simRun)">
-                    <span class="glyphicon glyphicon-stop"></span> Abort
-                  </button>
+                    <button type="button" class="btn btn-danger" ng-hide="simRun.Status == 'Failed' || simRun.Status == 'Aborted'" ng-click="simrunner.AbortSimulationRun(simRun)">
+                      <span class="glyphicon glyphicon-stop"></span> Abort
+                    </button>
+                  <table class="consoleOutput">
+                    <tr>
+                      <td>SimulationID:</td>
+                      <td>{{simRun.SimulationId}}</td>
+                    </tr>
+                    <tr>
+                      <td>Status:</td>
+                      <td>{{simRun.Status}} </td>
+                    </tr>
+                    <tr>
+                      <td>CurrentTick:</td>
+                      <td>{{simRun.CurrentTick}}</td>
+                    </tr>
+                    <tr>
+                      <td>Total Ticks:</td>
+                      <td>{{simRun.TotalTicks}}</td>
+                    </tr>
+                    <tr>
+                      <td>Start Time:</td>
+                      <td>{{simRun.StartDateTime | date:'dd MMM yyyy - hh:mm'}} </td>
+                    </tr>
+                    <tr>
+                      <td>Last Updated:</td>
+                      <td>{{simRun.LastUpdated | date:'dd MMM yyyy - hh:mm'}} </td>
+                    </tr>
+                    <tr>
+                      <td>Estimated Finish:</td>
+                      <td>{{simRun.EstimatedFinish | date:'dd MMM yyyy - hh:mm'}} </td>
+                    </tr>
+                    <tr>
+                      <td>Result Output:</td>
+                      <td><a href='{{simrunner.simResultOutput.getWebanalyticsLink(simRun.SimulationId)}}' target="_blank"> Open in a new window </a></td>
+                    </tr>
+                    <tr>
+                      <td>Console Output:</td>
+                      <td><span>{{simRun.ConsoleOutput}}</span></td>
+                    </tr>
+                  </table>
                 </div>
               </uib-accordion>
 

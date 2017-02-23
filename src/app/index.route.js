@@ -50,6 +50,10 @@
         controller: 'ResultConfigController',
         controllerAs: 'resultconfig'
       })
+      .state('simResultOutput', {
+        controller: 'SimResultOutputController',
+        controllerAs: 'simResultOutput'
+      })
       .state('scenario', {
         url: '/scenario',
         templateUrl: 'app/scenario/scenario.html',

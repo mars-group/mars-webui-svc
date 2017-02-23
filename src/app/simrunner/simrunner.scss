@@ -1,3 +1,19 @@
 #MissionCTLController-container {
   // your css goes here
+  .consoleOutput {
+    td {
+      width: 2%;
+      vertical-align: top;
+      padding: 10px;
+      font-weight: bold;
+    }
+    td:last-child {
+      width: 100%;
+      font-weight: normal;
+      font-family: Consolas, 'Liberation Mono', Courier, monospace;
+    }
+    span {
+      white-space: pre-line;
+    }
+  }
 }
