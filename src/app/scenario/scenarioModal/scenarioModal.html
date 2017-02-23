@@ -30,12 +30,9 @@
       <div class="form-group">
         <label for="scenarioModel" class="control-label">Model</label>
 
-        <select id="scenarioModel" class="form-control" ng-model="scenarioModal.scenario.Model" name="model"
-                ng-if="!scenarioModal.isCloneScenario" required>
+        <select id="scenarioModel" class="form-control" ng-model="scenarioModal.scenario.Model" name="model" required>
           <option ng-repeat="model in scenarioModal.models" value="{{ model.dataId }}">{{ model.title }}</option>
         </select>
-        <select id="scenarioModel" class="form-control" data-ng-options="o for o in scenarioModal.cloneModel"
-                data-ng-model="scenarioModal.cloneModel[0]" ng-if="scenarioModal.isCloneScenario" disabled></select>
       </div>
     </form>
 

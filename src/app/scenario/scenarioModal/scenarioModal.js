@@ -11,9 +11,8 @@
 
     vm.alerts = new Alert();
     vm.scenario = scenario;
-    vm.isCloneScenario = angular.isDefined(vm.scenario) && vm.scenario.hasOwnProperty('ScenarioId');
-    vm.cloneModel = vm.isCloneScenario && angular.isDefined(vm.scenario.ModelName) ? [vm.scenario.ModelName] : [];
 
+    var isCloneScenario = angular.isDefined(vm.scenario) && vm.scenario.hasOwnProperty('ScenarioId');
     var project = Project.getId();
 
     var params = {
@@ -30,6 +29,10 @@
     var hasModels = function () {
       if (vm.models && vm.models.length > 0) {
         vm.hasModel = true;
+
+        if (isCloneScenario) {
+          vm.scenario.Model = vm.scenario.ModelIdentifier;
+        }
       } else {
         vm.alerts.add('There are no models, please import one first!', 'warning');
       }
@@ -52,13 +55,9 @@
         Owner: 'me',
         Project: project,
         Name: vm.scenario.Name,
-        Description: vm.scenario.Description
+        Description: vm.scenario.Description,
+        ModelIdentifier: vm.scenario.Model
       };
-      if (!vm.isCloneScenario) {
-        data.ModelIdentifier = vm.scenario.Model;
-      } else {
-        data.ModelIdentifier = vm.scenario.ModelMetaData;
-      }
 
       var loadMapping = function (scenarioId, callback) {
         Mapping.getMapping(scenarioId)
@@ -77,14 +76,7 @@
         if (res.hasOwnProperty('error')) {
           callback(res.error);
         }
-
-        if (vm.isCloneScenario) {
-          loadMapping(vm.scenario.ScenarioId, function (mapping) {
-            putMapping(mapping, res);
-          });
-        } else {
           callback();
-        }
       });
 
       var putMapping = function (mapping, scenarioId) {
