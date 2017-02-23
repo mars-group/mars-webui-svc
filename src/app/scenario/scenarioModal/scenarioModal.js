@@ -24,7 +24,16 @@
       if (!res.hasOwnProperty('error')) {
         vm.models = res;
       }
+      hasModels();
     });
+
+    var hasModels = function () {
+      if (vm.models && vm.models.length > 0) {
+        vm.hasModel = true;
+      } else {
+        vm.alerts.add('There are no models, please import one first!', 'warning');
+      }
+    };
 
     vm.cancel = function () {
       $uibModalInstance.dismiss('cancel');
@@ -99,21 +108,6 @@
       };
 
     };
-
-    var hasModels = function () {
-      var filter = {
-        types: ['MODEL'],
-        states: ['FINISHED']
-      };
-      Metadata.getFiltered(filter, function (res) {
-        if (!res.hasOwnProperty('error') && res.length > 0) {
-          vm.hasModel = true;
-        } else {
-          vm.alerts.add('There are no models, please import one first!', 'warning');
-        }
-      });
-    };
-    hasModels();
 
   }
 
