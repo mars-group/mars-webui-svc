@@ -30,8 +30,9 @@
       if (vm.models && vm.models.length > 0) {
         vm.hasModel = true;
 
+        // set active model
         if (isCloneScenario) {
-          vm.scenario.Model = vm.scenario.ModelIdentifier;
+          vm.scenario.Model = vm.scenario.ModelMetaData;
         }
       } else {
         vm.alerts.add('There are no models, please import one first!', 'warning');
@@ -56,7 +57,7 @@
         Project: project,
         Name: vm.scenario.Name,
         Description: vm.scenario.Description,
-        ModelIdentifier: vm.scenario.Model
+        ModelMetaData: vm.scenario.Model
       };
 
       var loadMapping = function (scenarioId, callback) {
@@ -76,7 +77,7 @@
         if (res.hasOwnProperty('error')) {
           callback(res.error);
         }
-          callback();
+        callback();
       });
 
       var putMapping = function (mapping, scenarioId) {
