@@ -349,5 +349,11 @@
       });
     };
 
+    // convert date format for the date picker to utcString
+    vm.onTimeSet = function (field, newDate) {
+      var date = new Date(newDate);
+      field.Value = date.toISOString();
+    };
+
   }
 })();

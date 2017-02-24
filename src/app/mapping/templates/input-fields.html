@@ -16,7 +16,7 @@
   </div>
   <div uib-collapse="!datepickerCollapsed[$index]">
     <datetimepicker ng-model="field.Value" ng-required="field.Required" name="datepicker_{{$index}}"
-                    data-datetimepicker-config="{ minuteStep: 1 }">
+                    data-datetimepicker-config="{ minuteStep: 1 }" data-on-set-time="mapping.onTimeSet(field, newDate)">
     </datetimepicker>
   </div>
 </div>
@@ -26,7 +26,7 @@
        data-ng-if="field.AllowedValues.type === 'string' && field.AllowedValues.hasOwnProperty('enum')">
   <select class="form-control" data-ng-model="field.Value" data-ng-required="field.Required"
           data-ng-min="field.AllowedValues.minimum" data-ng-max="field.AllowedValues.maximum">
-    <option ng-repeat="key in field.AllowedValues.enum" value="{{key}}">{{ key }}</option>
+    <option ng-repeat="key in field.AllowedValues.enum" value="{{ key }}">{{ key }}</option>
   </select>
 </label>
 
