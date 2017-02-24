@@ -6,7 +6,7 @@
     .controller('ScenarioModalController', ScenarioModalController);
 
   /** @ngInject */
-  function ScenarioModalController($uibModalInstance, $log, Metadata, Scenario, Mapping, Project, Alert, scenario) {
+  function ScenarioModalController($uibModalInstance, Metadata, Scenario, Project, Alert, scenario) {
     var vm = this;
 
     vm.alerts = new Alert();
@@ -75,10 +75,19 @@
         if (res.hasOwnProperty('error')) {
           callback(res.error);
         }
-        callback();
+        setCurrentScenarioFromId(res);
       });
 
-
+      var setCurrentScenarioFromId = function (id) {
+        Scenario.getScenarios(function (scenarios) {
+          angular.forEach(scenarios, function (e) {
+            if (e.ScenarioId === id) {
+              Scenario.setCurrentScenario(e);
+            }
+          });
+          callback();
+        });
+      };
     };
 
   }
