@@ -30,7 +30,7 @@
       <div class="form-group">
         <label for="scenarioModel" class="control-label">Model</label>
 
-        <select id="scenarioModel" class="form-control" ng-model="scenarioModal.scenario.Model" name="model" required>
+        <select id="scenarioModel" class="form-control" ng-model="scenarioModal.scenario.ModelMetaData" name="model" required>
           <option ng-repeat="model in scenarioModal.models" value="{{ model.dataId }}">{{ model.title }}</option>
         </select>
       </div>
