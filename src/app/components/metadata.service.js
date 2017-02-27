@@ -19,7 +19,14 @@
           url += pathVariable;
         }
 
-        $http.get(url)
+        $http({
+          url: url,
+          method: 'GET',
+          transformResponse: [function (data) {
+            // Do whatever you want!
+            return data;
+          }]
+        })
           .then(function (res) {
             callback(res.data);
           })

@@ -23,6 +23,10 @@
           res.forEach(function (e) {
             // get model name
             Metadata.getOne(e.ModelMetaData, function (res) {
+              if (res.hasOwnProperty('error')) {
+                vm.alerts.add(res.error.data, 'warning');
+                return;
+              }
               e.ModelName = res.title;
             });
           });
@@ -43,7 +47,7 @@
         controllerAs: 'scenarioModal',
         resolve: {
           scenario: function () {
-              return angular.copy(scenario);
+            return angular.copy(scenario);
           }
         }
       });
