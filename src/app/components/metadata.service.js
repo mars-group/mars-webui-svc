@@ -23,8 +23,13 @@
           url: url,
           method: 'GET',
           transformResponse: [function (data) {
-            // Do whatever you want!
-            return data;
+            var json;
+            try {
+              json = JSON.parse(data);
+            } catch (e) {
+              return data;
+            }
+            return json;
           }]
         })
           .then(function (res) {
