@@ -13,7 +13,6 @@
     vm.scenario = scenario;
     vm.models = [];
 
-    var isCloneScenario = angular.isDefined(vm.scenario) && vm.scenario.hasOwnProperty('ScenarioId');
     var project = Project.getId();
 
     var params = {
@@ -23,24 +22,9 @@
     Metadata.getFiltered(params, function (res) {
       if (!res.hasOwnProperty('error')) {
         vm.models = res;
-
-        if (isCloneScenario && vm.scenario.ModelMetaData) {
-          filterModelsForClone();
-        }
       }
       hasModels();
     });
-
-    var filterModelsForClone = function () {
-      Metadata.getOne(vm.scenario.ModelMetaData, function (res) {
-        angular.forEach(vm.models, function (e, index) {
-          if (e.additionalTypeSpecificData && !angular.equals(e.additionalTypeSpecificData, res.additionalTypeSpecificData)) {
-            vm.models.splice(index, 1);
-          }
-        });
-
-      });
-    };
 
     var hasModels = function () {
       if (vm.models && vm.models.length > 0) {
