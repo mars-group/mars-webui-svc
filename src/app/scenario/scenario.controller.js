@@ -43,9 +43,7 @@
         controllerAs: 'scenarioModal',
         resolve: {
           scenario: function () {
-            if (scenario) {
-              return scenario;
-            }
+              return angular.copy(scenario);
           }
         }
       });
