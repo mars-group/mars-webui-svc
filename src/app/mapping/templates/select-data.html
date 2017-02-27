@@ -7,36 +7,34 @@
   </span>
 </h3>
 
-<div class="form-group has-feedback has-clear">
-  <label for="filter" class="filter">Filter: </label>
-  <input type="search" id="filter" class="form-control" data-ng-model="mapping.dataFilter.title"/>
-  <a class="glyphicon glyphicon-remove-circle form-control-feedback form-control-clear clear-filter"
-     ng-click="mapping.dataFilter.title = ''" ng-if="mapping.dataFilter.title"></a>
-</div>
-
 <uib-accordion close-others="true">
-  <uib-accordion-group class="panel-default" ng-repeat="dataset in mapping.metadata |filter:mapping.dataFilter
-      track by $index" is-open="$first">
-    <uib-accordion-heading>
-      {{ dataset.title }}
-      <button class="btn btn-success btn-xs" data-ng-click="mapping.createMapping(dataset, $index)"
-              data-ng-hide="dataset.additionalTypeSpecificData.databaseName">add
-      </button>
-    </uib-accordion-heading>
-    <div>Type: {{ dataset.type }}</div>
-    <div>Description: {{ dataset.description }}</div>
-    <div ng-if="dataset.type === 'TABLE_BASED'">InstanceCount: {{ dataset.records }}
-      <button class="btn btn-warning btn-xs" data-ng-click="mapping.createInstanceCountMapping(dataset)">add
-      </button>
-    </div>
-    <div data-ng-if="dataset.additionalTypeSpecificData.databaseName">
-      <div>ColumnNames:</div>
-      <ul>
-        <li data-ng-repeat="field in dataset.additionalTypeSpecificData.columnNames track by $index ">
-          {{ field.clearColumnName }}
-          <button class="btn btn-success btn-xs" data-ng-click="mapping.createMapping(dataset, $index)">add</button>
-        </li>
-      </ul>
-    </div>
-  </uib-accordion-group>
+  <table ng-table="mapping.tableParams" class="table select-data-table">
+    <tr ng-repeat="dataset in $data">
+      <td title="'Name'" data-filter="{ title: 'text'}" data-sortable="'title'">
+        <uib-accordion-group class="panel-default" is-open="$first">
+          <uib-accordion-heading>
+            {{ dataset.title }}
+            <button class="btn btn-success btn-xs" data-ng-click="mapping.createMapping(dataset, $index)"
+                    data-ng-hide="dataset.additionalTypeSpecificData.databaseName">add
+            </button>
+          </uib-accordion-heading>
+          <div>Description: {{ dataset.description }}</div>
+          <div data-ng-if="dataset.type === 'TABLE_BASED'">InstanceCount: {{ dataset.records }}
+            <button class="btn btn-warning btn-xs" data-ng-click="mapping.createInstanceCountMapping(dataset)">add
+            </button>
+          </div>
+          <div data-ng-if="dataset.additionalTypeSpecificData.databaseName">
+            <div>ColumnNames:</div>
+            <ul>
+              <li data-ng-repeat="field in dataset.additionalTypeSpecificData.columnNames track by $index ">
+                {{ field.clearColumnName }}
+                <button class="btn btn-success btn-xs" data-ng-click="mapping.createMapping(dataset, $index)">add
+                </button>
+              </li>
+            </ul>
+          </div>
+        </uib-accordion-group>
+      </td>
+    </tr>
+  </table>
 </uib-accordion>

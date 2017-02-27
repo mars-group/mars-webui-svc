@@ -41,4 +41,15 @@
     color: orange;
   }
 
+  .select-data-table {
+    .panel-group {
+      margin-bottom: 0;
+    }
+
+    td {
+      border-top: none;
+      padding: 2px;
+    }
+
+  }
 }

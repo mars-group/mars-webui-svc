@@ -7,7 +7,7 @@
 
 
   /** @ngInject */
-  function MappingController($log, $uibModal, Mapping, Metadata, Alert, Scenario, Config) {
+  function MappingController($log, $uibModal, Mapping, Metadata, Alert, Scenario, Config, NgTableParams) {
     var vm = this;
 
     vm.alerts = new Alert();
@@ -123,6 +123,7 @@
         // select layer
         // vm.treeExpandedNodes.push(vm.treeData[1].Agents[1]);
         // vm.selectedNode = vm.treeData[1].Agents[1].Agents[0];
+        // selectFirstField(vm.selectedNode);
         // setDataFilter(vm.selectedNode);
 
         // select global parameters
@@ -173,6 +174,7 @@
           }
         } else {
           vm.metadata = res;
+          vm.tableParams = new NgTableParams({}, {dataset: res});
         }
       });
     };
@@ -194,26 +196,31 @@
     };
 
     var setDataFilter = function (node) {
+
+      var dataFilter;
       switch (node.LayerType) {
         case 'BasicLayers':
-          vm.dataFilter.type = 'TABLE_BASED';
+          dataFilter = 'TABLE_BASED';
           break;
         case 'TimeSeriesLayers':
-          vm.dataFilter.type = 'TIME_SERIES';
+          dataFilter = 'TIME_SERIES';
           break;
         case 'GeoPotentialFieldLayers':
-          vm.dataFilter.type = 'GEO_POTENTIAL_FIELD';
+          dataFilter = 'GEO_POTENTIAL_FIELD';
           break;
         case 'GridPotentialFieldLayers':
-          vm.dataFilter.type = 'GRID_POTENTIAL_FIELD';
+          dataFilter = 'GRID_POTENTIAL_FIELD';
           break;
         case 'ObstacleLayers':
-          vm.dataFilter.type = 'OBSTACLE_LAYER';
+          dataFilter = 'OBSTACLE_LAYER';
           break;
         case 'GISLayers':
-          vm.dataFilter.type = 'GIS';
+          dataFilter = 'GIS';
           break;
       }
+        var columnName = 'type';
+
+        vm.tableParams.filter()[columnName] = dataFilter;
     };
 
     var selectNextField = function () {
