@@ -6,7 +6,7 @@
     .controller('ScenarioModalController', ScenarioModalController);
 
   /** @ngInject */
-  function ScenarioModalController($uibModalInstance, Metadata, Scenario, Project, Alert, scenario, Mapping) {
+  function ScenarioModalController($uibModalInstance, Metadata, Scenario, Project, Alert, scenario, Mapping, $log) {
     var vm = this;
 
     vm.alerts = new Alert();

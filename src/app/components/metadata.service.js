@@ -25,7 +25,7 @@
           transformResponse: [function (data) {
             var json;
             try {
-              json = JSON.parse(data);
+              json = angular.fromJson(data);
             } catch (e) {
               return data;
             }
