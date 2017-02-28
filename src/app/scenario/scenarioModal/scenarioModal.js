@@ -6,13 +6,14 @@
     .controller('ScenarioModalController', ScenarioModalController);
 
   /** @ngInject */
-  function ScenarioModalController($uibModalInstance, Metadata, Scenario, Project, Alert, scenario) {
+  function ScenarioModalController($uibModalInstance, Metadata, Scenario, Project, Alert, scenario, Mapping) {
     var vm = this;
 
     vm.alerts = new Alert();
     vm.scenario = scenario;
     vm.models = [];
 
+    var isCloneScenario = angular.isDefined(vm.scenario) && vm.scenario.hasOwnProperty('ScenarioId');
     var project = Project.getId();
 
     var params = {
@@ -55,23 +56,70 @@
         ModelMetaData: vm.scenario.ModelMetaData
       };
 
+      // create scenario
       Scenario.postScenario(data, function (res) {
         if (res.hasOwnProperty('error')) {
           callback(res.error);
         }
+
+        if (isCloneScenario) {
+          console.log('clone scenario');
+          loadMapping(res, function (mapping) {
+            putMapping(mapping, res);
+            putParameters(mapping, res);
+          });
+        }
+
         setCurrentScenarioFromId(res);
+        callback();
       });
 
-      var setCurrentScenarioFromId = function (id) {
-        Scenario.getScenarios(function (scenarios) {
-          angular.forEach(scenarios, function (e) {
-            if (e.ScenarioId === id) {
-              Scenario.setCurrentScenario(e);
+      // load mapping from cloned Scenario
+      var loadMapping = function (scenarioId, callback) {
+        Mapping.getMapping(scenarioId)
+          .then(function (res) {
+            if (res.status > 299) {
+              vm.alerts.add(res, 'danger');
             }
+            callback(res);
+
+          }, function (err) {
+            $log.error(err);
           });
+      };
+
+      // save mapping to new scenario
+      var putMapping = function (mapping, scenarioId) {
+        Mapping.putMapping(mapping, scenarioId, function (err) {
+          if (err) {
+            vm.alerts.add(err.config.url + '" caused the following error: "' + err.data.Description + '"!', 'danger');
+          }
+          loadMapping(scenarioId, function (res) {
+            putParameters(res, scenarioId);
+          });
+        });
+      };
+
+      // save Parameters to new scenario
+      var putParameters = function (mapping, scenarioId) {
+        Mapping.putParameter(mapping, scenarioId, function (err) {
+          if (err) {
+            vm.alerts.add(err.config.url + '" caused the following error: "' + err.data.Description + '"!', 'danger');
+          }
           callback();
         });
       };
+
+      // make new scenario active
+      var setCurrentScenarioFromId = function (id) {
+        Scenario.getScenario(id, function (res) {
+          delete res.InitializationDescription;
+          delete res.ParameterizationDescription;
+          res.ScenarioId = id;
+          Scenario.setCurrentScenario(res);
+        });
+      };
+
     };
 
   }
