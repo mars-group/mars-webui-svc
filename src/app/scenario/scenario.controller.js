@@ -54,7 +54,7 @@
 
       modalInstance.result.then(function (err) {
         if (err) {
-          vm.alerts.add('Error: ' + err.Description, 'danger');
+          vm.alerts.add('Error: ' + err.data.description, 'danger');
         } else {
           loadScenarios();
         }
