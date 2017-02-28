@@ -56,66 +56,59 @@
         ModelMetaData: vm.scenario.ModelMetaData
       };
 
+      var scenarioId;
+
       // create scenario
       Scenario.postScenario(data, function (res) {
         if (res.hasOwnProperty('error')) {
-          callback(res.error);
+          return callback(res.error);
         }
 
+        scenarioId = res;
+
         if (isCloneScenario) {
-          console.log('clone scenario');
-          loadMapping(res, function (mapping) {
-            putMapping(mapping, res);
-            putParameters(mapping, res);
+          loadMapping(function (mapping) {
+            saveMapping(mapping);
           });
         }
 
-        setCurrentScenarioFromId(res);
+        setCurrentScenario();
         callback();
       });
 
-      // load mapping from cloned Scenario
-      var loadMapping = function (scenarioId, callback) {
-        Mapping.getMapping(scenarioId)
+      // load mapping from original Scenario
+      var loadMapping = function (callback) {
+        Mapping.getMapping(vm.scenario.ScenarioId)
           .then(function (res) {
-            if (res.status > 299) {
-              vm.alerts.add(res, 'danger');
-            }
             callback(res);
-
           }, function (err) {
             $log.error(err);
+            return callback(err);
           });
       };
 
       // save mapping to new scenario
-      var putMapping = function (mapping, scenarioId) {
+      var saveMapping = function (mapping) {
         Mapping.putMapping(mapping, scenarioId, function (err) {
           if (err) {
-            vm.alerts.add(err.config.url + '" caused the following error: "' + err.data.Description + '"!', 'danger');
+            return callback(err);
           }
-          loadMapping(scenarioId, function (res) {
-            putParameters(res, scenarioId);
+          loadMapping(function (mapping) {
+            Mapping.putParameter(mapping, scenarioId, function (err) {
+              if (err) {
+                return callback(err);
+              }
+            });
           });
         });
       };
 
-      // save Parameters to new scenario
-      var putParameters = function (mapping, scenarioId) {
-        Mapping.putParameter(mapping, scenarioId, function (err) {
-          if (err) {
-            vm.alerts.add(err.config.url + '" caused the following error: "' + err.data.Description + '"!', 'danger');
-          }
-          callback();
-        });
-      };
-
       // make new scenario active
-      var setCurrentScenarioFromId = function (id) {
-        Scenario.getScenario(id, function (res) {
+      var setCurrentScenario = function () {
+        Scenario.getScenario(scenarioId, function (res) {
           delete res.InitializationDescription;
           delete res.ParameterizationDescription;
-          res.ScenarioId = id;
+          res.ScenarioId = scenarioId;
           Scenario.setCurrentScenario(res);
         });
       };

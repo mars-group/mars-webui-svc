@@ -274,12 +274,12 @@
     vm.saveMapping = function () {
       Mapping.putMapping(vm.treeData, vm.currentScenario.ScenarioId, function (err) {
         if (err) {
-          vm.alerts.add(err.config.url + '" caused the following error: "' + err.data.Description + '"!', 'danger');
+          vm.alerts.add(err.config.url + '" caused the following error: "' + err.data.description + '"!', 'danger');
         }
         loadMapping();
         Mapping.putParameter(vm.treeData, vm.currentScenario.ScenarioId, function (err) {
           if (err) {
-            vm.alerts.add(err.config.url + '" caused the following error: "' + err.data.Description + '"!', 'danger');
+            vm.alerts.add(err.config.url + '" caused the following error: "' + err.data.description + '"!', 'danger');
           }
 
           loadMapping();
