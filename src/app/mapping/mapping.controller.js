@@ -218,9 +218,9 @@
           dataFilter = 'GIS';
           break;
       }
-        var columnName = 'type';
+      var columnName = 'type';
 
-        vm.tableParams.filter()[columnName] = dataFilter;
+      vm.tableParams.filter()[columnName] = dataFilter;
     };
 
     var selectNextField = function () {
@@ -262,6 +262,8 @@
         vm.selectedField.MetaDataId = dataset.dataId;
         vm.selectedField.ClearName = dataset.title;
       }
+
+      vm.selectedField.LayerName = dataset.title;
 
       vm.createInstanceCountMapping(dataset);
       selectNextField();
@@ -329,8 +331,13 @@
         return 'manual';
       }
 
+
       if (field.ColumnClearName) {
-        return field.ColumnClearName;
+        if (field.LayerName) {
+          return field.LayerName + ' / ' + field.ColumnClearName;
+        } else {
+          return field.ColumnClearName;
+        }
       } else if (field.ClearName) {
         return field.ClearName;
       } else if (field.InstanceCount) {
