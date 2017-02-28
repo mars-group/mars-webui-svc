@@ -90,7 +90,7 @@
         .then(function (res) {
           if (res.status > 299) {
             $log.error(res);
-            vm.alerts(res, 'danger');
+            vm.alerts.add(res, 'danger');
             return;
           }
 
@@ -103,7 +103,7 @@
           expandTopLevelNodes();
         }, function (err) {
           $log.error(err);
-          vm.alerts(err, 'danger');
+          vm.alerts.add(err, 'danger');
         });
     };
 
