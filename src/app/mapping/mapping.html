@@ -4,7 +4,7 @@
     <acme-navbar></acme-navbar>
   </div>
 
-  <div class="col-md-2">
+  <div class="col-md-3">
     <h3>Model Aspects</h3>
     <treecontrol class="tree-boot" tree-model="mapping.treeData"
                  expanded-nodes="mapping.treeExpandedNodes" options="mapping.treeOptions"
@@ -58,7 +58,7 @@
     </form>
   </div>
 
-  <div class="col-md-4" data-ng-if="mapping.selectedNode && !mapping.selectedNode.Parameters">
+  <div class="col-md-3" data-ng-if="mapping.selectedNode && !mapping.selectedNode.Parameters">
     <div ng-include data-src="'app/mapping/templates/select-data.html'"></div>
   </div>
 
