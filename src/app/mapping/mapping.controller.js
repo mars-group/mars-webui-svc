@@ -258,12 +258,14 @@
         if (vm.selectedField.hasOwnProperty('ColumnClearName')) {
           vm.selectedField.ColumnClearName = dataset.additionalTypeSpecificData.columnNames[index].clearColumnName;
         }
+
+        // This is used for temporary display only.
+        vm.selectedField.layerName = dataset.title;
+
       } else {
         vm.selectedField.MetaDataId = dataset.dataId;
         vm.selectedField.ClearName = dataset.title;
       }
-
-      vm.selectedField.layerName = dataset.title;
 
       vm.createInstanceCountMapping(dataset);
       selectNextField();
@@ -332,8 +334,8 @@
       }
 
       if (field.ColumnClearName) {
-        if (field.LayerName) {
-          return field.LayerName + ' / ' + field.ColumnClearName;
+        if (field.layerName) {
+          return field.layerName + ' / ' + field.ColumnClearName;
         } else {
           return field.ColumnClearName;
         }
