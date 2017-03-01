@@ -17,7 +17,8 @@
           if (err.status === 500 && err.data.message === 'Forwarding error') {
             vm.alerts.add('There is no instance of "Scenario service", so there is nothing to display!', 'danger');
           } else {
-            $log.error(err, 'danger');
+            $log.error(err);
+            vm.alerts.add(err.data, 'danger');
           }
         } else {
           res.forEach(function (e) {

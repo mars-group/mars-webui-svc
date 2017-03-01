@@ -11,15 +11,15 @@
   <table ng-table="mapping.tableParams" class="table select-data-table">
     <tr ng-repeat="dataset in $data">
       <td title="'Name'" data-filter="{ title: 'text'}" data-sortable="'title'">
-        <uib-accordion-group class="panel-default" is-open="$first">
+        <uib-accordion-group class="panel-default" is-open="$first" is-disabled="dataset.type !== 'TABLE_BASED'">
           <uib-accordion-heading>
             {{ dataset.title }}
             <button class="btn btn-success btn-xs" data-ng-click="mapping.createMapping(dataset, $index)"
                     data-ng-hide="dataset.additionalTypeSpecificData.databaseName">add
             </button>
           </uib-accordion-heading>
-          <div>Description: {{ dataset.description }}</div>
-          <div data-ng-if="dataset.type === 'TABLE_BASED'">InstanceCount: {{ dataset.records }}
+          <div ng-if="dataset.description">Description: {{ dataset.description }}</div>
+          <div data-ng-if="dataset.type === 'TABLE_BASED' && dataset.records">InstanceCount: {{ dataset.records }}
             <button class="btn btn-warning btn-xs" data-ng-click="mapping.createInstanceCountMapping(dataset)">add
             </button>
           </div>
@@ -35,6 +35,7 @@
           </div>
         </uib-accordion-group>
       </td>
+
     </tr>
   </table>
 </uib-accordion>

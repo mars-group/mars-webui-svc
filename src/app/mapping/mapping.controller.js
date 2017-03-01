@@ -263,7 +263,7 @@
         vm.selectedField.ClearName = dataset.title;
       }
 
-      vm.selectedField.LayerName = dataset.title;
+      vm.selectedField.layerName = dataset.title;
 
       vm.createInstanceCountMapping(dataset);
       selectNextField();
@@ -330,7 +330,6 @@
       if (field.Value) {
         return 'manual';
       }
-
 
       if (field.ColumnClearName) {
         if (field.LayerName) {
