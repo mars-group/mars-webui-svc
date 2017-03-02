@@ -29,20 +29,6 @@
     var selectScenarioInfoMessage = 'Please select a Scenario in the top right corner or create one';
     var mappingCompleteMessage = 'Mapping complete!';
 
-    Scenario.isCurrentScenarioExisting(function (res) {
-      if (res.hasOwnProperty('error')) {
-        $log.error(res.error);
-      }
-
-      if (!res) {
-        Scenario.clearScenarioSelection();
-      }
-
-      if (vm.currentScenario && !angular.equals(vm.currentScenario, {}) && !vm.selectedNode) {
-        vm.alerts.add(selectNodeInfoMessage);
-      }
-    });
-
     Scenario.getScenarios(function (res) {
       if (res.hasOwnProperty('error')) {
         var err = res.error;
@@ -86,11 +72,16 @@
         vm.alerts.add(selectScenarioInfoMessage);
         return;
       }
+
+      if (vm.currentScenario && !angular.equals(vm.currentScenario, {}) && !vm.selectedNode) {
+        vm.alerts.add(selectNodeInfoMessage);
+      }
+
       Mapping.getMapping(vm.currentScenario.ScenarioId)
         .then(function (res) {
           if (res.status > 299) {
             $log.error(res);
-            vm.alerts.add(res, 'danger');
+            vm.alerts.add(res.data.description, 'danger');
             return;
           }
 

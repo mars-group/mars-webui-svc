@@ -74,31 +74,33 @@
         triggerOnChangeListener();
       };
 
-      var clearScenarioSelection = function () {
+      var clearCurrentScenario = function () {
         currentScenario = {};
         $window.sessionStorage.removeItem('currentScenario');
         triggerOnChangeListener();
       };
 
       var getCurrentScenario = function () {
-        if (!isCurrentScenarioSet()) {
+        checkCurrentScenario(function () {
           currentScenario = angular.fromJson($window.sessionStorage.getItem('currentScenario'));
-        }
+        });
+
         return currentScenario;
       };
 
-      var isCurrentScenarioExisting = function (callback) {
+      var checkCurrentScenario = function (callback) {
         if (!isCurrentScenarioSet()) {
           return callback(false);
         }
 
         $http.get('/scenario-management/scenarios/' + currentScenario.ScenarioId)
           .then(function () {
-            callback(true);
+            callback();
           })
           .catch(function (err) {
             if (err.status === 404) {
-              callback(false);
+              clearCurrentScenario();
+              callback();
             } else {
               callback({error: err});
             }
@@ -147,9 +149,8 @@
         getScenario: getScenario,
         postScenario: postScenario,
         setCurrentScenario: setCurrentScenario,
-        clearScenarioSelection: clearScenarioSelection,
+        clearScenarioSelection: clearCurrentScenario,
         getCurrentScenario: getCurrentScenario,
-        isCurrentScenarioExisting: isCurrentScenarioExisting,
         getMappingComplete: getMappingComplete,
         isMappingComplete: isMappingComplete,
         registerOnChangeListener: registerOnChangeListener
