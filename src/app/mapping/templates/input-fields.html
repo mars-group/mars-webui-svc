@@ -6,19 +6,41 @@
 
 <!-- Date-Time -->
 <div data-ng-if="field.AllowedValues.type === 'string' && field.AllowedValues.format === 'date-time'">
-  <div class="input-group">
-    <label for="calendar-picker"></label>
-    <input type="text" id="calendar-picker" class="form-control" ng-model="field.Value"/>
-    <span class="input-group-addon" ng-class="mappingForm.datepicker_{{$index}}.$invalid ? 'ng-invalid' : ''"
-          ng-click="datepickerCollapsed[$index] = !datepickerCollapsed[$index]">
-      <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
-    </span>
+  <div class="row date-row">
+    <div class="form-group col-xs-4">
+      <label for="year" class="sr-only">Year</label>
+      <input id="year" class="form-control" type="number" name="year" title="Year" placeholder="Year" min="1900" max="3000"
+             ng-model="field.date.year" ng-change="field.Value = mapping.setDate(field.date)"/>
+    </div>
+
+    <div class="form-group col-xs-4">
+      <label for="month" class="sr-only">Month</label>
+      <input id="month" class="form-control" type="number" name="month" title="Month" placeholder="Month" min="1"
+             max="12" ng-model="field.date.month" ng-change="field.Value = mapping.setDate(field.date)"/>
+    </div>
+
+    <div class="form-group col-xs-4">
+      <label for="day" class="sr-only">Day</label>
+      <input id="day" class="form-control" type="number" name="day" title="Day" placeholder="Day" min="1"
+             max="31" ng-model="field.date.day" ng-change="field.Value = mapping.setDate(field.date)"/>
+    </div>
   </div>
-  <div uib-collapse="!datepickerCollapsed[$index]">
-    <datetimepicker ng-model="field.Value" ng-required="field.Required" name="datepicker_{{$index}}"
-                    data-datetimepicker-config="{ minuteStep: 1 }" data-on-set-time="mapping.onTimeSet(field, newDate)">
-    </datetimepicker>
+
+  <div class="row date-row">
+    <div class="form-group col-xs-6">
+      <label for="hour" class="sr-only">Hour</label>
+      <input id="hour" class="form-control" type="number" name="hour" title="Hour" placeholder="Hour" min="0" max="23"
+             ng-model="field.date.hour" ng-change="field.Value = mapping.setDate(field.date)"/>
+    </div>
+
+    <div class="form-group col-xs-6">
+      <label for="minute" class="sr-only">Minute</label>
+      <input id="minute" class="form-control" type="number" name="minute" title="Minute" placeholder="Minute" min="0"
+             max="59" ng-model="field.date.minute" ng-change="field.Value = mapping.setDate(field.date)"/>
+    </div>
   </div>
+
+  <span>{{ field.Value |date : 'yyyy/MM/dd HH:mm' : '+0' }}</span>
 </div>
 
 <!-- Enum -->

@@ -20,7 +20,6 @@
       'ngTable',
       'treeControl',
       'ngPrettyJson',
-      'ui.bootstrap.datetimepicker',
       'ngTagsInput'
     ]);
 

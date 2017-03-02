@@ -118,8 +118,8 @@
         // setDataFilter(vm.selectedNode);
 
         // select global parameters
-        // vm.selectedNode = vm.treeData[2].Agents[1];
-        // vm.alerts.remove(selectNodeInfoMessage);
+        vm.selectedNode = vm.treeData[2].Agents[1];
+        vm.alerts.remove(selectNodeInfoMessage);
       }
     };
 
@@ -355,10 +355,40 @@
       });
     };
 
-    // convert date format for the date picker to utcString
-    vm.onTimeSet = function (field, newDate) {
-      var date = new Date(newDate);
-      field.Value = date.toISOString();
+    vm.setDate = function (date) {
+      var year = checkDateField(date.year, 1900);
+      var month = checkDateField(date.month, 1);
+      var day = checkDateField(date.day, 1);
+      var hour = checkDateField(date.hour, 0);
+      var minute = checkDateField(date.minute, 0);
+
+      var dateString = year + '-' + month + '-' + day + 'T' + hour + ':' + minute;
+      return new Date(dateString).toISOString();
+    };
+
+    var checkDateField = function (field, zeroValue) {
+      if (!angular.isDefined(field)) {
+        field = zeroValue;
+      }
+
+      if (field < 10) {
+        field = '0' + field;
+      }
+
+      return field;
+    };
+
+    vm.getDate = function (dateString) {
+      console.log(dateString);
+
+      var date = new Date(dateString);
+      var year = date.getUTCFullYear();
+      var month = date.getUTCMonth() + 1; // month start at 0. Welcome to JS.
+      var day = date.getUTCDate();
+      var hour = date.getUTCHours();
+      var minute = date.getUTCMinutes();
+
+      console.log(year + '/' + month + '/' + day + ' ' + hour + ':' + minute);
     };
 
   }
