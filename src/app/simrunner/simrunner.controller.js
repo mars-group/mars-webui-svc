@@ -18,7 +18,7 @@
       var currentScenario = Scenario.getCurrentScenario();
       if(currentScenario !== null) {
         vm.ScenarioId = Scenario.getCurrentScenario().ScenarioId;
-        SimRunner.getAllSimPlans({"scenarioid": vm.ScenarioId}, function(res){
+        SimRunner.getAllSimPlans({"scenarioid": vm.ScenarioId, projectid: 42}, function(res){
           if(res !== "" && !res.error) {
             vm.SimPlans = res;
           }
@@ -29,13 +29,13 @@
 
     Scenario.registerOnChangeListener(function(){
       vm.ScenarioId = Scenario.getCurrentScenario().ScenarioId;
-      SimRunner.getAllSimPlans({"scenarioid": vm.ScenarioId}, function(res){
+      SimRunner.getAllSimPlans({"scenarioid": vm.ScenarioId, projectid: 42}, function(res){
         if(!res.error) {vm.SimPlans = res;}
       });
     });
 
     vm.GetAllSimRunsForSimPlan = function(simPlan) {
-      SimRunner.getAllSimRuns({simPlanId: simPlan.id}, function(res){
+      SimRunner.getAllSimRuns({simPlanId: simPlan.id, projectid: 42}, function(res){
         simPlan.simRuns = res;
       });
     };
