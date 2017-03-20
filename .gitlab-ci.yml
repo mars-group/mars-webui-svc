@@ -26,6 +26,8 @@ cache:
 #    - docker push $DOCKER_REGISTRY/$SERVICE_NAME:$CI_PIPELINE_ID
 #    - docker push $DOCKER_REGISTRY/$SERVICE_NAME:latest
 #    - docker push $DOCKER_REGISTRY/$SERVICE_NAME:$CI_BUILD_REF
+#  only:
+#    - master
 
 build_dependencies:
   stage: build
@@ -40,6 +42,8 @@ build_dependencies:
       }" > src/version.json'
     - gulp  # build dist/
     - yarn install --no-progress --production # cleanup development packages
+  only:
+    - master
   artifacts:
     expire_in: 1 hour
     paths:
@@ -64,6 +68,8 @@ deploy_production:
     - docker push $DOCKER_REGISTRY/$SERVICE_NAME:$CI_PIPELINE_ID
     - docker push $DOCKER_REGISTRY/$SERVICE_NAME:latest
     - docker push $DOCKER_REGISTRY/$SERVICE_NAME:$CI_BUILD_REF
+  only:
+    - master
 
 deploy_development:
   stage: deploy
@@ -80,4 +86,6 @@ deploy_development:
     - docker push $DOCKER_REGISTRY/$SERVICE_NAME:$CI_PIPELINE_ID
     - docker push $DOCKER_REGISTRY/$SERVICE_NAME:latest
     - docker push $DOCKER_REGISTRY/$SERVICE_NAME:$CI_BUILD_REF
+  only:
+    - master
   dependencies: []

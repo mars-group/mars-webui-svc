@@ -11,7 +11,8 @@
   <table ng-table="mapping.tableParams" class="table select-data-table">
     <tr ng-repeat="dataset in $data">
       <td title="'Name'" data-filter="{ title: 'text'}" data-sortable="'title'">
-        <uib-accordion-group class="panel-default" is-open="$first" is-disabled="dataset.type !== 'TABLE_BASED'">
+        <uib-accordion-group class="panel-default" is-open="$first"
+                             is-disabled="dataset.type !== 'TABLE_BASED' && dataset.type !== 'TIME_SERIES'">
           <uib-accordion-heading>
             {{ dataset.title }}
             <button class="btn btn-success btn-xs" data-ng-click="mapping.createMapping(dataset, $index)"
