@@ -10,6 +10,7 @@
     var vm = this;
 
     vm.alerts = new Alert();
+    vm.columnMaxCharacters = 40;
 
     // Filter categories
     // TODO: get from code
