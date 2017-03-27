@@ -39,6 +39,7 @@
             Name: simPlanName,
             OwnerId: "1", // TODO: change in future!
             GroupId: "42", // TODO: change in future!
+            ProjectId: "42",
             ScenarioDescriptionId: scenarioConfigId,
             ResultConfigurationId: resultConfigId,
             ExecutionConfigurationId: executionConfigId
