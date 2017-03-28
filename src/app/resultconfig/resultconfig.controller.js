@@ -74,10 +74,12 @@
 
         defaultConfig.Agents.push({
           TypeName: type["AgentType"],
+          FullName: type["AgentFullName"],
           OutputEnabled: false,
           Frequency: 1,
           SpatialOutput: false,
-          SpatialType: "stationary",
+          SpatialType: type["SpatialType"],
+          MovementType: "stationary",
           EnableVisualization: false,
           VisualizationParams: "",
           OutputProperties: properties

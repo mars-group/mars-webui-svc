@@ -26,9 +26,8 @@
             <div class="col-sm-6">
 
               <table class="agentData">
-                <tr><td>Selected agent:</td><td>{{agent.AgentType}}</td></tr>
                 <tr><td>Agent layer:</td><td>{{agent.AgentLayer}}</td></tr>
-                <tr><td>Spatial:</td><td>{{agent.IsSpatial}}</td></tr>
+                <tr><td>Spatial type:</td><td>{{agent.SpatialType}}</td></tr>
               </table>
 
               <!-- Output enable/disable master switch. -->
@@ -53,8 +52,8 @@
                   </div>
                   <fieldset class="RCS-Options" data-ng-disabled="!resultconfig.SelectedConfig.Agents[$index].SpatialOutput">
                     <div class="form-group">
-                      <label class="radio-inline"><input type="radio" name="{{agent.AgentType}}" ng-model="resultconfig.SelectedConfig.Agents[$index].SpatialType" value="stationary" />stationary</label>
-                      <label class="radio-inline"><input type="radio" name="{{agent.AgentType}}" ng-model="resultconfig.SelectedConfig.Agents[$index].SpatialType" value="mobile" />mobile</label>
+                      <label class="radio-inline"><input type="radio" name="{{agent.AgentType}}" ng-model="resultconfig.SelectedConfig.Agents[$index].MovementType" value="stationary" />stationary</label>
+                      <label class="radio-inline"><input type="radio" name="{{agent.AgentType}}" ng-model="resultconfig.SelectedConfig.Agents[$index].MovementType" value="mobile" />mobile</label>
                     </div>
                     <div class="checkbox">
                       <label class="reslbl"><input type="checkbox" ng-model="resultconfig.SelectedConfig.Agents[$index].EnableVisualization">Enable 3D visualization</label>
