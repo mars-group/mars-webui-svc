@@ -9,7 +9,7 @@
   function ImportDataController() {
     var vm = this;
 
-    vm.pageTitle = 'File import';
+    vm.pageTitle = 'Data Import';
     vm.dataTypes = [
       {name: 'GEO_POTENTIAL_FIELD', clearName: 'Geo-potential-field data'},
       {name: 'GRID_POTENTIAL_FIELD', clearName: 'Grid-potential-field data'},

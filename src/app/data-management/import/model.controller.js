@@ -9,7 +9,7 @@
   function ImportModelController() {
     var vm = this;
 
-    vm.pageTitle = 'Model import';
+    vm.pageTitle = 'Model Import';
     vm.dataTypes = [
       {name: 'MODEL', clearName: 'Model data'}
     ];
