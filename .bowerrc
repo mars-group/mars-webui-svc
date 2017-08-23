@@ -1,9 +1,5 @@
 {
   "directory": "bower_components",
-  "resolvers": [
-    "bower-art-resolver"
-  ],
-  "registry": "https://artifactory.mars.haw-hamburg.de/artifactory/api/bower/bower-virtual",
   "allow_root": true,
   "loglevel": "warn"
 }
