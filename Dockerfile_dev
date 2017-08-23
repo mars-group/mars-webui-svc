@@ -1,4 +1,4 @@
-FROM artifactory.mars.haw-hamburg.de:5002/webui-svc-base
+FROM nexus.informatik.haw-hamburg.de/webui-svc-base
 
 ENV NPM_CONFIG_LOGLEVEL warn
 

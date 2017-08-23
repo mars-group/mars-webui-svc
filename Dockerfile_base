@@ -1,4 +1,4 @@
-FROM artifactory.mars.haw-hamburg.de:5000/node:boron
+FROM nexus.informatik.haw-hamburg.de/node:boron
 
 ENV NPM_CONFIG_LOGLEVEL warn
 

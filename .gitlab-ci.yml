@@ -4,34 +4,36 @@ stages:
   - deploy
 
 variables:
-  DOCKER_HOST: "dock-one.mars.haw-hamburg.de:5555"
-  DOCKER_REGISTRY: "artifactory.mars.haw-hamburg.de:5002"
+  DOCKER_HOST: "tcp://localhost:2375"
+  DOCKER_REGISTRY: "nexus.informatik.haw-hamburg.de"
 
 cache:
   paths:
     - /usr/local/share/.cache/yarn
 
 # this is the build image that is use for creating production and in development. It rarely changes
-#build_deploy_base:
-#  stage: base
-#  variables:
-#    SERVICE_NAME: "webui-svc-base"
-#  script:
-#    - export DOCKER_HOST=$DOCKER_HOST
-#    - docker build -t $SERVICE_NAME:latest -f Dockerfile_base .
-#    - docker tag $SERVICE_NAME:latest $DOCKER_REGISTRY/$SERVICE_NAME:$CI_PIPELINE_ID
-#    - docker tag $SERVICE_NAME:latest $DOCKER_REGISTRY/$SERVICE_NAME:latest
-#    - docker tag $SERVICE_NAME:latest $DOCKER_REGISTRY/$SERVICE_NAME:$CI_COMMIT_SHA
-#    - docker login -u $ARTIFACTORY_USER -p $ARTIFACTORY_PW $DOCKER_REGISTRY
-#    - docker push $DOCKER_REGISTRY/$SERVICE_NAME:$CI_PIPELINE_ID
-#    - docker push $DOCKER_REGISTRY/$SERVICE_NAME:latest
-#    - docker push $DOCKER_REGISTRY/$SERVICE_NAME:$CI_COMMIT_SHA
-#  only:
-#    - master
+build_deploy_base:
+  stage: base
+  services:
+    - $DOCKER_REGISTRY/docker:stable-dind
+  variables:
+    SERVICE_NAME: "webui-svc-base"
+  script:
+    - docker login -u $NEXUS_USER -p $NEXUS_PW $DOCKER_REGISTRY
+    - export DOCKER_HOST=$DOCKER_HOST
+    - docker build -t $SERVICE_NAME:latest -f Dockerfile_base .
+    - docker tag $SERVICE_NAME:latest $DOCKER_REGISTRY/$SERVICE_NAME:$CI_PIPELINE_ID
+    - docker tag $SERVICE_NAME:latest $DOCKER_REGISTRY/$SERVICE_NAME:latest
+    - docker tag $SERVICE_NAME:latest $DOCKER_REGISTRY/$SERVICE_NAME:$CI_COMMIT_SHA
+    - docker push $DOCKER_REGISTRY/$SERVICE_NAME:$CI_PIPELINE_ID
+    - docker push $DOCKER_REGISTRY/$SERVICE_NAME:latest
+    - docker push $DOCKER_REGISTRY/$SERVICE_NAME:$CI_COMMIT_SHA
+  only:
+    - master
 
 build_dependencies:
   stage: build
-  image: artifactory.mars.haw-hamburg.de:5002/webui-svc-base
+  image: $DOCKER_REGISTRY/webui-svc-base
   script:
     - npm install --warn phantomjs-prebuilt # workaround for phantomjs being stupid
     - yarn install --no-progress # npm in fast with cache :-)
@@ -55,16 +57,18 @@ build_dependencies:
 
 deploy_production:
   stage: deploy
+  services:
+    - $DOCKER_REGISTRY/docker:stable-dind
   variables:
     SERVICE_NAME: "webui-svc"
   script:
+    - docker login -u $NEXUS_USER -p $NEXUS_PW $DOCKER_REGISTRY
     - mv node_modules/ node_modules_prod/ # fix some strange bug, where the name causes an issue.
     - export DOCKER_HOST=$DOCKER_HOST
     - docker build -t $SERVICE_NAME:latest .
     - docker tag $SERVICE_NAME:latest $DOCKER_REGISTRY/$SERVICE_NAME:$CI_PIPELINE_ID
     - docker tag $SERVICE_NAME:latest $DOCKER_REGISTRY/$SERVICE_NAME:latest
     - docker tag $SERVICE_NAME:latest $DOCKER_REGISTRY/$SERVICE_NAME:$CI_COMMIT_SHA
-    - docker login -u $ARTIFACTORY_USER -p $ARTIFACTORY_PW $DOCKER_REGISTRY
     - docker push $DOCKER_REGISTRY/$SERVICE_NAME:$CI_PIPELINE_ID
     - docker push $DOCKER_REGISTRY/$SERVICE_NAME:latest
     - docker push $DOCKER_REGISTRY/$SERVICE_NAME:$CI_COMMIT_SHA
@@ -73,16 +77,18 @@ deploy_production:
 
 deploy_development:
   stage: deploy
+  services:
+    - $DOCKER_REGISTRY/docker:stable-dind
   variables:
     SERVICE_NAME: "webui-svc_dev"
   script:
+    - docker login -u $NEXUS_USER -p $NEXUS_PW $DOCKER_REGISTRY
     - rm -rf dist/
     - export DOCKER_HOST=$DOCKER_HOST
     - docker build -t $SERVICE_NAME:latest -f Dockerfile_dev .
     - docker tag $SERVICE_NAME:latest $DOCKER_REGISTRY/$SERVICE_NAME:$CI_PIPELINE_ID
     - docker tag $SERVICE_NAME:latest $DOCKER_REGISTRY/$SERVICE_NAME:latest
     - docker tag $SERVICE_NAME:latest $DOCKER_REGISTRY/$SERVICE_NAME:$CI_COMMIT_SHA
-    - docker login -u $ARTIFACTORY_USER -p $ARTIFACTORY_PW $DOCKER_REGISTRY
     - docker push $DOCKER_REGISTRY/$SERVICE_NAME:$CI_PIPELINE_ID
     - docker push $DOCKER_REGISTRY/$SERVICE_NAME:latest
     - docker push $DOCKER_REGISTRY/$SERVICE_NAME:$CI_COMMIT_SHA
