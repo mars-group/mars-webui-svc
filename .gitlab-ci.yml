@@ -1,5 +1,5 @@
 stages:
-  - base
+#  - base
   - build
   - deploy
 
@@ -12,24 +12,24 @@ cache:
     - /usr/local/share/.cache/yarn
 
 # this is the build image that is use for creating production and in development. It rarely changes
-build_deploy_base:
-  stage: base
-  services:
-    - $DOCKER_REGISTRY/docker:stable-dind
-  variables:
-    SERVICE_NAME: "webui-svc-base"
-  script:
-    - docker login -u $NEXUS_USER -p $NEXUS_PW $DOCKER_REGISTRY
-    - export DOCKER_HOST=$DOCKER_HOST
-    - docker build -t $SERVICE_NAME:latest -f Dockerfile_base .
-    - docker tag $SERVICE_NAME:latest $DOCKER_REGISTRY/$SERVICE_NAME:$CI_PIPELINE_ID
-    - docker tag $SERVICE_NAME:latest $DOCKER_REGISTRY/$SERVICE_NAME:latest
-    - docker tag $SERVICE_NAME:latest $DOCKER_REGISTRY/$SERVICE_NAME:$CI_COMMIT_SHA
-    - docker push $DOCKER_REGISTRY/$SERVICE_NAME:$CI_PIPELINE_ID
-    - docker push $DOCKER_REGISTRY/$SERVICE_NAME:latest
-    - docker push $DOCKER_REGISTRY/$SERVICE_NAME:$CI_COMMIT_SHA
-  only:
-    - master
+#build_deploy_base:
+#  stage: base
+#  services:
+#    - $DOCKER_REGISTRY/docker:stable-dind
+#  variables:
+#    SERVICE_NAME: "webui-svc-base"
+#  script:
+#    - docker login -u $NEXUS_USER -p $NEXUS_PW $DOCKER_REGISTRY
+#    - export DOCKER_HOST=$DOCKER_HOST
+#    - docker build -t $SERVICE_NAME:latest -f Dockerfile_base .
+#    - docker tag $SERVICE_NAME:latest $DOCKER_REGISTRY/$SERVICE_NAME:$CI_PIPELINE_ID
+#    - docker tag $SERVICE_NAME:latest $DOCKER_REGISTRY/$SERVICE_NAME:latest
+#    - docker tag $SERVICE_NAME:latest $DOCKER_REGISTRY/$SERVICE_NAME:$CI_COMMIT_SHA
+#    - docker push $DOCKER_REGISTRY/$SERVICE_NAME:$CI_PIPELINE_ID
+#    - docker push $DOCKER_REGISTRY/$SERVICE_NAME:latest
+#    - docker push $DOCKER_REGISTRY/$SERVICE_NAME:$CI_COMMIT_SHA
+#  only:
+#    - master
 
 build_dependencies:
   stage: build
