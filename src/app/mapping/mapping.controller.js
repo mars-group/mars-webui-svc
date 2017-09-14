@@ -206,6 +206,8 @@
           dataFilter = 'OBSTACLE_LAYER';
           break;
         case 'GISLayers':
+        case 'GISVectorLayers':
+        case 'GISRasterLayers':
           dataFilter = 'GIS';
           break;
       }
